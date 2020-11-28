@@ -1,0 +1,21 @@
+<script>
+  import MapEmbed from 'components/MapEmbed.svelte'
+  import { title } from './stores'
+
+  $title = `Kontakt`
+</script>
+
+<div>
+
+<h1>{$title}</h1>
+
+<MapEmbed place="München" title="Kontaktadresse" />
+
+</div>
+
+<style>
+  div {
+    max-width: 40em;
+    margin: auto;
+  }
+</style>

@@ -1,0 +1,7 @@
+semi: false
+singleQuote: true
+svelteSortOrder: scripts-markup-styles # rule provided by prettier-plugin-svelte
+overrides:
+  - files: '*.svelte'
+    options:
+      printWidth: 90

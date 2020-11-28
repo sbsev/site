@@ -1,0 +1,15 @@
+{
+  "background_color": "#ffffff",
+  "theme_color": "#333333",
+  "name": "Studenten bilden Schüler e.V.",
+  "short_name": "SbS",
+  "display": "minimal-ui",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg"
+    }
+  ]
+}

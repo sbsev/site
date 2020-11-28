@@ -1,0 +1,12 @@
+# dependenices
+node_modules
+src/node_modules/@sapper
+
+# build
+__sapper__
+
+# deploy config
+.netlify
+
+# secrets
+.env
