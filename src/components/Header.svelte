@@ -5,6 +5,7 @@
 </script>
 
 <header>
+  <a href="/"><img src="favicon.svg" alt="Favicon" /></a>
   <Nav />
   <Search
     indices={[{ name: `films`, title: `Filme` }, { name: `articles`, title: `Artikel` }, { name: `press`, title: `Pressestimmen` }]}
@@ -28,5 +29,9 @@
     background: var(--bodyBg);
     box-shadow: 0 -1pt 1ex 0 var(--shadowColor);
     z-index: 2;
+  }
+  img {
+    height: 1.6em;
+    vertical-align: middle;
   }
 </style>

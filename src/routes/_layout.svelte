@@ -37,7 +37,7 @@
 
 <style>
   main {
-    padding: 5vw;
+    padding: 5vw 0;
     box-sizing: border-box;
     width: 100%;
     max-width: 70em;
