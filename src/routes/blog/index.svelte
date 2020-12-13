@@ -1,33 +1,18 @@
-<script>
-  import { query } from 'svelte-apollo'
-  import { gql } from '@apollo/client/core'
+<script context="module">
+  import { fetchPosts } from '../queries'
 
-  const posts = query(gql`
-    {
-      posts: contentType2WKn6YEnZewu2ScCkus4AsCollection {
-        items {
-          title
-          slug
-          date
-          cover {
-            description
-            url
-          }
-          author {
-            name
-            email
-            homepage
-            bio
-            fieldOfStudy
-          }
-        }
-      }
-    }
-  `)
+  export async function preload(_, session) {
+    const posts = await fetchPosts(session.gqlUri)
+    return { posts }
+  }
+</script>
+
+<script>
+  export let posts
 </script>
 
 <div>
-  {#each $posts?.data?.posts.items || [] as { title, slug, cover, date, author }}
+  {#each posts as { title, slug, cover, date, author }}
     <section>
       <a href="/blog/{slug}"><img src={cover.url} alt={cover.description} /></a>
       <h3><a href="/blog/{slug}">{title}</a></h3>

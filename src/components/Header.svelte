@@ -2,11 +2,13 @@
   import Nav from 'components/Nav.svelte'
   import ColorMode from 'components/ColorMode.svelte'
   import Search from 'components/Search.svelte'
+
+  export let nav
 </script>
 
 <header>
   <a href="/"><img src="favicon.svg" alt="Favicon" /></a>
-  <Nav />
+  <Nav {nav} />
   <Search
     indices={[{ name: `films`, title: `Filme` }, { name: `articles`, title: `Artikel` }, { name: `press`, title: `Pressestimmen` }]}
     highlightable={[`title`, `excerpt`, `date`, `channel`, `tag`]} />

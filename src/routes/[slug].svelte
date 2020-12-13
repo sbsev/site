@@ -1,26 +1,18 @@
-<script>
-  import { query } from 'svelte-apollo'
-  import { gql } from '@apollo/client/core'
-  import { stores } from '@sapper/app'
-  import marked from 'marked'
-  const { page } = stores()
+<script context="module">
+  import { fetchPage } from './queries'
 
-  const pages = query(gql`
-    {
-      pages: pageCollection(where: {slug: "${$page.path.substring(1)}"}) {
-        items {
-          title
-          slug
-          body
-          cover {
-            description
-            url
-          }
-        }
-      }
-    }
-  `)
-  $: ({ title, cover = {}, body = `` } = $pages?.data?.pages.items[0] || {})
+  export async function preload({ path }, session) {
+    const page = await fetchPage(path.substring(1), session.gqlUri)
+    return { page }
+  }
+</script>
+
+<script>
+  import marked from 'marked'
+
+  export let page
+
+  const { title, cover = {}, body = `` } = page
 </script>
 
 <hgroup>

@@ -1,37 +1,19 @@
-<script>
-  import { query } from 'svelte-apollo'
-  import { gql } from '@apollo/client/core'
-  import { stores } from '@sapper/app'
-  import marked from 'marked'
-  const { page } = stores()
-  const slug = $page.path.replace(`/blog/`, ``)
+<script context="module">
+  import { fetchPost } from '../queries'
 
-  const posts = query(gql`
-    {
-      posts: contentType2WKn6YEnZewu2ScCkus4AsCollection(where: {slug: "${slug}"}) {
-        items {
-          title
-          slug
-          date
-          cover {
-            description
-            url
-          }
-          body
-          author {
-            name
-            email
-            homepage
-            bio
-            fieldOfStudy
-          }
-        }
-      }
-    }
-  `)
-  $: post = $posts?.data?.posts.items[0] || {}
-  $: ({ title, author = {}, date, cover = {}, body = `` } = post)
-  $: ({ bio, fieldOfStudy, name } = author)
+  export async function preload({ path }, session) {
+    const post = await fetchPost(path.replace(`/blog/`, ``), session.gqlUri)
+    return { post }
+  }
+</script>
+
+<script>
+  import marked from 'marked'
+
+  export let post
+
+  const { title, author = {}, date, cover = {}, body = `` } = post
+  const { bio, fieldOfStudy, name } = author
 </script>
 
 <hgroup>

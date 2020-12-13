@@ -1,22 +1,13 @@
 <script>
-  import { query } from 'svelte-apollo'
-  import { gql } from '@apollo/client/core'
-
-  const getNav = gql`
-    {
-      json(id: "3hmpA4klTFvPa9PDvF6TiI") {
-        data
-      }
-    }
-  `
-  const nav = query(getNav)
-
   import { stores } from '@sapper/app'
+
+  export let nav
+
   const { page } = stores()
 </script>
 
 <nav>
-  {#each $nav?.data?.json?.data?.nav || [] as { title, url }}
+  {#each nav as { title, url }}
     <a
       rel="prefetch"
       aria-current={url === $page.path ? `page` : undefined}

@@ -1,36 +1,30 @@
-<!-- eslint-disable no-console -->
+<script context="module">
+  import { fetchJson } from './queries'
+
+  export async function preload(_, session) {
+    const nav = await fetchJson(`Nav`, session.gqlUri)
+    return { nav }
+  }
+</script>
+
 <script>
   import Header from 'components/Header.svelte'
   import Footer from 'components/Footer.svelte'
   import GoogleAnalytics from 'components/GoogleAnalytics.svelte'
-  import { title } from './stores'
-  import ApolloClient from 'apollo-boost'
-  import { setClient } from 'svelte-apollo'
-  import 'cross-fetch/polyfill'
   import { stores } from '@sapper/app'
+  import 'cross-fetch/polyfill'
 
-  const { session } = stores()
-  const { CONTENTFUL_SPACE_ID: spaceId, CONTENTFUL_ACCESS_TOKEN: accessToken } = $session
+  export let nav
 
-  const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
-  const ctfGqlEndpoint = `${ctfGqlUrl}${spaceId}?access_token=${accessToken}`
-
-  const client = new ApolloClient({
-    uri: ctfGqlEndpoint,
-    onError: ({ graphQLErrors }) => {
-      // eslint-disable-next-line no-console
-      console.log(`graphQLErrors`, graphQLErrors)
-    },
-  })
-  setClient(client)
+  const { page } = stores()
 </script>
 
 <svelte:head>
-  <title>SbS | {$title}</title>
+  <title>SbS | {$page.path.replace(`-`, ` `)}</title>
 </svelte:head>
 
 <GoogleAnalytics />
-<Header />
+<Header nav={nav.data.nav} />
 <main>
   <slot />
 </main>
@@ -80,5 +74,8 @@
     border-radius: 5px;
     cursor: pointer;
     outline: none;
+  }
+  main :global(img) {
+    width: 100%;
   }
 </style>

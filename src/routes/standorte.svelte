@@ -1,30 +1,24 @@
-<script>
-  import { query } from 'svelte-apollo'
-  import { gql } from '@apollo/client/core'
-  import { stores } from '@sapper/app'
-  import marked from 'marked'
-  import ChapterMap from '../components/ChapterMap.svelte'
-  const { page } = stores()
+<script context="module">
+  import { fetchChapters, fetchPage } from './queries'
 
-  const pages = query(gql`
-    {
-      pages: pageCollection(where: {slug: "${$page.path.substring(1)}"}) {
-        items {
-          title
-          slug
-          body
-          cover {
-            description
-            url
-          }
-        }
-      }
-    }
-  `)
-  $: ({ title, cover = {}, body = `` } = $pages?.data?.pages.items[0] || {})
+  export async function preload({ path }, session) {
+    const page = await fetchPage(path.substring(1), session.gqlUri)
+    const chapters = await fetchChapters(session.gqlUri)
+    return { page, chapters }
+  }
 </script>
 
-<ChapterMap />
+<script>
+  import marked from 'marked'
+  import ChapterMap from '../components/ChapterMap.svelte'
+  import ChapterList from '../components/ChapterList.svelte'
+
+  export let chapters, page
+  const { title, cover = {}, body = `` } = page
+</script>
+
+<ChapterMap {chapters} />
+<ChapterList {chapters} />
 <hgroup>
   <img src={cover.url} alt={cover.description} />
   <h1>{title}</h1>

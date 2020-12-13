@@ -19,7 +19,6 @@
     "compression": "^1.7.1"
   },
   "devDependencies": {
-    "@apollo/client": "^3.3.6",
     "@babel/core": "^7.12.10",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.12.10",
@@ -31,12 +30,10 @@
     "@rollup/plugin-replace": "^2.3.4",
     "@rollup/plugin-yaml": "^3.0.0",
     "@svg-icons/fa-solid": "^1.22.0",
-    "apollo-boost": "^0.4.9",
     "cross-fetch": "^3.0.6",
     "dotenv": "^8.2.0",
     "eslint": "^7.15.0",
     "eslint-plugin-svelte3": "^2.7.3",
-    "graphql": "^15.4.0",
     "js-yaml": "^3.14.1",
     "marked": "^1.2.6",
     "mdsvex": "^0.8.9",
@@ -51,7 +48,6 @@
     "sirv": "^1.0.10",
     "sirv-cli": "^1.0.10",
     "svelte": "^3.31.0",
-    "svelte-algolia": "^0.1.4",
-    "svelte-apollo": "^0.4.0"
+    "svelte-algolia": "^0.1.4"
   }
 }
