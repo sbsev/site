@@ -13,6 +13,7 @@ export const modeColors = {
   light: {
     textColor: `black`,
     linkColor: `darkblue`,
+    hoverColor: `lightblue`,
     bodyBg: `#f1f1f1`,
     accentBg: `white`,
     transparentBg: `rgba(255, 255, 255, 0.5)`,
@@ -23,6 +24,7 @@ export const modeColors = {
   dark: {
     textColor: `white`,
     linkColor: `#00a1ff`,
+    hoverColor: `#89ba17`,
     bodyBg: `#061725`,
     accentBg: `#001d31`,
     transparentBg: `rgba(6, 23, 37, 0.5)`,

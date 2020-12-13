@@ -17,7 +17,7 @@
       }
     }
   `
-  const pages = query(getChapters)
+  const chapters = query(getChapters)
 
   const addMarkers = (map, { chapters }) => {
     chapters.forEach(({ title, slug, coords }, idx) => {
@@ -38,4 +38,27 @@
 <Map
   mapProps={{ disableDefaultUI: true }}
   onLoad={addMarkers}
-  onLoadProps={{ chapters: $pages?.data?.chapters.items || [] }} />
+  onLoadProps={{ chapters: $chapters?.data?.chapters.items || [] }} />
+
+<ol>
+  {#each $chapters?.data?.chapters.items || [] as { title, slug }}
+    <li><a href={slug}>{title}</a></li>
+  {/each}
+</ol>
+
+<style>
+  ol {
+    max-width: 45em;
+    margin: 2em auto;
+    columns: 3;
+    padding-left: 3em;
+  }
+  @media (max-width: 600px) {
+    ol {
+      columns: 2;
+    }
+  }
+  ol li {
+    padding-left: 1ex;
+  }
+</style>

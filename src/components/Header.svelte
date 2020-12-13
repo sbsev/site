@@ -15,7 +15,7 @@
 
 <style>
   header {
-    padding: 4pt 1ex 0;
+    padding: 1ex;
     border-bottom: 1px solid var(--borderColor);
     font-size: 1.2em;
     place-content: center;

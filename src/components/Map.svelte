@@ -34,6 +34,5 @@
   div {
     height: 30em;
     max-height: 60vh;
-    margin: 1em 0;
   }
 </style>

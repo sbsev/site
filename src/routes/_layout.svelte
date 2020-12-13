@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script>
   import Header from 'components/Header.svelte'
   import Footer from 'components/Footer.svelte'
@@ -14,7 +15,13 @@
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
   const ctfGqlEndpoint = `${ctfGqlUrl}${spaceId}?access_token=${accessToken}`
 
-  const client = new ApolloClient({ uri: ctfGqlEndpoint })
+  const client = new ApolloClient({
+    uri: ctfGqlEndpoint,
+    onError: ({ graphQLErrors }) => {
+      // eslint-disable-next-line no-console
+      console.log(`graphQLErrors`, graphQLErrors)
+    },
+  })
   setClient(client)
 </script>
 
@@ -24,12 +31,6 @@
 
 <GoogleAnalytics />
 <Header />
-<hgroup>
-  <img
-    src="//images.ctfassets.net/gi9muc70s4ub/357JRaqTpvKnGLYoxIplnf/f9988e7ddc838211aa5284fccc70436e/MV_Dresden_2017.JPG"
-    alt="Mountains" />
-  <h1>Studenten bilden Schüler</h1>
-</hgroup>
 <main>
   <slot />
 </main>
@@ -37,34 +38,10 @@
 
 <style>
   main {
-    padding: 5vw 0;
     box-sizing: border-box;
     width: 100%;
     max-width: 70em;
     margin: 0 auto auto;
-  }
-  hgroup {
-    position: relative;
-    height: max-content;
-    max-height: 700px;
-    overflow: hidden;
-  }
-  img {
-    width: 100%;
-    object-position: cover;
-  }
-  h1 {
-    color: white;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 5pt 1ex;
-    border-radius: 1ex;
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: min-content;
-    white-space: nowrap;
   }
   main :global(h1):first-child {
     text-align: center;
@@ -88,6 +65,9 @@
   :global(a) {
     color: var(--linkColor);
     text-decoration: none;
+  }
+  :global(a):hover {
+    color: var(--hoverColor);
   }
   @media (min-width: 1600px) {
     :global(body) {
