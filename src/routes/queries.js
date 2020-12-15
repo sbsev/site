@@ -52,6 +52,7 @@ const postQuery = (slug) => `{
       title
       slug
       date
+      body
       cover {
         description
         url
@@ -62,6 +63,11 @@ const postQuery = (slug) => `{
         homepage
         bio
         fieldOfStudy
+        photo {
+          title
+          description
+          url
+        }
       }
     }
   }

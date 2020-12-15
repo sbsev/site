@@ -10,7 +10,6 @@
 <script>
   import Header from 'components/Header.svelte'
   import Footer from 'components/Footer.svelte'
-  import GoogleAnalytics from 'components/GoogleAnalytics.svelte'
   import { stores } from '@sapper/app'
   import 'cross-fetch/polyfill'
 
@@ -23,7 +22,6 @@
   <title>SbS | {$page.path.replace(`-`, ` `)}</title>
 </svelte:head>
 
-<GoogleAnalytics />
 <Header nav={nav.data.nav} />
 <main>
   <slot />
@@ -31,16 +29,8 @@
 <Footer />
 
 <style>
-  main {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 70em;
-    margin: 0 auto auto;
-  }
-  main :global(h1):first-child {
+  main :global(h1) {
     text-align: center;
-    text-transform: uppercase;
-    font-weight: bold;
     color: var(--headingColor);
   }
   :global(body) {
@@ -75,7 +65,41 @@
     cursor: pointer;
     outline: none;
   }
-  main :global(img) {
+  :global(.multi-col-list ul) {
+    display: grid;
+    grid-gap: 0 2em;
+    grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+  }
+  :global(table) {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  :global(table td),
+  :global(table th) {
+    border: 1px solid var(--textColor);
+    padding: 0.4em 0.8em;
+  }
+  :global(tbody tr:nth-child(odd)) {
+    background: var(--accentBg);
+  }
+  :global(div.scroll) {
+    overflow: scroll;
+    margin: 1em auto;
+    border: 1px solid var(--textColor);
+    border-width: 0 1px;
+  }
+  :global(main img) {
+    max-width: 100%;
+  }
+  :global(main p) {
+    max-width: 45em;
+  }
+  :global(section.grid) {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+  }
+  :global(section.grid img) {
     width: 100%;
   }
 </style>

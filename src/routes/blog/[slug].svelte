@@ -13,17 +13,22 @@
   export let post
 
   const { title, author = {}, date, cover = {}, body = `` } = post
-  const { bio, fieldOfStudy, name } = author
+  const { bio, fieldOfStudy, name, photo } = author
 </script>
 
 <hgroup>
   <img src={cover.url} alt={cover.description} />
   <h1>{title}</h1>
-  <span>{new Date(date).toLocaleDateString(`de`)}</span>
-  <span class:hasbio={bio} data-tooltip={bio}>{name}
-    {fieldOfStudy ? `(${fieldOfStudy})` : ``}</span>
 </hgroup>
 <div>
+  <blockquote>
+    <img src={photo.url} alt={name} />
+    <span>{new Date(date).toLocaleDateString(`de`)}</span>
+    <span>{name} {fieldOfStudy ? `(${fieldOfStudy})` : ``}</span>
+    {#if bio}
+      <p>{bio}</p>
+    {/if}
+  </blockquote>
   {@html marked(body)}
 </div>
 
@@ -31,20 +36,26 @@
   div {
     max-width: 50em;
     padding: 2em;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17em, 1fr));
-    grid-gap: 2em 1.5em;
   }
   hgroup {
     position: relative;
     height: max-content;
-    max-height: 700px;
+    max-height: 30em;
     overflow: hidden;
   }
   img {
     width: 100%;
     object-position: cover;
+  }
+  blockquote {
+    background: var(--accentBg);
+    padding: 6pt 1em;
+    border-radius: 1ex;
+    margin-bottom: 2em;
+  }
+  blockquote img {
+    width: 3em;
+    border-radius: 50%;
   }
   h1 {
     color: white;
@@ -58,24 +69,5 @@
     text-align: center;
     width: min-content;
     white-space: nowrap;
-  }
-  span.hasbio:before {
-    content: attr(data-tooltip);
-    position: absolute;
-    opacity: 0;
-
-    /* customizable */
-    transition: all 0.15s ease;
-    padding: 10px;
-    color: #333;
-    border-radius: 10px;
-    box-shadow: 2px 2px 1px silver;
-  }
-  span.hasbio:hover:before {
-    opacity: 1;
-
-    /* customizable */
-    background: yellow;
-    margin-top: -50px;
   }
 </style>

@@ -28,7 +28,6 @@
     max-width: 45em;
     padding: 2em;
     margin: auto;
-    columns: 2;
   }
   div :global(img) {
     width: 100%;
@@ -41,7 +40,8 @@
   }
   hgroup img {
     width: 100%;
-    object-position: cover;
+    object-fit: cover;
+    max-height: 25em;
   }
   h1 {
     color: white;

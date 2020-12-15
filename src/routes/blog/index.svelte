@@ -14,11 +14,13 @@
 <div>
   {#each posts as { title, slug, cover, date, author }}
     <section>
-      <a href="/blog/{slug}"><img src={cover.url} alt={cover.description} /></a>
+      <a href="/blog/{slug}"><img
+          src={cover.url}
+          alt={cover.description}
+          loading="lazy" /></a>
       <h3><a href="/blog/{slug}">{title}</a></h3>
       <span>{new Date(date).toLocaleDateString(`de`)}</span>
-      <span class:hasbio={author.bio} data-tooltip={author.bio}>{author.name}
-        {author.fieldOfStudy ? `(${author.fieldOfStudy})` : ``}</span>
+      <span>{author.name} {author.fieldOfStudy ? `(${author.fieldOfStudy})` : ``}</span>
     </section>
   {/each}
 </div>
@@ -39,24 +41,5 @@
   img {
     width: 100%;
     border-radius: 4pt;
-  }
-  span.hasbio:before {
-    content: attr(data-tooltip);
-    position: absolute;
-    opacity: 0;
-
-    /* customizable */
-    transition: all 0.15s ease;
-    padding: 10px;
-    color: #333;
-    border-radius: 10px;
-    box-shadow: 2px 2px 1px silver;
-  }
-  span.hasbio:hover:before {
-    opacity: 1;
-
-    /* customizable */
-    background: yellow;
-    margin-top: -50px;
   }
 </style>

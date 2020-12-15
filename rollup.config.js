@@ -14,14 +14,6 @@ import marked from 'marked'
 import { mdToPlain } from './src/utils/mdToPlain'
 import svelteSVG from 'rollup-plugin-svelte-svg'
 
-const ctfSpaceId = process.env.CONTENTFUL_SPACE_ID
-const ctfAccessToken = process.env.CONTENTFUL_ACCESS_TOKEN
-const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
-const ctfGqlEndpoint = `${ctfGqlUrl}${ctfSpaceId}/explore?access_token=${ctfAccessToken}`
-
-// eslint-disable-next-line no-console
-console.log(`GraphiQL:`, ctfGqlEndpoint)
-
 // YAML transformer   nn  used by @rollup/plugin-yaml
 function yamlTransform(data, id) {
   // the content in these files needs further processing
@@ -47,6 +39,13 @@ function yamlTransform(data, id) {
     return data
   }
 }
+
+const spaceId = process.env.CONTENTFUL_SPACE_ID
+const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN
+const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${spaceId}/explore?access_token=${accessToken}`
+
+// eslint-disable-next-line no-console
+console.log(`GraphiQL:`, gqlEndpoint)
 
 const replacements = replace({
   'process.browser': true,

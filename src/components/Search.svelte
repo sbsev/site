@@ -2,7 +2,6 @@
   import { onMount } from 'svelte'
   import algoliasearch from 'algoliasearch/lite'
   import Modal from './Modal.svelte'
-  import { reduceMeta } from '../utils'
   import { stores } from '@sapper/app'
   import Search from '@svg-icons/fa-solid/search.svg'
 
@@ -62,9 +61,6 @@
                     on:click={() => (open = false)}
                     on:click>{@html title}</a>
                 </h3>
-                <p>
-                  {@html reduceMeta(date, channel, tag)}
-                </p>
                 {#if excerpt}
                   <p>
                     {@html excerpt}

@@ -25,7 +25,7 @@ const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID } = process.env
 const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
 session.gqlUri = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
 
-polka() // You can also use Express
+polka()
   .use(
     compression({ threshold: 0 }),
     sirv(`static`, { dev }),
