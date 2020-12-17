@@ -7,7 +7,6 @@ import { terser } from 'rollup-plugin-terser'
 import config from 'sapper/config/rollup.js'
 import pkg from './package.json'
 import rollupYaml from '@rollup/plugin-yaml'
-import alias from '@rollup/plugin-alias'
 import { mdsvex } from 'mdsvex'
 import { indexAlgolia } from 'svelte-algolia'
 import marked from 'marked'
@@ -69,18 +68,11 @@ const onwarn = (warning, onwarn) =>
     /[/\\]@sapper[/\\]/.test(warning.message)) ||
   onwarn(warning)
 
-// rollup aliases
-const entries = [
-  { find: `content`, replacement: `./content` },
-  { find: `components`, replacement: `./src/components` },
-]
-
 export default {
   client: {
     input: config.client.input(),
     output: config.client.output(),
     plugins: [
-      alias({ entries }),
       rollupYaml({ transform: yamlTransform }),
       replacements,
       svelteSVG({ dev }),
@@ -113,7 +105,6 @@ export default {
     input: config.server.input(),
     output: config.server.output(),
     plugins: [
-      alias({ entries }),
       rollupYaml({ transform: yamlTransform }),
       replacements,
       svelteSVG({ generate: `ssr`, dev }),

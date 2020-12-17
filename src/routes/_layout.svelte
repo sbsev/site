@@ -8,9 +8,8 @@
 </script>
 
 <script>
-  import Header from 'components/Header.svelte'
-  import Footer from 'components/Footer.svelte'
-  import { stores } from '@sapper/app'
+  import Header from '../components/Header.svelte'
+  import Footer from '../components/Footer.svelte'
   import 'cross-fetch/polyfill'
 
   export let nav
