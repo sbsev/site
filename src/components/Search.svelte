@@ -11,9 +11,9 @@
   export let indices = []
   export let highlightable = []
   let client, input
-  let query = ``,
-    allHits = [],
-    open = false
+  let query = ``
+  let allHits = []
+  let open = false
 
   onMount(() => (client = algoliasearch(appId, searchKey)))
 
@@ -77,7 +77,7 @@
 
 <style>
   button {
-    color: var(--linkColor);
+    color: var(--headerColor);
     padding: 0;
     background: transparent;
     width: 3ex;
@@ -104,7 +104,7 @@
     white-space: initial;
   }
   .results :global(em) {
-    background: orange;
+    background: var(--hoverColor);
     line-height: 1.2em;
     border-radius: 3pt;
   }

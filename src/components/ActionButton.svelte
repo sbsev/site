@@ -34,7 +34,7 @@
   class="container"
   style="width: {size}px; height: {size}px;"
   use:onClickOutside={() => open && toggle()}>
-  {#each options as [title, icon, handler], idx}
+  {#each options as [title, Icon, handler], idx}
     <button
       class="option"
       on:click={() => {
@@ -43,7 +43,8 @@
       }}
       class:open
       style="opacity: {$opacity}; bottom: {(idx + 1) * $yPos}px; width: {size}px; height: {size}px;">
-      <span>{title}</span>{icon}
+      <span>{title}</span>
+      <Icon />
     </button>
   {/each}
   <button
@@ -65,7 +66,6 @@
     background: var(--bodyBg);
     border-radius: 50%;
     transition: transform 0.5s;
-    font-size: 1.7ex;
     font-weight: 100;
     display: flex;
     place-content: center;
@@ -79,6 +79,7 @@
     transform: scale(1.02);
   }
   .option span {
+    font-size: 1.7ex;
     position: absolute;
     right: 50%;
     background: var(--transparentBg);

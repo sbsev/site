@@ -1,7 +1,7 @@
 <script>
-  import Nav from 'components/Nav.svelte'
-  import ColorMode from 'components/ColorMode.svelte'
-  import Search from 'components/Search.svelte'
+  import Nav from './Nav.svelte'
+  import ColorMode from './ColorMode.svelte'
+  import Search from './Search.svelte'
 
   export let nav
 </script>
@@ -17,8 +17,7 @@
 
 <style>
   header {
-    padding: 1ex;
-    border-bottom: 1px solid var(--borderColor);
+    padding: 1.5ex 1ex 1ex;
     font-size: 1.2em;
     place-content: center;
     place-items: center;
@@ -28,7 +27,8 @@
     flex-wrap: wrap;
     position: sticky;
     top: 0;
-    background: var(--bodyBg);
+    font-weight: 300;
+    background: var(--headerBg);
     box-shadow: 0 -1pt 1ex 0 var(--shadowColor);
     z-index: 2;
   }

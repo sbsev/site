@@ -68,6 +68,7 @@
     overflow: scroll;
     padding: 1em;
     border-radius: 5pt;
+    background: var(--transparentBg);
   }
   button {
     position: absolute;
