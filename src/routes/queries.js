@@ -4,7 +4,8 @@ const gqlFetch = async (uri, query) => {
     headers: { 'Content-Type': `application/json` },
     body: JSON.stringify({ query }),
   })
-  const { data } = await response.json()
+  const { data, error } = await response.json()
+  if (error) console.error(error)
   return data
 }
 
@@ -30,6 +31,7 @@ const pageQuery = (slug) => `{
   pages: pageCollection(where: {slug: "${slug}"}) {
     items {
       title
+      subtitle
       slug
       body
       cover {

@@ -14,14 +14,16 @@
   import ChapterList from '../components/ChapterList.svelte'
 
   export let chapters, page
-  const { title, cover = {}, body = `` } = page
+  const { subtitle, cover = {}, body = `` } = page
 </script>
 
 <ChapterMap {chapters} />
 <ChapterList {chapters} />
 <hgroup>
   <img src={cover.url} alt={cover.description} />
-  <h1>{title}</h1>
+  <h1>
+    {@html subtitle}
+  </h1>
 </hgroup>
 <div>
   {@html marked(body)}
@@ -32,14 +34,9 @@
     max-width: 45em;
     padding: 2em;
     margin: auto;
-    columns: 2;
-  }
-  div :global(img) {
-    width: 100%;
   }
   hgroup {
     position: relative;
-    height: max-content;
     max-height: 20em;
     overflow: hidden;
   }
@@ -47,10 +44,10 @@
     width: 100%;
   }
   h1 {
-    color: white;
-    background: rgba(0, 0, 0, 0.2);
+    font-weight: lighter;
+    background: rgba(0, 0, 0, 0.6);
     padding: 5pt 1ex;
-    border-radius: 1ex;
+    border-radius: 6pt;
     position: absolute;
     top: 50%;
     left: 50%;

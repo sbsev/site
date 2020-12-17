@@ -36,6 +36,6 @@
     color: white;
   }
   .buttons button.active {
-    background: orange;
+    background: var(--buttonBg);
   }
 </style>

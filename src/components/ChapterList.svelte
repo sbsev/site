@@ -1,7 +1,12 @@
 <script>
   export let chapters
+  import Place from '@svg-icons/material-filled/place.svg'
 </script>
 
+<h1>
+  <Place height="1em" style="vertical-align: -5pt;" />
+  Unsere Standorte
+</h1>
 <ol>
   {#each chapters as { title, slug }}
     <li><a href={slug}>{title}</a></li>
@@ -11,7 +16,7 @@
 <style>
   ol {
     max-width: 45em;
-    margin: 2em auto;
+    margin: 2em auto 4em;
     columns: 3;
     padding-left: 3em;
   }
