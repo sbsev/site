@@ -1,4 +1,4 @@
-const gqlFetch = async (uri, query) => {
+export const gqlFetch = async (uri, query) => {
   const response = await fetch(uri, {
     method: `POST`,
     headers: { 'Content-Type': `application/json` },
@@ -37,6 +37,8 @@ const pageQuery = (slug) => `{
       cover {
         description
         url
+        width
+        height
       }
     }
   }
@@ -58,6 +60,8 @@ const postQuery = (slug) => `{
       cover {
         description
         url
+        width
+        height
       }
       author {
         name

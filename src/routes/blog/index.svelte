@@ -8,16 +8,17 @@
 </script>
 
 <script>
+  import Img from 'svelte-image'
   export let posts
 </script>
 
 <div>
-  {#each posts as { title, slug, cover, date, author }}
+  {#each posts as { title, slug, cover: { url, description, width, height }, date, author }}
     <section>
-      <a href="/blog/{slug}"><img
-          src={cover.url}
-          alt={cover.description}
-          loading="lazy" /></a>
+      <a href="/blog/{slug}"><Img
+          src={url}
+          alt={description}
+          ratio={`${Math.floor((100 * height) / width)}%`} /></a>
       <h3><a href="/blog/{slug}">{title}</a></h3>
       <span>{new Date(date).toLocaleDateString(`de`)}</span>
       <span>{author.name} {author.fieldOfStudy ? `(${author.fieldOfStudy})` : ``}</span>
@@ -38,8 +39,8 @@
     padding: 1ex;
     border-radius: 1ex;
   }
-  img {
-    width: 100%;
+  div :global(.wrapper) {
     border-radius: 4pt;
+    overflow: hidden;
   }
 </style>

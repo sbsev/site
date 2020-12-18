@@ -63,6 +63,7 @@
     "sirv": "^1.0.10",
     "sirv-cli": "^1.0.10",
     "svelte": "^3.31.0",
-    "svelte-algolia": "^0.1.4"
+    "svelte-algolia": "^0.1.4",
+    "svelte-image": "^0.2.9"
   }
 }

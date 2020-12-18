@@ -12,6 +12,7 @@ import { indexAlgolia } from 'svelte-algolia'
 import marked from 'marked'
 import { mdToPlain } from './src/utils/mdToPlain'
 import svelteSVG from 'rollup-plugin-svelte-svg'
+import svelteImage from 'svelte-image'
 
 // YAML transformer   nn  used by @rollup/plugin-yaml
 function yamlTransform(data, id) {
@@ -82,7 +83,7 @@ export default {
           hydratable: true,
         },
         emitCss: true,
-        preprocess: mdsvex(),
+        preprocess: [mdsvex(), svelteImage()],
         extensions: [`.svelte`, `.svx`],
       }),
       resolve({
@@ -114,7 +115,7 @@ export default {
           dev,
           hydratable: true,
         },
-        preprocess: mdsvex(),
+        preprocess: [mdsvex(), svelteImage()],
         extensions: [`.svelte`, `.svx`],
       }),
       resolve({

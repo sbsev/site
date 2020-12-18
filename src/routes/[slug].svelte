@@ -8,15 +8,17 @@
 </script>
 
 <script>
+  import Img from 'svelte-image'
   import marked from 'marked'
 
   export let page
 
   const { title, cover = {}, body = `` } = page
+  const { url, description, width, height } = cover
 </script>
 
 <hgroup>
-  <img src={cover.url} alt={cover.description} />
+  <Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
   <h1>{title}</h1>
 </hgroup>
 <div>
@@ -38,14 +40,9 @@
     max-height: 700px;
     overflow: hidden;
   }
-  hgroup img {
-    width: 100%;
-    object-fit: cover;
-    max-height: 25em;
-  }
   h1 {
     color: white;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--transparentBg);
     padding: 5pt 1ex;
     border-radius: 1ex;
     position: absolute;
@@ -54,6 +51,5 @@
     transform: translate(-50%, -50%);
     text-align: center;
     width: min-content;
-    white-space: nowrap;
   }
 </style>

@@ -8,16 +8,18 @@
 </script>
 
 <script>
+  import Img from 'svelte-image'
   import marked from 'marked'
 
   export let post
 
   const { title, author = {}, date, cover = {}, body = `` } = post
   const { bio, fieldOfStudy, name, photo } = author
+  const { url, description, width, height } = cover
 </script>
 
 <hgroup>
-  <img src={cover.url} alt={cover.description} />
+  <Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
   <h1>{title}</h1>
 </hgroup>
 <div>

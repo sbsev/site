@@ -9,20 +9,64 @@
 </script>
 
 <script>
+  import Img from 'svelte-image'
   import marked from 'marked'
   import ChapterMap from '../components/ChapterMap.svelte'
+  import Place from '@svg-icons/material-filled/place.svg'
+  import UserGraduate from '@svg-icons/fa-solid/user-graduate.svg'
+  import Child from '@svg-icons/fa-solid/child.svg'
 
   export let chapters, page
+
   const { cover = {}, body = `` } = page
+  const { url, description, width, height } = cover
 </script>
 
 <ChapterMap {chapters} />
 
-<div>
-  <h1>Studenten bilden Schüler</h1>
-  <img src={cover.url} alt={cover.description} />
-  {@html marked(body)}
-</div>
+<h1>Studenten bilden Schüler</h1>
+
+<section>
+  <div style="background: var(--lightBlue);">
+    <span>{chapters.length}</span>
+    <Place height="2.5ex" style="vertical-align: middle; margin-right: 6pt;" />Standorte
+  </div>
+  <div style="background: var(--green);">
+    <span>1045</span>
+    <UserGraduate
+      height="2.5ex"
+      style="vertical-align: middle; margin-right: 6pt;" />Studierende
+  </div>
+  <div style="background: var(--orange);">
+    <span>1228</span>
+    <Child height="2.5ex" style="vertical-align: middle; margin-right: 6pt;" />Schüler
+  </div>
+</section>
+
+<Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
+
+{@html marked(body)}
 
 <style>
+  section {
+    display: flex;
+    padding: 1em;
+    place-content: center;
+    gap: 2em;
+    margin: 2em;
+    flex-wrap: wrap;
+    color: white;
+  }
+  section div {
+    font-size: 3ex;
+    text-align: center;
+    flex: 0 1 10%;
+    padding: 1ex;
+    border-radius: 1ex;
+    font-weight: bold;
+  }
+  section div span {
+    font-size: 3ex;
+    display: block;
+  }
 </style>
