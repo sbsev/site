@@ -9,6 +9,8 @@
   import Contact from '@svg-icons/boxicons-solid/contact.svg'
   import Place from '@svg-icons/material-filled/place.svg'
   import Plant from '@svg-icons/remix-fill/plant.svg'
+  import Menu from '@svg-icons/heroicons-solid/menu.svg'
+  import { onClickOutside } from '../utils/onClickOutside'
 
   export let nav
 
@@ -22,24 +24,65 @@
     Kontakt: Contact,
   }
   const { page } = stores()
+
+  let isOpen = false
+  const close = () => {
+    // prevent scrolling background while modal open
+    document.body.style.removeProperty(`overflow-y`)
+    isOpen = false
+  }
+  const open = () => {
+    document.body.style.overflowY = `hidden`
+    isOpen = true
+  }
+
+  const isCurrent = (url) => (url === $page.path ? `page` : undefined)
 </script>
 
-<nav>
-  {#each nav as { title, url }}
-    <a rel="prefetch" aria-current={url === $page.path ? `page` : undefined} href={url}>
-      <svelte:component
-        this={icons[title]}
-        height="1em"
-        style="vertical-align: -3pt; padding-right: 2pt;" />
-      {title}</a>
+<button on:click|preventDefault={open}>
+  <Menu height="2.9ex" />
+</button>
+
+<a
+  on:click={close}
+  class="logo"
+  href="/"
+  rel="prefetch"
+  aria-current={isCurrent(`/`)}><img src="favicon.svg" alt="Favicon" /></a>
+<nav class:isOpen use:onClickOutside={close}>
+  {#each nav as { title, url, subNav }}
+    <li>
+      <a on:click={close} rel="prefetch" aria-current={isCurrent(url)} href={url}>
+        <svelte:component
+          this={icons[title]}
+          height="1em"
+          style="vertical-align: -3pt; padding-right: 2pt;" />
+        {title}</a>
+      {#if subNav}
+        <ul
+          style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 14))};">
+          {#each subNav as { title, url, span }}
+            <li class:span>
+              <a
+                on:click={close}
+                rel="prefetch"
+                aria-current={isCurrent(url)}
+                href={url}>{title}</a>
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </li>
   {/each}
 </nav>
 
 <style>
-  nav {
-    display: contents;
+  button {
+    grid-area: nav;
+    padding: 0;
   }
-  a {
+  a,
+  button {
     transition: 0.4s;
     color: var(--headerColor);
   }
@@ -52,5 +95,89 @@
     line-height: 0;
     background: var(--linkColor);
     color: white;
+  }
+  a.logo {
+    grid-area: logo;
+    border-radius: 50%;
+    padding: 2pt;
+  }
+  img {
+    height: 2em;
+    vertical-align: middle;
+  }
+  ul,
+  nav {
+    list-style: none;
+  }
+  li::marker {
+    color: var(--headerColor);
+  }
+  @media (max-width: 900px) {
+    /* mobile styles */
+    nav {
+      position: fixed;
+      display: grid;
+      grid-gap: 1em;
+      top: 0;
+      left: 0;
+      background: var(--accentBg);
+      padding: 1em;
+      transition: 0.4s;
+      max-height: 100vh;
+      overflow: scroll;
+      overscroll-behavior-y: none;
+      background: var(--headerBg);
+      transform: translate(-100%);
+      box-sizing: border-box;
+    }
+    nav:after {
+      /* adds bottom scroll padding */
+      content: '';
+      height: 1px;
+    }
+    nav.isOpen {
+      box-shadow: 0 0 1em black;
+      transform: translate(0);
+    }
+    a.logo {
+      /* needed for centering logo since menu button takes less space than colormode + search */
+      margin-left: 4vw;
+    }
+  }
+  @media (min-width: 901px) {
+    /* desktop styles */
+    nav > li {
+      position: relative;
+    }
+    nav > li > ul {
+      position: absolute;
+      background: var(--accentBg);
+      padding: 1ex;
+      border-radius: 1ex;
+      box-shadow: 0 0 1em black;
+      top: 4ex;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.4s;
+      display: grid;
+      gap: 0 1em;
+      width: max-content;
+    }
+    nav > li > ul > li.span {
+      grid-column: 1/-1;
+      border-top: 1px solid var(--headerColor);
+      padding-top: 6pt;
+      margin-top: 6pt;
+    }
+    nav > li:hover > ul {
+      visibility: visible;
+      opacity: 1;
+    }
+    button {
+      display: none;
+    }
+    nav {
+      display: contents;
+    }
   }
 </style>

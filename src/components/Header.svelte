@@ -7,10 +7,9 @@
 </script>
 
 <header>
-  <a href="/"><img src="favicon.svg" alt="Favicon" /></a>
   <Nav {nav} />
   <Search
-    indices={[{ name: `films`, title: `Filme` }, { name: `articles`, title: `Artikel` }, { name: `press`, title: `Pressestimmen` }]}
+    indices={[`Pages`, `Posts`]}
     highlightable={[`title`, `excerpt`, `date`, `channel`, `tag`]} />
   <ColorMode />
 </header>
@@ -23,8 +22,7 @@
     place-items: center;
     gap: 2vw;
     white-space: nowrap;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     position: sticky;
     top: 0;
     font-weight: 300;
@@ -32,8 +30,17 @@
     box-shadow: 0 -1pt 1ex 0 var(--shadowColor);
     z-index: 2;
   }
-  img {
-    height: 1.6em;
-    vertical-align: middle;
+  @media (max-width: 900px) {
+    header {
+      gap: 5vw;
+      padding: 1.5ex 2ex 1ex;
+      grid-template-columns: auto 1fr auto auto;
+      grid-template-areas: 'nav logo search colormode'; /* switch order of nav and logo*/
+    }
+  }
+  @media (min-width: 901px) {
+    header {
+      display: flex;
+    }
   }
 </style>

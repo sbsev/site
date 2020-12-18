@@ -55,7 +55,7 @@
 </script>
 
 <button class="opener" on:click={() => (open = true)}>
-  <Moon width="30px" />
+  <Moon alt="Color Mode" height="2.5ex" style="vertical-align: middle;" />
 </button>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -89,6 +89,8 @@
     }
   }
   button.opener {
+    padding: 0;
+    grid-area: colormode;
     background: transparent;
     color: var(--yellow);
   }

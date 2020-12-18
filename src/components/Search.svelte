@@ -26,7 +26,7 @@
   // Fires on each keyup in form
   async function search() {
     const { results } = await client.multipleQueries(
-      indices.map(({ name }) => ({ indexName: name, query }))
+      indices.map((indexName) => ({ indexName, query }))
     )
     if (results)
       allHits = results.map(({ hits, index }) => ({ hits: processResults(hits), index }))
@@ -34,7 +34,7 @@
 </script>
 
 <button on:click={() => (open = true)} title="Search">
-  <Search alt="Search Icon" />
+  <Search alt="Search Icon" height="2.3ex" style="vertical-align: middle;" />
 </button>
 {#if open}
   <Modal
@@ -53,7 +53,7 @@
         {#each allHits as { index, hits }}
           {#if hits.length}
             <section>
-              <h2>{indices.find((idx) => idx.name === index).title}</h2>
+              <h2>{index}</h2>
               {#each hits as { title, slug, date, channel, tag, excerpt }}
                 <h3>
                   <a
@@ -77,10 +77,10 @@
 
 <style>
   button {
-    color: var(--headerColor);
     padding: 0;
+    grid-area: search;
+    color: var(--headerColor);
     background: transparent;
-    width: 3ex;
     margin-top: 4pt;
   }
   h2 {

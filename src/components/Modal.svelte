@@ -13,31 +13,31 @@
 
     document.body.style.overflowY = `hidden` // prevent scrolling background while modal open
   })
-  const handleKeydown = (e) => {
-    if (e.key === `Escape`) return close()
-
-    if (e.key === `Tab`) {
-      // trap focus
-      const nodes = modal.querySelectorAll(`*`)
-      const tabbable = Array.from(nodes).filter((n) => n.tabIndex >= 0)
-
-      let index = tabbable.indexOf(document.activeElement)
-      if (index === -1 && e.shiftKey) index = 0
-
-      index += tabbable.length + (e.shiftKey ? -1 : 1)
-      index %= tabbable.length
-
-      tabbable[index].focus()
-    }
-  }
 
   const previouslyFocused = typeof document !== `undefined` && document.activeElement
-
   onDestroy(() => {
     if (previouslyFocused) previouslyFocused.focus()
     window.scrollTo(...origScrollPos)
     document.body.style.removeProperty(`overflow-y`)
   })
+
+  const handleKeydown = (event) => {
+    if (event.key === `Escape`) return close()
+
+    if (event.key === `Tab`) {
+      // trap focus
+      const nodes = modal.querySelectorAll(`*`)
+      const tabbable = Array.from(nodes).filter((n) => n.tabIndex >= 0)
+
+      let index = tabbable.indexOf(document.activeElement)
+      if (index === -1 && event.shiftKey) index = 0
+
+      index += tabbable.length + (event.shiftKey ? -1 : 1)
+      index %= tabbable.length
+
+      tabbable[index].focus()
+    }
+  }
 </script>
 
 <svelte:window on:keydown={handleKeydown} />

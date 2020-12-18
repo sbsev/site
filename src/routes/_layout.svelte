@@ -1,9 +1,15 @@
 <script context="module">
-  import { fetchJson } from './queries'
+  import { fetchJson, fetchPage, fetchChapters } from './queries'
 
-  export async function preload(_, session) {
+  export async function preload({ path }, session) {
     const nav = await fetchJson(`Nav`, session.gqlUri)
-    return { nav }
+    const chapters = await fetchChapters(session.gqlUri)
+    const page = (await fetchPage(path.substring(1), session.gqlUri)) || {}
+
+    nav.data.nav.find((el) => el.url === `/standorte`).subNav[0].span = true
+    nav.data.nav.find((el) => el.url === `/standorte`).subNav.unshift(...chapters)
+
+    return { nav: nav.data.nav, page }
   }
 </script>
 
@@ -12,22 +18,24 @@
   import Footer from '../components/Footer.svelte'
   import 'cross-fetch/polyfill'
 
-  export let nav
-
-  const { page } = stores()
+  export let nav, page
+  const { title } = page
 </script>
 
 <svelte:head>
-  <title>SbS | {$page.path.replace(`-`, ` `)}</title>
+  <title>SbS{title ? ` - ${title}` : ``}</title>
 </svelte:head>
 
-<Header nav={nav.data.nav} />
+<Header {nav} />
 <main>
   <slot />
 </main>
 <Footer />
 
 <style>
+  main {
+    width: 100vw;
+  }
   main :global(h1) {
     text-align: center;
     color: var(--headingColor);
@@ -58,7 +66,8 @@
     }
   }
   :global(button) {
-    padding: 0.3em 0.6em;
+    background: transparent;
+    font-size: 1em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -90,12 +99,10 @@
   :global(main img) {
     max-width: 100%;
   }
-  :global(main p) {
-    max-width: 45em;
-  }
   :global(section.grid) {
     display: grid;
-    grid-gap: 1em;
+    margin: 4em;
+    grid-gap: 3em;
     grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
   }
   :global(section.grid img) {
