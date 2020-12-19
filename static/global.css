@@ -1,0 +1,78 @@
+main {
+  width: 100vw;
+}
+main h1 {
+  text-align: center;
+  color: var(--headingColor);
+}
+body {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  margin: 0;
+  background: var(--body-bg);
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  font-size: calc(1em + 0.5vw);
+  transition: 0.3s;
+  background: var(--bodyBg);
+  color: var(--textColor);
+}
+a {
+  color: var(--linkColor);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--hoverColor);
+}
+@media (min-width: 1600px) {
+  body {
+    font-size: 1.5em;
+  }
+}
+button {
+  background: transparent;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+.multi-col-list ul {
+  display: grid;
+  grid-gap: 0 2em;
+  grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+table td,
+table th {
+  border: 1px solid var(--textColor);
+  padding: 0.4em 0.8em;
+}
+tbody tr:nth-child(odd) {
+  background: var(--accentBg);
+}
+div.scroll {
+  overflow: scroll;
+  margin: 1em auto;
+  border: 1px solid var(--textColor);
+  border-width: 0 1px;
+}
+main img {
+  max-width: 100%;
+}
+.grid {
+  display: grid;
+  grid-gap: 2em;
+  grid-template-columns: repeat(auto-fit, minmax(8em, 12em));
+}
+.grid img {
+  width: 100%;
+}
+.grid.disk-img img {
+  border-radius: 50%;
+}
