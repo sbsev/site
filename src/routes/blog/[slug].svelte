@@ -1,5 +1,5 @@
 <script context="module">
-  import { fetchPost } from '../queries'
+  import { fetchPost } from '../../utils/queries'
 
   export async function preload({ path }, session) {
     const post = await fetchPost(path.replace(`/blog/`, ``), session.gqlUri)

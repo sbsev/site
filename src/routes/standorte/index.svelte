@@ -1,5 +1,5 @@
 <script context="module">
-  import { fetchChapters, fetchPage } from '../queries'
+  import { fetchChapters, fetchPage } from '../../utils/queries'
 
   export async function preload({ path }, session) {
     const page = await fetchPage(path.substring(1), session.gqlUri)
