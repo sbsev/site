@@ -1,5 +1,5 @@
 <script context="module">
-  import { fetchChapters, fetchPage } from './queries'
+  import { fetchChapters, fetchPage } from '../queries'
 
   export async function preload({ path }, session) {
     const page = await fetchPage(path.substring(1), session.gqlUri)
@@ -10,8 +10,8 @@
 
 <script>
   import marked from 'marked'
-  import ChapterMap from '../components/ChapterMap.svelte'
-  import ChapterList from '../components/ChapterList.svelte'
+  import ChapterMap from '../../components/ChapterMap.svelte'
+  import ChapterList from '../../components/ChapterList.svelte'
 
   export let chapters, page
   const { subtitle, cover = {}, body = `` } = page

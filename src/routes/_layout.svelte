@@ -7,7 +7,9 @@
     const page = (await fetchPage(path.substring(1), session.gqlUri)) || {}
 
     nav.data.nav.find((el) => el.url === `/standorte`).subNav[0].span = true
-    nav.data.nav.find((el) => el.url === `/standorte`).subNav.unshift(...chapters)
+    nav.data.nav
+      .find((el) => el.url === `/standorte`)
+      .subNav.unshift(...chapters.map((el) => ({ ...el, url: `/standorte/` + el.slug })))
 
     return { nav: nav.data.nav, page }
   }

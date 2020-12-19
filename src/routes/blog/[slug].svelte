@@ -8,21 +8,15 @@
 </script>
 
 <script>
-  import Img from 'svelte-image'
-  import marked from 'marked'
+  import BasePage from '../../components/BasePage.svelte'
 
   export let post
 
-  const { title, author = {}, date, cover = {}, body = `` } = post
+  const { author = {}, date } = post
   const { bio, fieldOfStudy, name, photo } = author
-  const { url, description, width, height } = cover
 </script>
 
-<hgroup>
-  <Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
-  <h1>{title}</h1>
-</hgroup>
-<div>
+<BasePage data={post}>
   <blockquote>
     <img src={photo.url} alt={name} />
     <span>{new Date(date).toLocaleDateString(`de`)}</span>
@@ -31,20 +25,9 @@
       <p>{bio}</p>
     {/if}
   </blockquote>
-  {@html marked(body)}
-</div>
+</BasePage>
 
 <style>
-  div {
-    max-width: 50em;
-    padding: 2em;
-  }
-  hgroup {
-    position: relative;
-    height: max-content;
-    max-height: 30em;
-    overflow: hidden;
-  }
   img {
     width: 100%;
     object-position: cover;
@@ -58,18 +41,5 @@
   blockquote img {
     width: 3em;
     border-radius: 50%;
-  }
-  h1 {
-    color: white;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 5pt 1ex;
-    border-radius: 1ex;
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: min-content;
-    white-space: nowrap;
   }
 </style>
