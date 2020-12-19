@@ -1,5 +1,6 @@
 <script>
   import { stores } from '@sapper/app'
+  import { slide } from 'svelte/transition'
   import Euro from '@svg-icons/material-sharp/euro.svg'
   // import Donate from '@svg-icons/fa-solid/donate.svg'
   // import DonateHeart from '@svg-icons/boxicons-solid/donate-heart.svg'
@@ -11,6 +12,7 @@
   import Plant from '@svg-icons/remix-fill/plant.svg'
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import { onClickOutside } from '../utils/onClickOutside'
+  import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
 
   export let nav
 
@@ -23,9 +25,10 @@
     Blog: Rss,
     Kontakt: Contact,
   }
-  const { page } = stores()
 
   let isOpen = false
+  let activeSubNav = -1
+
   const close = () => {
     // prevent scrolling background while modal open
     document.body.style.removeProperty(`overflow-y`)
@@ -36,6 +39,12 @@
     isOpen = true
   }
 
+  const setActiveSubNav = (idx) => () => {
+    if (activeSubNav !== idx) activeSubNav = idx
+    else activeSubNav = undefined
+  }
+
+  const { page } = stores()
   const isCurrent = (url) => (url === $page.path ? `page` : undefined)
 </script>
 
@@ -50,7 +59,7 @@
   rel="prefetch"
   aria-current={isCurrent(`/`)}><img src="favicon.svg" alt="Favicon" /></a>
 <nav class:isOpen use:onClickOutside={close}>
-  {#each nav as { title, url, subNav }}
+  {#each nav as { title, url, subNav }, idx}
     <li>
       <a on:click={close} rel="prefetch" aria-current={isCurrent(url)} href={url}>
         <svelte:component
@@ -59,7 +68,15 @@
           style="vertical-align: -3pt; padding-right: 2pt;" />
         {title}</a>
       {#if subNav}
+        <button on:click={setActiveSubNav(idx)}>
+          <ChevronExpand
+            height="1em"
+            style="vertical-align: text-bottom; color: var(--green);" />
+        </button>
+      {/if}
+      {#if subNav && activeSubNav === idx}
         <ul
+          transition:slide
           style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 14))};">
           {#each subNav as { title, url, span }}
             <li class:span>
@@ -152,15 +169,15 @@
     nav > li > ul {
       position: absolute;
       background: var(--accentBg);
-      padding: 1ex;
+      padding: 1ex 1em;
       border-radius: 1ex;
       box-shadow: 0 0 1em black;
-      top: 4ex;
+      top: 3ex;
       visibility: hidden;
       opacity: 0;
       transition: 0.4s;
       display: grid;
-      gap: 0 1em;
+      gap: 5pt 1em;
       width: max-content;
     }
     nav > li > ul > li.span {
