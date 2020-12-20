@@ -34,7 +34,7 @@
   }
   h1 {
     color: white;
-    background: var(--transparentBg);
+    background: rgba(0, 0, 0, 0.6);
     padding: 5pt 1ex;
     border-radius: 1ex;
     position: absolute;

@@ -18,9 +18,9 @@
 <script>
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
-  import 'cross-fetch/polyfill'
 
   export let nav, page
+
   const { title } = page
 </script>
 

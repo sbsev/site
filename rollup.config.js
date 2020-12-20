@@ -9,6 +9,7 @@ import pkg from './package.json'
 import rollupYaml from '@rollup/plugin-yaml'
 import { mdsvex } from 'mdsvex'
 import { indexAlgolia } from 'svelte-algolia'
+import { algoliaConfig } from './src/utils/algolia'
 import marked from 'marked'
 import { mdToPlain } from './src/utils/mdToPlain'
 import svelteSVG from 'rollup-plugin-svelte-svg'
@@ -40,28 +41,18 @@ function yamlTransform(data, id) {
   }
 }
 
-const spaceId = process.env.CONTENTFUL_SPACE_ID
-const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN
-const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${spaceId}/explore?access_token=${accessToken}`
+const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID } = process.env
+const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
+const gqlEndPoint = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
 
 // eslint-disable-next-line no-console
-console.log(`GraphiQL:`, gqlEndpoint)
+console.log(`Contentful GraphiQL:`, gqlEndPoint)
 
 const replacements = replace({
   'process.browser': true,
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 })
 const dev = process.env.NODE_ENV === `development`
-
-const algoliaConfig = {
-  appId: process.env.ALGOLIA_APP_ID,
-  apiKey: process.env.ALGOLIA_ADMIN_KEY,
-  partialUpdates: true,
-  indices: [
-    { name: `posts`, getData: [{ foo: `bar` }] },
-    { name: `pages`, getData: [{ foo: `bar` }] },
-  ],
-}
 
 const onwarn = (warning, onwarn) =>
   (warning.code === `MISSING_EXPORT` && /'preload'/.test(warning.message)) ||

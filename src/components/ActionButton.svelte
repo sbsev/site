@@ -82,7 +82,7 @@
     font-size: 1.7ex;
     position: absolute;
     right: 50%;
-    background: var(--transparentBg);
+    background: rgba(0, 0, 0, 0.6);
     color: var(--textColor);
     line-height: 1em;
     top: 50%;

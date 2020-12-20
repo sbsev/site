@@ -1,3 +1,5 @@
+import 'cross-fetch/polyfill'
+
 export const gqlFetch = async (uri, query) => {
   const response = await fetch(uri, {
     method: `POST`,
@@ -28,7 +30,8 @@ export async function fetchChapters(uri) {
 }
 
 const pageQuery = (slug) => `{
-  pages: pageCollection(where: {slug: "${slug}"}) {
+  pages: pageCollection
+  ${slug ? `(where: {slug: "${slug}"})` : ``} {
     items {
       title
       subtitle
@@ -47,6 +50,11 @@ const pageQuery = (slug) => `{
 export async function fetchPage(slug, uri) {
   const data = await gqlFetch(uri, pageQuery(slug))
   return data?.pages?.items[0]
+}
+
+export async function fetchPages(uri) {
+  const data = await gqlFetch(uri, pageQuery())
+  return data?.pages?.items
 }
 
 const postQuery = (slug) => `{

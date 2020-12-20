@@ -11,8 +11,9 @@
   import Place from '@svg-icons/material-filled/place.svg'
   import Plant from '@svg-icons/remix-fill/plant.svg'
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
-  import { onClickOutside } from '../utils/onClickOutside'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
+
+  import { onClickOutside } from '../utils/onClickOutside'
 
   export let nav
 
@@ -27,7 +28,7 @@
   }
 
   let isOpen = false
-  let activeSubNav = -1
+  let activeSubNav = null
 
   const close = () => {
     // prevent scrolling background while modal open
@@ -41,7 +42,7 @@
 
   const setActiveSubNav = (idx) => () => {
     if (activeSubNav !== idx) activeSubNav = idx
-    else activeSubNav = undefined
+    else activeSubNav = null
   }
 
   const { page } = stores()
@@ -49,7 +50,7 @@
 </script>
 
 <button on:click|preventDefault={open}>
-  <Menu height="2.9ex" />
+  <Menu height="2.9ex" style="vertical-align: middle;" />
 </button>
 
 <a
@@ -58,6 +59,7 @@
   href="/"
   rel="prefetch"
   aria-current={isCurrent(`/`)}><img src="favicon.svg" alt="Favicon" /></a>
+
 <nav class:isOpen use:onClickOutside={close}>
   {#each nav as { title, url, subNav }, idx}
     <li>
@@ -135,8 +137,8 @@
       position: fixed;
       display: grid;
       grid-gap: 1em;
-      top: 0;
-      left: 0;
+      top: 1em;
+      left: 1em;
       background: var(--accentBg);
       padding: 1em;
       transition: 0.4s;
@@ -144,7 +146,7 @@
       overflow: scroll;
       overscroll-behavior-y: none;
       background: var(--headerBg);
-      transform: translate(-100%);
+      transform: translate(-120%);
       box-sizing: border-box;
     }
     nav:after {

@@ -8,10 +8,8 @@
 
 <header>
   <Nav {nav} />
-  <Search
-    indices={[`Pages`, `Posts`]}
-    highlightable={[`title`, `excerpt`, `date`, `channel`, `tag`]} />
   <ColorMode />
+  <Search indices={[`Pages`, `Posts`]} />
 </header>
 
 <style>
@@ -35,7 +33,7 @@
       gap: 5vw;
       padding: 1.5ex 2ex 1ex;
       grid-template-columns: auto 1fr auto auto;
-      grid-template-areas: 'nav logo search colormode'; /* switch order of nav and logo*/
+      grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
     }
   }
   @media (min-width: 901px) {
