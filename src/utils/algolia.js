@@ -1,17 +1,13 @@
-import 'dotenv/config'
-
 import { fetchPages, fetchPosts } from './queries'
 import { mdToPlain } from './mdToPlain'
 
-const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID } = process.env
-const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
-const gqlEndPoint = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
+import { gqlEndPoint } from './contentful'
 
 const bodyToPlainText = (fetchFunction) => async () => {
   const items = await fetchFunction(gqlEndPoint)
   items.forEach((itm) => {
     if (itm.body) {
-      itm.excerpt = mdToPlain(itm.body)
+      itm.body = mdToPlain(itm.body).slice(0, 5000)
     }
     itm.id = itm.slug
   })
@@ -26,5 +22,5 @@ export const algoliaConfig = {
     { name: `Pages`, getData: bodyToPlainText(fetchPages) },
     { name: `Posts`, getData: bodyToPlainText(fetchPosts) },
   ],
-  settings: { attributesToSnippet: [`excerpt:20`, `body:20`] },
+  settings: { attributesToSnippet: [`body:20`] },
 }

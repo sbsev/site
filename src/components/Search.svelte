@@ -64,7 +64,8 @@
         {#if hits.length}
           <section>
             <h2>{index}</h2>
-            {#each hits as { title, slug, body }}
+            {#each hits as { title, slug, body, cover }}
+              <img src={cover.url + `?w=100`} alt={cover.description} />
               <h3>
                 <a href={slug} on:click={() => (hasFocus = false)}>{@html title}</a>
               </h3>
@@ -148,5 +149,10 @@
   }
   section h3 :global(em) {
     color: white;
+  }
+  img {
+    float: right;
+    border-radius: 5pt;
+    margin-top: 2ex;
   }
 </style>
