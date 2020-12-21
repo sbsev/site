@@ -14,3 +14,18 @@ export function onClickOutside(node, cb) {
     },
   }
 }
+
+export function preventOverScroll(node) {
+  const preventScroll = (e) => {
+    const scrollable =
+      node.scrollWidth > node.clientWidth ||
+      node.scrollHeight > node.clientHeight
+
+    if (!scrollable) e.preventDefault()
+  }
+
+  node.addEventListener(`mousewheel`, preventScroll)
+  return {
+    onDestroy: () => node.removeEventListener(`mousewheel`, preventScroll),
+  }
+}

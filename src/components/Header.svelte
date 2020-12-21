@@ -14,7 +14,6 @@
 
 <style>
   header {
-    padding: 1.5ex 1ex 1ex;
     font-size: 1.2em;
     place-content: center;
     place-items: center;
@@ -31,13 +30,14 @@
   @media (max-width: 900px) {
     header {
       gap: 5vw;
-      padding: 1.5ex 2ex 1ex;
+      padding: 1ex 2ex;
       grid-template-columns: auto 1fr auto auto;
       grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
     }
   }
   @media (min-width: 901px) {
     header {
+      padding: 1ex;
       display: flex;
     }
   }

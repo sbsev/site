@@ -1,5 +1,8 @@
 <script>
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+
+  import { preventOverScroll } from '../utils/actions'
+
   export let style
   export let showCloseBtn = false
 
@@ -10,15 +13,12 @@
   // record original scroll position to return to when modal closes (see onDestroy)
   onMount(() => {
     origScrollPos = [window.scrollX, window.scrollY]
-
-    document.body.style.overflowY = `hidden` // prevent scrolling background while modal open
   })
 
   const previouslyFocused = typeof document !== `undefined` && document.activeElement
   onDestroy(() => {
     if (previouslyFocused) previouslyFocused.focus()
     window.scrollTo(...origScrollPos)
-    document.body.style.removeProperty(`overflow-y`)
   })
 
   const handleKeydown = (event) => {
@@ -43,7 +43,13 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="modal-background" on:click|self={close}>
-  <div class="modal" role="dialog" aria-modal="true" bind:this={modal} {style}>
+  <div
+    use:preventOverScroll
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    bind:this={modal}
+    {style}>
     {#if showCloseBtn}<button on:click={close}><span>&times;</span></button>{/if}
     <slot />
   </div>

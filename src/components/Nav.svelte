@@ -13,7 +13,7 @@
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
 
-  import { onClickOutside } from '../utils/onClickOutside'
+  import { onClickOutside, preventOverScroll } from '../utils/actions'
 
   export let nav
 
@@ -28,17 +28,10 @@
   }
 
   let isOpen = false
+  const close = () => (isOpen = false)
   let activeSubNav = null
-
-  const close = () => {
-    // prevent scrolling background while modal open
-    document.body.style.removeProperty(`overflow-y`)
-    isOpen = false
-  }
-  const open = () => {
-    document.body.style.overflowY = `hidden`
-    isOpen = true
-  }
+  let resultsDiv
+  let viewWidth
 
   const setActiveSubNav = (idx) => () => {
     if (activeSubNav !== idx) activeSubNav = idx
@@ -49,7 +42,9 @@
   const isCurrent = (url) => (url === $page.path ? `page` : undefined)
 </script>
 
-<button on:click|preventDefault={open}>
+<svelte:window bind:innerWidth={viewWidth} />
+
+<button on:click|preventDefault={() => (isOpen = true)}>
   <Menu height="2.9ex" style="vertical-align: middle;" />
 </button>
 
@@ -58,41 +53,43 @@
   class="logo"
   href="/"
   rel="prefetch"
-  aria-current={isCurrent(`/`)}><img src="favicon.svg" alt="Favicon" /></a>
+  aria-current={isCurrent(`/`)}><img src="favicon.svg" alt="SbS Logo" height="55" /></a>
 
-<nav class:isOpen use:onClickOutside={close}>
-  {#each nav as { title, url, subNav }, idx}
-    <li>
-      <a on:click={close} rel="prefetch" aria-current={isCurrent(url)} href={url}>
-        <svelte:component
-          this={icons[title]}
-          height="1em"
-          style="vertical-align: -3pt; padding-right: 2pt;" />
-        {title}</a>
-      {#if subNav}
-        <button on:click={setActiveSubNav(idx)}>
-          <ChevronExpand
+<nav class:isOpen use:onClickOutside={close} use:preventOverScroll bind:this={resultsDiv}>
+  <ul>
+    {#each nav as { title, url, subNav }, idx}
+      <li>
+        <a on:click={close} rel="prefetch" aria-current={isCurrent(url)} href={url}>
+          <svelte:component
+            this={icons[title]}
             height="1em"
-            style="vertical-align: text-bottom; color: var(--green);" />
-        </button>
-      {/if}
-      {#if subNav && activeSubNav === idx}
-        <ul
-          transition:slide
-          style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 14))};">
-          {#each subNav as { title, url, span }}
-            <li class:span>
-              <a
-                on:click={close}
-                rel="prefetch"
-                aria-current={isCurrent(url)}
-                href={url}>{title}</a>
-            </li>
-          {/each}
-        </ul>
-      {/if}
-    </li>
-  {/each}
+            style="vertical-align: -3pt; padding-right: 2pt;" />
+          {title}</a>
+        {#if subNav}
+          <button on:click={setActiveSubNav(idx)}>
+            <ChevronExpand
+              height="1em"
+              style="vertical-align: text-bottom; color: var(--green);" />
+          </button>
+        {/if}
+        {#if subNav && (activeSubNav === idx || viewWidth > 900)}
+          <ul
+            transition:slide
+            style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 14))};">
+            {#each subNav as { title, url, span }}
+              <li class:span>
+                <a
+                  on:click={close}
+                  rel="prefetch"
+                  aria-current={isCurrent(url)}
+                  href={url}>{title}</a>
+              </li>
+            {/each}
+          </ul>
+        {/if}
+      </li>
+    {/each}
+  </ul>
 </nav>
 
 <style>
@@ -119,13 +116,9 @@
     grid-area: logo;
     border-radius: 50%;
     padding: 2pt;
+    display: flex;
   }
-  img {
-    height: 2em;
-    vertical-align: middle;
-  }
-  ul,
-  nav {
+  ul {
     list-style: none;
   }
   li::marker {
@@ -135,28 +128,29 @@
     /* mobile styles */
     nav {
       position: fixed;
-      display: grid;
-      grid-gap: 1em;
       top: 1em;
       left: 1em;
       background: var(--accentBg);
       padding: 1em;
       transition: 0.4s;
-      max-height: 100vh;
+      max-height: calc(100vh - 2em);
       overflow: scroll;
-      overscroll-behavior-y: none;
       background: var(--headerBg);
       transform: translate(-120%);
       box-sizing: border-box;
     }
-    nav:after {
-      /* adds bottom scroll padding */
-      content: '';
-      height: 1px;
-    }
     nav.isOpen {
       box-shadow: 0 0 1em black;
       transform: translate(0);
+    }
+    nav > ul {
+      display: grid;
+      grid-gap: 1em;
+      padding: 0;
+      margin: 0;
+    }
+    nav > ul > li > ul {
+      margin-top: 1ex;
     }
     a.logo {
       /* needed for centering logo since menu button takes less space than colormode + search */
@@ -165,12 +159,16 @@
   }
   @media (min-width: 901px) {
     /* desktop styles */
-    nav > li {
+    nav,
+    nav > ul {
+      display: contents;
+    }
+    nav > ul > li {
       position: relative;
     }
-    nav > li > ul {
+    nav > ul > li > ul {
       position: absolute;
-      background: var(--accentBg);
+      background: var(--headerBg);
       padding: 1ex 1em;
       border-radius: 1ex;
       box-shadow: 0 0 1em black;
@@ -182,21 +180,18 @@
       gap: 5pt 1em;
       width: max-content;
     }
-    nav > li > ul > li.span {
+    nav > ul > li > ul > li.span {
       grid-column: 1/-1;
       border-top: 1px solid var(--headerColor);
       padding-top: 6pt;
       margin-top: 6pt;
     }
-    nav > li:hover > ul {
+    nav > ul > li:hover > ul {
       visibility: visible;
       opacity: 1;
     }
-    button {
+    button:first-child {
       display: none;
-    }
-    nav {
-      display: contents;
     }
   }
 </style>

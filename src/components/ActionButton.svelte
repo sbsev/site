@@ -1,7 +1,7 @@
 <script>
   import { tweened } from 'svelte/motion'
   import { quintOut } from 'svelte/easing'
-  import { onClickOutside } from '../utils/onClickOutside'
+  import { onClickOutside } from '../utils/actions'
   export let direction = `up`
   export let size = 40
   export let options = []
