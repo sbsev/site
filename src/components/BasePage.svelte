@@ -2,9 +2,11 @@
   import Img from 'svelte-image'
   import marked from 'marked'
 
+  import Toc from '../components/Toc.svelte'
+
   export let data
 
-  const { title, cover = {}, body = `` } = data
+  const { title, cover = {}, body = ``, toc } = data
   const { url, description, width, height } = cover
 </script>
 
@@ -13,17 +15,20 @@
   <h1>{title}</h1>
 </hgroup>
 <slot />
-<div>
+<article>
+  {#if toc}
+    <Toc />
+  {/if}
   {@html marked(body)}
-</div>
+</article>
 
 <style>
-  div {
-    max-width: 45em;
+  article {
+    max-width: 42em;
     padding: 2em;
     margin: auto;
   }
-  div :global(img) {
+  article :global(img) {
     width: 100%;
   }
   hgroup {

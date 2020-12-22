@@ -14,7 +14,7 @@
 
 <style>
   header {
-    font-size: 1.2em;
+    font-size: 1.1em;
     place-content: center;
     place-items: center;
     gap: 2vw;
@@ -27,7 +27,7 @@
     box-shadow: 0 -1pt 1ex 0 var(--shadowColor);
     z-index: 2;
   }
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     header {
       gap: 5vw;
       padding: 1ex 2ex;
@@ -35,7 +35,7 @@
       grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
     }
   }
-  @media (min-width: 901px) {
+  @media (min-width: 1001px) {
     header {
       padding: 1ex;
       display: flex;

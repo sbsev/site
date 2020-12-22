@@ -51,5 +51,6 @@
     text-align: right;
     font-size: 0.8em;
     padding: 2em;
+    text-align: center;
   }
 </style>

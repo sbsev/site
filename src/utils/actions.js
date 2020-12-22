@@ -9,9 +9,7 @@ export function onClickOutside(node, cb) {
   document.addEventListener(`click`, detectClickOutside)
 
   return {
-    destroy() {
-      document.removeEventListener(`click`, detectClickOutside)
-    },
+    destroy: () => document.removeEventListener(`click`, detectClickOutside),
   }
 }
 

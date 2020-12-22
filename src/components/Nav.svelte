@@ -63,7 +63,7 @@
           <svelte:component
             this={icons[title]}
             height="1em"
-            style="vertical-align: -3pt; padding-right: 2pt;" />
+            style="vertical-align: -2pt; padding-right: 2pt;" />
           {title}</a>
         {#if subNav}
           <button on:click={setActiveSubNav(idx)}>
@@ -124,7 +124,7 @@
   li::marker {
     color: var(--headerColor);
   }
-  @media (max-width: 900px) {
+  @media (max-width: 1000px) {
     /* mobile styles */
     nav {
       position: fixed;
@@ -157,7 +157,7 @@
       margin-left: 4vw;
     }
   }
-  @media (min-width: 901px) {
+  @media (min-width: 1001px) {
     /* desktop styles */
     nav,
     nav > ul {
