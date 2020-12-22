@@ -100,14 +100,12 @@ export async function fetchPosts(uri) {
 const jsonQuery = (title) => `{
   json: jsonCollection(where: {title: "${title}"}) {
     items {
-      title
       data
-      md
     }
   }
 }`
 
-export async function fetchJson(slug, uri) {
-  const data = await gqlFetch(uri, jsonQuery(slug))
-  return data?.json?.items[0]
+export async function fetchJson(title, uri) {
+  const data = await gqlFetch(uri, jsonQuery(title))
+  return data?.json?.items[0]?.data
 }

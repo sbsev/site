@@ -55,7 +55,7 @@
 </script>
 
 <button class="opener" on:click={() => (open = true)}>
-  <Moon alt="Color Mode" height="2.5ex" />
+  <Moon alt="Color Mode" height="2.5ex" style="vertical-align: text-bottom;" />
 </button>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -100,7 +100,11 @@
     display: grid;
     place-items: center;
     font-size: 3ex;
-    box-shadow: 0 0 1em var(--shadowColor);
+    box-shadow: 0 0 1em black;
+    transition: 0.3s;
+  }
+  button.choice:hover {
+    transform: scale(1.02);
   }
   button.choice.light {
     background: #f1f1f1;

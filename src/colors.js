@@ -1,5 +1,5 @@
 export const colors = {
-  blue: `#003089`,
+  blue: `#0b4abf`,
   darkBlue: `#003056`,
   darkerBlue: `#061725`,
   lightBlue: `#00a1ff`,
@@ -34,8 +34,8 @@ export const modeColors = {
     buttonBg: colors.green,
     borderColor: colors.lightBlue,
     shadowColor: colors.lightGray,
-    headingColor: colors.darkGreen,
-    headerBg: colors.blue,
+    headingColor: colors.lightBlue,
+    headerBg: colors.darkBlue,
     headerColor: `white`,
   },
   dark: {

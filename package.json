@@ -42,6 +42,7 @@
     "@svg-icons/material-rounded": "^1.25.0",
     "@svg-icons/material-sharp": "^1.25.0",
     "@svg-icons/material-twotone": "^1.25.0",
+    "@svg-icons/octicons": "^1.24.0",
     "@svg-icons/remix-fill": "^1.1.0",
     "@svg-icons/typicons": "^1.1.0",
     "contentful-management": "^7.5.1",

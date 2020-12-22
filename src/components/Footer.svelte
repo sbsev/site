@@ -1,22 +1,64 @@
 <script>
-  let social = []
-  social.push({ name: `Impressum`, url: `/imprint` })
+  import OpenSource from '@svg-icons/remix-fill/open-source.svg'
+  import Cookie from '@svg-icons/boxicons-solid/cookie.svg'
+  import Law from '@svg-icons/octicons/law.svg'
+  import PrivacyTip from '@svg-icons/material-sharp/privacy-tip.svg'
+  import AlternateEmail from '@svg-icons/material-sharp/alternate-email.svg'
+  import DocumentText from '@svg-icons/ionicons-solid/document-text.svg'
+
+  import Social from './Social.svelte'
+
+  const icons = {
+    Impressum: Law,
+    Datenschutz: PrivacyTip,
+    Kontakt: AlternateEmail,
+    Satzung: DocumentText,
+  }
+
+  export let social
+  export let links
 </script>
 
 <footer>
-  <span>© 2020 Studenten bilden Schüler</span>
+  <img src="favicon.svg" alt="SbS Logo" height="60" />
+  <span>© 2020 Studenten bilden Schüler e.V.</span>
   <div>
-    {#each social as { name, url }}<a href={url}>{name}</a>{/each}
+    {#each links as { title, url }}
+      <a href={url}>
+        <svelte:component
+          this={icons[title]}
+          height="1em"
+          style="vertical-align: -3pt; padding-right: 2pt;" />
+        {title}</a>
+    {/each}
   </div>
+  <span>Diese Seite ist
+    <a href="https://github.com/StudentenBildenSchueler/website"><OpenSource
+        height="2.5ex"
+        style="vertical-align: bottom; padding-right: 3pt;" />open source</a>
+    und verwendet
+    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">keine
+      <Cookie height="2.2ex" style="vertical-align: middle;" />
+      Cookies.</a></span>
+
+  <Social {social} />
 </footer>
 
 <style>
   footer {
-    border-top: 1px solid lightblue;
-    padding: 2em;
+    padding: 3em calc(1em + 3vw);
     text-align: center;
     display: grid;
-    gap: 1em;
+    gap: 2em;
+    place-items: center;
+    background: var(--headerBg);
+    color: white;
+  }
+  footer :global(a) {
+    color: var(--lightBlue);
+  }
+  footer :global(a:hover) {
+    color: var(--green);
   }
   footer div {
     margin: auto;
