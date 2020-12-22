@@ -12,4 +12,4 @@
   export let page
 </script>
 
-<BasePage data={page} />
+<BasePage {page} />

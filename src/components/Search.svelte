@@ -3,7 +3,8 @@
   import algoliasearch from 'algoliasearch/lite'
   import { stores } from '@sapper/app'
   import Search from '@svg-icons/fa-solid/search.svg'
-  import { onClickOutside } from '../utils/onClickOutside'
+
+  import { onClickOutside } from '../utils/actions'
 
   const { session } = stores()
   const { ALGOLIA_APP_ID: appId, ALGOLIA_SEARCH_KEY: searchKey } = $session

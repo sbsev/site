@@ -9,51 +9,16 @@
 </script>
 
 <script>
-  import marked from 'marked'
   import ChapterMap from '../../components/ChapterMap.svelte'
   import ChapterList from '../../components/ChapterList.svelte'
+  import BasePage from '../../components/BasePage.svelte'
 
   export let chapters, page
-  const { subtitle, cover = {}, body = `` } = page
 </script>
 
 <ChapterMap {chapters} />
 <ChapterList {chapters} />
-<hgroup>
-  <img src={cover.url} alt={cover.description} />
-  <h1>
-    {@html subtitle}
-  </h1>
-</hgroup>
-<div>
-  {@html marked(body)}
-</div>
 
-<style>
-  div {
-    max-width: 45em;
-    padding: 2em;
-    margin: auto;
-  }
-  hgroup {
-    position: relative;
-    max-height: 20em;
-    overflow: hidden;
-  }
-  hgroup img {
-    width: 100%;
-  }
-  h1 {
-    font-weight: lighter;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5pt 1ex;
-    border-radius: 6pt;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: min-content;
-    white-space: nowrap;
-  }
-</style>
+<BasePage {page}>
+  <h2 slot="title">🤗 Wir brauchen dich! 🤗</h2>
+</BasePage>

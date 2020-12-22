@@ -33,7 +33,6 @@
     object-position: cover;
   }
   blockquote {
-    background: var(--accentBg);
     padding: 6pt 1em;
     border-radius: 1ex;
     margin-bottom: 2em;

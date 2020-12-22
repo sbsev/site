@@ -51,7 +51,7 @@
     display: grid;
     gap: 2em;
     place-items: center;
-    background: var(--headerBg);
+    background: var(--footerBg);
     color: white;
   }
   footer :global(a) {

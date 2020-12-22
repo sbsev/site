@@ -130,7 +130,6 @@
       position: fixed;
       top: 1em;
       left: 1em;
-      background: var(--accentBg);
       padding: 1em;
       transition: 0.4s;
       max-height: calc(100vh - 2em);

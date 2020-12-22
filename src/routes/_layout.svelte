@@ -46,10 +46,9 @@
 
 <style>
   time {
-    background: var(--accentBg);
     display: block;
     text-align: right;
-    font-size: 0.8em;
+    font-size: 0.6em;
     padding: 2em;
     text-align: center;
   }

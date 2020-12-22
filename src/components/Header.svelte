@@ -24,7 +24,7 @@
     top: 0;
     font-weight: 300;
     background: var(--headerBg);
-    box-shadow: 0 -1pt 1ex 0 var(--shadowColor);
+    box-shadow: 0 0 1ex black;
     z-index: 2;
   }
   @media (max-width: 1000px) {

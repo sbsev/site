@@ -33,10 +33,10 @@ export const modeColors = {
     accentBg: `white`,
     buttonBg: colors.green,
     borderColor: colors.lightBlue,
-    shadowColor: colors.lightGray,
     headingColor: colors.lightBlue,
     headerBg: colors.darkBlue,
     headerColor: `white`,
+    footerBg: colors.darkBlue,
   },
   dark: {
     textColor: `white`,
@@ -46,9 +46,9 @@ export const modeColors = {
     accentBg: `black`,
     buttonBg: colors.darkGreen,
     borderColor: colors.darkGreen,
-    shadowColor: `black`,
     headingColor: colors.lightGreen,
     headerBg: colors.darkerBlue,
     headerColor: colors.lightBlue,
+    footerBg: `black`,
   },
 }

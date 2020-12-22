@@ -4,15 +4,24 @@
 
   import Toc from '../components/Toc.svelte'
 
-  export let data
+  export let page
 
-  const { title, cover = {}, body = ``, toc } = data
+  const { title, subtitle, cover = {}, body = ``, toc } = page
   const { url, description, width, height } = cover
 </script>
 
 <hgroup>
   <Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
-  <h1>{title}</h1>
+  {#if $$slots.title}
+    <slot name="title" />
+  {:else}
+    {#if title}
+      <h1>{title}</h1>
+    {/if}
+    {#if subtitle}
+      <h2>{subtitle}</h2>
+    {/if}
+  {/if}
 </hgroup>
 <slot />
 <article>
@@ -34,19 +43,21 @@
   hgroup {
     position: relative;
     height: max-content;
-    max-height: 700px;
+    max-height: 20em;
     overflow: hidden;
   }
-  h1 {
+  hgroup > :global(*:not(:first-child)) {
     color: white;
     background: rgba(0, 0, 0, 0.6);
     padding: 5pt 1ex;
     border-radius: 1ex;
     position: absolute;
-    top: 35%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    width: min-content;
+  }
+  hgroup > :global(h2) {
+    font-weight: lighter;
   }
 </style>
