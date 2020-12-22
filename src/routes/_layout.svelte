@@ -11,7 +11,7 @@
     nav.find((el) => el.url === `/standorte`).subNav[0].span = true
     nav
       .find((el) => el.url === `/standorte`)
-      .subNav.unshift(...chapters.map((el) => ({ ...el, url: `/standorte/` + el.slug })))
+      .subNav.unshift(...chapters.map((el) => ({ ...el, url: el.slug })))
 
     return { nav, page, footer, social }
   }

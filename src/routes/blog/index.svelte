@@ -15,11 +15,11 @@
 <div>
   {#each posts as { title, slug, cover: { url, description, width, height }, date, author }}
     <section>
-      <a href="/blog/{slug}"><Img
+      <a href={slug}><Img
           src={url}
           alt={description}
           ratio={`${Math.floor((100 * height) / width)}%`} /></a>
-      <h3><a href="/blog/{slug}">{title}</a></h3>
+      <h3><a href={slug}>{title}</a></h3>
       <span>{new Date(date).toLocaleDateString(`de`)}</span>
       <span>{author.name} {author.fieldOfStudy ? `(${author.fieldOfStudy})` : ``}</span>
     </section>

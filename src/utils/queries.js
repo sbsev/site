@@ -1,5 +1,10 @@
 import 'cross-fetch/polyfill'
 
+function prefixSlug(obj, prefix) {
+  obj.slug = prefix + obj.slug
+  return obj
+}
+
 export const gqlFetch = async (uri, query) => {
   const response = await fetch(uri, {
     method: `POST`,
@@ -25,8 +30,8 @@ const chaptersQuery = `{
 }`
 
 export async function fetchChapters(uri) {
-  const data = await gqlFetch(uri, chaptersQuery)
-  return data?.chapters?.items
+  const { chapters } = await gqlFetch(uri, chaptersQuery)
+  return chapters?.items?.map((chapter) => prefixSlug(chapter, `standorte/`))
 }
 
 const pageQuery = (slug) => `{
@@ -94,12 +99,14 @@ const postQuery = (slug) => `{
 
 export async function fetchPost(slug, uri) {
   const data = await gqlFetch(uri, postQuery(slug))
-  return data?.posts?.items[0]
+  const post = data?.posts?.items[0]
+  return prefixSlug(post, `blog/`)
 }
 
 export async function fetchPosts(uri) {
   const data = await gqlFetch(uri, postQuery())
-  return data?.posts?.items
+  const posts = data?.posts?.items
+  return posts.map((post) => prefixSlug(post, `blog/`))
 }
 
 const jsonQuery = (title) => `{

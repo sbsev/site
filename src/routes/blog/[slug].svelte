@@ -2,7 +2,7 @@
   import { fetchPost } from '../../utils/queries'
 
   export async function preload({ path }, session) {
-    const post = await fetchPost(path.replace(`/blog/`, ``), session.gqlUri)
+    const post = await fetchPost(path.split(`/`).pop(), session.gqlUri)
     return { post }
   }
 </script>
@@ -16,7 +16,7 @@
   const { bio, fieldOfStudy, name, photo } = author
 </script>
 
-<BasePage data={post}>
+<BasePage page={post}>
   <blockquote>
     <img src={photo.url} alt={name} />
     <span>{new Date(date).toLocaleDateString(`de`)}</span>

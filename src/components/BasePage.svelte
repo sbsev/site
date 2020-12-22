@@ -43,7 +43,7 @@
   hgroup {
     position: relative;
     height: max-content;
-    max-height: 20em;
+    max-height: calc(20em + 15vw);
     overflow: hidden;
   }
   hgroup > :global(*:not(:first-child)) {
