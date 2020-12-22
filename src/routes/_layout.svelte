@@ -18,12 +18,14 @@
 </script>
 
 <script>
+  import Update from '@svg-icons/material-rounded/update.svg'
+
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
 
   export let nav, page, footer, social
 
-  const { title } = page
+  const { title, sys } = page
 </script>
 
 <svelte:head>
@@ -33,5 +35,21 @@
 <Header {nav} />
 <main>
   <slot />
+  {#if sys?.publishedAt}
+    <time><Update
+        height="3ex"
+        style="vertical-align: bottom; padding-right: 4pt;" />Zuletzt bearbeitet:
+      {new Date(sys?.publishedAt).toLocaleDateString(`de`)}</time>
+  {/if}
 </main>
 <Footer links={footer.links} {social} />
+
+<style>
+  time {
+    background: var(--accentBg);
+    display: block;
+    text-align: right;
+    font-size: 0.8em;
+    padding: 2em;
+  }
+</style>

@@ -9,7 +9,6 @@
 </script>
 
 <script>
-  import Img from 'svelte-image'
   import marked from 'marked'
   import ChapterMap from '../components/ChapterMap.svelte'
   import Place from '@svg-icons/material-filled/place.svg'
@@ -17,9 +16,6 @@
   import Child from '@svg-icons/fa-solid/child.svg'
 
   export let chapters, page
-
-  const { cover = {}, body = `` } = page
-  const { url, description, width, height } = cover
 </script>
 
 <ChapterMap {chapters} />
@@ -43,9 +39,9 @@
   </div>
 </section>
 
-<Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
-
-{@html marked(body)}
+<article>
+  {@html marked(page.body)}
+</article>
 
 <style>
   section {
@@ -53,12 +49,11 @@
     padding: 1em;
     place-content: center;
     gap: 2em;
-    margin: 2em;
     flex-wrap: wrap;
     color: white;
   }
   section div {
-    font-size: 3ex;
+    font-size: 2ex;
     text-align: center;
     flex: 0 1 10%;
     padding: 1ex;
@@ -68,5 +63,10 @@
   section div span {
     font-size: 3ex;
     display: block;
+  }
+  article {
+    padding: calc(1ex + 2vw);
+    max-width: 40em;
+    margin: auto;
   }
 </style>

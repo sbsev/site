@@ -68,7 +68,7 @@ main img {
 .grid {
   display: grid;
   grid-gap: 2em;
-  grid-template-columns: repeat(auto-fit, minmax(8em, 12em));
+  grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
 }
 .grid img {
   width: 100%;

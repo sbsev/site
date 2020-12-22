@@ -37,11 +37,16 @@ const pageQuery = (slug) => `{
       subtitle
       slug
       body
+      toc
+      caption
       cover {
         description
         url
         width
         height
+      }
+      sys {
+        publishedAt
       }
     }
   }
