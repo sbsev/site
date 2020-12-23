@@ -33,7 +33,7 @@
     {/each}
   </div>
   <span>Diese Seite ist
-    <a href="https://github.com/StudentenBildenSchueler/website"><OpenSource
+    <a href="https://github.com/sbsev/website"><OpenSource
         height="2.5ex"
         style="vertical-align: bottom; padding-right: 3pt;" />open source</a>
     und verwendet
