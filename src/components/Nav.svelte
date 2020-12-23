@@ -176,6 +176,7 @@
       opacity: 0;
       transition: 0.4s;
       display: grid;
+      padding-left: 2ex;
       gap: 5pt 1em;
       width: max-content;
     }

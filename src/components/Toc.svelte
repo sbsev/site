@@ -56,9 +56,9 @@
 <aside use:preventOverScroll>
   <button on:click={() => (open = !open)}>
     {#if open}
-      <CircleWithCross height="50" />
+      <CircleWithCross height="40" />
     {:else}
-      <Menu height="50" />
+      <Menu height="40" />
     {/if}
   </button>
   {#if open || windowWidth > 1600}
@@ -96,7 +96,7 @@
     background: var(--accentBg);
     border-radius: 50%;
     padding: 2pt;
-    box-shadow: 0 0 1em black;
+    box-shadow: 0 0 1em -3pt black;
   }
   nav {
     position: absolute;

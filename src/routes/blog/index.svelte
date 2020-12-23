@@ -8,39 +8,24 @@
 </script>
 
 <script>
-  import Img from 'svelte-image'
+  import PostPreview from '../../components/PostPreview.svelte'
+
   export let posts
 </script>
 
-<div>
-  {#each posts as { title, slug, cover: { url, description, width, height }, date, author }}
-    <section>
-      <a href={slug}><Img
-          src={url}
-          alt={description}
-          ratio={`${Math.floor((100 * height) / width)}%`} /></a>
-      <h3><a href={slug}>{title}</a></h3>
-      <span>{new Date(date).toLocaleDateString(`de`)}</span>
-      <span>{author.name} {author.fieldOfStudy ? `(${author.fieldOfStudy})` : ``}</span>
-    </section>
+<ul>
+  {#each posts as post}
+    <PostPreview {post} />
   {/each}
-</div>
+</ul>
 
 <style>
-  div {
+  ul {
     max-width: 50em;
-    margin: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17em, 1fr));
-    grid-gap: 2em 1.5em;
-  }
-  section {
-    background: var(--accentBg);
-    padding: 1ex;
-    border-radius: 1ex;
-  }
-  div :global(.wrapper) {
-    border-radius: 4pt;
-    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(16em, 1fr));
+    grid-gap: 1em;
+    margin: auto;
+    padding: 2em 1em;
   }
 </style>

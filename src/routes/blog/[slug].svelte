@@ -10,6 +10,8 @@
 <script>
   import BasePage from '../../components/BasePage.svelte'
 
+  import Calendar from '@svg-icons/octicons/calendar.svg'
+
   export let post
 
   const { author = {}, date } = post
@@ -19,7 +21,9 @@
 <BasePage page={post}>
   <blockquote>
     <img src={photo.url} alt={name} />
-    <span>{new Date(date).toLocaleDateString(`de`)}</span>
+    <span><Calendar
+        height="20"
+        style="vertical-align: -2pt;" />{new Date(date).toLocaleDateString(`de`)}</span>
     <span>{name} {fieldOfStudy ? `(${fieldOfStudy})` : ``}</span>
     {#if bio}
       <p>{bio}</p>

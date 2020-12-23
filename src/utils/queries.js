@@ -81,10 +81,15 @@ const postQuery = (slug) => `{
         width
         height
       }
+      tags: tagsCollection {
+        items {
+          title
+        }
+      }
       author {
         name
         email
-        homepage
+        url
         bio
         fieldOfStudy
         photo {
@@ -100,13 +105,17 @@ const postQuery = (slug) => `{
 export async function fetchPost(slug, uri) {
   const data = await gqlFetch(uri, postQuery(slug))
   const post = data?.posts?.items[0]
+  post.tags = post.tags.items.map((tag) => tag.title)
   return prefixSlug(post, `blog/`)
 }
 
 export async function fetchPosts(uri) {
   const data = await gqlFetch(uri, postQuery())
   const posts = data?.posts?.items
-  return posts.map((post) => prefixSlug(post, `blog/`))
+  return posts.map((post) => {
+    post.tags = post.tags.items.map((tag) => tag.title)
+    return prefixSlug(post, `blog/`)
+  })
 }
 
 const jsonQuery = (title) => `{
