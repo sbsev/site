@@ -40,8 +40,7 @@
     <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">keine
       <Cookie height="2.2ex" style="vertical-align: middle;" />
       Cookies.</a></span>
-
-  <Social {social} />
+  <Social {social} style="margin-top: 1ex;" />
 </footer>
 
 <style>
@@ -49,7 +48,7 @@
     padding: 3em calc(1em + 3vw);
     text-align: center;
     display: grid;
-    gap: 2em;
+    gap: 3em;
     place-items: center;
     background: var(--footerBg);
     color: white;

@@ -130,3 +130,32 @@ export async function fetchJson(title, uri) {
   const data = await gqlFetch(uri, jsonQuery(title))
   return data?.json?.items[0]?.data
 }
+
+const tagsQuery = `{
+  tags:  contentType5KMiN6YPvi42IcqAuqmcQeCollection(order: title_ASC) {
+    items {
+      title
+      linkedFrom {
+        entryCollection {
+          total
+        }
+      }
+      icon {
+        url
+      }
+    }
+  }
+}
+`
+
+function processTag(tag) {
+  const { total } = tag?.linkedFrom?.entryCollection
+  tag.total = total
+  delete tag?.linkedFrom
+  return tag
+}
+
+export async function fetchTags(uri) {
+  const { tags } = await gqlFetch(uri, tagsQuery)
+  return tags?.items.map(processTag)
+}
