@@ -8,6 +8,8 @@
   import Link from '@svg-icons/boxicons-regular/link.svg'
   import Calendar from '@svg-icons/octicons/calendar.svg'
 
+  import ToolTip from './ToolTip.svelte'
+
   export let post
 
   const { title, slug, cover, date, author, tags } = post
@@ -21,10 +23,9 @@
   <h3><a href={slug}>{title}</a></h3>
   <div class="metadata">
     <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
-    <div class="author">
-      <PersonCircle {style} />
-      {author.name}
-      <address>
+    <ToolTip>
+      <PersonCircle {style} />{author.name}
+      <address slot="tip">
         {#if author.url}
           <a href={author.url}><Link {style} />{author.url}</a>
           <br />
@@ -37,7 +38,7 @@
           <GraduationCap {style} />{author.fieldOfStudy}
         {/if}
       </address>
-    </div>
+    </ToolTip>
     <span><Tags {style} />{tags.join(`, `)}</span>
   </div>
 </section>
@@ -68,26 +69,6 @@
     flex-wrap: wrap;
     gap: 1em;
   }
-  div.author {
-    position: relative;
-    height: max-content;
-  }
-  address {
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.4s;
-    position: absolute;
-    max-width: 16em;
-    background: var(--bodyBg);
-    top: 100%;
-    padding: 1ex 1em;
-    border-radius: 1ex;
-    left: 50%;
-    transform: translate(-50%, 1em);
-    z-index: 1;
-    box-shadow: 0 0 1ex -3pt black;
-    font-style: normal;
-  }
   address a {
     white-space: nowrap;
     overflow: hidden;
@@ -95,20 +76,6 @@
     display: inline-block;
     width: 100%;
     vertical-align: bottom;
-  }
-  address::before {
-    content: '';
-    width: 1em;
-    position: absolute;
-    left: 50%;
-    bottom: 100%;
-    height: 1em;
-    border: 1em solid;
-    border-color: transparent transparent var(--bodyBg) transparent;
-    box-sizing: border-box;
-  }
-  div.author:hover address {
-    visibility: visible;
-    opacity: 1;
+    font-style: normal;
   }
 </style>

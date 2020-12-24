@@ -9,23 +9,44 @@
 
 <script>
   import BasePage from '../../components/BasePage.svelte'
+  import ToolTip from '../../components/ToolTip.svelte'
 
   import Calendar from '@svg-icons/octicons/calendar.svg'
   import PersonCircle from '@svg-icons/bootstrap/person-circle.svg'
+  import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
+  import HistoryEdu from '@svg-icons/material-sharp/history-edu.svg'
 
   export let post
 
   const { author = {}, date } = post
-  const { name, photo } = author
-  const style = `height:20px; vertical-align: -2pt; padding: 0 2pt;`
+  const { bio, fieldOfStudy, name, photo } = author
+  const style = `height: 18pt; vertical-align: -3pt; padding: 0 3pt;`
 </script>
 
 <BasePage page={post}>
   <blockquote>
     <img src={photo.url} alt={name} />
     <span>von
-      <PersonCircle {style} />
-      <strong>{name}</strong>
+      {#if bio || fieldOfStudy}
+        <ToolTip>
+          <PersonCircle {style} />
+          <strong>{name}</strong>
+          <span slot="tip">
+            <HistoryEdu {style} />
+            Bio:
+            {bio}
+            {#if fieldOfStudy}
+              <br />
+              <GraduationCap {style} />
+              Studiert:
+              {fieldOfStudy}
+            {/if}
+          </span>
+        </ToolTip>
+      {:else}
+        <PersonCircle {style} />
+        <strong>{name}</strong>
+      {/if}
       am
       <Calendar {style} />
       <strong>{new Date(date).toLocaleDateString(`de`)}</strong>
