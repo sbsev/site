@@ -55,6 +55,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    margin: 0 1em;
   }
   hgroup > :global(h2) {
     font-weight: lighter;

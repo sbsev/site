@@ -35,7 +35,7 @@
 <Header {nav} />
 <main>
   <slot />
-  {#if sys?.publishedAt}
+  {#if sys?.publishedAt && !page.slug.includes(`blog`)}
     <time><Update
         height="3ex"
         style="vertical-align: bottom; padding-right: 4pt;" />Zuletzt bearbeitet:
