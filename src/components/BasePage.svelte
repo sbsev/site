@@ -1,6 +1,5 @@
 <script>
   import Img from 'svelte-image'
-  import marked from 'marked'
 
   import Toc from '../components/Toc.svelte'
 
@@ -28,7 +27,7 @@
   {#if toc}
     <Toc />
   {/if}
-  {@html marked(body)}
+  {@html body}
 </article>
 
 <style>

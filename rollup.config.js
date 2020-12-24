@@ -52,10 +52,7 @@ export default {
       }),
       commonjs(),
 
-      !dev &&
-        terser({
-          module: true,
-        }),
+      !dev && terser({ module: true }),
     ],
 
     preserveEntrySignatures: false,
@@ -83,10 +80,10 @@ export default {
       commonjs(),
       !dev && indexAlgolia(algoliaConfig),
     ],
+
     external: Object.keys(pkg.dependencies).concat(
       require(`module`).builtinModules
     ),
-
     preserveEntrySignatures: `strict`,
     onwarn,
   },

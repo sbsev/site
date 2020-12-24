@@ -11,16 +11,13 @@
   export let post
 
   const { title, slug, cover, date, author, tags } = post
-  const { url, description, width, height } = cover
+  const { url, description } = cover
 
   const style = `padding-right: 4pt; vertical-align: -2pt; height: 15pt;`
 </script>
 
 <section>
-  <a href={slug}><Img
-      src={url}
-      alt={description}
-      ratio={`${Math.floor((100 * height) / width)}%`} /></a>
+  <a href={slug}><Img src={url} alt={description} /></a>
   <h3><a href={slug}>{title}</a></h3>
   <div class="metadata">
     <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
@@ -29,12 +26,11 @@
       {author.name}
       <address>
         {#if author.url}
-          <Link {style} /><a href={author.url}>{author.url}</a>
+          <a href={author.url}><Link {style} />{author.url}</a>
           <br />
         {/if}
         {#if author.email}
-          <Email {style} />
-          <a href="mailto:{author.email}">{author.email}</a>
+          <a href="mailto:{author.email}"><Email {style} />{author.email}</a>
           <br />
         {/if}
         {#if author.fieldOfStudy}
@@ -87,13 +83,29 @@
     padding: 1ex 1em;
     border-radius: 1ex;
     left: 50%;
-    transform: translate(-50%, 5pt);
+    transform: translate(-50%, 1em);
     z-index: 1;
+    box-shadow: 0 0 1ex -3pt black;
+    font-style: normal;
+  }
+  address a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    box-shadow: 0 0 1ex -3pt black;
-    font-style: normal;
+    display: inline-block;
+    width: 100%;
+    vertical-align: bottom;
+  }
+  address::before {
+    content: '';
+    width: 1em;
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    height: 1em;
+    border: 1em solid;
+    border-color: transparent transparent var(--bodyBg) transparent;
+    box-sizing: border-box;
   }
   div.author:hover address {
     visibility: visible;

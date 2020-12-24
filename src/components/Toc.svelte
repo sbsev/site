@@ -6,8 +6,6 @@
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
 
-  import { preventOverScroll } from '../utils/actions'
-
   function accumulateOffsetTop(el, totalOffset = 0) {
     while (el) {
       totalOffset += el.offsetTop - el.scrollTop + el.clientTop
@@ -53,7 +51,7 @@
 
 <svelte:window on:scroll={scrollHandler} bind:innerWidth={windowWidth} />
 
-<aside use:preventOverScroll>
+<aside>
   <button on:click={() => (open = !open)}>
     {#if open}
       <CircleWithCross height="40" />
@@ -81,6 +79,9 @@
 <style>
   nav {
     list-style: none;
+    max-height: 90vh;
+    overflow: scroll;
+    overscroll-behavior: contain;
   }
   nav > li {
     margin-top: 5pt;

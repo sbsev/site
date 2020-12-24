@@ -15,6 +15,8 @@
 
   export let posts, tags
 
+  tags.find((tag) => tag.title === `Alle`).total = posts.length
+
   let activeTag = `Alle`
   $: filteredPosts = posts.filter(
     (post) => activeTag === `Alle` || post.tags.includes(activeTag)
@@ -26,7 +28,7 @@
 </h2>
 <ul>
   {#each tags as { title, total, icon }}
-    <button on:click={() => (activeTag = title)}>
+    <button class:active={activeTag === title} on:click={() => (activeTag = title)}>
       <img src={icon.url} alt={title} />
       {title}
       ({total})</button>
@@ -64,11 +66,16 @@
   ul > button {
     border: 1px dotted;
     padding: 3pt 7pt;
+    transition: 0.4s;
+  }
+  ul > button.active {
+    box-shadow: inset 0 0 1em -5pt black;
+    background: var(--buttonBg);
   }
   ul > button > img {
     height: 20px;
-    background: var(--green);
-    padding: 2pt;
+    background: var(--buttonBg);
+    padding: 3pt;
     border-radius: 1ex;
     vertical-align: bottom;
     margin-right: 4pt;

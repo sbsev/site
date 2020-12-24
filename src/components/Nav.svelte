@@ -72,10 +72,10 @@
               style="vertical-align: text-bottom; color: var(--green);" />
           </button>
         {/if}
-        {#if subNav && (activeSubNav === idx || viewWidth > 900)}
+        {#if subNav && (activeSubNav === idx || viewWidth > 1000)}
           <ul
             transition:slide
-            style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 14))};">
+            style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 13))};">
             {#each subNav as { title, url, span }}
               <li class:span>
                 <a

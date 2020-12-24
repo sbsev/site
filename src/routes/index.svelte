@@ -9,7 +9,6 @@
 </script>
 
 <script>
-  import marked from 'marked'
   import ChapterMap from '../components/ChapterMap.svelte'
   import Place from '@svg-icons/material-filled/place.svg'
   import UserGraduate from '@svg-icons/fa-solid/user-graduate.svg'
@@ -40,7 +39,7 @@
 </section>
 
 <article>
-  {@html marked(page.body)}
+  {@html page.body}
 </article>
 
 <style>
