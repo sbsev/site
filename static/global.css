@@ -77,3 +77,12 @@ main img {
 .grid.disk-img img {
   border-radius: 50%;
 }
+.grid.disk-img em,
+.grid.disk-img strong {
+  text-align: center;
+  display: block;
+  font-style: normal;
+}
+.grid.disk-img strong {
+  font-weight: lighter;
+}

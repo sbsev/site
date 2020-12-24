@@ -2,9 +2,7 @@
   import { stores } from '@sapper/app'
   import { slide } from 'svelte/transition'
   import Euro from '@svg-icons/material-sharp/euro.svg'
-  // import Donate from '@svg-icons/fa-solid/donate.svg'
-  // import DonateHeart from '@svg-icons/boxicons-solid/donate-heart.svg'
-  import QaA from '@svg-icons/material-rounded/question-answer.svg'
+  import QuestionAnswer from '@svg-icons/material-rounded/question-answer.svg'
   import PeopleCircle from '@svg-icons/ionicons-solid/people-circle.svg'
   import Rss from '@svg-icons/fa-solid/rss-square.svg'
   import Contact from '@svg-icons/boxicons-solid/contact.svg'
@@ -18,20 +16,24 @@
   export let nav
 
   const icons = {
-    Verein: Plant,
+    'Über Uns': Plant,
     Standorte: Place,
     Spenden: Euro,
-    FAQ: QaA,
+    FAQ: QuestionAnswer,
     Mitmachen: PeopleCircle,
     Blog: Rss,
     Kontakt: Contact,
   }
 
   let isOpen = false
-  const close = () => (isOpen = false)
+  const close = () => {
+    isOpen = false
+    hovered = null
+  }
   let activeSubNav = null
   let resultsDiv
   let viewWidth
+  let hovered
 
   const setActiveSubNav = (idx) => () => {
     if (activeSubNav !== idx) activeSubNav = idx
@@ -58,7 +60,10 @@
 <nav class:isOpen use:onClickOutside={close} use:preventOverScroll bind:this={resultsDiv}>
   <ul>
     {#each nav as { title, url, subNav }, idx}
-      <li>
+      <li
+        on:mouseenter={() => (hovered = idx)}
+        on:mouseleave={() => (hovered = null)}
+        class:hover={hovered === idx}>
         <a on:click={close} rel="prefetch" aria-current={isCurrent(url)} href={url}>
           <svelte:component
             this={icons[title]}
@@ -174,7 +179,7 @@
       top: 3ex;
       visibility: hidden;
       opacity: 0;
-      transition: 0.4s;
+      transition: 0.3s;
       display: grid;
       padding-left: 2ex;
       gap: 5pt 1em;
@@ -186,7 +191,7 @@
       padding-top: 6pt;
       margin-top: 6pt;
     }
-    nav > ul > li:hover > ul {
+    nav > ul > li.hover > ul {
       visibility: visible;
       opacity: 1;
     }
