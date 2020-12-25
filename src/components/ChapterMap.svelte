@@ -3,12 +3,15 @@
 
   export let chapters
 
-  const addMarkers = (map, { chapters }) => {
-    chapters.forEach(({ title, slug, coords }, idx) => {
+  // chapters can be inside the addMarkers closure because it's static
+  // if chapters might change and we wanted the markers to rerender,
+  // it would need to be part of the map's props
+  const addMarkers = (map) => {
+    chapters.forEach(({ title, slug, coords }) => {
       const marker = new window.google.maps.Marker({
         map,
         position: coords,
-        label: `${idx + 1}`,
+        label: title.slice(0, 2),
         title,
       })
       marker.addListener(`click`, () => {
@@ -17,9 +20,7 @@
     })
     map.fitBounds({ south: 49, west: 8, north: 54, east: 12 })
   }
+  const mapProps = { disableDefaultUI: true }
 </script>
 
-<Map
-  mapProps={{ disableDefaultUI: true }}
-  onLoad={addMarkers}
-  onLoadProps={{ chapters }} />
+<Map {mapProps} onLoad={addMarkers} />

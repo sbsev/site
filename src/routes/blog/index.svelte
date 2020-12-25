@@ -1,10 +1,11 @@
 <script context="module">
-  import { fetchPosts, fetchTags } from '../../utils/queries'
+  import { fetchJson, fetchPosts, fetchTags } from '../../utils/queries'
 
   export async function preload(_, session) {
     const posts = await fetchPosts(session.gqlUri)
     const tags = await fetchTags(session.gqlUri)
-    return { posts, tags }
+    const social = await fetchJson(`Social`, session.gqlUri)
+    return { posts, tags, social }
   }
 </script>
 
@@ -12,8 +13,9 @@
   import Tags from '@svg-icons/fa-solid/tags.svg'
 
   import PostPreview from '../../components/PostPreview.svelte'
+  import Social from '../../components/Social.svelte'
 
-  export let posts, tags
+  export let posts, tags, social
 
   tags.find((tag) => tag.title === `Alle`).total = posts.length
 
@@ -22,6 +24,8 @@
     (post) => activeTag === `Alle` || post.tags.includes(activeTag)
   )
 </script>
+
+<Social {social} fixed vertical />
 
 <h2>
   <Tags height="20" />Tags

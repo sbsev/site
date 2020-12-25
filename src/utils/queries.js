@@ -18,7 +18,7 @@ export const gqlFetch = async (uri, query) => {
 }
 
 const chaptersQuery = `{
-  chapters: chapterCollection(where: { active: true }) {
+  chapters: chapterCollection(where: { active: true }, order: title_ASC) {
     items {
       title
       slug
@@ -77,8 +77,9 @@ export async function fetchPages(uri) {
 }
 
 const postQuery = (slug) => `{
-  posts: postCollection
-  ${slug ? `(where: {slug: "${slug}"})` : ``} {
+  posts: postCollection(order: date_DESC, ${
+    slug ? `where: {slug: "${slug}"}` : ``
+  }) {
     items {
       title
       slug

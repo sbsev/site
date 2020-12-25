@@ -69,20 +69,17 @@ main img {
 .grid {
   display: grid;
   grid-gap: 2em;
-  grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));
+  text-align: center;
 }
-.grid img {
-  width: 100%;
+.grid em,
+.grid strong {
+  font-style: normal;
+  display: block;
+}
+.grid strong {
+  font-weight: lighter;
 }
 .grid.disk-img img {
   border-radius: 50%;
-}
-.grid.disk-img em,
-.grid.disk-img strong {
-  text-align: center;
-  display: block;
-  font-style: normal;
-}
-.grid.disk-img strong {
-  font-weight: lighter;
 }

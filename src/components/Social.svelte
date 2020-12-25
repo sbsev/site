@@ -8,14 +8,15 @@
   import Youtube from '@svg-icons/fa-brands/youtube.svg'
   import Email from '@svg-icons/material-rounded/email.svg'
 
-  export let social, style
+  export let social, style, vertical, fixed
+  export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
 
   const icons = { Facebook, Github, Instagram, Linkedin, Twitter, Xing, Youtube, Email }
 </script>
 
-<div {style}>
-  {#each Object.entries(social) as [key, url]}
-    <a href={url}>
+<div {style} class:vertical class:fixed>
+  {#each include as key}
+    <a href={social[key].url}>
       <svelte:component this={icons[key]} height="2.5ex" /></a>
   {/each}
 </div>
@@ -27,6 +28,26 @@
     gap: 1em;
     place-content: center;
     line-height: 0;
+  }
+  div.vertical {
+    flex-direction: column;
+  }
+  div.fixed {
+    position: fixed;
+    z-index: 1;
+    background: var(--accentBg);
+    padding: 1ex;
+  }
+  div.fixed.vertical {
+    right: 0;
+    border-radius: 1ex 0 0 1ex;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media (max-width: 1150px) {
+    div.fixed {
+      display: none;
+    }
   }
   a {
     transition: 0.4s;

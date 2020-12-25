@@ -4,13 +4,12 @@
 
   export let onLoad = () => {}
   export let mapProps = {}
-  export let onLoadProps
 
   const { session } = stores()
   const { GOOGLE_MAPS_API_KEY: apiKey } = $session
   let div, map
 
-  // insert some defaul map props
+  // some default map props
   mapProps = { center: { lat: 48, lng: 8 }, zoom: 5, ...mapProps }
 
   onMount(() => {
@@ -25,7 +24,7 @@
     } else mountMap()
   })
 
-  $: if (map && typeof onLoad === `function`) onLoad(map, onLoadProps)
+  $: if (map && typeof onLoad === `function`) onLoad(map)
 </script>
 
 <div bind:this={div} />
