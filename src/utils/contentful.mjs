@@ -1,13 +1,12 @@
-/* eslint-disable no-console */
 import 'dotenv/config.js'
 
+const { CONTENTFUL_ACCESS_TOKEN: token, CONTENTFUL_SPACE_ID: id } = process.env
+const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
+
+export const gqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
+export const graphiql = `${ctfGqlUrl}/${id}/explore?access_token=${token}`
+
 import contentful from 'contentful-management'
-
-const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID } = process.env
-const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
-
-export const gqlEndPoint = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
-export const graphiql = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}/explore?access_token=${CONTENTFUL_ACCESS_TOKEN}`
 
 // to use any of the functions in this file, generate a Content Management Token (CMT) at
 // https://app.contentful.com/spaces/gi9muc70s4ub/api/cma_tokens and add it to your .env file
@@ -18,9 +17,9 @@ const getClient = () =>
 
 export async function searchPages(
   searchTerm = process.argv[2],
-  contentType = `page`
+  contentType = process.argv[3] || `page`
 ) {
-  const space = await getClient().getSpace(CONTENTFUL_SPACE_ID)
+  const space = await getClient().getSpace(id)
 
   const env = await space.getEnvironment(`master`)
   let { items } = await env.getEntries({ content_type: contentType })
@@ -28,8 +27,9 @@ export async function searchPages(
     (item) => item.fields.body && item.fields.body.de.includes(searchTerm)
   )
   items = items.map((item) => item.fields.title.de)
+  // eslint-disable-next-line no-console
   console.log(`items of type ${contentType} containing ${searchTerm}:`, items)
 }
 
-// call node src/utils/contentful.js
+// run with: node src/utils/contentful.js
 // searchPages()

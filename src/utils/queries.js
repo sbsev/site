@@ -77,7 +77,7 @@ export async function fetchPages(uri) {
 }
 
 const postQuery = (slug) => `{
-  posts: contentType2WKn6YEnZewu2ScCkus4AsCollection
+  posts: postCollection
   ${slug ? `(where: {slug: "${slug}"})` : ``} {
     items {
       title
@@ -144,7 +144,7 @@ export async function fetchJson(title, uri) {
 }
 
 const tagsQuery = `{
-  tags:  contentType5KMiN6YPvi42IcqAuqmcQeCollection(order: title_ASC) {
+  tags: blogTagCollection(order: title_ASC) {
     items {
       title
       linkedFrom {
@@ -157,8 +157,7 @@ const tagsQuery = `{
       }
     }
   }
-}
-`
+}`
 
 function processTag(tag) {
   const { total } = tag?.linkedFrom?.entryCollection
