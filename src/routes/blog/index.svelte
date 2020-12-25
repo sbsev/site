@@ -10,16 +10,15 @@
 </script>
 
 <script>
-  import Tags from '@svg-icons/fa-solid/tags.svg'
-
   import PostPreview from '../../components/PostPreview.svelte'
   import Social from '../../components/Social.svelte'
+  import TagList from '../../components/TagList.svelte'
 
   export let posts, tags, social
 
   tags.find((tag) => tag.title === `Alle`).total = posts.length
 
-  let activeTag = `Alle`
+  let activeTag
   $: filteredPosts = posts.filter(
     (post) => activeTag === `Alle` || post.tags.includes(activeTag)
   )
@@ -27,20 +26,10 @@
 
 <Social {social} fixed vertical />
 
-<h2>
-  <Tags height="20" />Tags
-</h2>
-<ul>
-  {#each tags as { title, total, icon }}
-    <button class:active={activeTag === title} on:click={() => (activeTag = title)}>
-      <img src={icon.url} alt={title} />
-      {title}
-      ({total})</button>
-  {/each}
-</ul>
+<TagList {tags} bind:activeTag />
 
 <ul>
-  {#each filteredPosts as post}
+  {#each filteredPosts as post (post.slug)}
     <PostPreview {post} />
   {/each}
 </ul>
@@ -54,34 +43,5 @@
     grid-gap: 1em;
     margin: auto;
     padding: 2em 1em;
-  }
-  h2 {
-    text-align: center;
-    margin-top: 2em;
-  }
-  h2 + ul {
-    padding: 0 1em 2em;
-    max-width: 40em;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-    place-content: center;
-  }
-  ul > button {
-    border: 1px dotted;
-    padding: 3pt 7pt;
-    transition: 0.4s;
-  }
-  ul > button.active {
-    box-shadow: inset 0 0 1em -5pt black;
-    background: var(--buttonBg);
-  }
-  ul > button > img {
-    height: 20px;
-    background: var(--buttonBg);
-    padding: 3pt;
-    border-radius: 1ex;
-    vertical-align: bottom;
-    margin-right: 4pt;
   }
 </style>
