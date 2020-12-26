@@ -12,7 +12,7 @@
 
   export let post
 
-  const { title, slug, cover, date, author, tags } = post
+  const { title, slug, cover, date, author, tags, plainBody } = post
   const { url, description } = cover
 
   const style = `padding-right: 4pt; vertical-align: -2pt; height: 15pt;`
@@ -40,6 +40,10 @@
       </address>
     </ToolTip>
     <span><Tags {style} />{tags.join(`, `)}</span>
+    <p>
+      {plainBody.split(` `).slice(0, 20).join(` `) + `...`}
+      [<a href={slug}>weiterlesen</a>]
+    </p>
   </div>
 </section>
 
