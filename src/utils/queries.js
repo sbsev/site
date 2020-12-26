@@ -26,6 +26,7 @@ const chaptersQuery = `{
         lat
         lng: lon
       }
+      baseId
     }
   }
 }`
