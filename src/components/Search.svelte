@@ -4,14 +4,14 @@
   import { stores } from '@sapper/app'
   import Search from '@svg-icons/fa-solid/search.svg'
 
-  import { onClickOutside } from '../utils/actions'
+  import SearchHit from './SearchHit.svelte'
+  import { onClickOutside, preventOverScroll } from '../utils/actions'
 
   const { session } = stores()
   const { ALGOLIA_APP_ID: appId, ALGOLIA_SEARCH_KEY: searchKey } = $session
 
   export let indices = []
-  let client, input
-  let query = ``
+  let client, input, query
   let allHits = []
   let hasFocus = false
 
@@ -34,8 +34,9 @@
     const { results } = await client.multipleQueries(
       indices.map((indexName) => ({ indexName, query }))
     )
-    if (results)
+    if (results) {
       allHits = results.map(({ hits, index }) => ({ hits: processResults(hits), index }))
+    }
   }
 </script>
 
@@ -59,22 +60,14 @@
       height="{hasFocus ? 2 : 2.3}ex"
       style="vertical-align: text-bottom; z-index: 0;" />
   </button>
-  {#if hasFocus && allHits.length > 0 && query}
-    <div class="results">
-      {#each allHits as { index, hits }}
+  {#if hasFocus && allHits.some(({ hits }) => hits.length) && query}
+    <div class="results" use:preventOverScroll>
+      {#each allHits as { index, hits } (index)}
         {#if hits.length}
           <section>
             <h2>{index}</h2>
-            {#each hits as { title, slug, body, cover }}
-              <img src={cover.url + `?w=100`} alt={cover.description} />
-              <h3>
-                <a href={slug} on:click={() => (hasFocus = false)}>{@html title}</a>
-              </h3>
-              {#if body}
-                <p>
-                  {@html body}
-                </p>
-              {/if}
+            {#each hits as hit (hit.objectID)}
+              <SearchHit {hit} clickHandler={() => (hasFocus = false)} />
             {/each}
           </section>
         {/if}
@@ -147,13 +140,5 @@
     line-height: 1.2em;
     border-radius: 3pt;
     font-style: normal;
-  }
-  section h3 :global(em) {
-    color: white;
-  }
-  img {
-    float: right;
-    border-radius: 5pt;
-    margin-top: 2ex;
   }
 </style>

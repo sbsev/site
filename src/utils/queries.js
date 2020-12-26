@@ -60,7 +60,7 @@ const pageQuery = (slug) => `{
 }`
 
 function parseMd(page) {
-  if (!page?.body) return
+  if (!page?.body) return page
   page.body = marked(page.body) // generate HTML
   page.plainBody = page.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
   return page

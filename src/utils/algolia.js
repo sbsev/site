@@ -1,5 +1,4 @@
 import { fetchPages, fetchPosts } from './queries'
-import { mdToPlain } from './mdToPlain'
 
 import { gqlEndPoint } from './contentful'
 
@@ -7,7 +6,8 @@ const bodyToPlainText = (fetchFunction) => async () => {
   const items = await fetchFunction(gqlEndPoint)
   items.forEach((itm) => {
     if (itm.body) {
-      itm.body = mdToPlain(itm.body).slice(0, 5000)
+      itm.body = itm.plainBody
+      delete itm.plainBody
     }
     itm.id = itm.slug
   })
@@ -22,5 +22,15 @@ export const algoliaConfig = {
     { name: `Pages`, getData: bodyToPlainText(fetchPages) },
     { name: `Posts`, getData: bodyToPlainText(fetchPosts) },
   ],
-  settings: { attributesToSnippet: [`body:20`] },
+  settings: {
+    attributesToSnippet: [`body:20`],
+    attributesToHighlight: [
+      `title`,
+      `date`,
+      `body`,
+      `cover.description`,
+      `author.name`,
+      `author.email`,
+    ],
+  },
 }
