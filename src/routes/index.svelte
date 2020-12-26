@@ -58,6 +58,8 @@
     padding: 1ex;
     border-radius: 1ex;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
   }
   section div span {
     font-size: 3ex;

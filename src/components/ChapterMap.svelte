@@ -18,7 +18,6 @@
         window.location.href = slug
       })
     })
-    map.fitBounds({ south: 49, west: 8, north: 54, east: 12 })
   }
   const mapProps = { disableDefaultUI: true }
 </script>

@@ -10,7 +10,7 @@
   let div, map
 
   // some default map props
-  mapProps = { center: { lat: 48, lng: 8 }, zoom: 5, ...mapProps }
+  mapProps = { center: { lat: 51.16, lng: 10.45 }, zoom: 6, ...mapProps }
 
   onMount(() => {
     const mountMap = () => (map = new window.google.maps.Map(div, mapProps))

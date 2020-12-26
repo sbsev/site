@@ -8,7 +8,10 @@
   import Youtube from '@svg-icons/fa-brands/youtube.svg'
   import Email from '@svg-icons/material-rounded/email.svg'
 
-  export let social, style, vertical, fixed
+  export let social
+  export let style = ``
+  export let vertical = false
+  export let fixed = false
   export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
 
   const icons = { Facebook, Github, Instagram, Linkedin, Twitter, Xing, Youtube, Email }
