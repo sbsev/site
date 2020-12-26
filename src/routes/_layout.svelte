@@ -18,7 +18,7 @@
 </script>
 
 <script>
-  import Update from '@svg-icons/material-rounded/update.svg'
+  import Update from '@svg-icons/material-sharp/update.svg'
 
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'

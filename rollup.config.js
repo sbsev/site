@@ -5,7 +5,6 @@ import commonjs from '@rollup/plugin-commonjs'
 import svelte from 'rollup-plugin-svelte'
 import { terser } from 'rollup-plugin-terser'
 import config from 'sapper/config/rollup.js'
-import { mdsvex } from 'mdsvex'
 import { indexAlgolia } from 'svelte-algolia'
 import svelteSVG from 'rollup-plugin-svelte-svg'
 import svelteImage from 'svelte-image'
@@ -43,8 +42,7 @@ export default {
           hydratable: true,
         },
         emitCss: true,
-        preprocess: [mdsvex(), svelteImage()],
-        extensions: [`.svelte`, `.svx`],
+        preprocess: [svelteImage()],
       }),
       resolve({
         browser: true,
@@ -71,8 +69,7 @@ export default {
           dev,
           hydratable: true,
         },
-        preprocess: [mdsvex(), svelteImage()],
-        extensions: [`.svelte`, `.svx`],
+        preprocess: [svelteImage()],
       }),
       resolve({
         dedupe: [`svelte`],

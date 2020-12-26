@@ -6,7 +6,7 @@
   import Twitter from '@svg-icons/fa-brands/twitter.svg'
   import Xing from '@svg-icons/fa-brands/xing-square.svg'
   import Youtube from '@svg-icons/fa-brands/youtube.svg'
-  import Email from '@svg-icons/material-rounded/email.svg'
+  import Email from '@svg-icons/material-sharp/email.svg'
 
   export let social
   export let style = ``

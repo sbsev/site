@@ -2,7 +2,7 @@
   import { stores } from '@sapper/app'
   import { slide } from 'svelte/transition'
   import Euro from '@svg-icons/material-sharp/euro.svg'
-  import QuestionAnswer from '@svg-icons/material-rounded/question-answer.svg'
+  import QuestionAnswer from '@svg-icons/material-sharp/question-answer.svg'
   import PeopleCircle from '@svg-icons/ionicons-solid/people-circle.svg'
   import Rss from '@svg-icons/fa-solid/rss-square.svg'
   import Contact from '@svg-icons/boxicons-solid/contact.svg'
