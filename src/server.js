@@ -12,6 +12,7 @@ const keys = [
   `GOOGLE_MAPS_API_KEY`,
   `CONTENTFUL_SPACE_ID`,
   `CONTENTFUL_ACCESS_TOKEN`,
+  `AIRTABLE_API_KEY`,
 ]
 
 const session = Object.fromEntries(

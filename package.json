@@ -50,6 +50,7 @@
     "dotenv": "^8.2.0",
     "eslint": "^7.16.0",
     "eslint-plugin-svelte3": "^3.0.0",
+    "js-yaml": "^3.14.1",
     "marked": "^1.2.7",
     "mdsvex": "^0.8.9",
     "polka": "^0.5.2",

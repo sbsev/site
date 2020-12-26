@@ -172,3 +172,16 @@ export async function fetchTags(uri) {
   const { tags } = await gqlFetch(uri, tagsQuery)
   return tags?.items.map(processTag)
 }
+
+const microcopyQuery = (title) => `{
+  microcopy: microcopyCollection${title ? `(where: {title: "${title}"})` : ``} {
+    items {
+      text
+    }
+  }
+}`
+
+export async function fetchMicrocopy(title, uri) {
+  const { microcopy } = await gqlFetch(uri, microcopyQuery(title))
+  return microcopy?.items[0]?.text
+}
