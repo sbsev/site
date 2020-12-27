@@ -18,7 +18,7 @@ export const gqlFetch = async (uri, query) => {
 }
 
 const chaptersQuery = `{
-  chapters: chapterCollection(where: { active: true }, order: title_ASC) {
+  chapters: chapterCollection(where: { showInNav: true }, order: title_ASC) {
     items {
       title
       slug
@@ -27,6 +27,7 @@ const chaptersQuery = `{
         lng: lon
       }
       baseId
+      acceptsSignUps
     }
   }
 }`
