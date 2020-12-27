@@ -6,6 +6,7 @@
 
   import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
+  import ReadOnly from '@svg-icons/material-sharp/person-add-disabled.svg'
 
   export let value = []
   export let readonly = false
@@ -46,8 +47,8 @@
 
   function remove(value) {
     if (!readonly) {
-      const { [value]: val, ...rest } = selected
-      selected = rest
+      delete selected[value]
+      selected = selected // assignment needed to trigger rerender
     }
   }
 
@@ -55,7 +56,7 @@
     if (readonly) return
     if (typeof show === `boolean`) {
       showOptions = show
-      show && input.focus()
+      if (show) input.focus()
     } else {
       showOptions = !showOptions
     }
@@ -64,23 +65,28 @@
     }
   }
 
-  function handleKeyup(e) {
-    if (e.keyCode === 13) {
+  function handleKeyup(event) {
+    if (event.keyCode === 13) {
       Object.keys(selected).includes(activeOption.value)
         ? remove(activeOption.value)
         : add(activeOption)
       inputValue = ``
     }
-    if ([38, 40].includes(e.keyCode)) {
-      // up and down arrows
-      const increment = e.keyCode === 38 ? -1 : 1
+    if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
+      const increment = event.key === `ArrowUp` ? -1 : 1
       const calcIndex = filtered.indexOf(activeOption) + increment
-      activeOption =
-        calcIndex < 0
-          ? filtered[filtered.length - 1]
-          : calcIndex === filtered.length
-          ? filtered[0]
-          : filtered[calcIndex]
+      if (calcIndex < 0) {
+        activeOption = filtered[filtered.length - 1]
+      } else {
+        if (calcIndex === filtered.length) activeOption = filtered[0]
+        else activeOption = filtered[calcIndex]
+      }
+      // activeOption =
+      //   calcIndex < 0
+      //     ? filtered[filtered.length - 1]
+      //     : calcIndex === filtered.length
+      //     ? filtered[0]
+      //     : filtered[calcIndex]
     }
   }
 
@@ -110,7 +116,7 @@
     }
   }
 
-  const style = `height: 18pt; margin: 0 5pt;`
+  const style = `height: 18pt; margin-left: 3pt;`
 </script>
 
 <div class="multiselect" class:readonly>
@@ -120,14 +126,16 @@
       <div class="token" data-id={s.value}>
         <span>{s.name}</span>
         {#if !readonly}
-          <div class="token-remove" title="Remove {s.name}">
+          <button class="token-remove" title="Remove {s.name}">
             <CircleWithCross {style} />
-          </div>
+          </button>
         {/if}
       </div>
     {/each}
     <div class="actions">
-      {#if !readonly}
+      {#if readonly}
+        <ReadOnly {style} />
+      {:else}
         <input
           autocomplete="off"
           bind:value={inputValue}
@@ -135,12 +143,12 @@
           on:keyup={handleKeyup}
           on:blur={handleBlur}
           {placeholder} />
-        <div
+        <button
           class="remove-all"
           title="Remove All"
           class:hidden={!Object.keys(selected).length}>
           <CircleWithCross {style} />
-        </div>
+        </button>
       {/if}
     </div>
   </div>
@@ -179,30 +187,14 @@
     flex-wrap: wrap;
     position: relative;
   }
-  .tokens::after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: -1px;
-    content: '';
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background: hsl(45, 100%, 51%);
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-  }
-  .tokens.showOptions::after {
-    width: 100%;
-    left: 0;
-  }
   .token {
     align-items: center;
     background: var(--green);
-    border-radius: 1.25rem;
+    border-radius: 1.25em;
     display: flex;
     margin: 0.25rem 0.5rem 0.25rem 0;
-    max-height: 1.3rem;
-    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    max-height: 1.3em;
+    padding: 0.25rem 0.5rem 0.25rem 0.5em;
     transition: 0.3s;
     white-space: nowrap;
   }
@@ -210,36 +202,36 @@
     background: var(--darkGreen);
   }
   .readonly .token {
-    color: hsl(0, 0%, 40%);
+    color: var(--lightGray);
   }
   .token-remove,
   .remove-all {
     align-items: center;
     border-radius: 50%;
-    color: hsl(214, 17%, 92%);
+    color: var(--gray);
     display: flex;
     justify-content: center;
-    height: 1.25rem;
-    margin-left: 0.25rem;
-    min-width: 1.25rem;
+    height: 1.25em;
+    min-width: 1.25em;
     cursor: pointer;
+    transition: 0.3s;
   }
   .token-remove:hover,
   .remove-all:hover {
-    color: var(--lightBlue);
+    color: var(--darkGray);
   }
 
   .actions {
     align-items: center;
     display: flex;
     flex: 1;
-    min-width: 15rem;
+    min-width: 15em;
   }
 
   input {
     border: none;
-    font-size: 1.5rem;
-    line-height: 1.5rem;
+    font-size: 1.5em;
+    line-height: 1.5em;
     margin: 0;
     outline: none;
     padding: 0;
@@ -248,44 +240,35 @@
   }
 
   ul {
-    left: 0;
     list-style: none;
-    margin-block-end: 0;
-    margin-block-start: 0;
     max-height: 70vh;
     overflow: auto;
     padding-inline-start: 0;
-    position: absolute;
-    top: calc(100% + 1px);
+    top: calc(100% + 1pt);
     width: 100%;
     z-index: 1;
+    background: var(--lightBg);
+    cursor: pointer;
+    position: absolute;
+    border-radius: 1ex;
   }
   li {
-    background-color: white;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-  li:last-child {
-    border-bottom-left-radius: 0.2rem;
-    border-bottom-right-radius: 0.2rem;
+    padding: 6pt 2ex;
   }
   li:not(.selected):hover {
-    background-color: hsl(214, 17%, 92%);
-  }
-  li.selected {
-    background-color: hsl(232, 54%, 41%);
+    background: var(--green);
     color: white;
   }
-  li.selected:nth-child(even) {
-    background-color: hsl(232, 50%, 45%);
+  li.selected {
+    background: var(--darkGreen);
     color: white;
   }
   li.active {
-    background-color: hsl(214, 17%, 88%);
+    background: var(--green);
   }
   li.selected.active,
   li.selected:hover {
-    background-color: hsl(232, 48%, 50%);
+    background: var(--darkerGreen);
   }
 
   .hidden {

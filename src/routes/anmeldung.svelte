@@ -3,6 +3,8 @@
   import marked from 'marked'
   import yaml from 'js-yaml'
 
+  const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
+
   export async function preload(_, { gqlUri }) {
     const chapters = await fetchChapters(gqlUri)
     const options = await fetchJson(`Signup Form Options`, gqlUri)
@@ -11,7 +13,7 @@
       let copy = await fetchMicrocopy(title, gqlUri)
       copy = yaml.safeLoad(copy)
       Object.entries(copy).forEach(([key, val]) => {
-        copy[key] = marked(val)
+        copy[key] = stripOuterPTag(marked(val))
       })
       return copy
     }
@@ -25,9 +27,10 @@
 
 <script>
   import { stores } from '@sapper/app'
+  import Plant from '@svg-icons/remix-fill/plant.svg'
+
   import MultiSelect from '../components/MultiSelect.svelte'
   import Toggle from '../components/Toggle.svelte'
-
   import { handleSubmit } from '../utils/airtable.js'
 
   const { session } = stores()
@@ -43,14 +46,13 @@
 </script>
 
 <form on:submit|preventDefault={() => handleSubmit(baseId, data, apiKey)}>
+  <!-- Prevent implicit form submission on pressing enter in a text field (https://stackoverflow.com/a/51507806) -->
+  <button type="submit" disabled style="display: none" aria-hidden="true" />
+
   <h1>
+    <Plant height="1em" style="vertical-align: -3pt;" />
     {@html snippets.pageTitle}
   </h1>
-  <h2>
-    {@html snippets.pageTitle}
-  </h2>
-  Type:
-  {type}
   <!-- Type RadioButton -->
   <select bind:value={type}>
     {#each options.types as type}
@@ -164,9 +166,8 @@
       {@html snippets.agreementTitle}
     </h2>
     {@html snippets.agreement}
-    <Toggle bind:checked={data.agreement} />
-  {/if}
-  {#if type === `Schüler`}
+    <Toggle name="agreement" bind:checked={data.agreement} />
+  {:else if type === `Schüler`}
     <h2>
       {@html snippets.firstnameTitle}
     </h2>
@@ -238,20 +239,19 @@
     </h2>
     {@html snippets.orgContact}
     <input type="text" name="orgContact" bind:value={data.orgContact} />
+
+    <h2>
+      {@html snippets.needTitle}
+    </h2>
+    {@html snippets.need}
+    <Toggle name="need" bind:checked={data.need} />
   {/if}
 
   <h2>
     {@html snippets.dataProtectionTitle}
   </h2>
   {@html snippets.dataProtection}
-  <Toggle bind:checked={data.dataProtection} />
-  {#if type === `Schüler`}
-    <h2>
-      {@html snippets.needTitle}
-    </h2>
-    {@html snippets.need}
-    <Toggle bind:checked={data.need} />
-  {/if}
+  <Toggle name="dataProtection" bind:checked={data.dataProtection} />
   <h2>
     {@html snippets.submitTitle}
   </h2>
@@ -266,12 +266,9 @@
     background: var(--accentBg);
     padding: 2em;
   }
+  input,
   select {
-    background: var(--bodyBg);
-    font-size: 1em;
-    color: var(--textColor);
-    border-radius: 6pt;
-    padding: 3pt 6pt;
+    display: block;
   }
   button {
     background: var(--darkGreen);
@@ -285,5 +282,8 @@
   button:hover {
     transform: scale(1.02);
     background: var(--green);
+  }
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(var(--invert));
   }
 </style>

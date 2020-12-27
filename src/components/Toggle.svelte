@@ -3,7 +3,7 @@
   export let checked = false
 </script>
 
-<label> <input type="checkbox" {name} bind:checked /> <span /> </label>
+<label for={name}> <input type="checkbox" {name} bind:checked /> <span /> </label>
 
 <style>
   label {

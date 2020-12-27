@@ -59,22 +59,24 @@ const pageQuery = (slug) => `{
   }
 }`
 
-function parseMd(page) {
+function processPage(page) {
   if (!page?.body) return page
+
   page.body = marked(page.body) // generate HTML
   page.plainBody = page.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
+
   return page
 }
 
 export async function fetchPage(slug, uri) {
   const data = await gqlFetch(uri, pageQuery(slug))
   const page = data?.pages?.items[0]
-  return parseMd(page)
+  return processPage(page)
 }
 
 export async function fetchPages(uri) {
   const data = await gqlFetch(uri, pageQuery())
-  return data?.pages?.items?.map(parseMd)
+  return data?.pages?.items?.map(processPage)
 }
 
 const postQuery = (slug) => `{
@@ -115,7 +117,7 @@ const postQuery = (slug) => `{
 
 function processPost(post) {
   post.tags = post.tags.items.map((tag) => tag.title)
-  parseMd(post)
+  processPage(post)
   prefixSlug(post, `blog/`)
   return post
 }

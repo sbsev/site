@@ -83,3 +83,17 @@ main img {
 .grid.disk-img img {
   border-radius: 50%;
 }
+input,
+select {
+  font-size: 1em;
+  background: var(--bodyBg);
+  border-radius: 5pt;
+  border: 1px solid var(--lightBg);
+  color: var(--textColor);
+  padding: 3pt 1ex;
+  width: 18em;
+  max-width: 100%;
+}
+select {
+  font-size: 2.1ex;
+}

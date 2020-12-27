@@ -7,6 +7,7 @@ export const colors = {
 
   green: `#89ba17`,
   darkGreen: `#4d8711`,
+  darkerGreen: `#3c660f`,
   lightGreen: `#95d50f`,
   lighterGreen: `#caef76`,
 
@@ -31,13 +32,14 @@ export const modeColors = {
     hoverColor: colors.lightBlue,
     bodyBg: colors.lightestGray,
     accentBg: `white`,
-    lightBg: colors.lighterGray,
+    lightBg: colors.lightestGray,
     buttonBg: colors.green,
     borderColor: colors.lightBlue,
     headingColor: colors.lightBlue,
     headerBg: colors.darkBlue,
     headerColor: `white`,
     footerBg: colors.darkBlue,
+    invert: 0,
   },
   dark: {
     textColor: `white`,
@@ -52,5 +54,6 @@ export const modeColors = {
     headerBg: colors.darkerBlue,
     headerColor: colors.lightBlue,
     footerBg: `black`,
+    invert: 1,
   },
 }
