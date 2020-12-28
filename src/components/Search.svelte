@@ -105,9 +105,10 @@
     cursor: pointer;
     transition: 0.3s;
     opacity: 0;
+    height: 1em;
   }
   input::placeholder {
-    color: var(--headerColor);
+    color: var(--linkColor);
   }
   input.hasFocus {
     opacity: 1;

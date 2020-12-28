@@ -15,7 +15,7 @@ const getClient = () =>
     accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
   })
 
-export async function searchPages(
+export async function searchStringInContentType(
   searchTerm = process.argv[2],
   contentType = process.argv[3] || `page`
 ) {
@@ -32,4 +32,4 @@ export async function searchPages(
 }
 
 // run with: node src/utils/contentful.js
-// searchPages()
+// searchStringInContentType()
