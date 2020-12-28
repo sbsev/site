@@ -33,7 +33,7 @@ export const modeColors = {
     hoverColor: colors.lightBlue,
     bodyBg: colors.lightestGray,
     accentBg: `white`,
-    lightBg: colors.lightestGray,
+    lightBg: colors.lighterGray,
     buttonBg: colors.green,
     borderColor: colors.lightBlue,
     headingColor: colors.lightBlue,

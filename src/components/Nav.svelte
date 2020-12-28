@@ -129,6 +129,9 @@
   li::marker {
     color: var(--headerColor);
   }
+  nav > ul > li > ul {
+    padding-left: 2ex;
+  }
   @media (max-width: 1000px) {
     /* mobile styles */
     nav {
@@ -181,7 +184,6 @@
       opacity: 0;
       transition: 0.3s;
       display: grid;
-      padding-left: 2ex;
       gap: 5pt 1em;
       width: max-content;
     }

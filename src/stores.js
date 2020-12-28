@@ -10,7 +10,9 @@ colorMode.subscribe(
 )
 
 export const signupForm = writable(
-  typeof localStorage !== `undefined` ? JSON.parse(localStorage.signupForm) : {}
+  typeof localStorage !== `undefined` && localStorage.signupForm
+    ? JSON.parse(localStorage.signupForm)
+    : {}
 )
 
 signupForm.subscribe(

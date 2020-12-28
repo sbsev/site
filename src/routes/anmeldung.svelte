@@ -36,18 +36,23 @@
 <script>
   import { stores } from '@sapper/app'
   import Plant from '@svg-icons/remix-fill/plant.svg'
+  import { onMount } from 'svelte'
 
   import FormInput from '../components/FormInput.svelte'
+  import RadioButton from '../components/RadioButton.svelte'
   import { handleSubmit } from '../utils/airtable.js'
   import { signupForm as data } from '../stores'
 
   export let studentSnippets, chapters, options, pupilSnippets
 
-  const { session } = stores()
+  const { session, page } = stores()
   const { AIRTABLE_API_KEY: apiKey } = $session
 
-  let type = `Student`
-  let formIsValid = false
+  let type
+  onMount(() => {
+    type = $page.query.type ?? `Student`
+    if ($page.query.chapter) $data.chapter = $page.query.chapter
+  })
 
   $: snippets = type === `Student` ? studentSnippets : pupilSnippets
   $: baseId = chapters?.find(({ title }) => title === data.chapter)?.baseId
@@ -61,24 +66,15 @@
     <Plant height="1em" style="vertical-align: -3pt;" />
     {@html snippets.page.title}
   </h1>
-  <!-- Type RadioButton -->
-  <select bind:value={type}>
-    {#each options.types as type}
-      <option value={type}>{type}</option>
-    {/each}
-  </select>
 
-  {@html snippets.infoText}
+  <RadioButton options={options.types} bind:value={type} />
+
+  {@html snippets.page.note}
 
   <FormInput
     {...snippets.chapter}
-    select={chapters.map((c) => c.title)}
-    bind:value={$data.chapter} />
-
-  <FormInput
-    {...snippets.subjects}
-    bind:value={$data.subjects}
-    multiselect={options.subjects} />
+    bind:value={$data.chapter}
+    select={chapters.map((c) => c.title)} />
 
   <FormInput {...snippets.gender} select={options.genders} bind:value={$data.gender} />
 
@@ -98,6 +94,11 @@
     <FormInput {...snippets.birthDate} bind:value={$data.birthDate} type="date" />
 
     <FormInput
+      {...snippets.subjects}
+      bind:value={$data.subjects}
+      multiselect={options.subjects} />
+
+    <FormInput
       {...snippets.schoolTypes}
       bind:value={$data.schoolTypes}
       multiselect={options.schoolTypes} />
@@ -110,25 +111,30 @@
 
     <FormInput
       {...snippets.discovery}
-      select={options.discoveries}
-      bind:value={$data.discovery} />
+      bind:value={$data.discovery}
+      select={options.discoveries} />
 
     <FormInput {...snippets.agreement} bind:value={$data.agreement} type="toggle" />
   {:else if type === `Schüler`}
     <FormInput {...snippets.firstname} bind:value={$data.firstname} />
 
     <FormInput
+      {...snippets.subjects}
+      bind:value={$data.subjects}
+      multiselect={options.subjects} />
+
+    <FormInput
       {...snippets.schoolType}
       bind:value={$data.schoolType}
-      select={options.schoolType} />
+      select={options.schoolTypes} />
 
     <FormInput {...snippets.level} bind:value={$data.level} />
 
     <FormInput {...snippets.place} bind:value={$data.place} />
 
-    <FormInput {...snippets.remarks} bind:value={$data.remarks} />
+    <FormInput {...snippets.age} bind:value={$data.age} type="number" />
 
-    <FormInput {...snippets.remarks} bind:value={$data.remarks} type="number" />
+    <FormInput {...snippets.remarks} bind:value={$data.remarks} />
 
     <FormInput {...snippets.nameContact} bind:value={$data.nameContact} />
 
@@ -150,30 +156,40 @@
     {@html snippets.submit.title}
   </h3>
   {@html snippets.submit.note}
-  <button type="submit" disabled={!formIsValid}>Anmeldung Abschicken</button>
+  <button type="submit">Anmeldung Abschicken</button>
+  <input
+    type="reset"
+    value="Formular zurücksetzen"
+    on:click|preventDefault={() => {
+      if (confirm(`Formular wirklich leeren?`)) $data = {}
+    }} />
 </form>
 
 <style>
   form {
     max-width: 40em;
     margin: 2em auto;
-    background: var(--accentBg);
     padding: 2em;
   }
-  select {
-    display: block;
-  }
-  button {
-    background: var(--darkGreen);
-    color: white;
-    padding: 1ex 1em;
-    font-size: 1.2em;
-    margin: auto;
+  button,
+  input {
+    margin: 1em auto;
     display: block;
     transition: 0.3s;
+    padding: 1ex 1em;
+    color: white;
   }
-  button:hover {
+  button[type='submit'] {
+    background: var(--darkGreen);
+    font-size: 1.2em;
+  }
+  button[type='submit']:hover {
     transform: scale(1.02);
     background: var(--green);
+  }
+  input[type='reset'] {
+    background: var(--orange);
+    font-size: 0.8em;
+    cursor: pointer;
   }
 </style>

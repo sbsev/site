@@ -81,12 +81,6 @@
         if (calcIndex === filtered.length) activeOption = filtered[0]
         else activeOption = filtered[calcIndex]
       }
-      // activeOption =
-      //   calcIndex < 0
-      //     ? filtered[filtered.length - 1]
-      //     : calcIndex === filtered.length
-      //     ? filtered[0]
-      //     : filtered[calcIndex]
     }
   }
 
@@ -173,9 +167,10 @@
 
 <style>
   .multiselect {
-    background: var(--bodyBg);
+    background: var(--accentBg);
     position: relative;
     border-radius: 1ex;
+    margin: 1em 0;
   }
   .multiselect:not(.readonly):hover {
     border-bottom-color: hsl(0, 0%, 50%);
@@ -236,7 +231,7 @@
     outline: none;
     padding: 0;
     width: 100%;
-    background: var(--bodyBg);
+    background: none;
   }
 
   ul {

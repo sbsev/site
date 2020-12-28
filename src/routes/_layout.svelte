@@ -6,26 +6,36 @@
     const footer = await fetchJson(`Footer`, session.gqlUri)
     const social = await fetchJson(`Social`, session.gqlUri)
     const chapters = await fetchChapters(session.gqlUri)
-    const page = (await fetchPage(path.substring(1), session.gqlUri)) || {}
+    const pageData = (await fetchPage(path.substring(1), session.gqlUri)) || {}
 
     nav.find((el) => el.url === `/standorte`).subNav[0].span = true
     nav
       .find((el) => el.url === `/standorte`)
       .subNav.unshift(...chapters.map((el) => ({ ...el, url: el.slug })))
 
-    return { nav, page, footer, social }
+    return { nav, pageData, footer, social }
   }
 </script>
 
 <script>
   import Update from '@svg-icons/material-sharp/update.svg'
+  import { stores } from '@sapper/app'
 
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
 
-  export let nav, page, footer, social
+  export let nav, pageData, footer, social
 
-  const { title, sys } = page
+  const { page } = stores()
+
+  if (typeof window !== `undefined`) {
+    page.subscribe(() => {
+      if (!window.locations) window.locations = [document.referrer]
+      window.locations.push(location.pathname + location.search)
+    })
+  }
+
+  const { title, sys } = pageData
 </script>
 
 <svelte:head>
@@ -35,7 +45,7 @@
 <Header {nav} />
 <main>
   <slot />
-  {#if sys?.publishedAt && !page.slug.includes(`blog`)}
+  {#if sys?.publishedAt && !pageData.slug.includes(`blog`)}
     <time><Update
         height="3ex"
         style="vertical-align: bottom; padding-right: 4pt;" />Zuletzt bearbeitet:

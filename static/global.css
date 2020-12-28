@@ -86,7 +86,6 @@ main img {
 input,
 select {
   font-size: 1em;
-  background: var(--bodyBg);
   border-radius: 5pt;
   border: 1px solid var(--lightBg);
   color: var(--textColor);

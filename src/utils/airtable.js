@@ -1,5 +1,4 @@
 function airtablePost(baseId, table, data, apiKey) {
-  console.log(data[0][`fields`])
   fetch(`https://api.airtable.com/v0/${baseId}/${table}`, {
     method: `POST`,
     headers: {
@@ -15,6 +14,7 @@ const testBaseId = `appe3hVONuwBkuQv1`
 let runTest = true
 
 export async function handleSubmit(chapterBaseId, data, apiKey) {
+  console.log(`data:`, data)
   const table = data.type === `Student` ? `Studenten` : `Schüler`
   // const table = `Studenten`
   if (data.age) {
@@ -51,11 +51,7 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
     'E-Mail Kontaktperson': data.emailContact, // for pupils
     'Telefon Kontaktperson': data.phoneContact, // for pupils
     'Organisation Kontaktperson': data.orgContact, // for pupils
-  }
-  const smallfields = {
-    Geschlecht: data.gender,
-    Datenschutz: data.dataProtection,
-    Fächer: data.subjects,
+    Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
   }
   // Certain chapters organize contact persons a bit different to others
   if (data.chapter === `Halle` && table === `Schüler`) {
@@ -73,6 +69,7 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
     // fields not present in individual chapter tables
     const globalFields = {
       Standort: data.chapter,
+      Spur: window.locations.join(`,\n`),
       // Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${document.referrer}, ${source}`,
       // Spur: `test2`, // window.locations.join(`,\n`),
     }
@@ -85,8 +82,7 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
 
     const townSubmit = [
       {
-        // fields: { ...fields, Kontaktpersonen: data.nameContact },
-        fields: smallfields,
+        fields: { ...fields, Kontaktpersonen: data.nameContact },
       },
     ]
 
@@ -121,8 +117,7 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
     //   discovery: null,
     // })
   } catch (err) {
-    console.log(`Forms error`)
-    console.error(err)
+    console.error(`Forms error`, err)
     // alert(snippets.error + `\n\n` + JSON.stringify(err, null, 4))
   }
 }

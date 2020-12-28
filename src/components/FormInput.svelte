@@ -2,7 +2,7 @@
   import Toggle from './Toggle.svelte'
   import MultiSelect from './MultiSelect.svelte'
 
-  export let value
+  export let value = ``
   export let name
   export let title = ``
   export let note = ``
@@ -19,14 +19,14 @@
   {@html note}
 {/if}
 
-{#if select.length}
+{#if select?.length}
   <select id={name} bind:value>
     {#each select as option}
       <option value={option}>{option}</option>
     {/each}
   </select>
-{:else if multiselect.length}
-  <MultiSelect {name} bind:checked={value}>
+{:else if multiselect?.length}
+  <MultiSelect bind:checked={value}>
     {#each multiselect as option}
       <option value={option}>{option}</option>
     {/each}
@@ -54,6 +54,7 @@
   select {
     display: block;
     margin: 1em 0;
+    background: var(--accentBg);
   }
   ::-webkit-calendar-picker-indicator {
     filter: invert(var(--invert));
