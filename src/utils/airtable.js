@@ -14,7 +14,6 @@ const testBaseId = `appe3hVONuwBkuQv1`
 let runTest = true
 
 export async function handleSubmit(chapterBaseId, data, apiKey) {
-  console.log(`data:`, data)
   const table = data.type === `Student` ? `Studenten` : `Schüler`
   // const table = `Studenten`
   if (data.age) {
@@ -90,6 +89,7 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
 
     if (runTest) {
       await Promise.all([airtablePost(testBaseId, table, townSubmit, apiKey)])
+      return true
     } else {
       await Promise.all([
         // airtablePost(globalBaseId, table, globalSubmit, apiKey), //reactivate after testing
@@ -103,21 +103,11 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
         //     { typecast: true }
         //   ),
       ])
+      return true
     }
-    // alert(snippets.success)
-    // // Reset form fields and localStorage.
-    // setStoredData({})
-    // rhf.reset(null)
-    // // Second reset needed to clear controlled react-select fields.
-    // rhf.reset({
-    //   chapter: ``,
-    //   subjects: ``,
-    //   schoolTypes: ``,
-    //   schoolType: null,
-    //   discovery: null,
-    // })
   } catch (err) {
     console.error(`Forms error`, err)
+    return false
     // alert(snippets.error + `\n\n` + JSON.stringify(err, null, 4))
   }
 }

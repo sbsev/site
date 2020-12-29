@@ -99,7 +99,7 @@ select {
   display: block;
   white-space: nowrap;
   margin: 1ex;
-  color: white;
+  color: white !important;
   border-radius: 5pt;
   padding: 1ex 1.5ex;
   transition: 0.3s;
@@ -126,7 +126,7 @@ select {
   background: var(--darkOrange);
 }
 .btn.stroke {
-  color: var(--textColor);
+  color: var(--textColor) !important;
   background: none;
 }
 .btn.stroke.blue {
@@ -139,6 +139,6 @@ select {
   border: 2pt solid var(--orange);
 }
 .btn.stroke:hover {
-  color: white;
+  color: white !important;
   border: 2pt solid transparent;
 }

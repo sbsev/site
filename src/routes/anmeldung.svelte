@@ -41,24 +41,55 @@
   import FormInput from '../components/FormInput.svelte'
   import RadioButton from '../components/RadioButton.svelte'
   import { handleSubmit } from '../utils/airtable.js'
-  import { signupForm as data } from '../stores'
+  import { signupForm as state } from '../stores'
+  // state is an object of objects with initial keys
+  // { valid: true, dirty: false, value: null } for each form field
 
   export let studentSnippets, chapters, options, pupilSnippets
 
   const { session, page } = stores()
   const { AIRTABLE_API_KEY: apiKey } = $session
 
-  let type
+  let type, submitMessage, submitError, validationError
   onMount(() => {
     type = $page.query.type ?? `Student`
-    if ($page.query.chapter) $data.chapter = $page.query.chapter
+    if ($page.query.chapter) {
+      if (!$state.chapter) $state.chapter = {}
+      $state.chapter.value = $page.query.chapter
+    }
   })
 
   $: snippets = type === `Student` ? studentSnippets : pupilSnippets
-  $: baseId = chapters?.find(({ title }) => title === data.chapter)?.baseId
+
+  function checkFormValid() {
+    // set all fields to dirty to trigger their validation before allowing submission
+    Object.keys($state).forEach((key) => ($state[key].dirty = true))
+    // use 100 ms timeout since svelte's two-way binding appears to need some time
+    // to update all the state[key].valid attributes after marking them as dirty
+    setTimeout(async () => {
+      const formIsValid = Object.values($state)
+        .map((val) => val.valid)
+        .reduce((all, field) => all && field, true)
+
+      let formValues = Object.entries($state).map(([key, val]) => [key, val.value])
+      formValues = Object.fromEntries(formValues)
+      const baseId = chapters?.find(({ title }) => title === $state.chapter.value)?.baseId
+      if (formIsValid) {
+        const success = await handleSubmit(baseId, { ...formValues, type }, apiKey)
+
+        if (success) {
+          submitMessage = snippets.success
+          submitError = ``
+          validationError = ``
+        } else submitError = snippets.error
+      } else {
+        validationError = `Das Formular ist nicht vollständig ausgefüllt`
+      }
+    }, 10)
+  }
 </script>
 
-<form on:submit|preventDefault={() => handleSubmit(baseId, data, apiKey)}>
+<form on:submit|preventDefault={checkFormValid}>
   <!-- Prevent implicit form submission on pressing enter in a text field (https://stackoverflow.com/a/51507806) -->
   <button type="submit" disabled style="display: none" aria-hidden="true" />
 
@@ -70,98 +101,129 @@
   <RadioButton options={options.types} bind:value={type} />
 
   {@html snippets.page.note}
+  <FormInput
+    select={chapters.map((c) => c.title)}
+    {...snippets.chapter}
+    bind:state={$state.chapter}
+    required />
 
   <FormInput
-    {...snippets.chapter}
-    bind:value={$data.chapter}
-    select={chapters.map((c) => c.title)} />
-
-  <FormInput {...snippets.gender} select={options.genders} bind:value={$data.gender} />
+    select={options.genders}
+    {...snippets.gender}
+    bind:state={$state.gender}
+    required />
 
   {#if type === `Student`}
-    <FormInput {...snippets.fullname} bind:value={$data.fullname} />
+    <FormInput {...snippets.fullname} bind:state={$state.fullname} required />
 
-    <FormInput {...snippets.phone} bind:value={$data.phone} type="phone" />
+    <FormInput {...snippets.phone} bind:state={$state.phone} type="phone" />
 
-    <FormInput {...snippets.email} bind:value={$data.email} type="email" />
+    <FormInput {...snippets.email} bind:state={$state.email} required type="email" />
 
-    <FormInput {...snippets.studySubject} bind:value={$data.studySubject} />
+    <FormInput {...snippets.studySubject} bind:state={$state.studySubject} />
 
-    <FormInput {...snippets.semester} bind:value={$data.semester} type="number" />
+    <FormInput {...snippets.semester} bind:state={$state.semester} type="number" />
 
-    <FormInput {...snippets.birthPlace} bind:value={$data.birthPlace} />
+    <FormInput {...snippets.birthPlace} bind:state={$state.birthPlace} />
 
-    <FormInput {...snippets.birthDate} bind:value={$data.birthDate} type="date" />
+    <FormInput {...snippets.birthDate} bind:state={$state.birthDate} type="date" />
 
     <FormInput
       {...snippets.subjects}
-      bind:value={$data.subjects}
-      multiselect={options.subjects} />
+      bind:state={$state.subjects}
+      multiselect={options.subjects}
+      required />
 
     <FormInput
       {...snippets.schoolTypes}
-      bind:value={$data.schoolTypes}
+      bind:state={$state.schoolTypes}
       multiselect={options.schoolTypes} />
 
-    <FormInput {...snippets.levels} bind:value={$data.levels} />
+    <FormInput {...snippets.levels} bind:state={$state.levels} />
 
-    <FormInput {...snippets.place} bind:value={$data.place} />
+    <FormInput {...snippets.place} bind:state={$state.place} required />
 
-    <FormInput {...snippets.remarks} bind:value={$data.remarks} />
+    <FormInput {...snippets.remarks} bind:state={$state.remarks} />
 
     <FormInput
+      select={options.discoveries}
       {...snippets.discovery}
-      bind:value={$data.discovery}
-      select={options.discoveries} />
+      bind:state={$state.discovery}
+      required />
 
-    <FormInput {...snippets.agreement} bind:value={$data.agreement} type="toggle" />
+    <FormInput
+      {...snippets.agreement}
+      bind:state={$state.agreement}
+      type="toggle"
+      required />
   {:else if type === `Schüler`}
-    <FormInput {...snippets.firstname} bind:value={$data.firstname} />
+    <FormInput {...snippets.firstname} bind:state={$state.firstname} required />
 
     <FormInput
       {...snippets.subjects}
-      bind:value={$data.subjects}
-      multiselect={options.subjects} />
+      bind:state={$state.subjects}
+      multiselect={options.subjects}
+      required />
 
     <FormInput
+      select={options.schoolTypes}
       {...snippets.schoolType}
-      bind:value={$data.schoolType}
-      select={options.schoolTypes} />
+      bind:state={$state.schoolType}
+      required />
 
-    <FormInput {...snippets.level} bind:value={$data.level} />
+    <FormInput {...snippets.level} bind:state={$state.level} required />
 
-    <FormInput {...snippets.place} bind:value={$data.place} />
+    <FormInput {...snippets.place} bind:state={$state.place} required />
 
-    <FormInput {...snippets.age} bind:value={$data.age} type="number" />
+    <FormInput {...snippets.age} bind:state={$state.age} type="number" />
 
-    <FormInput {...snippets.remarks} bind:value={$data.remarks} />
+    <FormInput {...snippets.remarks} bind:state={$state.remarks} />
 
-    <FormInput {...snippets.nameContact} bind:value={$data.nameContact} />
+    <FormInput {...snippets.nameContact} bind:state={$state.nameContact} required />
 
-    <FormInput {...snippets.phoneContact} bind:value={$data.phoneContact} type="phone" />
+    <FormInput
+      {...snippets.phoneContact}
+      bind:state={$state.phoneContact}
+      type="phone"
+      required />
 
-    <FormInput {...snippets.emailContact} bind:value={$data.emailContact} type="email" />
+    <FormInput
+      {...snippets.emailContact}
+      bind:state={$state.emailContact}
+      type="email"
+      required />
 
-    <FormInput {...snippets.orgContact} bind:value={$data.orgContact} />
+    <FormInput {...snippets.orgContact} bind:state={$state.orgContact} required />
 
-    <FormInput {...snippets.need} bind:value={$data.need} type="toggle" />
+    <FormInput {...snippets.need} bind:state={$state.need} type="toggle" required />
   {/if}
 
   <FormInput
     {...snippets.dataProtection}
-    bind:value={$data.dataProtection}
-    type="toggle" />
+    bind:state={$state.dataProtection}
+    type="toggle"
+    required />
 
   <h3>
     {@html snippets.submit.title}
   </h3>
   {@html snippets.submit.note}
   <button type="submit">Anmeldung Abschicken</button>
+  {#if submitMessage}
+    <div class="success">
+      {@html submitMessage}
+    </div>
+  {/if}
+  {#if submitError || validationError}
+    <div class="error">
+      {@html submitError || validationError}
+    </div>
+  {/if}
   <input
     type="reset"
     value="Formular zurücksetzen"
     on:click|preventDefault={() => {
-      if (confirm(`Formular wirklich leeren?`)) $data = {}
+      if (confirm(`Formular wirklich leeren?`)) $state = {}
     }} />
 </form>
 
@@ -183,7 +245,11 @@
     background: var(--darkGreen);
     font-size: 1.2em;
   }
-  button[type='submit']:hover {
+  button[type='submit']:disabled {
+    background: var(--gray);
+    font-size: 1.2em;
+  }
+  button[type='submit']:hover:not(:disabled) {
     transform: scale(1.02);
     background: var(--green);
   }
@@ -191,5 +257,14 @@
     background: var(--orange);
     font-size: 0.8em;
     cursor: pointer;
+  }
+  div {
+    text-align: center;
+  }
+  div.error {
+    color: red;
+  }
+  div.success {
+    color: var(--green);
   }
 </style>

@@ -1,8 +1,10 @@
 <script>
   // https://svelte.dev/repl/c7094fb1004b440482d2a88f4d1d7ef5
 
-  import { onMount } from 'svelte'
+  import { onMount, createEventDispatcher } from 'svelte'
   import { fly } from 'svelte/transition'
+
+  const dispatch = createEventDispatcher()
 
   import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
@@ -11,6 +13,7 @@
   export let value = []
   export let readonly = false
   export let placeholder = ``
+  export let valid = true
 
   let input, slot, activeOption, inputValue
   let options = []
@@ -49,6 +52,7 @@
     if (!readonly) {
       delete selected[value]
       selected = selected // assignment needed to trigger rerender
+      dispatch(`blur`)
     }
   }
 
@@ -113,14 +117,14 @@
   const style = `height: 18pt; margin-left: 3pt;`
 </script>
 
-<div class="multiselect" class:readonly>
+<div class="multiselect" class:readonly class:valid>
   <div class="tokens" class:showOptions on:click={handleTokenClick}>
     <ChevronExpand {style} />
     {#each Object.values(selected) as s}
       <div class="token" data-id={s.value}>
         <span>{s.name}</span>
         {#if !readonly}
-          <button class="token-remove" title="Remove {s.name}">
+          <button type="button" class="token-remove" title="Remove {s.name}">
             <CircleWithCross {style} />
           </button>
         {/if}
@@ -131,6 +135,7 @@
         <ReadOnly {style} />
       {:else}
         <input
+          on:blur={() => dispatch(`blur`)}
           autocomplete="off"
           bind:value={inputValue}
           bind:this={input}
@@ -138,6 +143,7 @@
           on:blur={handleBlur}
           {placeholder} />
         <button
+          type="button"
           class="remove-all"
           title="Remove All"
           class:hidden={!Object.keys(selected).length}>
@@ -171,6 +177,9 @@
     position: relative;
     border-radius: 1ex;
     margin: 1em 0;
+  }
+  .multiselect:not(.valid) {
+    border: 1px solid red;
   }
   .multiselect:not(.readonly):hover {
     border-bottom-color: hsl(0, 0%, 50%);
