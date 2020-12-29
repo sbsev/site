@@ -60,18 +60,23 @@
       height="{hasFocus ? 2 : 2.3}ex"
       style="vertical-align: text-bottom; z-index: 0;" />
   </button>
-  {#if hasFocus && allHits.some(({ hits }) => hits.length) && query}
+  {#if hasFocus && query}
     <div class="results" use:preventOverScroll>
-      {#each allHits as { index, hits } (index)}
-        {#if hits.length}
-          <section>
-            <h2>{index}</h2>
-            {#each hits as hit (hit.objectID)}
-              <SearchHit {hit} clickHandler={() => (hasFocus = false)} />
-            {/each}
-          </section>
-        {/if}
-      {/each}
+      {#if allHits.some(({ hits }) => hits.length)}
+        {#each allHits as { index, hits } (index)}
+          {#if hits.length}
+            <section>
+              <h2>
+                {index}
+                {#if hits.length > 0}<span>Ergebnisse: {hits.length}</span>{/if}
+              </h2>
+              {#each hits as hit (hit.objectID)}
+                <SearchHit {hit} clickHandler={() => (hasFocus = false)} />
+              {/each}
+            </section>
+          {/if}
+        {/each}
+      {:else}Keine Ergebnisse für '{query}'{/if}
     </div>
   {/if}
 </aside>
@@ -93,6 +98,13 @@
     color: var(--headingColor);
     border-bottom: 1px solid;
     text-align: center;
+    position: relative;
+  }
+  h2 span {
+    position: absolute;
+    font-size: 1ex;
+    bottom: 0;
+    right: 0;
   }
   input {
     font-size: 1em;
@@ -105,14 +117,14 @@
     cursor: pointer;
     transition: 0.3s;
     opacity: 0;
-    height: 1em;
+    height: 2ex;
   }
   input::placeholder {
     color: var(--linkColor);
   }
   input.hasFocus {
     opacity: 1;
-    width: 4em;
+    width: 5em;
     margin-left: -2.5ex;
     padding-left: 3ex;
   }
@@ -124,9 +136,9 @@
     top: 3ex;
     max-height: 60vh;
     position: absolute;
-    max-width: 30em;
+    width: max-content;
+    max-width: 80vw;
     overflow: scroll;
-    width: 70vw;
     right: 0;
     box-shadow: 0 0 1ex black;
     padding: 1ex 1em;
@@ -135,6 +147,8 @@
   section {
     font-size: 0.7em;
     white-space: initial;
+    width: 100%;
+    max-width: 40em;
   }
   section :global(em) {
     background: var(--hoverColor);

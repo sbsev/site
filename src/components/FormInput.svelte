@@ -83,6 +83,8 @@
     display: block;
     margin: 1em 0;
     background: var(--accentBg);
+    width: 100%;
+    height: 2em;
   }
   input:not(.valid),
   select:not(.valid) {

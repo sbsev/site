@@ -19,7 +19,7 @@ export const algoliaConfig = {
   apiKey: process.env.ALGOLIA_ADMIN_KEY,
   // partialUpdates: true,
   indices: [
-    { name: `Pages`, getData: bodyToPlainText(fetchPages) },
+    { name: `Seiten`, getData: bodyToPlainText(fetchPages) },
     { name: `Posts`, getData: bodyToPlainText(fetchPosts) },
   ],
   settings: {

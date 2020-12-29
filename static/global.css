@@ -90,8 +90,8 @@ select {
   border: 1px solid var(--lightBg);
   color: var(--textColor);
   padding: 3pt 1ex;
-  width: 18em;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* anchor tags styled as buttons */
