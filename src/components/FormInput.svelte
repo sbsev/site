@@ -47,11 +47,11 @@
     {/each}
   </select>
 {:else if multiselect.length}
-  <MultiSelect bind:value on:blur={handleBlur} bind:valid>
-    {#each multiselect as option}
-      <option value={option}>{option}</option>
-    {/each}
-  </MultiSelect>
+  <MultiSelect
+    bind:selected={value}
+    on:blur={handleBlur}
+    bind:valid
+    options={multiselect} />
 {:else if type === `toggle`}
   <Toggle {name} bind:checked={value} />
 {:else if type === `text`}

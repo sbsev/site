@@ -1,42 +1,25 @@
 <script>
   // https://svelte.dev/repl/c7094fb1004b440482d2a88f4d1d7ef5
 
-  import { onMount, createEventDispatcher } from 'svelte'
+  import { createEventDispatcher } from 'svelte'
   import { fly } from 'svelte/transition'
 
-  const dispatch = createEventDispatcher()
+  import CrossIcon from '@svg-icons/entypo/circle-with-cross.svg'
+  import ExpandIcon from '@svg-icons/bootstrap/chevron-expand.svg'
+  import ReadOnlyIcon from '@svg-icons/material-sharp/person-add-disabled.svg'
 
-  import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
-  import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
-  import ReadOnly from '@svg-icons/material-sharp/person-add-disabled.svg'
-
-  export let value = []
+  export let selected = []
   export let readonly = false
   export let placeholder = ``
   export let valid = true
+  export let options
 
-  let input, slot, activeOption, inputValue
-  let options = []
+  const dispatch = createEventDispatcher()
+  let input, activeOption, inputValue
   let showOptions = false
-  let selected = {}
-  let first = true
 
-  onMount(() => {
-    slot.querySelectorAll(`option`).forEach((o) => {
-      o.selected && !value.includes(o.value) && (value = [...value, o.value])
-      options = [...options, { value: o.value, name: o.textContent }]
-    })
-    if (value) {
-      const reducer = (obj, op) =>
-        value.includes(op.value) ? { ...obj, [op.value]: op } : obj
-      selected = options.reduce(reducer, {})
-    }
-    first = false
-  })
-
-  $: if (!first) value = Object.values(selected).map((o) => o.value)
-  $: filtered = options.filter((o) =>
-    inputValue ? o.name.toLowerCase().includes(inputValue.toLowerCase()) : o
+  $: filtered = options.filter((option) =>
+    inputValue ? option.toLowerCase().includes(inputValue.toLowerCase()) : option
   )
   $: if (
     (activeOption && !filtered.includes(activeOption)) ||
@@ -45,35 +28,25 @@
     activeOption = filtered[0]
 
   function add(token) {
-    if (!readonly) selected[token.value] = token
+    if (!readonly && !selected.includes(token)) selected = [token, ...selected]
   }
 
-  function remove(value) {
-    if (!readonly) {
-      delete selected[value]
-      selected = selected // assignment needed to trigger rerender
-      dispatch(`blur`)
-    }
+  function remove(token) {
+    if (readonly) return
+    selected = selected.filter((str) => str !== token)
+    dispatch(`blur`)
   }
 
   function optionsVisibility(show) {
     if (readonly) return
-    if (typeof show === `boolean`) {
-      showOptions = show
-      if (show) input.focus()
-    } else {
-      showOptions = !showOptions
-    }
-    if (!showOptions) {
-      activeOption = undefined
-    }
+    showOptions = show
+    if (show) input.focus()
+    else activeOption = undefined
   }
 
   function handleKeyup(event) {
-    if (event.keyCode === 13) {
-      Object.keys(selected).includes(activeOption.value)
-        ? remove(activeOption.value)
-        : add(activeOption)
+    if (event.code === `Enter`) {
+      selected.includes(activeOption) ? remove(activeOption) : add(activeOption)
       inputValue = ``
     }
     if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
@@ -88,51 +61,34 @@
     }
   }
 
-  function handleBlur() {
-    optionsVisibility(false)
-  }
-
-  function handleTokenClick(e) {
-    if (e.target.closest(`.token-remove`)) {
-      e.stopPropagation()
-      remove(e.target.closest(`.token`).dataset.id)
-    } else if (e.target.closest(`.remove-all`)) {
-      selected = []
-      inputValue = ``
-    } else {
-      optionsVisibility(true)
-    }
-  }
-
-  function handleOptionMousedown(e) {
-    const value = e.target.dataset.value
-    if (selected[value]) {
-      remove(value)
-    } else {
-      add(options.filter((o) => o.value === value)[0])
-      input.focus()
-    }
+  const removeAll = () => {
+    selected = []
+    inputValue = ``
   }
 
   const style = `height: 18pt; margin-left: 3pt;`
 </script>
 
-<div class="multiselect" class:readonly class:valid>
-  <div class="tokens" class:showOptions on:click={handleTokenClick}>
-    <ChevronExpand {style} />
-    {#each Object.values(selected) as s}
-      <div class="token" data-id={s.value}>
-        <span>{s.name}</span>
+<div
+  class="multiselect"
+  class:readonly
+  class:valid
+  on:click={() => optionsVisibility(true)}>
+  <div class="tokens" class:showOptions>
+    <ExpandIcon {style} />
+    {#each selected as itm}
+      <div class="token">
+        <span>{itm}</span>
         {#if !readonly}
-          <button type="button" class="token-remove" title="Remove {s.name}">
-            <CircleWithCross {style} />
+          <button on:click={() => remove(itm)} type="button" title="Remove {itm}">
+            <CrossIcon {style} />
           </button>
         {/if}
       </div>
     {/each}
     <div class="actions">
       {#if readonly}
-        <ReadOnly {style} />
+        <ReadOnlyIcon {style} />
       {:else}
         <input
           on:blur={() => dispatch(`blur`)}
@@ -140,31 +96,28 @@
           bind:value={inputValue}
           bind:this={input}
           on:keyup={handleKeyup}
-          on:blur={handleBlur}
+          on:blur={() => optionsVisibility(false)}
           {placeholder} />
         <button
           type="button"
           class="remove-all"
           title="Remove All"
-          class:hidden={!Object.keys(selected).length}>
-          <CircleWithCross {style} />
+          on:click={removeAll}
+          style={selected.length === 0 && `display: none;`}>
+          <CrossIcon {style} />
         </button>
       {/if}
     </div>
   </div>
 
-  <select bind:this={slot} type="multiple" class="hidden"><slot /></select>
-
   {#if showOptions}
-    <ul
-      transition:fly={{ duration: 200, y: 50 }}
-      on:mousedown|preventDefault={handleOptionMousedown}>
+    <ul transition:fly={{ duration: 200, y: 50 }}>
       {#each filtered as option}
         <li
-          class:selected={selected[option.value]}
-          class:active={activeOption === option}
-          data-value={option.value}>
-          {option.name}
+          on:mousedown|preventDefault={() => (selected.includes(option) ? remove(option) : add(option))}
+          class:selected={selected.includes(option)}
+          class:active={activeOption === option}>
+          {option}
         </li>
       {/each}
     </ul>
@@ -181,64 +134,49 @@
   .multiselect:not(.valid) {
     border: 1px solid red;
   }
-  .multiselect:not(.readonly):hover {
-    border-bottom-color: hsl(0, 0%, 50%);
+  .multiselect.readonly {
+    background: var(--lightBg);
   }
 
   .tokens {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    position: relative;
   }
   .token {
     align-items: center;
     background: var(--green);
-    border-radius: 1.25em;
+    border-radius: 1ex;
     display: flex;
-    margin: 0.25rem 0.5rem 0.25rem 0;
-    max-height: 1.3em;
-    padding: 0.25rem 0.5rem 0.25rem 0.5em;
+    margin: 3pt;
+    padding: 1pt 0 1pt 1ex;
     transition: 0.3s;
     white-space: nowrap;
   }
   .token:hover {
     background: var(--darkGreen);
   }
-  .readonly .token {
-    color: var(--lightGray);
-  }
-  .token-remove,
+  .token button,
   .remove-all {
     align-items: center;
     border-radius: 50%;
-    color: var(--gray);
     display: flex;
-    justify-content: center;
-    height: 1.25em;
-    min-width: 1.25em;
     cursor: pointer;
     transition: 0.3s;
   }
-  .token-remove:hover,
+  .token button:hover,
   .remove-all:hover {
-    color: var(--darkGray);
+    color: var(--lightGray);
   }
 
   .actions {
-    align-items: center;
     display: flex;
     flex: 1;
-    min-width: 15em;
   }
 
   input {
     border: none;
-    font-size: 1.5em;
-    line-height: 1.5em;
-    margin: 0;
     outline: none;
-    padding: 0;
     width: 100%;
     background: none;
   }
@@ -246,9 +184,7 @@
   ul {
     list-style: none;
     max-height: 70vh;
-    overflow: auto;
-    padding-inline-start: 0;
-    top: calc(100% + 1pt);
+    padding: 0;
     width: 100%;
     z-index: 1;
     background: var(--lightBg);
@@ -273,9 +209,5 @@
   li.selected.active,
   li.selected:hover {
     background: var(--darkerGreen);
-  }
-
-  .hidden {
-    display: none;
   }
 </style>
