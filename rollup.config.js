@@ -7,7 +7,6 @@ import { terser } from 'rollup-plugin-terser'
 import config from 'sapper/config/rollup.js'
 import { indexAlgolia } from 'svelte-algolia'
 import svelteSVG from 'rollup-plugin-svelte-svg'
-import svelteImage from 'svelte-image'
 
 import pkg from './package.json'
 import { algoliaConfig } from './src/utils/algolia'
@@ -42,7 +41,6 @@ export default {
           hydratable: true,
         },
         emitCss: true,
-        preprocess: [svelteImage()],
       }),
       resolve({
         browser: true,
@@ -69,7 +67,6 @@ export default {
           dev,
           hydratable: true,
         },
-        preprocess: [svelteImage()],
       }),
       resolve({
         dedupe: [`svelte`],

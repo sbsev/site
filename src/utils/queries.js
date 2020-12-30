@@ -1,6 +1,26 @@
 import 'cross-fetch/polyfill'
 import marked from 'marked'
 
+const renderer = {
+  image(href, title, text) {
+    if (href?.includes(`images.ctfassets.net`) && !href.endsWith(`.svg`)) {
+      title = title ? `title="${title}"` : ``
+      return `
+      <picture>
+        <source media="(min-width: 1000px)" type="image/webp" srcset="${href}?w=1000&q=80&fm=webp" />
+        <source media="(min-width: 800px)" type="image/webp" srcset="${href}?w=800&q=80&fm=webp" />
+        <source media="(min-width: 600px)" type="image/webp" srcset="${href}?w=600&q=80&fm=webp" />
+        <source media="(min-width: 400px)" type="image/webp" srcset="${href}?w=400&q=80&fm=webp" />
+        <img src="${href}?w=1000&q=80" alt="${text}" ${title} loading="lazy" />
+      </picture>`
+    }
+
+    return false // delegate to default renderer
+  },
+}
+
+marked.use({ renderer })
+
 function prefixSlug(obj, prefix) {
   obj.slug = prefix + obj.slug
   return obj
@@ -37,6 +57,19 @@ export async function fetchChapters(uri) {
   return chapters?.items?.map((chapter) => prefixSlug(chapter, `standorte/`))
 }
 
+const coverFragment = `
+  small: url(transform: {format: WEBP, quality: 80, width: 400, height: 300, resizeStrategy: FILL})
+  medium: url(transform: {format: WEBP, quality: 80, width: 800, height: 350, resizeStrategy: FILL})
+  large: url(transform: {format: WEBP, quality: 80, width: 1200, height: 400, resizeStrategy: FILL})
+  xl: url(transform: {format: WEBP, quality: 80, width: 1600, height: 500, resizeStrategy: FILL})
+  jpg: url(transform: {quality: 80, width: 1200})
+  url
+  description
+  title
+  width
+  height
+`
+
 const pageQuery = (slug) => `{
   pages: pageCollection
   ${slug ? `(where: {slug: "${slug}"})` : ``} {
@@ -48,10 +81,7 @@ const pageQuery = (slug) => `{
       toc
       caption
       cover {
-        description
-        url(transform: {format: WEBP})
-        width
-        height
+        ${coverFragment}
       }
       sys {
         publishedAt
@@ -90,10 +120,7 @@ const postQuery = (slug) => `{
       date
       body
       cover {
-        description
-        url
-        width
-        height
+        ${coverFragment}
       }
       tags: tagsCollection {
         items {

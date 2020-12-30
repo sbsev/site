@@ -1,16 +1,14 @@
 <script>
-  import Img from 'svelte-image'
-
+  import Img from '../components/Img.svelte'
   import Toc from '../components/Toc.svelte'
 
   export let page
 
   const { title, subtitle, cover = {}, body = ``, toc } = page
-  const { url, description, width, height } = cover
 </script>
 
 <hgroup>
-  <Img src={url} alt={description} ratio={`${Math.floor((100 * height) / width)}%`} />
+  <Img {cover} />
   {#if $$slots.title}
     <slot name="title" />
   {:else}
@@ -41,9 +39,6 @@
   }
   hgroup {
     position: relative;
-    height: max-content;
-    max-height: calc(20em + 15vw);
-    overflow: hidden;
   }
   hgroup > :global(*:not(:first-child)) {
     color: white;
@@ -53,7 +48,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(calc(-50% - 1em), -50%);
     text-align: center;
     margin: 0 1em;
   }

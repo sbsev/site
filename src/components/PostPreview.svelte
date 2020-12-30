@@ -1,6 +1,4 @@
 <script>
-  import Img from 'svelte-image'
-
   import Tags from '@svg-icons/fa-solid/tags.svg'
   import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
   import PersonCircle from '@svg-icons/bootstrap/person-circle.svg'
@@ -13,13 +11,13 @@
   export let post
 
   const { title, slug, cover, date, author, tags, plainBody } = post
-  const { url, description } = cover
+  const { small, description } = cover
 
   const style = `padding-right: 4pt; vertical-align: -2pt; height: 15pt;`
 </script>
 
 <section>
-  <a href={slug}><Img src={url} alt={description} /></a>
+  <a href={slug}><img src={small} alt={description || cover.title} /></a>
   <h3><a href={slug}>{title}</a></h3>
   <div class="metadata">
     <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
@@ -53,6 +51,7 @@
     border-radius: 1ex;
     display: grid;
     font-size: 0.9em;
+    overflow: hidden;
   }
   section > *:not(:first-child) {
     margin: 1ex 1em;
