@@ -5,19 +5,35 @@
   const { title, slug, body, cover, date, author } = hit
 </script>
 
-{#if cover}<img src={cover.url + `?w=100`} alt={cover.description} />{/if}
-<h3>
-  <a href={slug} on:click={clickHandler}>{@html title}</a>
-</h3>
-{#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
-{#if author}<span>{author.name}</span>{/if}
-{#if body}
-  <p>
-    {@html body}
-  </p>
-{/if}
+<div>
+  {#if cover}
+    <a href={slug}><img src={cover.url + `?w=100`} alt={cover.description} /></a>
+  {/if}
+  <h3>
+    <a href={slug} on:click={clickHandler}>{@html title}</a>
+  </h3>
+  {#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
+  {#if author}<span>{author.name}</span>{/if}
+  {#if body}
+    <p>
+      {@html body}
+    </p>
+  {/if}
+</div>
 
 <style>
+  div {
+    background: var(--accentBg);
+    padding: 1ex 1em;
+    border-radius: 1ex;
+    margin: 1em 0;
+  }
+  div > h3 {
+    margin-top: 0;
+  }
+  div > p {
+    margin-bottom: 0;
+  }
   h3 :global(em) {
     color: white;
   }

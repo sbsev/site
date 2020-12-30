@@ -5,22 +5,18 @@
   import Search from '@svg-icons/fa-solid/search.svg'
 
   import SearchHit from './SearchHit.svelte'
-  import { onClickOutside, preventOverScroll } from '../utils/actions'
+  import { onClickOutside } from '../utils/actions'
 
   const { session } = stores()
   const { ALGOLIA_APP_ID: appId, ALGOLIA_SEARCH_KEY: searchKey } = $session
 
   export let indices = []
-  let client, input, query
-  let allHits = []
+  let client, input, query, promise
   let hasFocus = false
 
-  onMount(() => {
-    client = algoliasearch(appId, searchKey)
-    return () => client.destroy()
-  })
+  onMount(() => (client = algoliasearch(appId, searchKey)))
 
-  const processResults = (hits) =>
+  const processHits = (hits) =>
     hits.map((hit) => {
       for (const [key, val] of Object.entries(hit)) {
         hit[key] =
@@ -29,15 +25,14 @@
       return hit
     })
 
-  // Fires on each keyup in form
   async function search() {
     const { results } = await client.multipleQueries(
       indices.map((indexName) => ({ indexName, query }))
     )
-    if (results) {
-      allHits = results.map(({ hits, index }) => ({ hits: processResults(hits), index }))
-    }
+    return results.map(({ hits, index }) => ({ hits: processHits(hits), index }))
   }
+
+  const style = `vertical-align: text-bottom; z-index: 0;`
 </script>
 
 <aside use:onClickOutside={() => (hasFocus = false)}>
@@ -45,7 +40,7 @@
     type="text"
     bind:this={input}
     bind:value={query}
-    on:keyup={search}
+    on:keyup={() => (promise = search())}
     placeholder="Suchen"
     aria-label="Suche"
     class:hasFocus />
@@ -55,28 +50,27 @@
       input.focus()
     }}
     title="Suche">
-    <Search
-      alt="Lupe"
-      height="{hasFocus ? 2 : 2.3}ex"
-      style="vertical-align: text-bottom; z-index: 0;" />
+    <Search alt="Lupe" height="{hasFocus ? 1.9 : 2.3}ex" {style} />
   </button>
   {#if hasFocus && query}
-    <div class="results" use:preventOverScroll>
-      {#if allHits.some(({ hits }) => hits.length)}
-        {#each allHits as { index, hits } (index)}
-          {#if hits.length}
-            <section>
-              <h2>
-                {index}
-                {#if hits.length > 0}<span>Ergebnisse: {hits.length}</span>{/if}
-              </h2>
-              {#each hits as hit (hit.objectID)}
-                <SearchHit {hit} clickHandler={() => (hasFocus = false)} />
-              {/each}
-            </section>
-          {/if}
-        {/each}
-      {:else}Keine Ergebnisse für '{query}'{/if}
+    <div class="results">
+      {#await promise then allHits}
+        {#if allHits?.some(({ hits }) => hits.length)}
+          {#each allHits as { index, hits } (index)}
+            {#if hits.length}
+              <section>
+                <h2>
+                  {index}
+                  {#if hits.length > 0}<span>Ergebnisse: {hits.length}</span>{/if}
+                </h2>
+                {#each hits as hit (hit.objectID)}
+                  <SearchHit {hit} clickHandler={() => (hasFocus = false)} />
+                {/each}
+              </section>
+            {/if}
+          {/each}
+        {:else}Keine Ergebnisse für '{query}'{/if}
+      {/await}
     </div>
   {/if}
 </aside>
@@ -117,14 +111,14 @@
     cursor: pointer;
     transition: 0.3s;
     opacity: 0;
-    height: 2ex;
+    height: 2.5ex;
   }
   input::placeholder {
     color: var(--linkColor);
   }
   input.hasFocus {
     opacity: 1;
-    width: 5em;
+    width: 7em;
     margin-left: -2.5ex;
     padding-left: 3ex;
   }
@@ -143,6 +137,7 @@
     box-shadow: 0 0 1ex black;
     padding: 1ex 1em;
     border-radius: 5pt;
+    overscroll-behavior: none;
   }
   section {
     font-size: 0.7em;
