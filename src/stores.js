@@ -9,14 +9,21 @@ colorMode.subscribe(
     typeof localStorage !== `undefined` && (localStorage[colorModeKey] = val)
 )
 
-export const signupForm = writable(
-  typeof localStorage !== `undefined` && localStorage.signupForm
-    ? JSON.parse(localStorage.signupForm)
-    : {}
-)
+function createLSStore(name, defaultValue) {
+  const store = writable(
+    typeof sessionStorage !== `undefined` && sessionStorage[name]
+      ? JSON.parse(sessionStorage[name])
+      : defaultValue
+  )
 
-signupForm.subscribe(
-  (val) =>
-    typeof localStorage !== `undefined` &&
-    (localStorage.signupForm = JSON.stringify(val))
-)
+  store.subscribe(
+    (val) =>
+      typeof sessionStorage !== `undefined` &&
+      (sessionStorage[name] = JSON.stringify(val))
+  )
+
+  return store
+}
+
+export const studentData = createLSStore(`studentSignup`, {})
+export const pupilData = createLSStore(`pupilSignup`, {})

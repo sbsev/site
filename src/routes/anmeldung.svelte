@@ -1,11 +1,13 @@
 <script context="module">
-  import { fetchMicrocopy, fetchJson, fetchChapters } from '../utils/queries'
   import marked from 'marked'
   import yaml from 'js-yaml'
 
+  import { fetchMicrocopy, fetchJson, fetchChapters } from '../utils/queries'
+  import { studentData, pupilData } from '../stores'
+
   const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-  export async function preload(_, { gqlUri }) {
+  export async function preload(page, { gqlUri }) {
     const chapters = await fetchChapters(gqlUri)
     const options = await fetchJson(`Signup Form Options`, gqlUri)
 
@@ -29,37 +31,37 @@
     const studentSnippets = await parseMicrocopy(`Student Form`)
     const pupilSnippets = await parseMicrocopy(`Pupil Form`)
 
-    return { chapters, options, studentSnippets, pupilSnippets }
+    const { type = `Stundent`, chapter = `` } = page.query
+    const state = type === `Student` ? studentData : pupilData
+    if (chapter)
+      state.update((val) => {
+        if (!val.chapter) val.chapter = {}
+        val.chapter.value = chapter
+        return val
+      })
+
+    return { chapters, options, studentSnippets, pupilSnippets, type, state }
   }
 </script>
 
 <script>
   import { stores } from '@sapper/app'
   import Plant from '@svg-icons/remix-fill/plant.svg'
-  import { onMount } from 'svelte'
 
   import FormInput from '../components/FormInput.svelte'
   import RadioButton from '../components/RadioButton.svelte'
-  import { handleSubmit } from '../utils/airtable.js'
-  import { signupForm as state } from '../stores'
-  // state is an object of objects with initial keys
-  // { valid: true, dirty: false, value: null } for each form field
+  import { handleSubmit } from '../utils/airtable'
 
-  export let studentSnippets, chapters, options, pupilSnippets
+  export let chapters, options, studentSnippets, pupilSnippets, type, state
 
-  const { session, page } = stores()
-  const { AIRTABLE_API_KEY: apiKey } = $session
+  const { session } = stores()
 
-  let type, submitMessage, submitError, validationError
-  onMount(() => {
-    type = $page.query.type ?? `Student`
-    if ($page.query.chapter) {
-      if (!$state.chapter) $state.chapter = {}
-      $state.chapter.value = $page.query.chapter
-    }
-  })
+  let submitMessage, submitError, validationError
 
   $: snippets = type === `Student` ? studentSnippets : pupilSnippets
+  $: state = type === `Student` ? studentData : pupilData
+  // state is an object of objects with initial keys
+  // { valid: true, dirty: false, value: null } for each form field
 
   function checkFormValid() {
     // set all fields to dirty to trigger their validation before allowing submission
@@ -72,10 +74,12 @@
         .reduce((all, field) => all && field, true)
 
       let formValues = Object.entries($state).map(([key, val]) => [key, val.value])
-      formValues = Object.fromEntries(formValues)
+      formValues = { type, ...Object.fromEntries(formValues) }
+
       const baseId = chapters?.find(({ title }) => title === $state.chapter.value)?.baseId
+
       if (formIsValid) {
-        const success = await handleSubmit(baseId, { ...formValues, type }, apiKey)
+        const success = await handleSubmit(baseId, formValues, $session.AIRTABLE_API_KEY)
 
         if (success) {
           submitMessage = snippets.success
@@ -219,12 +223,6 @@
       {@html submitError || validationError}
     </div>
   {/if}
-  <input
-    type="reset"
-    value="Formular zurücksetzen"
-    on:click|preventDefault={() => {
-      if (confirm(`Formular wirklich leeren?`)) $state = {}
-    }} />
 </form>
 
 <style>
@@ -233,8 +231,7 @@
     margin: 2em auto;
     padding: 2em;
   }
-  button,
-  input {
+  button {
     margin: 1em auto;
     display: block;
     transition: 0.3s;
@@ -252,11 +249,6 @@
   button[type='submit']:hover:not(:disabled) {
     transform: scale(1.02);
     background: var(--green);
-  }
-  input[type='reset'] {
-    background: var(--orange);
-    font-size: 0.8em;
-    cursor: pointer;
   }
   div {
     text-align: center;
