@@ -22,7 +22,7 @@ export function preventOverScroll(node) {
     if (!scrollable) e.preventDefault()
   }
 
-  node.addEventListener(`mousewheel`, preventScroll)
+  node.addEventListener(`mousewheel`, preventScroll, { passive: false })
   return {
     onDestroy: () => node.removeEventListener(`mousewheel`, preventScroll),
   }

@@ -36,20 +36,22 @@
   }
 
   const { title, sys } = pageData
+  const date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
+  const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
 
 <svelte:head>
   <title>SbS{title ? ` - ${title}` : ``}</title>
+  <meta name="description" content="Ehrenamtliche Nachhilfe von Studenten für Schüler" />
+  <meta name="date" content={date} />
 </svelte:head>
 
 <Header {nav} />
 <main>
   <slot />
   {#if sys?.publishedAt && !pageData.slug.includes(`blog`)}
-    <time><Update
-        height="3ex"
-        style="vertical-align: bottom; padding-right: 4pt;" />Zuletzt bearbeitet:
-      {new Date(sys?.publishedAt).toLocaleDateString(`de`)}</time>
+    <time><Update {style} />Zuletzt bearbeitet:
+      {date}</time>
   {/if}
 </main>
 <Footer links={footer.links} {social} />

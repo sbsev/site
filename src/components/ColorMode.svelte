@@ -54,7 +54,7 @@
   }
 </script>
 
-<button class="opener" on:click={() => (open = true)}>
+<button class="opener" on:click={() => (open = true)} aria-label="Farbmodus öffnen">
   <Moon alt="Color Mode" height="2.5ex" style="vertical-align: text-bottom;" />
 </button>
 

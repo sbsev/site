@@ -26,6 +26,6 @@
     }
   }
   ol li {
-    padding-left: 1ex;
+    padding: 3pt 1ex;
   }
 </style>

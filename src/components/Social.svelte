@@ -19,7 +19,7 @@
 
 <div {style} class:vertical class:fixed>
   {#each include as key}
-    <a href={social[key].url}>
+    <a href={social[key]} aria-label={key}>
       <svelte:component this={icons[key]} height="2.5ex" /></a>
   {/each}
 </div>
@@ -29,7 +29,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
-    place-content: center;
+    place-items: center;
     line-height: 0;
   }
   div.vertical {
@@ -53,9 +53,9 @@
     }
   }
   a {
-    transition: 0.4s;
+    transition: 0.2s;
   }
   a:hover {
-    transform: scale(1.02);
+    transform: scale(1.04);
   }
 </style>

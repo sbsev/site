@@ -52,7 +52,7 @@
 <svelte:window on:scroll={scrollHandler} bind:innerWidth={windowWidth} />
 
 <aside>
-  <button on:click={() => (open = !open)}>
+  <button on:click={() => (open = !open)} aria-label="Inhaltsverzeichnis öffnen">
     {#if open}
       <CircleWithCross height="40" />
     {:else}
@@ -103,7 +103,7 @@
     position: absolute;
     width: 11em;
     margin: 2em 1em;
-    padding: 5pt 0 1ex 1.5ex;
+    padding: 5pt 1ex 1ex 1.5ex;
     background: var(--accentBg);
     border-radius: 6pt;
   }

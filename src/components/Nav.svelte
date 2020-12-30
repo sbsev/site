@@ -46,7 +46,9 @@
 
 <svelte:window bind:innerWidth={viewWidth} />
 
-<button on:click|preventDefault={() => (isOpen = true)}>
+<button
+  on:click|preventDefault={() => (isOpen = true)}
+  aria-label="Navigationsmenü öffnen">
   <Menu height="2.9ex" style="vertical-align: middle;" />
 </button>
 
@@ -71,7 +73,7 @@
             style="vertical-align: -2pt; padding-right: 2pt;" />
           {title}</a>
         {#if subNav}
-          <button on:click={setActiveSubNav(idx)}>
+          <button on:click={setActiveSubNav(idx)} aria-label="Untermenü {title} öffnen">
             <ChevronExpand
               height="1em"
               style="vertical-align: text-bottom; color: var(--green);" />

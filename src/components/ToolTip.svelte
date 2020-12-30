@@ -14,9 +14,16 @@
 {/if}
 
 <style>
+  span {
+    position: relative;
+  }
+  span {
+    cursor: pointer;
+  }
   div {
     visibility: hidden;
     opacity: 0;
+    cursor: default;
     background: var(--lightBg);
     transition: 0.4s;
     position: absolute;
@@ -39,12 +46,6 @@
     border: 1em solid;
     border-color: transparent transparent var(--lightBg) transparent;
     box-sizing: border-box;
-  }
-  span {
-    position: relative;
-  }
-  span {
-    cursor: pointer;
   }
   span:hover > div {
     visibility: visible;

@@ -49,7 +49,7 @@ const pageQuery = (slug) => `{
       caption
       cover {
         description
-        url
+        url(transform: {format: WEBP})
         width
         height
       }

@@ -16,7 +16,7 @@
 <h2>
   <Tags height="20" />Tags
   {#if viewWidth < 750}
-    <button on:click={() => (open = !open)}>
+    <button on:click={() => (open = !open)} aria-label="Blog Tags öffnen">
       {#if open}
         <CircleWithCross height="20" />
       {:else}
@@ -28,13 +28,16 @@
 {#if viewWidth > 750 || open}
   <ul transition:slide>
     {#each tags as { title, total, icon }}
-      <button
-        transition:fade
-        class:active={activeTag === title}
-        on:click={() => (activeTag = title)}>
-        <img src={icon.url} alt={title} />
-        {title}
-        ({total})</button>
+      <li>
+        <button
+          transition:fade
+          aria-label="Nach Tag {title} filtern"
+          class:active={activeTag === title}
+          on:click={() => (activeTag = title)}>
+          <img src={icon.url} alt={title} />
+          {title}
+          ({total})</button>
+      </li>
     {/each}
   </ul>
 {/if}
@@ -53,19 +56,20 @@
     gap: 1em;
     place-content: center;
     margin: auto;
+    list-style: none;
   }
-  ul > button {
+  ul > li > button {
     border: 1px dotted;
     padding: 3pt 7pt;
     transition: 0.4s;
     display: flex;
     align-items: center;
   }
-  ul > button.active {
+  ul > li > button.active {
     box-shadow: inset 0 0 1em -5pt black;
     background: var(--buttonBg);
   }
-  ul > button > img {
+  ul > li > button > img {
     height: 1em;
     background: var(--buttonBg);
     padding: 3pt;
