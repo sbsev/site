@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup node v15
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15'
+
+      - name: Install dependencies
+        run: npm install && npm install -g @lhci/cli@0.6.x
+
+      - name: Build site
+        run: npm run export
+
+      - name: Run Lighthouse
+        run: lhci autorun
+        # https://github.com/apps/lighthouse-ci
+        # for displaying lighthouse results below PRs
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

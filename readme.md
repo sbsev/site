@@ -9,6 +9,7 @@
 <h3 align="center">
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2bcf7f93-7c33-40f4-9843-bbbf22ea213b/deploy-status)](https://app.netlify.com/sites/sbsev/deploys)
+[![CI](https://github.com/sbsev/website/workflows/CI/badge.svg)](https://github.com/sbsev/website/actions)
 [![License](https://img.shields.io/github/license/sbsev/website?label=License)](/license)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sbsev/website?label=Repo+Size)
 [![GitHub last commit](https://img.shields.io/github/last-commit/sbsev/website?label=Last+Commit)](https://github.com/sbsev/website/commits/master)

@@ -17,6 +17,7 @@
 
   export let social
   export let links
+  const style = `height: 1em; vertical-align: -3pt; padding-right: 2pt;`
 </script>
 
 <footer>
@@ -25,10 +26,7 @@
   <div>
     {#each links as { title, url }}
       <a href={url}>
-        <svelte:component
-          this={icons[title]}
-          height="1em"
-          style="vertical-align: -3pt; padding-right: 2pt;" />
+        <svelte:component this={icons[title]} {style} />
         {title}</a>
     {/each}
   </div>
@@ -64,5 +62,6 @@
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
+    justify-content: center;
   }
 </style>
