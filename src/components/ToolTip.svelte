@@ -31,19 +31,19 @@
     padding: 5pt 1ex;
     border-radius: 1ex;
     left: 50%;
-    transform: translate(-50%, 1em);
+    transform: translate(-50%, 1ex);
     z-index: 1;
     box-shadow: 0 0 1ex -3pt black;
   }
   div::before {
     content: '';
-    width: 1em;
+    width: 1ex;
     position: absolute;
     left: 50%;
     bottom: 100%;
     transform: translate(-50%);
-    height: 1em;
-    border: 1em solid;
+    height: 1ex;
+    border: 1ex solid;
     border-color: transparent transparent var(--lightBg) transparent;
     box-sizing: border-box;
   }

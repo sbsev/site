@@ -1,6 +1,5 @@
 <script context="module">
   import marked from 'marked'
-  import yaml from 'js-yaml'
 
   import { fetchMicrocopy, fetchJson, fetchChapters } from '../utils/queries'
   import { studentData, pupilData } from '../stores'
@@ -13,7 +12,6 @@
 
     async function parseMicrocopy(title) {
       let copy = await fetchMicrocopy(title, gqlUri)
-      copy = yaml.safeLoad(copy)
       // iterate over name, phone, email, ...
       Object.entries(copy).forEach(([key, itm]) => {
         if (typeof itm === `string`) copy[key] = stripOuterPTag(marked(itm))

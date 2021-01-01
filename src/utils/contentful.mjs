@@ -1,4 +1,6 @@
 import 'dotenv/config.js'
+import fs from 'fs'
+import yaml from 'js-yaml'
 
 const { CONTENTFUL_ACCESS_TOKEN: token, CONTENTFUL_SPACE_ID: id } = process.env
 const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
@@ -31,5 +33,28 @@ export async function searchStringInContentType(
   console.log(`items of type ${contentType} containing ${searchTerm}:`, items)
 }
 
+export async function createFAQEntries() {
+  const data = fs.readFileSync(`./faq.yml`)
+  const faqs = yaml.safeLoad(data)
+
+  const space = await getClient().getSpace(id)
+
+  const env = await space.getEnvironment(`master`)
+
+  faqs.forEach(async ({ title, body, tags }) => {
+    await env.createEntry(`faq`, {
+      fields: {
+        title: { de: title },
+        tags: { de: tags },
+        body: { de: body },
+      },
+    })
+  })
+}
+
 // run with: node src/utils/contentful.js
-// searchStringInContentType()
+// try {
+//   createFAQEntries()
+// } catch (error) {
+//   console.error(error)
+// }

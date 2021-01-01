@@ -126,6 +126,7 @@
     color: var(--linkColor);
   }
   div.results {
+    z-index: 1;
     background: var(--bodyBg);
     top: 3ex;
     max-height: 60vh;

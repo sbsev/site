@@ -9,7 +9,7 @@
 <header>
   <Nav {nav} />
   <ColorMode />
-  <Search indices={[`Seiten`, `Posts`]} />
+  <Search indices={[`Seiten`, `Posts`, `FAQs`]} />
 </header>
 
 <style>

@@ -1,5 +1,6 @@
 import 'cross-fetch/polyfill'
 import marked from 'marked'
+import yaml from 'js-yaml'
 
 const renderer = {
   image(href, title, text) {
@@ -15,13 +16,13 @@ const renderer = {
       </picture>`
     }
 
-    return false // delegate to default renderer
+    return false // delegate to default marked image renderer
   },
 }
 
 marked.use({ renderer })
 
-function prefixSlug(obj, prefix) {
+const prefixSlug = (prefix) => (obj) => {
   obj.slug = prefix + obj.slug
   return obj
 }
@@ -54,7 +55,7 @@ const chaptersQuery = `{
 
 export async function fetchChapters(uri) {
   const { chapters } = await gqlFetch(uri, chaptersQuery)
-  return chapters?.items?.map((chapter) => prefixSlug(chapter, `standorte/`))
+  return chapters?.items?.map(prefixSlug(`standorte/`))
 }
 
 const coverFragment = `
@@ -90,24 +91,24 @@ const pageQuery = (slug) => `{
   }
 }`
 
-function processPage(page) {
-  if (!page?.body) return page
+function renderBody(itm) {
+  if (!itm?.body) return itm
 
-  page.body = marked(page.body) // generate HTML
-  page.plainBody = page.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
+  itm.body = marked(itm.body) // generate HTML
+  itm.plainBody = itm.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
 
-  return page
+  return itm
 }
 
 export async function fetchPage(slug, uri) {
   const data = await gqlFetch(uri, pageQuery(slug))
   const page = data?.pages?.items[0]
-  return processPage(page)
+  return renderBody(page)
 }
 
 export async function fetchPages(uri) {
   const data = await gqlFetch(uri, pageQuery())
-  return data?.pages?.items?.map(processPage)
+  return data?.pages?.items?.map(renderBody)
 }
 
 const postQuery = (slug) => `{
@@ -145,8 +146,8 @@ const postQuery = (slug) => `{
 
 function processPost(post) {
   post.tags = post.tags.items.map((tag) => tag.title)
-  processPage(post)
-  prefixSlug(post, `blog/`)
+  renderBody(post)
+  prefixSlug(`blog/`)(post)
   return post
 }
 
@@ -213,5 +214,23 @@ const microcopyQuery = (title) => `{
 
 export async function fetchMicrocopy(title, uri) {
   const { microcopy } = await gqlFetch(uri, microcopyQuery(title))
-  return microcopy?.items[0]?.text
+  return yaml.safeLoad(microcopy?.items[0]?.text)
+}
+
+function titleToSlug(itm) {
+  itm.slug = itm.title
+    .toLowerCase()
+    .replace(/ä/g, `ae`)
+    .replace(/ö/g, `oe`)
+    .replace(/ü/g, `ue`)
+    .replace(/[^\w ]+/g, ``)
+    .replace(/[^\w ]+/g, ``)
+    .replace(/ +/g, `-`)
+  itm.id = itm.slug
+  return itm
+}
+
+export async function fetchFaqs(uri) {
+  const faqs = await fetchMicrocopy(`FAQ`, uri)
+  return faqs.map(renderBody).map(titleToSlug).map(prefixSlug(`faq#`))
 }

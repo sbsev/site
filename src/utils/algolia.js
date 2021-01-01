@@ -1,15 +1,15 @@
-import { fetchPages, fetchPosts } from './queries'
+import { fetchFaqs, fetchPages, fetchPosts } from './queries'
 
 import { gqlEndPoint } from './contentful'
 
 const bodyToPlainText = (fetchFunction) => async () => {
   const items = await fetchFunction(gqlEndPoint)
   items.forEach((itm) => {
-    if (itm.body) {
+    if (!itm.id) itm.id = itm?.slug || itm?.title
+    if (itm.body && itm.plainBody) {
       itm.body = itm.plainBody
       delete itm.plainBody
     }
-    itm.id = itm.slug
   })
   return items
 }
@@ -21,6 +21,7 @@ export const algoliaConfig = {
   indices: [
     { name: `Seiten`, getData: bodyToPlainText(fetchPages) },
     { name: `Posts`, getData: bodyToPlainText(fetchPosts) },
+    { name: `FAQs`, getData: bodyToPlainText(fetchFaqs) },
   ],
   settings: {
     attributesToSnippet: [`body:20`],
