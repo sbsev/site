@@ -9,7 +9,7 @@ colorMode.subscribe(
     typeof localStorage !== `undefined` && (localStorage[colorModeKey] = val)
 )
 
-function createLSStore(name, defaultValue) {
+function createSessionStore(name, defaultValue) {
   const store = writable(
     typeof sessionStorage !== `undefined` && sessionStorage[name]
       ? JSON.parse(sessionStorage[name])
@@ -25,5 +25,5 @@ function createLSStore(name, defaultValue) {
   return store
 }
 
-export const studentData = createLSStore(`studentSignup`, {})
-export const pupilData = createLSStore(`pupilSignup`, {})
+export const studentData = createSessionStore(`studentSignup`, {})
+export const pupilData = createSessionStore(`pupilSignup`, {})

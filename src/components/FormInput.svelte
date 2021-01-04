@@ -6,9 +6,10 @@
   export let note = ``
 
   export let name
+  export let placeholder = title
   export let select = []
   export let multiselect = []
-  export let type = `text`
+  export let type = `text` // text, email, number, date, phone
   export let required = false
   export let state = {
     valid: true,
@@ -16,17 +17,22 @@
     value: select.length || multiselect.length ? [] : null,
   }
 
-  let { valid, dirty, value } = state
-  $: state = { valid, dirty, value }
-
-  $: valid = Boolean(!required || !dirty || (dirty && required && value))
+  $: state.valid = Boolean(
+    !required || !state.dirty || (state.dirty && required && state.value)
+  )
 
   const handleBlur = () => {
     setTimeout(() => {
-      dirty = true
-      if (required && !(Array.isArray(value) ? value.length : value)) valid = false
-      if (required && (Array.isArray(value) ? value.length : value)) valid = true
+      state.dirty = true
+      if (required && !(Array.isArray(state.value) ? state.value.length : state.value))
+        state.valid = false
+      if (required && (Array.isArray(state.value) ? state.value.length : state.value))
+        state.valid = true
     }, 10)
+  }
+
+  const onInput = ({ target }) => {
+    state.value = type.match(/^(number|range)$/) ? +target.value : target.value
   }
 </script>
 
@@ -39,33 +45,28 @@
   {@html note}
 {/if}
 
-{#if select.length}
-  <select id={name} bind:value on:blur={handleBlur} class:valid>
-    <option hidden disabled selected value>Auswahl treffen</option>
-    {#each select as option}
-      <option value={option}>{option}</option>
-    {/each}
-  </select>
-{:else if multiselect.length}
+{#if select.length || multiselect.length}
   <MultiSelect
-    bind:selected={value}
+    bind:selected={state.value}
     on:blur={handleBlur}
-    bind:valid
-    options={multiselect} />
+    bind:valid={state.valid}
+    {placeholder}
+    options={select.length ? select : multiselect}
+    single={select.length ? true : false} />
 {:else if type === `toggle`}
-  <Toggle {name} bind:checked={value} />
-{:else if type === `text`}
-  <input type="text" id={name} {name} bind:value on:blur={handleBlur} class:valid />
-{:else if type === `email`}
-  <input type="email" id={name} {name} bind:value on:blur={handleBlur} class:valid />
-{:else if type === `number`}
-  <input type="number" id={name} {name} bind:value on:blur={handleBlur} class:valid />
-{:else if type === `date`}
-  <input type="date" id={name} {name} bind:value on:blur={handleBlur} class:valid />
-{:else if type === `phone`}
-  <input type="phone" id={name} {name} bind:value on:blur={handleBlur} class:valid />
+  <Toggle {name} bind:checked={state.value} />
+{:else}
+  <input
+    {type}
+    on:input={onInput}
+    id={name}
+    {name}
+    value={state.value}
+    on:blur={handleBlur}
+    class:valid={state.valid}
+    {placeholder} />
 {/if}
-{#if !valid}<span>Dieses Feld ist erforderlich</span>{/if}
+{#if !state.valid}<span>Dieses Feld ist erforderlich</span>{/if}
 
 <style>
   label {
@@ -78,16 +79,14 @@
     color: red;
     content: '*';
   }
-  input,
-  select {
+  input {
     display: block;
     margin: 1em 0;
     background: var(--accentBg);
     width: 100%;
     height: 2em;
   }
-  input:not(.valid),
-  select:not(.valid) {
+  input:not(.valid) {
     border: 1px solid red;
   }
   ::-webkit-calendar-picker-indicator {

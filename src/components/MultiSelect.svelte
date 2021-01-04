@@ -13,6 +13,7 @@
   export let placeholder = ``
   export let valid = true
   export let options
+  export let single = false
 
   const dispatch = createEventDispatcher()
   let input, activeOption, inputValue
@@ -28,26 +29,40 @@
     activeOption = filtered[0]
 
   function add(token) {
-    if (!readonly && !selected.includes(token)) selected = [token, ...selected]
+    if (
+      (!readonly && !selected.includes(token) && !single) ||
+      (single && selected.length !== 1)
+    ) {
+      selected = single ? token : [token, ...selected]
+      if (single) {
+        setOptionsVisible(false)
+        input.blur()
+      }
+    }
   }
 
   function remove(token) {
-    if (readonly) return
+    if (readonly || single) return
     selected = selected.filter((str) => str !== token)
-    dispatch(`blur`)
   }
 
-  function optionsVisibility(show) {
+  function setOptionsVisible(show) {
     if (readonly) return
     showOptions = show
     if (show) input.focus()
     else activeOption = undefined
   }
-
-  function handleKeyup(event) {
-    if (event.code === `Enter`) {
-      selected.includes(activeOption) ? remove(activeOption) : add(activeOption)
+  function handleKeydown(event) {
+    if (event.code === `Escape`) {
+      setOptionsVisible(false)
       inputValue = ``
+    }
+    if (event.code === `Enter`) {
+      if (activeOption) {
+        selected.includes(activeOption) ? remove(activeOption) : add(activeOption)
+        inputValue = ``
+      } // no active option means the options are closed in which case enter means open
+      else setOptionsVisible(true)
     }
     if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
       const increment = event.key === `ArrowUp` ? -1 : 1
@@ -69,23 +84,26 @@
   const style = `height: 18pt; margin-left: 3pt;`
 </script>
 
-<div
-  class="multiselect"
-  class:readonly
-  class:valid
-  on:click={() => optionsVisibility(true)}>
-  <div class="tokens" class:showOptions>
+<div class="multiselect" class:readonly class:valid>
+  <div class="tokens" class:showOptions on:click={() => setOptionsVisible(true)}>
     <ExpandIcon {style} />
-    {#each selected as itm}
-      <div class="token">
-        <span>{itm}</span>
-        {#if !readonly}
-          <button on:click={() => remove(itm)} type="button" title="Remove {itm}">
-            <CrossIcon {style} />
-          </button>
-        {/if}
-      </div>
-    {/each}
+    {#if single}
+      <span>{selected}</span>
+    {:else}
+      {#each selected as itm}
+        <div class="token">
+          <span>{itm}</span>
+          {#if !readonly}
+            <button
+              on:click|stopPropagation={() => remove(itm)}
+              type="button"
+              title="Remove {itm}">
+              <CrossIcon {style} />
+            </button>
+          {/if}
+        </div>
+      {/each}
+    {/if}
     <div class="actions">
       {#if readonly}
         <ReadOnlyIcon {style} />
@@ -95,17 +113,19 @@
           autocomplete="off"
           bind:value={inputValue}
           bind:this={input}
-          on:keyup={handleKeyup}
-          on:blur={() => optionsVisibility(false)}
-          {placeholder} />
-        <button
-          type="button"
-          class="remove-all"
-          title="Remove All"
-          on:click={removeAll}
-          style={selected.length === 0 && `display: none;`}>
-          <CrossIcon {style} />
-        </button>
+          on:keydown={handleKeydown}
+          on:blur={() => setOptionsVisible(false)}
+          placeholder={selected.length ? `` : placeholder} />
+        {#if !single}
+          <button
+            type="button"
+            class="remove-all"
+            title="Remove All"
+            on:click={removeAll}
+            style={selected.length === 0 && `display: none;`}>
+            <CrossIcon {style} />
+          </button>
+        {/if}
       {/if}
     </div>
   </div>
@@ -183,7 +203,7 @@
 
   ul {
     list-style: none;
-    max-height: 70vh;
+    max-height: 50vh;
     padding: 0;
     width: 100%;
     z-index: 1;
@@ -191,9 +211,10 @@
     cursor: pointer;
     position: absolute;
     border-radius: 1ex;
+    overflow: scroll;
   }
   li {
-    padding: 6pt 2ex;
+    padding: 3pt 2ex;
   }
   li:not(.selected):hover {
     background: var(--green);
@@ -206,8 +227,7 @@
   li.active {
     background: var(--green);
   }
-  li.selected.active,
-  li.selected:hover {
+  li.selected.active {
     background: var(--darkerGreen);
   }
 </style>

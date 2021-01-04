@@ -29,7 +29,7 @@
     const studentSnippets = await parseMicrocopy(`Student Form`)
     const pupilSnippets = await parseMicrocopy(`Pupil Form`)
 
-    const { type = `Stundent`, chapter = `` } = page.query
+    const { type = `Student`, chapter = `` } = page.query
     const state = type === `Student` ? studentData : pupilData
     if (chapter)
       state.update((val) => {
@@ -227,7 +227,7 @@
   form {
     max-width: 40em;
     margin: 2em auto;
-    padding: 2em;
+    padding: 1em;
   }
   button {
     margin: 1em auto;
