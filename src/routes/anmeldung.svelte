@@ -2,7 +2,6 @@
   import marked from 'marked'
 
   import { fetchMicrocopy, fetchJson, fetchChapters } from '../utils/queries'
-  import { studentData, pupilData } from '../stores'
 
   const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
@@ -26,202 +25,221 @@
       return copy
     }
 
-    const studentSnippets = await parseMicrocopy(`Student Form`)
-    const pupilSnippets = await parseMicrocopy(`Pupil Form`)
+    const studentText = await parseMicrocopy(`Student Form`)
+    const pupilText = await parseMicrocopy(`Pupil Form`)
 
-    const { type = `Student`, chapter = `` } = page.query
-    const state = type === `Student` ? studentData : pupilData
-    if (chapter)
-      state.update((val) => {
-        if (!val.chapter) val.chapter = {}
-        val.chapter.value = chapter
-        return val
-      })
-
-    return { chapters, options, studentSnippets, pupilSnippets, type, state }
+    return { chapters, options, studentText, pupilText }
   }
 </script>
 
 <script>
   import { stores } from '@sapper/app'
   import Plant from '@svg-icons/remix-fill/plant.svg'
+  import { onDestroy, onMount } from 'svelte'
 
   import FormInput from '../components/FormInput.svelte'
   import RadioButton from '../components/RadioButton.svelte'
-  import { handleSubmit } from '../utils/airtable'
+  import Modal from '../components/Modal.svelte'
+  import { handleSubmit, tryParse } from '../utils/airtable'
+  import { studentSignupStore, pupilSignupStore } from '../stores'
 
-  export let chapters, options, studentSnippets, pupilSnippets, type, state
+  export let chapters, options, studentText, pupilText
 
-  const { session } = stores()
+  const { session, page } = stores()
+  let { type = `Student`, chapter = `` } = $page.query
+  const inputs = {}
+  let response = undefined
+  let modalOpen = false
 
-  let submitMessage, submitError, validationError
+  function getFormVals() {
+    return Object.fromEntries(
+      Object.entries(inputs).map(([key, inp]) => [key, tryParse(inp?.value)])
+    )
+  }
+  function setFormVals(values) {
+    Object.keys(inputs).forEach((key) => {
+      if (values[key]) inputs[key].value = values[key]
+    })
+  }
 
-  $: snippets = type === `Student` ? studentSnippets : pupilSnippets
-  $: state = type === `Student` ? studentData : pupilData
-  // state is an object of objects with initial keys
-  // { valid: true, dirty: false, value: null } for each form field
+  const leaveListener = () => {
+    if (type === `Student`) $studentSignupStore = getFormVals()
+    else $pupilSignupStore = getFormVals()
+  }
 
-  function checkFormValid() {
-    // set all fields to dirty to trigger their validation before allowing submission
-    Object.keys($state).forEach((key) => ($state[key].dirty = true))
-    // use 100 ms timeout since svelte's two-way binding appears to need some time
-    // to update all the state[key].valid attributes after marking them as dirty
-    setTimeout(async () => {
-      const formIsValid = Object.values($state)
-        .map((val) => val.valid)
-        .reduce((all, field) => all && field, true)
+  onMount(() => {
+    if (type === `Student`) setFormVals($studentSignupStore)
+    else setFormVals($pupilSignupStore)
 
-      let formValues = Object.entries($state).map(([key, val]) => [key, val.value])
-      formValues = { type, ...Object.fromEntries(formValues) }
+    inputs.chapter.value = chapter
+    // For domain changes and page reloads (site-external navigation)
+    window.addEventListener(`beforeunload`, leaveListener)
+    return () => window.removeEventListener(`beforeunload`, leaveListener)
+  })
 
-      const baseId = chapters?.find(({ title }) => title === $state.chapter.value)?.baseId
+  // For site-internal navigation
+  onDestroy(() => leaveListener())
 
-      if (formIsValid) {
-        const success = await handleSubmit(baseId, formValues, $session.AIRTABLE_API_KEY)
+  $: text = type === `Student` ? studentText : pupilText
 
-        if (success) {
-          submitMessage = snippets.success
-          submitError = ``
-          validationError = ``
-        } else submitError = snippets.error
-      } else {
-        validationError = `Das Formular ist nicht vollständig ausgefüllt`
-      }
-    }, 10)
+  async function submit() {
+    let formValues = { type, ...getFormVals() }
+    // eslint-disable-next-line no-console
+    console.log(`formValues:`, formValues)
+
+    const baseId = chapters?.find(({ title }) => title === formValues?.chapter)?.baseId
+
+    if (!baseId) throw Error(`baseId could not be determined`)
+
+    response = await handleSubmit(baseId, formValues, $session.AIRTABLE_API_KEY)
+    // eslint-disable-next-line no-console
+    console.log(`response:`, response)
+    if (!response.error) window.scrollTo({ top: 0, behavior: `smooth` })
+    else modalOpen = true
   }
 </script>
 
-<form on:submit|preventDefault={checkFormValid}>
-  <!-- Prevent implicit form submission on pressing enter in a text field (https://stackoverflow.com/a/51507806) -->
-  <button type="submit" disabled style="display: none" aria-hidden="true" />
+{#if response?.records}
+  <section>
+    <span>🎉 ⭐ 🎉</span>
+    {@html text.success}
+  </section>
+{:else}
+  <form on:submit|preventDefault={submit}>
+    <!-- Prevent implicit form submission on pressing enter in a text field (https://stackoverflow.com/a/51507806) -->
+    <button type="submit" disabled style="display: none" aria-hidden="true" />
 
-  <h1>
-    <Plant height="1em" style="vertical-align: -3pt;" />
-    {@html snippets.page.title}
-  </h1>
+    <h1>
+      <Plant height="1em" style="vertical-align: -3pt;" />
+      {@html text.page.title}
+    </h1>
 
-  <RadioButton options={options.types} bind:value={type} />
+    <RadioButton options={options.types} bind:value={type} />
 
-  {@html snippets.page.note}
-  <FormInput
-    select={chapters.map((c) => c.title)}
-    {...snippets.chapter}
-    bind:state={$state.chapter}
-    required />
-
-  <FormInput
-    select={options.genders}
-    {...snippets.gender}
-    bind:state={$state.gender}
-    required />
-
-  {#if type === `Student`}
-    <FormInput {...snippets.fullname} bind:state={$state.fullname} required />
-
-    <FormInput {...snippets.phone} bind:state={$state.phone} type="phone" />
-
-    <FormInput {...snippets.email} bind:state={$state.email} required type="email" />
-
-    <FormInput {...snippets.studySubject} bind:state={$state.studySubject} />
-
-    <FormInput {...snippets.semester} bind:state={$state.semester} type="number" />
-
-    <FormInput {...snippets.birthPlace} bind:state={$state.birthPlace} />
-
-    <FormInput {...snippets.birthDate} bind:state={$state.birthDate} type="date" />
-
+    {@html text.page.note}
     <FormInput
-      {...snippets.subjects}
-      bind:state={$state.subjects}
-      multiselect={options.subjects}
+      select={chapters.map((c) => c.title)}
+      {...text.chapter}
+      bind:node={inputs.chapter}
       required />
 
     <FormInput
-      {...snippets.schoolTypes}
-      bind:state={$state.schoolTypes}
-      multiselect={options.schoolTypes} />
-
-    <FormInput {...snippets.levels} bind:state={$state.levels} />
-
-    <FormInput {...snippets.place} bind:state={$state.place} required />
-
-    <FormInput {...snippets.remarks} bind:state={$state.remarks} />
-
-    <FormInput
-      select={options.discoveries}
-      {...snippets.discovery}
-      bind:state={$state.discovery}
+      select={options.genders}
+      {...text.gender}
+      bind:node={inputs.gender}
       required />
 
+    {#if type === `Student`}
+      <FormInput {...text.fullname} bind:node={inputs.fullname} required />
+
+      <FormInput {...text.phone} bind:node={inputs.phone} type="phone" />
+
+      <FormInput {...text.email} bind:node={inputs.email} required type="email" />
+
+      <FormInput {...text.studySubject} bind:node={inputs.studySubject} />
+
+      <FormInput {...text.semester} bind:node={inputs.semester} type="number" />
+
+      <FormInput {...text.birthPlace} bind:node={inputs.birthPlace} />
+
+      <FormInput {...text.birthDate} bind:node={inputs.birthDate} type="date" />
+
+      <FormInput
+        {...text.subjects}
+        bind:node={inputs.subjects}
+        multiselect={options.subjects}
+        required />
+
+      <FormInput
+        {...text.schoolTypes}
+        bind:node={inputs.schoolTypes}
+        multiselect={options.schoolTypes} />
+
+      <FormInput {...text.levels} bind:node={inputs.levels} />
+
+      <FormInput {...text.place} bind:node={inputs.place} required />
+
+      <FormInput {...text.remarks} bind:node={inputs.remarks} />
+
+      <FormInput
+        select={options.discoveries}
+        {...text.discovery}
+        bind:node={inputs.discovery}
+        required />
+
+      <FormInput
+        {...text.agreement}
+        bind:node={inputs.agreement}
+        type="toggle"
+        required />
+    {:else if type === `Schüler`}
+      <FormInput {...text.firstname} bind:node={inputs.firstname} required />
+
+      <FormInput
+        {...text.subjects}
+        bind:node={inputs.subjects}
+        multiselect={options.subjects}
+        required />
+
+      <FormInput
+        select={options.schoolTypes}
+        {...text.schoolType}
+        bind:node={inputs.schoolType}
+        required />
+
+      <FormInput {...text.level} bind:node={inputs.level} required type="number" />
+
+      <FormInput {...text.place} bind:node={inputs.place} required />
+
+      <FormInput {...text.age} bind:node={inputs.age} type="number" />
+
+      <FormInput {...text.remarks} bind:node={inputs.remarks} />
+
+      <FormInput {...text.nameContact} bind:node={inputs.nameContact} required />
+
+      <FormInput
+        {...text.phoneContact}
+        bind:node={inputs.phoneContact}
+        type="phone"
+        required />
+
+      <FormInput
+        {...text.emailContact}
+        bind:node={inputs.emailContact}
+        type="email"
+        required />
+
+      <FormInput {...text.orgContact} bind:node={inputs.orgContact} required />
+
+      <FormInput {...text.need} bind:node={inputs.need} type="toggle" required />
+    {/if}
+
     <FormInput
-      {...snippets.agreement}
-      bind:state={$state.agreement}
+      {...text.dataProtection}
+      bind:node={inputs.dataProtection}
       type="toggle"
       required />
-  {:else if type === `Schüler`}
-    <FormInput {...snippets.firstname} bind:state={$state.firstname} required />
 
-    <FormInput
-      {...snippets.subjects}
-      bind:state={$state.subjects}
-      multiselect={options.subjects}
-      required />
-
-    <FormInput
-      select={options.schoolTypes}
-      {...snippets.schoolType}
-      bind:state={$state.schoolType}
-      required />
-
-    <FormInput {...snippets.level} bind:state={$state.level} required />
-
-    <FormInput {...snippets.place} bind:state={$state.place} required />
-
-    <FormInput {...snippets.age} bind:state={$state.age} type="number" />
-
-    <FormInput {...snippets.remarks} bind:state={$state.remarks} />
-
-    <FormInput {...snippets.nameContact} bind:state={$state.nameContact} required />
-
-    <FormInput
-      {...snippets.phoneContact}
-      bind:state={$state.phoneContact}
-      type="phone"
-      required />
-
-    <FormInput
-      {...snippets.emailContact}
-      bind:state={$state.emailContact}
-      type="email"
-      required />
-
-    <FormInput {...snippets.orgContact} bind:state={$state.orgContact} required />
-
-    <FormInput {...snippets.need} bind:state={$state.need} type="toggle" required />
+    <h3>
+      {@html text.submit.title}
+    </h3>
+    {@html text.submit.note}
+    <button type="submit">Anmeldung Abschicken</button>
+  </form>
+  {#if modalOpen}
+    <Modal
+      on:close={() => (modalOpen = false)}
+      style="background: var(--darkBlue); color: white;">
+      <div>
+        <span>😢</span>
+        {@html text.error}
+        <pre><code>
+        {JSON.stringify(response?.error, null, 2)}
+      </code></pre>
+      </div>
+    </Modal>
   {/if}
-
-  <FormInput
-    {...snippets.dataProtection}
-    bind:state={$state.dataProtection}
-    type="toggle"
-    required />
-
-  <h3>
-    {@html snippets.submit.title}
-  </h3>
-  {@html snippets.submit.note}
-  <button type="submit">Anmeldung Abschicken</button>
-  {#if submitMessage}
-    <div class="success">
-      {@html submitMessage}
-    </div>
-  {/if}
-  {#if submitError || validationError}
-    <div class="error">
-      {@html submitError || validationError}
-    </div>
-  {/if}
-</form>
+{/if}
 
 <style>
   form {
@@ -248,13 +266,20 @@
     transform: scale(1.02);
     background: var(--green);
   }
-  div {
+  section {
+    max-width: 30em;
+    margin: auto;
     text-align: center;
+    font-size: 3ex;
+    padding: 1em;
   }
-  div.error {
-    color: red;
+  span {
+    text-align: center;
+    display: block;
+    font-size: 2em;
+    padding: 1em;
   }
-  div.success {
-    color: var(--green);
+  pre {
+    overflow: scroll;
   }
 </style>

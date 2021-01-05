@@ -1,5 +1,6 @@
 main {
   width: 100vw;
+  hyphens: auto;
 }
 main h1 {
   text-align: center;
@@ -18,6 +19,10 @@ body {
   transition: 0.3s;
   background: var(--bodyBg);
   color: var(--textColor);
+}
+html {
+  /* when scrolling elements into view, don't scroll them to the very top edge where they're hidden by the nav bar (https://stackoverflow.com/a/61913557) */
+  scroll-padding-top: 15em;
 }
 a {
   color: var(--linkColor);

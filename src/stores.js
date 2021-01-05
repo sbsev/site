@@ -25,5 +25,5 @@ function createSessionStore(name, defaultValue) {
   return store
 }
 
-export const studentData = createSessionStore(`studentSignup`, {})
-export const pupilData = createSessionStore(`pupilSignup`, {})
+export const studentSignupStore = createSessionStore(`studentSignup`, {})
+export const pupilSignupStore = createSessionStore(`pupilSignup`, {})

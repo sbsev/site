@@ -11,20 +11,21 @@
   export let selected = []
   export let readonly = false
   export let placeholder = ``
-  export let valid = true
   export let options
   export let single = false
+  export let required = false
+  export let input = undefined
 
   const dispatch = createEventDispatcher()
-  let input, activeOption, inputValue
+  let activeOption, filterValue, filterInput
   let showOptions = false
 
   $: filtered = options.filter((option) =>
-    inputValue ? option.toLowerCase().includes(inputValue.toLowerCase()) : option
+    filterValue ? option.toLowerCase().includes(filterValue.toLowerCase()) : option
   )
   $: if (
     (activeOption && !filtered.includes(activeOption)) ||
-    (!activeOption && inputValue)
+    (!activeOption && filterValue)
   )
     activeOption = filtered[0]
 
@@ -33,10 +34,12 @@
       (!readonly && !selected.includes(token) && !single) ||
       (single && selected.length !== 1)
     ) {
+      filterValue = ``
       selected = single ? token : [token, ...selected]
+      input.value = JSON.stringify(selected)
       if (single) {
         setOptionsVisible(false)
-        input.blur()
+        filterInput.blur()
       }
     }
   }
@@ -44,23 +47,25 @@
   function remove(token) {
     if (readonly || single) return
     selected = selected.filter((str) => str !== token)
+    input.value = JSON.stringify(selected)
   }
 
   function setOptionsVisible(show) {
     if (readonly) return
     showOptions = show
-    if (show) input.focus()
+    if (show) filterInput.focus()
     else activeOption = undefined
   }
+
   function handleKeydown(event) {
     if (event.code === `Escape`) {
       setOptionsVisible(false)
-      inputValue = ``
+      filterValue = ``
     }
     if (event.code === `Enter`) {
       if (activeOption) {
         selected.includes(activeOption) ? remove(activeOption) : add(activeOption)
-        inputValue = ``
+        filterValue = ``
       } // no active option means the options are closed in which case enter means open
       else setOptionsVisible(true)
     }
@@ -78,21 +83,21 @@
 
   const removeAll = () => {
     selected = []
-    inputValue = ``
+    filterValue = ``
   }
 
   const style = `height: 18pt; margin-left: 3pt;`
 </script>
 
-<div class="multiselect" class:readonly class:valid>
+<div class="multiselect" class:readonly>
   <div class="tokens" class:showOptions on:click={() => setOptionsVisible(true)}>
     <ExpandIcon {style} />
     {#if single}
-      <span>{selected}</span>
+      {selected}
     {:else}
       {#each selected as itm}
         <div class="token">
-          <span>{itm}</span>
+          {itm}
           {#if !readonly}
             <button
               on:click|stopPropagation={() => remove(itm)}
@@ -108,11 +113,13 @@
       {#if readonly}
         <ReadOnlyIcon {style} />
       {:else}
+        <!-- for holding the component's value in a way accessible to the DOM -->
+        <input bind:this={input} style="width: 0; padding: 1px;" {required} />
         <input
           on:blur={() => dispatch(`blur`)}
           autocomplete="off"
-          bind:value={inputValue}
-          bind:this={input}
+          bind:value={filterValue}
+          bind:this={filterInput}
           on:keydown={handleKeydown}
           on:blur={() => setOptionsVisible(false)}
           placeholder={selected.length ? `` : placeholder} />
@@ -150,9 +157,6 @@
     position: relative;
     border-radius: 1ex;
     margin: 1em 0;
-  }
-  .multiselect:not(.valid) {
-    border: 1px solid red;
   }
   .multiselect.readonly {
     background: var(--lightBg);

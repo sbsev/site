@@ -1,36 +1,47 @@
-function airtablePost(baseId, table, data, apiKey) {
-  fetch(`https://api.airtable.com/v0/${baseId}/${table}`, {
-    method: `POST`,
-    headers: {
-      'Content-Type': `application/json`,
-      authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({ records: data, typecast: true }),
-  })
+export function tryParse(str) {
+  try {
+    return JSON.parse(str)
+  } catch (_) {
+    return str
+  }
 }
 
-const globalBaseId = `appSswal9DNdJKRB8`
-const testBaseId = `appe3hVONuwBkuQv1`
-let runTest = true
+async function airtablePost(baseId, table, data, apiKey) {
+  const response = await fetch(
+    `https://api.airtable.com/v0/${baseId}/${table}`,
+    {
+      method: `POST`,
+      headers: {
+        'Content-Type': `application/json`,
+        authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
+    }
+  )
+  return await response.json()
+}
+
+const toStr = (str) => (str ? String(str) : undefined)
 
 export async function handleSubmit(chapterBaseId, data, apiKey) {
   const table = data.type === `Student` ? `Studenten` : `Schüler`
-  // const table = `Studenten`
+
+  // convert pupil age to approximate birthday (assuming today's day and month)
   if (data.age) {
-    // convert pupil age to approximate birthday (assuming today's day and month)
     const date = new Date()
     date.setFullYear(date.getFullYear() - data.age)
     data.birthDate = date
   }
+
   const fields = {
     'Vor- und Nachname': data.fullname, // for students
     Vorname: data.firstname, // for pupils
-    Telefon: data.phone, // for students
-    'E-Mail': data.email,
-    Bemerkung: data.remarks,
-    'Geografische Präferenz': data.place,
-    Klassenstufen: data.levels, // for students
-    Klassenstufe: data.level, // for pupils
+    Telefon: toStr(data.phone), // for students
+    'E-Mail': toStr(data.email),
+    Bemerkung: toStr(data.remarks),
+    'Geografische Präferenz': toStr(data.place),
+    Klassenstufen: toStr(data.levels), // for students
+    Klassenstufe: toStr(data.level), // for pupils
     Fächer: data.subjects,
     Schulform: data.schoolTypes, // for pupils
     Werbemaßnahme: data.discovery,
@@ -38,7 +49,7 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
     'Semester Anmeldung': Number(data.semester) || undefined, // for students
     // pass undefined in case Number(data.semester) is NaN
     Studienfach: data.studySubject, // for students
-    Geburtsort: data.birthPlace, // for students
+    Geburtsort: toStr(data.birthPlace), // for students
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
     Geburtsdatum:
@@ -47,67 +58,46 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
         : data.birthDate,
     Datenschutz: data.dataProtection,
     Kontaktperson: data.nameContact, // for pupils
-    'E-Mail Kontaktperson': data.emailContact, // for pupils
-    'Telefon Kontaktperson': data.phoneContact, // for pupils
-    'Organisation Kontaktperson': data.orgContact, // for pupils
+    'E-Mail Kontaktperson': toStr(data.emailContact), // for pupils
+    'Telefon Kontaktperson': toStr(data.phoneContact), // for pupils
+    'Organisation Kontaktperson': toStr(data.orgContact), // for pupils
     Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
   }
-  // Certain chapters organize contact persons a bit different to others
+
+  // some chapters organize contact persons little differently than others
   if (data.chapter === `Halle` && table === `Schüler`) {
     fields.Kontaktperson = `${data.nameContact}; ${data.orgContact}; ${data.emailContact}; ${data.phoneContact}`
     fields[`E-Mail Kontaktperson`] = undefined
     fields[`Telefon Kontaktperson`] = undefined
     fields[`Organisation Kontaktperson`] = undefined
   }
-  try {
-    const source = `test`
-    // [`source`, `chapter`, `type`]
-    //   .map((key) => `${key}: ${urlParams.get(key)}`)
-    //   .join(`, `)
 
-    // fields not present in individual chapter tables
-    const globalFields = {
-      Standort: data.chapter,
-      Spur: window.locations.join(`,\n`),
-      // Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${document.referrer}, ${source}`,
-      // Spur: `test2`, // window.locations.join(`,\n`),
-    }
+  // [`source`, `chapter`, `type`]
+  //   .map((key) => `${key}: ${urlParams.get(key)}`)
+  //   .join(`, `)
 
-    const globalSubmit = [
-      {
-        fields: { ...fields, ...globalFields },
-      },
-    ]
+  // fields not present in individual chapter tables
+  const globalFields = {
+    ...fields,
+    Standort: data.chapter,
+    Spur: window.locations.join(`,\n`),
+    // Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${document.referrer}, ${source}`,
+    // Spur: `test2`, // window.locations.join(`,\n`),
+  }
+  const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }
 
-    const townSubmit = [
-      {
-        fields: { ...fields, Kontaktpersonen: data.nameContact },
-      },
-    ]
+  const globalBaseId = `appSswal9DNdJKRB8`
+  const testBaseId = `appe3hVONuwBkuQv1`
+  let runTest = true
 
+  if (runTest) {
+    return await airtablePost(testBaseId, table, chapterFields, apiKey)
+  } else {
     // use Promise.all to fail fast if one record creation fails
-
-    if (runTest) {
-      await Promise.all([airtablePost(testBaseId, table, townSubmit, apiKey)])
-      return true
-    } else {
-      await Promise.all([
-        // airtablePost(globalBaseId, table, globalSubmit, apiKey), //reactivate after testing
-        airtablePost(chapterBaseId, table, townSubmit, apiKey),
-        //   globalTable.create([{ fields: { ...fields, ...globalFields } }], {
-        //     typecast: true,
-        //   }),
-        //   // Create new link to Kontaktpersonen table
-        //   chapterTable.create(
-        //     [{ fields: { ...fields, Kontaktpersonen: data.nameContact } }],
-        //     { typecast: true }
-        //   ),
-      ])
-      return true
-    }
-  } catch (err) {
-    console.error(`Forms error`, err)
-    return false
-    // alert(snippets.error + `\n\n` + JSON.stringify(err, null, 4))
+    const responses = await Promise.all([
+      // airtablePost(globalBaseId, table, globalFields, apiKey),
+      airtablePost(chapterBaseId, table, chapterFields, apiKey),
+    ])
+    return responses.find((res) => `error` in res) || responses[0]
   }
 }

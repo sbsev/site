@@ -1,10 +1,12 @@
 <script>
   export let name
   export let checked = false
+  export let required = false
+  export let node = undefined
 </script>
 
 <label for={name}>
-  <input type="checkbox" id={name} {name} bind:checked />
+  <input type="checkbox" id={name} {name} bind:checked {required} bind:this={node} />
   <span />
 </label>
 
@@ -27,7 +29,7 @@
     background: var(--bodyBg);
   }
   input {
-    display: none;
+    width: 0;
   }
   input + span::after {
     content: '';
