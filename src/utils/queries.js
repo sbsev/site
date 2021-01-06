@@ -214,7 +214,7 @@ const microcopyQuery = (title) => `{
 
 export async function fetchMicrocopy(title, uri) {
   const { microcopy } = await gqlFetch(uri, microcopyQuery(title))
-  return yaml.safeLoad(microcopy?.items[0]?.text)
+  return yaml.load(microcopy?.items[0]?.text)
 }
 
 function titleToSlug(itm) {

@@ -34,8 +34,7 @@ export async function searchStringInContentType(
 }
 
 export async function createFAQEntries() {
-  const data = fs.readFileSync(`./faq.yml`)
-  const faqs = yaml.safeLoad(data)
+  const faqs = yaml.load(fs.readFileSync(`./faq.yml`))
 
   const space = await getClient().getSpace(id)
 
