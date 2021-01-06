@@ -1,6 +1,7 @@
 <script>
   export let cover
-  const { small, medium, large, xl, jpg, description, title } = cover
+
+  $: ({ small, medium, large, xl, jpg, description, title } = cover)
 </script>
 
 <picture>

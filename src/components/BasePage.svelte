@@ -4,7 +4,7 @@
 
   export let page
 
-  const { title, subtitle, cover = {}, body = ``, toc } = page
+  $: ({ title, subtitle, cover = {}, body = ``, toc } = page)
 </script>
 
 <hgroup>
