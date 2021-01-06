@@ -30,13 +30,20 @@ Running this site locally requires [`git`](https://git-scm.com) and [`yarn`](htt
    git clone https://github.com/sbsev/website && website
    ```
 
-2. Install dependencies.
+2. (optional) Setup [`git` hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) by setting `core.hooksPath` and granting execute permission.
+
+   ```sh
+   git config core.hooksPath src/utils/gitHooks
+   && chmod -R u+x src/utils/gitHooks
+   ```
+
+3. Install dependencies.
 
    ```sh
    yarn
    ```
 
-3. Copy `.env.example` to `.env`.
+4. Copy `.env.example` to `.env`.
 
    ```sh
    cp .env.example .env
@@ -44,7 +51,7 @@ Running this site locally requires [`git`](https://git-scm.com) and [`yarn`](htt
 
    Then open `.env` and insert your [Contentful space ID and access token](https://contentful.com/developers/docs/references/authentication). These are found in the settings menu of a Contentful space under 'API keys'.
 
-4. Start the dev server.
+5. Start the dev server.
 
    ```sh
    yarn dev
