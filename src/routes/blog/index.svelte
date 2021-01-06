@@ -1,10 +1,10 @@
 <script context="module">
   import { fetchJson, fetchPosts, fetchTags } from '../../utils/queries'
 
-  export async function preload(_, session) {
-    const posts = await fetchPosts(session.gqlUri)
-    const tags = await fetchTags(session.gqlUri)
-    const social = await fetchJson(`Social`, session.gqlUri)
+  export async function preload() {
+    const posts = await fetchPosts()
+    const tags = await fetchTags()
+    const social = await fetchJson(`Social`)
     return { posts, tags, social }
   }
 </script>

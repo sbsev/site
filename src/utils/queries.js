@@ -27,8 +27,8 @@ const prefixSlug = (prefix) => (obj) => {
   return obj
 }
 
-export const gqlFetch = async (uri, query) => {
-  const response = await fetch(uri, {
+export const gqlFetch = async (query) => {
+  const response = await fetch(process.env.gqlEndPoint, {
     method: `POST`,
     headers: { 'Content-Type': `application/json` },
     body: JSON.stringify({ query }),
@@ -53,8 +53,8 @@ const chaptersQuery = `{
   }
 }`
 
-export async function fetchChapters(uri) {
-  const { chapters } = await gqlFetch(uri, chaptersQuery)
+export async function fetchChapters() {
+  const { chapters } = await gqlFetch(chaptersQuery)
   return chapters?.items?.map(prefixSlug(`standorte/`))
 }
 
@@ -100,14 +100,14 @@ function renderBody(itm) {
   return itm
 }
 
-export async function fetchPage(slug, uri) {
-  const data = await gqlFetch(uri, pageQuery(slug))
+export async function fetchPage(slug) {
+  const data = await gqlFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
   return renderBody(page)
 }
 
-export async function fetchPages(uri) {
-  const data = await gqlFetch(uri, pageQuery())
+export async function fetchPages() {
+  const data = await gqlFetch(pageQuery())
   return data?.pages?.items?.map(renderBody)
 }
 
@@ -151,14 +151,14 @@ function processPost(post) {
   return post
 }
 
-export async function fetchPost(slug, uri) {
-  const data = await gqlFetch(uri, postQuery(slug))
+export async function fetchPost(slug) {
+  const data = await gqlFetch(postQuery(slug))
   const post = data?.posts?.items[0]
   return processPost(post)
 }
 
-export async function fetchPosts(uri) {
-  const data = await gqlFetch(uri, postQuery())
+export async function fetchPosts() {
+  const data = await gqlFetch(postQuery())
   const posts = data?.posts?.items
   return posts.map(processPost)
 }
@@ -171,8 +171,8 @@ const jsonQuery = (title) => `{
   }
 }`
 
-export async function fetchJson(title, uri) {
-  const data = await gqlFetch(uri, jsonQuery(title))
+export async function fetchJson(title) {
+  const data = await gqlFetch(jsonQuery(title))
   return data?.json?.items[0]?.data
 }
 
@@ -199,8 +199,8 @@ function processTag(tag) {
   return tag
 }
 
-export async function fetchTags(uri) {
-  const { tags } = await gqlFetch(uri, tagsQuery)
+export async function fetchTags() {
+  const { tags } = await gqlFetch(tagsQuery)
   return tags?.items.map(processTag)
 }
 
@@ -212,8 +212,8 @@ const microcopyQuery = (title) => `{
   }
 }`
 
-export async function fetchMicrocopy(title, uri) {
-  const { microcopy } = await gqlFetch(uri, microcopyQuery(title))
+export async function fetchMicrocopy(title) {
+  const { microcopy } = await gqlFetch(microcopyQuery(title))
   return yaml.load(microcopy?.items[0]?.text)
 }
 
@@ -230,7 +230,7 @@ function titleToSlug(itm) {
   return itm
 }
 
-export async function fetchFaqs(uri) {
-  const faqs = await fetchMicrocopy(`FAQ`, uri)
+export async function fetchFaqs() {
+  const faqs = await fetchMicrocopy(`FAQ`)
   return faqs.map(renderBody).map(titleToSlug).map(prefixSlug(`faq#`))
 }

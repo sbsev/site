@@ -1,14 +1,13 @@
 import 'dotenv/config.js'
 import fs from 'fs'
 import yaml from 'js-yaml'
+import contentful from 'contentful-management'
 
 const { CONTENTFUL_ACCESS_TOKEN: token, CONTENTFUL_SPACE_ID: id } = process.env
 const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
 
 export const gqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
 export const graphiql = `${ctfGqlUrl}/${id}/explore?access_token=${token}`
-
-import contentful from 'contentful-management'
 
 // to use any of the functions in this file, generate a Content Management Token (CMT) at
 // https://app.contentful.com/spaces/gi9muc70s4ub/api/cma_tokens and add it to your .env file

@@ -10,11 +10,12 @@ import svelteSVG from 'rollup-plugin-svelte-svg'
 
 import pkg from './package.json'
 import { algoliaConfig } from './src/utils/algolia'
-import { graphiql } from './src/utils/contentful'
+import { graphiql, gqlEndPoint } from './src/utils/contentful'
 
 const replacements = replace({
   'process.browser': true,
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  'process.env.gqlEndPoint': JSON.stringify(gqlEndPoint),
 })
 const dev = process.env.NODE_ENV === `development`
 

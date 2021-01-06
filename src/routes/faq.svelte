@@ -1,8 +1,8 @@
 <script context="module">
   import { fetchFaqs } from '../utils/queries'
 
-  export async function preload(_, session) {
-    const faqs = await fetchFaqs(session.gqlUri)
+  export async function preload() {
+    const faqs = await fetchFaqs()
     return { faqs }
   }
 </script>

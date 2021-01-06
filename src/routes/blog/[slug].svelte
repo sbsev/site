@@ -1,8 +1,8 @@
 <script context="module">
   import { fetchPost } from '../../utils/queries'
 
-  export async function preload({ path }, session) {
-    const post = await fetchPost(path.split(`/`).pop(), session.gqlUri)
+  export async function preload({ path }) {
+    const post = await fetchPost(path.split(`/`).pop())
     return { post }
   }
 </script>

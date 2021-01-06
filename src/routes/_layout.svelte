@@ -1,12 +1,12 @@
 <script context="module">
   import { fetchJson, fetchPage, fetchChapters } from '../utils/queries'
 
-  export async function preload({ path }, session) {
-    const { nav } = await fetchJson(`Nav`, session.gqlUri)
-    const footer = await fetchJson(`Footer`, session.gqlUri)
-    const social = await fetchJson(`Social`, session.gqlUri)
-    const chapters = await fetchChapters(session.gqlUri)
-    const pageData = (await fetchPage(path.substring(1), session.gqlUri)) || {}
+  export async function preload({ path }) {
+    const { nav } = await fetchJson(`Nav`)
+    const footer = await fetchJson(`Footer`)
+    const social = await fetchJson(`Social`)
+    const chapters = await fetchChapters()
+    const pageData = (await fetchPage(path.substring(1))) || {}
 
     nav.find((el) => el.url === `/standorte`).subNav[0].span = true
     nav

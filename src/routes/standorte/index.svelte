@@ -1,9 +1,9 @@
 <script context="module">
   import { fetchChapters, fetchPage } from '../../utils/queries'
 
-  export async function preload({ path }, session) {
-    const page = await fetchPage(path.substring(1), session.gqlUri)
-    const chapters = await fetchChapters(session.gqlUri)
+  export async function preload({ path }) {
+    const page = await fetchPage(path.substring(1))
+    const chapters = await fetchChapters()
     return { page, chapters }
   }
 </script>
