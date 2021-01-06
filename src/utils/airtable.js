@@ -72,32 +72,21 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
     fields[`Organisation Kontaktperson`] = undefined
   }
 
-  // [`source`, `chapter`, `type`]
-  //   .map((key) => `${key}: ${urlParams.get(key)}`)
-  //   .join(`, `)
-
-  // fields not present in individual chapter tables
+  // fields not present in local chapter tables
   const globalFields = {
     ...fields,
     Standort: data.chapter,
     Spur: window.locations.join(`,\n`),
-    // Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${document.referrer}, ${source}`,
-    // Spur: `test2`, // window.locations.join(`,\n`),
   }
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }
 
   const globalBaseId = `appSswal9DNdJKRB8`
-  const testBaseId = `appe3hVONuwBkuQv1`
-  let runTest = true
+  // const testBaseId = `appe3hVONuwBkuQv1`
 
-  if (runTest) {
-    return await airtablePost(testBaseId, table, chapterFields, apiKey)
-  } else {
-    // use Promise.all to fail fast if one record creation fails
-    const responses = await Promise.all([
-      // airtablePost(globalBaseId, table, globalFields, apiKey),
-      airtablePost(chapterBaseId, table, chapterFields, apiKey),
-    ])
-    return responses.find((res) => `error` in res) || responses[0]
-  }
+  // use Promise.all to fail fast if one record creation fails
+  const responses = await Promise.all([
+    airtablePost(globalBaseId, table, globalFields, apiKey),
+    airtablePost(chapterBaseId, table, chapterFields, apiKey),
+  ])
+  return responses.find((res) => `error` in res) || responses[0]
 }
