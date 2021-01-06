@@ -26,18 +26,17 @@
     background: var(--headerBg);
     box-shadow: 0 0 1ex black;
     z-index: 2;
+    padding: 3pt 1ex;
   }
   @media (max-width: 1000px) {
     header {
       gap: 5vw;
-      padding: 1ex 2ex;
       grid-template-columns: auto 1fr auto auto;
       grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
     }
   }
   @media (min-width: 1001px) {
     header {
-      padding: 1ex;
       display: flex;
     }
   }

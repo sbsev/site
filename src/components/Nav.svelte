@@ -57,7 +57,10 @@
   class="logo"
   href="/"
   rel="prefetch"
-  aria-current={isCurrent(`/`)}><img src="favicon.svg" alt="SbS Logo" height="55" /></a>
+  aria-current={isCurrent(`/`)}><img
+    src="favicon.svg"
+    alt="SbS Logo"
+    style="height: 2em;" /></a>
 
 <nav class:isOpen use:onClickOutside={close} use:preventOverScroll bind:this={resultsDiv}>
   <ul>
@@ -108,6 +111,11 @@
   button {
     transition: 0.4s;
     color: var(--headerColor);
+  }
+  button:hover {
+    background: var(--gray);
+    border-radius: 50%;
+    padding: 1pt;
   }
   a:hover {
     color: var(--hoverColor);

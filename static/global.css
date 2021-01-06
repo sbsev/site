@@ -189,6 +189,7 @@ div.box-list ul {
   color: white;
   margin: 3ex auto;
   flex-wrap: wrap;
+  hyphens: none;
 }
 div.box-list ul li {
   padding: 5pt 1ex;

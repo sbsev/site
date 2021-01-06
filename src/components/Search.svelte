@@ -111,6 +111,7 @@
     cursor: pointer;
     transition: 0.3s;
     opacity: 0;
+    padding: 0;
     height: 2.5ex;
   }
   input::placeholder {

@@ -52,8 +52,4 @@ export async function createFAQEntries() {
 }
 
 // run with: node src/utils/contentful.js
-// try {
-//   createFAQEntries()
-// } catch (error) {
-//   console.error(error)
-// }
+// searchStringInContentType()

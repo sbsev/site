@@ -3,7 +3,11 @@
 
   import { fetchMicrocopy, fetchJson, fetchChapters } from '../utils/queries'
 
-  const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
+  const stripOuterPTag = (str) =>
+    str
+      .replace(/^<p>/, ``)
+      .replace(/<\/p>\s*?$/, ``)
+      .replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
 
   export async function preload(page, { gqlUri }) {
     const chapters = await fetchChapters(gqlUri)
@@ -74,6 +78,7 @@
     inputs.chapter.value = chapter
     // For domain changes and page reloads (site-external navigation)
     window.addEventListener(`beforeunload`, leaveListener)
+
     return () => window.removeEventListener(`beforeunload`, leaveListener)
   })
 
