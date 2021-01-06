@@ -40,7 +40,7 @@
     <span>
       Interesse an Standortleitung?
       <a
-        href="mailto:info.{page.slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse Standortleiter {page.title}"
+        href="mailto:info.{page.slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
         class="btn orange"><Email {style} />
         Schreib uns</a>
       <a href="mitmachen/standortleiter" class="btn orange stroke">
@@ -66,9 +66,13 @@
     display: grid;
     align-content: space-between;
   }
+  a.btn {
+    width: 100%;
+    margin: 1ex;
+    box-sizing: border-box;
+  }
   @media (min-width: 850px) {
     section {
-      gap: 0;
       grid-template-columns: auto auto auto;
     }
   }

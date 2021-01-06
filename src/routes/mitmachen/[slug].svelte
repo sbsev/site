@@ -9,6 +9,7 @@
 
 <script>
   import BasePage from '../../components/BasePage.svelte'
+
   export let page
 </script>
 

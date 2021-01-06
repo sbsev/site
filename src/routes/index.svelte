@@ -15,6 +15,8 @@
   import Child from '@svg-icons/fa-solid/child.svg'
 
   export let chapters, page
+
+  const style = `vertical-align: middle; margin-right: 6pt;`
 </script>
 
 <ChapterMap {chapters} />
@@ -24,17 +26,15 @@
 <section>
   <div style="background: var(--lightBlue);">
     <span>{chapters.length}</span>
-    <Place height="2.5ex" style="vertical-align: middle; margin-right: 6pt;" />Standorte
+    <Place height="2.5ex" {style} />Standorte
   </div>
   <div style="background: var(--green);">
     <span>1045</span>
-    <UserGraduate
-      height="2.5ex"
-      style="vertical-align: middle; margin-right: 6pt;" />Studierende
+    <UserGraduate height="2.5ex" {style} />Studierende
   </div>
   <div style="background: var(--orange);">
     <span>1228</span>
-    <Child height="2.5ex" style="vertical-align: middle; margin-right: 6pt;" />Schüler
+    <Child height="2.5ex" {style} />Schüler
   </div>
 </section>
 

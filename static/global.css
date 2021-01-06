@@ -117,6 +117,8 @@ select {
   border-radius: 5pt;
   padding: 1ex 1.5ex;
   transition: 0.3s;
+  width: max-content;
+  margin: 1em auto;
 }
 .btn:hover {
   transform: scale(1.03);
@@ -155,4 +157,49 @@ select {
 .btn.stroke:hover {
   color: white !important;
   border: 2pt solid transparent;
+}
+
+section.blue,
+section.green {
+  position: relative;
+  box-sizing: border-box;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin: 0 -50vw;
+  padding: 1.5em calc(50vw - 50%);
+  color: white;
+}
+section.blue a,
+section.green a {
+  color: var(--lightBlue);
+}
+section.blue {
+  background: var(--darkBlue);
+}
+section.green {
+  background: var(--darkGreen);
+}
+
+div.box-list ul {
+  display: flex;
+  gap: 1em;
+  list-style: none;
+  padding: 0;
+  color: white;
+  margin: 3ex auto;
+  flex-wrap: wrap;
+}
+div.box-list ul li {
+  padding: 5pt 1ex;
+  border-radius: 5pt;
+  background: var(--darkBlue);
+  flex: 1;
+  text-align: center;
+}
+section.blue div.box-list ul li {
+  background: var(--green);
+}
+section.blue div.box-list ul li a {
+  color: var(--darkBlue);
 }

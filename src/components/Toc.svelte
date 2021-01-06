@@ -16,7 +16,8 @@
 
   // the default selector relies on BasePage.svelte wrapping body content in <article>
   export let headingSelector = Array.from({ length: 6 }, (_, i) => `article h` + (i + 1))
-  export let getTitle, getDepth
+  export let getTitle = (node) => node.innerText
+  export let getDepth = (node) => Number(node.nodeName[1])
 
   let windowWidth
   let open = false
@@ -26,13 +27,11 @@
 
   onMount(() => {
     nodes = Array.from(document.querySelectorAll(headingSelector))
-    const depths = nodes.map((node) =>
-      getDepth ? getDepth(node) : Number(node.nodeName[1])
-    )
+    const depths = nodes.map(getDepth)
     const minDepth = Math.min(...depths)
 
     headings = nodes.map((node, idx) => ({
-      title: getTitle ? getTitle(node) : node.innerText,
+      title: getTitle(node),
       depth: depths[idx] - minDepth,
     }))
     scrollHandler()
@@ -77,6 +76,9 @@
 </aside>
 
 <style>
+  aside {
+    z-index: 1;
+  }
   nav {
     list-style: none;
     max-height: 90vh;

@@ -24,7 +24,7 @@
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
 
-  export let nav, pageData, footer, social
+  export let nav, pageData, footer, social, segment
 
   const { page } = stores()
 
@@ -49,7 +49,7 @@
 <Header {nav} />
 <main>
   <slot />
-  {#if sys?.publishedAt && !pageData.slug.includes(`blog`)}
+  {#if sys?.publishedAt && !(segment ?? ``).includes(`blog`)}
     <time><Update {style} />Zuletzt bearbeitet:
       {date}</time>
   {/if}
