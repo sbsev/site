@@ -2,7 +2,7 @@
   import { fetchPage } from '../../utils/queries'
 
   export async function preload({ path }) {
-    const page = await fetchPage(path.substring(1))
+    const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
     return { page }
   }
 </script>

@@ -1,8 +1,8 @@
 <script context="module">
   import { fetchPage } from '../utils/queries'
 
-  export async function preload({ path }) {
-    const page = await fetchPage(path.substring(1))
+  export async function preload({ params }) {
+    const page = await fetchPage(params.slug)
     return { page }
   }
 </script>

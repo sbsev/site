@@ -1,8 +1,8 @@
 <script context="module">
   import { fetchPost } from '../../utils/queries'
 
-  export async function preload({ path }) {
-    const post = await fetchPost(path.split(`/`).pop())
+  export async function preload({ params }) {
+    const post = await fetchPost(params.slug)
     return { post }
   }
 </script>
