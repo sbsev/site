@@ -10,7 +10,11 @@ export const gqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
 export const graphiql = `${ctfGqlUrl}/${id}/explore?access_token=${token}`
 
 // to use any of the functions in this file, generate a Content Management Token (CMT) at
-// https://app.contentful.com/spaces/gi9muc70s4ub/api/cma_tokens and add it to your .env file
+// https://app.contentful.com/spaces/gi9muc70s4ub/api/cma_tokens and add it to your .env file.
+// Note that on any Contentful entry comes as an object with update/publish/archive/etc. methods
+// as well as a fields and a sys key. Only the attributes in fields can be changed and then e.g.
+// published(). The data in entry.sys can be consumed but is non-user editable. The API will throw
+// if you modify sys and then try to publish()/update() an entry.
 const getClient = () =>
   contentful.createClient({
     accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
@@ -44,6 +48,18 @@ export async function convertBlogTagsToStr() {
     post.fields.tags2.de = post.fields.tags.de.map((tag) => tags[tag.sys.id])
     post.update()
     post.publish()
+  })
+}
+
+export async function copyEntries() {
+  // Microcopy to Yaml
+  const space = await getClient().getSpace(id)
+
+  const env = await space.getEnvironment(`master`)
+  let { items } = await env.getEntries({ content_type: `microcopy` })
+  items.forEach(async (itm) => {
+    const entry = await env.createEntry(`yaml`, itm)
+    await entry.publish()
   })
 }
 

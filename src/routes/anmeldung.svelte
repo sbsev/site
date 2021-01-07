@@ -1,7 +1,7 @@
 <script context="module">
   import marked from 'marked'
 
-  import { fetchMicrocopy, fetchChapters } from '../utils/queries'
+  import { fetchYaml, fetchChapters } from '../utils/queries'
 
   const stripOuterPTag = (str) =>
     str
@@ -11,10 +11,10 @@
 
   export async function preload() {
     const chapters = await fetchChapters()
-    const options = await fetchMicrocopy(`Signup Form Options`)
+    const options = await fetchYaml(`Signup Form Options`)
 
     async function parseMicrocopy(title) {
-      let copy = await fetchMicrocopy(title)
+      let copy = await fetchYaml(title)
       // iterate over name, phone, email, ...
       Object.entries(copy).forEach(([key, itm]) => {
         if (typeof itm === `string`) copy[key] = stripOuterPTag(marked(itm))

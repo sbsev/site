@@ -1,10 +1,10 @@
 <script context="module">
-  import { fetchMicrocopy, fetchPage, fetchChapters } from '../utils/queries'
+  import { fetchYaml, fetchPage, fetchChapters } from '../utils/queries'
 
   export async function preload({ path }) {
-    const nav = await fetchMicrocopy(`Nav`)
-    const footer = await fetchMicrocopy(`Footer`)
-    const social = await fetchMicrocopy(`Social`)
+    const nav = await fetchYaml(`Nav`)
+    const footer = await fetchYaml(`Footer`)
+    const social = await fetchYaml(`Social`)
     const chapters = await fetchChapters()
     const pageData = (await fetchPage(path.substring(1))) || {}
 

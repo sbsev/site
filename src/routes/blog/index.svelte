@@ -1,9 +1,9 @@
 <script context="module">
-  import { fetchMicrocopy, fetchPosts } from '../../utils/queries'
+  import { fetchYaml, fetchPosts } from '../../utils/queries'
 
   export async function preload() {
     const posts = await fetchPosts()
-    const social = await fetchMicrocopy(`Social`)
+    const social = await fetchYaml(`Social`)
     return { posts, social }
   }
 </script>

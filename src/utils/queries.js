@@ -158,17 +158,17 @@ export async function fetchPosts() {
   return posts.map(processPost)
 }
 
-const microcopyQuery = (title) => `{
-  microcopy: microcopyCollection${title ? `(where: {title: "${title}"})` : ``} {
+const yamlQuery = (title) => `{
+  yml: yamlCollection${title ? `(where: {title: "${title}"})` : ``} {
     items {
       data
     }
   }
 }`
 
-export async function fetchMicrocopy(title) {
-  const { microcopy } = await gqlFetch(microcopyQuery(title))
-  return yaml.load(microcopy?.items[0]?.data)
+export async function fetchYaml(title) {
+  const { yml } = await gqlFetch(yamlQuery(title))
+  return yaml.load(yml?.items[0]?.data)
 }
 
 function titleToSlug(itm) {
@@ -185,6 +185,6 @@ function titleToSlug(itm) {
 }
 
 export async function fetchFaqs() {
-  const faqs = await fetchMicrocopy(`FAQ`)
+  const faqs = await fetchYaml(`FAQ`)
   return faqs.map(renderBody).map(titleToSlug).map(prefixSlug(`faq#`))
 }
