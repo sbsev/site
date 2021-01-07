@@ -163,19 +163,6 @@ export async function fetchPosts() {
   return posts.map(processPost)
 }
 
-const jsonQuery = (title) => `{
-  json: jsonCollection(where: {title: "${title}"}) {
-    items {
-      data
-    }
-  }
-}`
-
-export async function fetchJson(title) {
-  const data = await gqlFetch(jsonQuery(title))
-  return data?.json?.items[0]?.data
-}
-
 const tagsQuery = `{
   tags: blogTagCollection(order: title_ASC) {
     items {
@@ -207,14 +194,14 @@ export async function fetchTags() {
 const microcopyQuery = (title) => `{
   microcopy: microcopyCollection${title ? `(where: {title: "${title}"})` : ``} {
     items {
-      text
+      data
     }
   }
 }`
 
 export async function fetchMicrocopy(title) {
   const { microcopy } = await gqlFetch(microcopyQuery(title))
-  return yaml.load(microcopy?.items[0]?.text)
+  return yaml.load(microcopy?.items[0]?.data)
 }
 
 function titleToSlug(itm) {

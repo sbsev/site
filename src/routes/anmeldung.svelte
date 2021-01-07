@@ -1,7 +1,7 @@
 <script context="module">
   import marked from 'marked'
 
-  import { fetchMicrocopy, fetchJson, fetchChapters } from '../utils/queries'
+  import { fetchMicrocopy, fetchChapters } from '../utils/queries'
 
   const stripOuterPTag = (str) =>
     str
@@ -9,12 +9,12 @@
       .replace(/<\/p>\s*?$/, ``)
       .replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
 
-  export async function preload(page, { gqlUri }) {
-    const chapters = await fetchChapters(gqlUri)
-    const options = await fetchJson(`Signup Form Options`, gqlUri)
+  export async function preload() {
+    const chapters = await fetchChapters()
+    const options = await fetchMicrocopy(`Signup Form Options`)
 
     async function parseMicrocopy(title) {
-      let copy = await fetchMicrocopy(title, gqlUri)
+      let copy = await fetchMicrocopy(title)
       // iterate over name, phone, email, ...
       Object.entries(copy).forEach(([key, itm]) => {
         if (typeof itm === `string`) copy[key] = stripOuterPTag(marked(itm))

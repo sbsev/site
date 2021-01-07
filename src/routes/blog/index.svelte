@@ -1,10 +1,10 @@
 <script context="module">
-  import { fetchJson, fetchPosts, fetchTags } from '../../utils/queries'
+  import { fetchMicrocopy, fetchPosts, fetchTags } from '../../utils/queries'
 
   export async function preload() {
     const posts = await fetchPosts()
     const tags = await fetchTags()
-    const social = await fetchJson(`Social`)
+    const social = await fetchMicrocopy(`Social`)
     return { posts, tags, social }
   }
 </script>

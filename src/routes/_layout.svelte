@@ -1,10 +1,10 @@
 <script context="module">
-  import { fetchJson, fetchPage, fetchChapters } from '../utils/queries'
+  import { fetchMicrocopy, fetchPage, fetchChapters } from '../utils/queries'
 
   export async function preload({ path }) {
-    const { nav } = await fetchJson(`Nav`)
-    const footer = await fetchJson(`Footer`)
-    const social = await fetchJson(`Social`)
+    const nav = await fetchMicrocopy(`Nav`)
+    const footer = await fetchMicrocopy(`Footer`)
+    const social = await fetchMicrocopy(`Social`)
     const chapters = await fetchChapters()
     const pageData = (await fetchPage(path.substring(1))) || {}
 
@@ -54,7 +54,7 @@
       {date}</time>
   {/if}
 </main>
-<Footer links={footer.links} {social} />
+<Footer {...footer} {social} />
 
 <style>
   time {
