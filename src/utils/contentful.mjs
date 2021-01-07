@@ -24,12 +24,27 @@ export async function searchStringInContentType(
 
   const env = await space.getEnvironment(`master`)
   let { items } = await env.getEntries({ content_type: contentType })
-  items = items.filter(
-    (item) => item.fields.body && item.fields.body.de.includes(searchTerm)
-  )
+  items = items.filter((item) => item?.fields?.body?.de?.includes(searchTerm))
   items = items.map((item) => item.fields.title.de)
   // eslint-disable-next-line no-console
   console.log(`items of type ${contentType} containing ${searchTerm}:`, items)
+}
+
+export async function convertBlogTagsToStr() {
+  const space = await getClient().getSpace(id)
+
+  const env = await space.getEnvironment(`master`)
+  let { items: tags } = await env.getEntries({ content_type: `blogTag` })
+  let { items: posts } = await env.getEntries({ content_type: `post` })
+  tags = Object.fromEntries(
+    tags.map((tag) => [tag.sys.id, tag.fields.title.de])
+  )
+  posts.forEach((post) => {
+    post.fields.tags2 = {}
+    post.fields.tags2.de = post.fields.tags.de.map((tag) => tags[tag.sys.id])
+    post.update()
+    post.publish()
+  })
 }
 
 export async function createFAQEntries() {

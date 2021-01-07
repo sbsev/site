@@ -1,11 +1,10 @@
 <script context="module">
-  import { fetchMicrocopy, fetchPosts, fetchTags } from '../../utils/queries'
+  import { fetchMicrocopy, fetchPosts } from '../../utils/queries'
 
   export async function preload() {
     const posts = await fetchPosts()
-    const tags = await fetchTags()
     const social = await fetchMicrocopy(`Social`)
-    return { posts, tags, social }
+    return { posts, social }
   }
 </script>
 
@@ -14,13 +13,19 @@
   import Social from '../../components/Social.svelte'
   import TagList from '../../components/TagList.svelte'
 
-  export let posts, tags, social
-
-  tags.find((tag) => tag.title === `Alle`).total = posts.length
+  export let posts, social
 
   let activeTag
   $: filteredPosts = posts.filter(
     (post) => activeTag === `Alle` || post.tags.includes(activeTag)
+  )
+  // count tag occurences
+  const tags = posts.reduce(
+    (obj, faq) => {
+      faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
+      return obj
+    },
+    { Alle: posts.length }
   )
 </script>
 

@@ -123,11 +123,7 @@ const postQuery = (slug) => `{
       cover {
         ${coverFragment}
       }
-      tags: tagsCollection {
-        items {
-          title
-        }
-      }
+      tags
       author {
         name
         email
@@ -145,7 +141,6 @@ const postQuery = (slug) => `{
 }`
 
 function processPost(post) {
-  post.tags = post.tags.items.map((tag) => tag.title)
   renderBody(post)
   prefixSlug(`blog/`)(post)
   return post
@@ -161,34 +156,6 @@ export async function fetchPosts() {
   const data = await gqlFetch(postQuery())
   const posts = data?.posts?.items
   return posts.map(processPost)
-}
-
-const tagsQuery = `{
-  tags: blogTagCollection(order: title_ASC) {
-    items {
-      title
-      linkedFrom {
-        entryCollection {
-          total
-        }
-      }
-      icon {
-        url
-      }
-    }
-  }
-}`
-
-function processTag(tag) {
-  const { total } = tag?.linkedFrom?.entryCollection
-  tag.total = total
-  delete tag?.linkedFrom
-  return tag
-}
-
-export async function fetchTags() {
-  const { tags } = await gqlFetch(tagsQuery)
-  return tags?.items.map(processTag)
 }
 
 const microcopyQuery = (title) => `{
