@@ -86,56 +86,54 @@
     filterValue = ``
   }
 
-  const style = `height: 18pt; margin-left: 3pt;`
+  const style = `height: 18pt; margin: 0 3pt;`
 </script>
 
-<div class="multiselect" class:readonly>
-  <div class="tokens" class:showOptions on:click={() => setOptionsVisible(true)}>
-    <ExpandIcon {style} />
-    {#if single}
-      {selected}
-    {:else}
-      {#each selected as itm}
-        <div class="token">
-          {itm}
-          {#if !readonly}
-            <button
-              on:click|stopPropagation={() => remove(itm)}
-              type="button"
-              title="Remove {itm}">
-              <CrossIcon {style} />
-            </button>
-          {/if}
-        </div>
-      {/each}
-    {/if}
-    <div class="actions">
-      {#if readonly}
-        <ReadOnlyIcon {style} />
-      {:else}
-        <!-- for holding the component's value in a way accessible to the DOM -->
-        <input bind:this={input} style="width: 0; padding: 1px;" {required} />
-        <input
-          on:blur={() => dispatch(`blur`)}
-          autocomplete="off"
-          bind:value={filterValue}
-          bind:this={filterInput}
-          on:keydown={handleKeydown}
-          on:blur={() => setOptionsVisible(false)}
-          placeholder={selected.length ? `` : placeholder} />
-        {#if !single}
+<div class="multiselect" class:readonly on:click|self={() => setOptionsVisible(true)}>
+  <ExpandIcon {style} />
+  {#if single}
+    {selected}
+  {:else}
+    {#each selected as itm}
+      <span class="token">
+        {itm}
+        {#if !readonly}
           <button
+            on:click|stopPropagation={() => remove(itm)}
             type="button"
-            class="remove-all"
-            title="Remove All"
-            on:click={removeAll}
-            style={selected.length === 0 && `display: none;`}>
+            title="Remove {itm}">
             <CrossIcon {style} />
           </button>
         {/if}
-      {/if}
-    </div>
-  </div>
+      </span>
+    {/each}
+  {/if}
+  {#if readonly}
+    <ReadOnlyIcon {style} />
+  {:else}
+    <!-- for holding the component's value in a way accessible to the DOM -->
+    <input bind:this={input} {required} />
+    <input
+      on:click|self={() => setOptionsVisible(true)}
+      on:blur={() => dispatch(`blur`)}
+      autocomplete="off"
+      bind:value={filterValue}
+      bind:this={filterInput}
+      on:keydown={handleKeydown}
+      on:blur={() => setOptionsVisible(false)}
+      style="flex: 1;"
+      placeholder={selected.length ? `` : placeholder} />
+    {#if !single}
+      <button
+        type="button"
+        class="remove-all"
+        title="Remove All"
+        on:click={removeAll}
+        style={selected.length === 0 && `display: none;`}>
+        <CrossIcon {style} />
+      </button>
+    {/if}
+  {/if}
 
   {#if showOptions}
     <ul transition:fly={{ duration: 200, y: 50 }}>
@@ -155,19 +153,20 @@
   .multiselect {
     background: var(--accentBg);
     position: relative;
-    border-radius: 1ex;
+    border-radius: 5pt;
     margin: 1em 0;
+    min-height: 2em;
+    border: 1px solid var(--lightBg);
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
   }
   .multiselect.readonly {
     background: var(--lightBg);
   }
 
-  .tokens {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .token {
+  span.token {
     align-items: center;
     background: var(--green);
     border-radius: 1ex;
@@ -177,10 +176,10 @@
     transition: 0.3s;
     white-space: nowrap;
   }
-  .token:hover {
+  span.token:hover {
     background: var(--darkGreen);
   }
-  .token button,
+  span.token button,
   .remove-all {
     align-items: center;
     border-radius: 50%;
@@ -188,30 +187,29 @@
     cursor: pointer;
     transition: 0.3s;
   }
-  .token button:hover,
+  span.token button:hover,
   .remove-all:hover {
     color: var(--lightGray);
   }
 
-  .actions {
-    display: flex;
-    flex: 1;
-  }
-
-  input {
+  .multiselect input {
     border: none;
     outline: none;
-    width: 100%;
     background: none;
+    padding: 0;
+    width: 1pt;
+    padding: 1pt;
   }
 
   ul {
     list-style: none;
     max-height: 50vh;
     padding: 0;
+    top: 100%;
     width: 100%;
     z-index: 1;
-    background: var(--lightBg);
+    background: var(--accentBg);
+    box-shadow: 0 0 1em var(--shadow);
     cursor: pointer;
     position: absolute;
     border-radius: 1ex;

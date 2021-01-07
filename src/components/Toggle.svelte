@@ -29,7 +29,9 @@
     background: var(--bodyBg);
   }
   input {
-    width: 0;
+    position: absolute;
+    opacity: 0;
+    width: 1em;
   }
   input + span::after {
     content: '';
