@@ -30,12 +30,15 @@
         {title}</a>
     {/each}
   </div>
-  <span>Diese Seite ist
-    <a href="https://github.com/sbsev/website"><OpenSource
+  <span
+    >Diese Seite ist
+    <a href="https://github.com/sbsev/website">
+      <OpenSource
         height="2.5ex"
         style="vertical-align: bottom; padding-right: 3pt;" />open source</a>
     und verwendet
-    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">keine
+    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
+      keine
       <Cookie height="2.2ex" style="vertical-align: middle;" />
       Cookies.</a></span>
   <Social {social} style="margin-top: 1ex;" />

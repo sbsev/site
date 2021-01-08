@@ -139,7 +139,8 @@
     <ul transition:fly={{ duration: 200, y: 50 }}>
       {#each filtered as option}
         <li
-          on:mousedown|preventDefault={() => (selected.includes(option) ? remove(option) : add(option))}
+          on:mousedown|preventDefault={() =>
+            selected.includes(option) ? remove(option) : add(option)}
           class:selected={selected.includes(option)}
           class:active={activeOption === option}>
           {option}

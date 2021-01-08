@@ -52,15 +52,8 @@
   <Menu height="2.9ex" style="vertical-align: middle;" />
 </button>
 
-<a
-  on:click={close}
-  class="logo"
-  href="/"
-  rel="prefetch"
-  aria-current={isCurrent(`/`)}><img
-    src="favicon.svg"
-    alt="SbS Logo"
-    style="height: 2em;" /></a>
+<a on:click={close} class="logo" href="/" rel="prefetch" aria-current={isCurrent(`/`)}
+  ><img src="favicon.svg" alt="SbS Logo" style="height: 2em;" /></a>
 
 <nav class:isOpen use:onClickOutside={close} use:preventOverScroll bind:this={resultsDiv}>
   <ul>
@@ -85,7 +78,7 @@
         {#if subNav && (activeSubNav === idx || viewWidth > 1000)}
           <ul
             transition:slide
-            style="grid-template-columns: {`1fr `.repeat(Math.ceil(subNav.length / 13))};">
+            style="grid-template-columns: repeat({Math.ceil(subNav.length / 13)}, 1fr);">
             {#each subNav as { title, url, span }}
               <li class:span>
                 <a

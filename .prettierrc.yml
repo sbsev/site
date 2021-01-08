@@ -1,6 +1,6 @@
 semi: false
 singleQuote: true
-svelteSortOrder: scripts-markup-styles # rule provided by prettier-plugin-svelte
+svelteBracketNewLine: false
 overrides:
   - files: '*.svelte'
     options:

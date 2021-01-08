@@ -50,7 +50,8 @@
 <main>
   <slot />
   {#if sys?.publishedAt && !(segment ?? ``).includes(`blog`)}
-    <time><Update {style} />Zuletzt bearbeitet:
+    <time>
+      <Update {style} />Zuletzt bearbeitet:
       {date}</time>
   {/if}
 </main>

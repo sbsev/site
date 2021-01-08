@@ -31,6 +31,7 @@
   export let faqs
 
   let activeTag = `Alle`
+  const email = `info@studenten-bilden-schueler.de`
   let hash
 
   $: filteredFaqs = faqs.filter(
@@ -69,8 +70,7 @@
 <div>
   <h2>Deine Frage war nicht dabei?</h2>
   Schreib uns direkt an
-  <a
-    href="mailto:info@studenten-bilden-schueler.de">info@studenten-bilden-schueler.de</a>.
+  <a href="mailto:{email}">{email}</a>.
 </div>
 
 <style>

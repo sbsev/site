@@ -26,7 +26,8 @@
 <BasePage page={post}>
   <blockquote>
     <img src={photo.url} alt={name} />
-    <span>von
+    <span>
+      von
       {#if bio || fieldOfStudy}
         <ToolTip>
           <PersonCircle {style} />

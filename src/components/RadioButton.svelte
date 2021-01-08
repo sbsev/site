@@ -5,7 +5,8 @@
 
 <div>
   {#each options as option}
-    <label><input type="radio" bind:group={value} value={option} />
+    <label>
+      <input type="radio" bind:group={value} value={option} />
       <span>{option}</span></label>
   {/each}
 </div>

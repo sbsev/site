@@ -64,10 +64,10 @@
   <Modal on:close={() => (open = false)} style="width: max-content; max-width: 90vw;">
     <div>
       <button on:click={setModeFactory(`light`)} class="choice light"><Sun />Hell</button>
-      <button on:click={setModeFactory(`dark`)} class="choice dark"><Moon
-          color="yellow" />Dunkel</button>
-      <button on:click={setModeFactory(`auto`)} class="choice auto"><BrightnessAuto
-          color="var(--bodyBg)" />Auto</button>
+      <button on:click={setModeFactory(`dark`)} class="choice dark">
+        <Moon color="yellow" />Dunkel</button>
+      <button on:click={setModeFactory(`auto`)} class="choice auto">
+        <BrightnessAuto color="var(--bodyBg)" />Auto</button>
     </div>
   </Modal>
 {/if}

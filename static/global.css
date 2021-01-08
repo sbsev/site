@@ -197,9 +197,11 @@ div.box-list ul li {
   background: var(--darkBlue);
   flex: 1;
   text-align: center;
+  box-shadow: 0 0 1ex var(--shadow);
 }
 section.blue div.box-list ul li {
   background: var(--green);
+  box-shadow: 0 0 1ex black;
 }
 section.blue div.box-list ul li a {
   color: var(--darkBlue);

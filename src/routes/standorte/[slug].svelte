@@ -22,17 +22,17 @@
 <BasePage {page}>
   <h2>Anmeldungen</h2>
   <section>
-    <span>Willst du bei uns mitmachen?
-      <a
-        href="/anmeldung?type=Student&chapter={page.title}"
-        class="btn blue"><GraduationCap {style} />Als Student anmelden</a>
-      <a href="mitmachen/nachhilfelehrer" class="btn blue stroke"><InfoCircle
-          style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
+    <span>
+      Willst du bei uns mitmachen?
+      <a href="/anmeldung?type=Student&chapter={page.title}" class="btn blue"
+        ><GraduationCap {style} />Als Student anmelden</a>
+      <a href="mitmachen/nachhilfelehrer" class="btn blue stroke"
+        ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
     </span>
     <span>
       Suchst du Nachhilfe?
-      <a href="/anmeldung?type=Schüler&chapter={page.title}" class="btn green"><Child
-          {style} />
+      <a href="/anmeldung?type=Schüler&chapter={page.title}" class="btn green"
+        ><Child {style} />
         Als Schüler anmelden</a>
       <a href="mitmachen/schueler" class="btn green stroke">
         <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler</a>
@@ -41,7 +41,8 @@
       Interesse an Standortleitung?
       <a
         href="mailto:info.{page.slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
-        class="btn orange"><Email {style} />
+        class="btn orange"
+        ><Email {style} />
         Schreib uns</a>
       <a href="mitmachen/standortleiter" class="btn orange stroke">
         <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleiter</a>
