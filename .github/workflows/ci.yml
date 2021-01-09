@@ -26,3 +26,25 @@ jobs:
         # for displaying lighthouse results below PRs
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup node v15
+        uses: actions/setup-node@v1
+        with:
+          node-version: '15'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run ci
+        env:
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}

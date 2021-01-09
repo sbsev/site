@@ -73,7 +73,8 @@ export default {
         dedupe: [`svelte`],
       }),
       commonjs(),
-      !dev && indexAlgolia(algoliaConfig),
+      // don't try to indexAlgolia if no apiKey was specified (e.g. in GitHub CI)
+      !dev && algoliaConfig.apiKey && indexAlgolia(algoliaConfig),
     ],
 
     external: Object.keys(pkg.dependencies).concat(

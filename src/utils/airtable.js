@@ -23,7 +23,8 @@ async function airtablePost(baseId, table, data, apiKey) {
 
 const toStr = (str) => (str ? String(str) : undefined)
 
-export async function handleSubmit(chapterBaseId, data, apiKey) {
+export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
+  if (!apiKey) throw `missing Airtable API key, got ${apiKey}`
   const table = data.type === `Student` ? `Studenten` : `Schüler`
 
   // convert pupil age to approximate birthday (assuming today's day and month)
@@ -81,8 +82,9 @@ export async function handleSubmit(chapterBaseId, data, apiKey) {
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }
 
   const globalBaseId = `appSswal9DNdJKRB8`
-  // const testBaseId = `appe3hVONuwBkuQv1`
+  const testBaseId = `appe3hVONuwBkuQv1` // id of test base called 'Verification' in Airtable
 
+  if (test) return await airtablePost(testBaseId, table, chapterFields, apiKey)
   // use Promise.all to fail fast if one record creation fails
   const responses = await Promise.all([
     airtablePost(globalBaseId, table, globalFields, apiKey),

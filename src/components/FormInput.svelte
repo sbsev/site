@@ -17,7 +17,7 @@
 </script>
 
 <!-- prefix `for` with `name` when type is toggle to prevent toggling the checkbox on clicking its label -->
-<label for={type === `toggle` ? name + type : name} class:required>
+<label for={type === `toggle` ? `${name}-${type}` : name} class:required>
   {@html title}
 </label>
 
@@ -28,6 +28,7 @@
 {#if select.length || multiselect.length}
   <MultiSelect
     bind:input={node}
+    {name}
     {placeholder}
     options={select.length ? select : multiselect}
     single={select.length ? true : false}

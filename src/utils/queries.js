@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import 'cross-fetch/polyfill'
 import marked from 'marked'
 import yaml from 'js-yaml'
@@ -28,13 +29,18 @@ const prefixSlug = (prefix) => (obj) => {
 }
 
 export const gqlFetch = async (query) => {
+  if (!process.env.gqlEndPoint)
+    throw `invalid process.env.gqlEndPoint: ${process.env.gqlEndPoint}`
+
   const response = await fetch(process.env.gqlEndPoint, {
     method: `POST`,
     headers: { 'Content-Type': `application/json` },
     body: JSON.stringify({ query }),
   })
+
   const { data, error } = await response.json()
-  if (error) console.error(error)
+
+  if (error) throw error
   return data
 }
 

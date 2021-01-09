@@ -42,18 +42,18 @@
   import { onDestroy, onMount } from 'svelte'
 
   import FormInput from '../components/FormInput.svelte'
+  import CircleSpinner from '../components/CircleSpinner.svelte'
   import RadioButton from '../components/RadioButton.svelte'
   import Modal from '../components/Modal.svelte'
-  import { handleSubmit, tryParse } from '../utils/airtable'
+  import { airtableSubmit, tryParse } from '../utils/airtable'
   import { studentSignupStore, pupilSignupStore } from '../stores'
 
   export let chapters, options, studentText, pupilText
 
   const { session, page } = stores()
-  let { type = `Student`, chapter = `` } = $page.query
+  let { type = `Student`, chapter = ``, test } = $page.query
   const inputs = {}
-  let response = undefined
-  let modalOpen = false
+  let response, isSubmitting, modalOpen
 
   function getFormVals() {
     return Object.fromEntries(
@@ -88,19 +88,19 @@
   $: text = type === `Student` ? studentText : pupilText
 
   async function submit() {
+    isSubmitting = true
     let formValues = { type, ...getFormVals() }
-    // eslint-disable-next-line no-console
-    console.log(`formValues:`, formValues)
 
     const baseId = chapters?.find(({ title }) => title === formValues?.chapter)?.baseId
+    if (!baseId) {
+      isSubmitting = false
+      throw Error(`baseId could not be determined`)
+    }
 
-    if (!baseId) throw Error(`baseId could not be determined`)
-
-    response = await handleSubmit(baseId, formValues, $session.AIRTABLE_API_KEY)
-    // eslint-disable-next-line no-console
-    console.log(`response:`, response)
+    response = await airtableSubmit(baseId, formValues, $session.AIRTABLE_API_KEY, test)
     if (!response.error) window.scrollTo({ top: 0, behavior: `smooth` })
     else modalOpen = true
+    isSubmitting = false
   }
 </script>
 
@@ -229,7 +229,13 @@
       {@html text.submit.title}
     </h3>
     {@html text.submit.note}
-    <button type="submit">Anmeldung Abschicken</button>
+    <button type="submit" disabled={isSubmitting}>
+      {#if isSubmitting}
+        <CircleSpinner color="white" />
+      {:else}
+        Anmeldung Abschicken
+      {/if}
+    </button>
   </form>
   {#if modalOpen}
     <Modal
@@ -252,24 +258,17 @@
     margin: 2em auto;
     padding: 1em;
   }
-  button {
+  button[type='submit'] {
     margin: 1em auto;
     display: block;
     transition: 0.3s;
     padding: 1ex 1em;
     color: white;
-  }
-  button[type='submit'] {
     background: var(--darkGreen);
     font-size: 1.2em;
   }
   button[type='submit']:disabled {
-    background: var(--gray);
-    font-size: 1.2em;
-  }
-  button[type='submit']:hover:not(:disabled) {
-    transform: scale(1.02);
-    background: var(--green);
+    cursor: default;
   }
   section {
     max-width: 30em;

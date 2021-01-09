@@ -15,6 +15,7 @@
   export let single = false
   export let required = false
   export let input = undefined
+  export let name = ``
 
   const dispatch = createEventDispatcher()
   let activeOption, filterValue, filterInput
@@ -112,7 +113,12 @@
     <ReadOnlyIcon {style} />
   {:else}
     <!-- for holding the component's value in a way accessible to the DOM -->
-    <input bind:this={input} {required} />
+    <input
+      bind:this={input}
+      {required}
+      {name}
+      id={name}
+      on:focus={() => filterInput.focus()} />
     <input
       on:click|self={() => setOptionsVisible(true)}
       on:blur={() => dispatch(`blur`)}
@@ -120,6 +126,7 @@
       bind:value={filterValue}
       bind:this={filterInput}
       on:keydown={handleKeydown}
+      on:focus={() => setOptionsVisible(true)}
       on:blur={() => setOptionsVisible(false)}
       style="flex: 1;"
       placeholder={selected.length ? `` : placeholder} />
