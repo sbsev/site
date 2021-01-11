@@ -65,13 +65,8 @@ export async function fetchChapters() {
 }
 
 const coverFragment = `
-  small: url(transform: {format: WEBP, quality: 80, width: 400, height: 300, resizeStrategy: FILL})
-  medium: url(transform: {format: WEBP, quality: 80, width: 800, height: 350, resizeStrategy: FILL})
-  large: url(transform: {format: WEBP, quality: 80, width: 1200, height: 400, resizeStrategy: FILL})
-  xl: url(transform: {format: WEBP, quality: 80, width: 1600, height: 500, resizeStrategy: FILL})
-  jpg: url(transform: {quality: 80, width: 1200})
-  url
-  description
+  src: url
+  alt: description
   title
   width
   height

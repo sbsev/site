@@ -53,7 +53,7 @@
   div {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 4pt;
-    overflow: scroll;
+    overflow: auto;
     padding: 4pt 1ex;
     text-align: left;
   }

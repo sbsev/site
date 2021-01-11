@@ -71,7 +71,7 @@
     width: calc(100vw - 8em);
     max-width: 40em;
     max-height: calc(100vh - 8em);
-    overflow: scroll;
+    overflow: auto;
     padding: 1em;
     border-radius: 5pt;
     background: rgba(0, 0, 0, 0.6);

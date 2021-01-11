@@ -82,7 +82,7 @@
   nav {
     list-style: none;
     max-height: 90vh;
-    overflow: scroll;
+    overflow: auto;
     overscroll-behavior: contain;
   }
   nav > li {
@@ -91,7 +91,7 @@
     color: var(--linkColor);
   }
   nav > li.active {
-    color: var(--buttonBg);
+    color: var(--darkGreen);
   }
   button {
     color: var(--linkColor);

@@ -10,7 +10,7 @@
   const mapId = `2c1732cc2265001f` // enables vector maps
 
   // default map props
-  mapProps = { center: { lat: 51.16, lng: 10.45 }, zoom: 6, mapId, ...mapProps }
+  mapProps = { center: { lat: 51.5, lng: 10 }, zoom: 6, mapId, ...mapProps }
 
   const mountMap = () => (map = new window.google.maps.Map(div, mapProps))
 
@@ -32,7 +32,7 @@
 
 <style>
   div {
-    height: 30em;
-    max-height: 60vh;
+    height: 700px;
+    max-height: 95vh;
   }
 </style>

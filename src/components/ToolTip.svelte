@@ -17,9 +17,6 @@
   span {
     position: relative;
   }
-  span {
-    cursor: pointer;
-  }
   div {
     visibility: hidden;
     opacity: 0;

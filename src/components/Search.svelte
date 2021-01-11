@@ -54,7 +54,9 @@
   </button>
   {#if hasFocus && query}
     <div class="results">
-      {#await promise then allHits}
+      {#await promise}
+        <p>Suche läuft...</p>
+      {:then allHits}
         {#if allHits?.some(({ hits }) => hits.length)}
           {#each allHits as { index, hits } (index)}
             {#if hits.length}
@@ -134,7 +136,7 @@
     position: absolute;
     width: max-content;
     max-width: 80vw;
-    overflow: scroll;
+    overflow: auto;
     right: 0;
     box-shadow: 0 0 1ex black;
     padding: 1ex 1em;

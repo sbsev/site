@@ -1,28 +1,32 @@
 <script>
   import Tags from '@svg-icons/fa-solid/tags.svg'
   import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
-  import PersonCircle from '@svg-icons/bootstrap/person-circle.svg'
   import Email from '@svg-icons/material-sharp/email.svg'
   import Link from '@svg-icons/boxicons-regular/link.svg'
   import Calendar from '@svg-icons/octicons/calendar.svg'
 
   import ToolTip from './ToolTip.svelte'
+  import Img from './Img.svelte'
 
   export let post
 
   const { title, slug, cover, date, author, tags, plainBody } = post
-  const { small, description } = cover
+  const { src, alt } = cover
 
-  const style = `padding-right: 4pt; vertical-align: -2pt; height: 15pt;`
+  const style = `padding-right: 4pt; vertical-align: -1pt; height: 12pt;`
+  const imgStyle = `width: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
 </script>
 
 <section>
-  <a href={slug}><img src={small} alt={description || cover.title} /></a>
+  <a href={slug}><Img sizes={[{ width: 400, height: 300 }]} {src} {alt} /></a>
   <h3><a href={slug}>{title}</a></h3>
   <div class="metadata">
-    <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
     <ToolTip>
-      <PersonCircle {style} />{author.name}
+      <Img
+        src={author.photo.url}
+        alt={author.name}
+        sizes={[{ width: 100, height: 100 }]}
+        {imgStyle} />{author.name}
       <address slot="tip">
         {#if author.url}
           <a href={author.url}><Link {style} />{author.url}</a>
@@ -37,9 +41,10 @@
         {/if}
       </address>
     </ToolTip>
+    <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
     <span><Tags {style} />{tags.join(`, `)}</span>
     <p>
-      {plainBody.split(` `).slice(0, 20).join(` `) + `...`}
+      {plainBody.slice(0, 150) + `...`}
       [<a href={slug}>weiterlesen</a>]
     </p>
   </div>
@@ -56,21 +61,12 @@
   section > *:not(:first-child) {
     margin: 1ex 1em;
   }
-  section :global(.wrapper) {
-    /* targets responsive cover images */
-    border-radius: 1ex 1ex 0 0;
-    overflow: hidden;
-    height: 15em;
-  }
-  section :global(.wrapper img) {
-    height: 15em;
-    object-fit: cover;
-  }
   div.metadata {
     padding: 1ex;
     display: flex;
     flex-wrap: wrap;
-    gap: 1em;
+    gap: 2ex;
+    align-items: baseline;
   }
   address a {
     white-space: nowrap;

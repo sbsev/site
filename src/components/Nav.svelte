@@ -11,7 +11,7 @@
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
 
-  import { onClickOutside, preventOverScroll } from '../utils/actions'
+  import { onClickOutside } from '../utils/actions'
 
   export let nav
 
@@ -26,14 +26,12 @@
   }
 
   let isOpen = false
+  let activeSubNav = null
+  let resultsDiv, viewWidth, hovered
   const close = () => {
     isOpen = false
     hovered = null
   }
-  let activeSubNav = null
-  let resultsDiv
-  let viewWidth
-  let hovered
 
   const setActiveSubNav = (idx) => () => {
     if (activeSubNav !== idx) activeSubNav = idx
@@ -41,7 +39,7 @@
   }
 
   const { page } = stores()
-  const isCurrent = (url) => (url === $page.path ? `page` : undefined)
+  $: isCurrent = (url) => (url === $page.path ? `page` : undefined)
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -55,7 +53,7 @@
 <a on:click={close} class="logo" href="/" rel="prefetch" aria-current={isCurrent(`/`)}
   ><img src="favicon.svg" alt="SbS Logo" style="height: 2em;" /></a>
 
-<nav class:isOpen use:onClickOutside={close} use:preventOverScroll bind:this={resultsDiv}>
+<nav class:isOpen use:onClickOutside={close} bind:this={resultsDiv}>
   <ul>
     {#each nav as { title, url, subNav }, idx}
       <li
@@ -104,11 +102,10 @@
   button {
     transition: 0.4s;
     color: var(--headerColor);
+    border-radius: 50%;
   }
   button:hover {
     background: var(--gray);
-    border-radius: 50%;
-    padding: 1pt;
   }
   a:hover {
     color: var(--hoverColor);
@@ -117,7 +114,7 @@
     border-radius: 1ex;
     padding: 3pt 5pt;
     line-height: 0;
-    background: var(--linkColor);
+    background: var(--lightBlue);
     color: white;
   }
   a.logo {
@@ -135,6 +132,9 @@
   nav > ul > li > ul {
     padding-left: 2ex;
   }
+  nav {
+    overflow: auto;
+  }
   @media (max-width: 1000px) {
     /* mobile styles */
     nav {
@@ -144,10 +144,10 @@
       padding: 1em;
       transition: 0.4s;
       max-height: calc(100vh - 2em);
-      overflow: scroll;
       background: var(--headerBg);
       transform: translate(-120%);
       box-sizing: border-box;
+      overscroll-behavior: none;
     }
     nav.isOpen {
       box-shadow: 0 0 1em black;
@@ -189,6 +189,9 @@
       display: grid;
       gap: 5pt 1em;
       width: max-content;
+      max-height: 80vh;
+      overflow-y: auto;
+      overscroll-behavior: none;
     }
     nav > ul > li > ul > li.span {
       grid-column: 1/-1;

@@ -1,5 +1,4 @@
 main {
-  width: 100vw;
   hyphens: auto;
 }
 main h1 {
@@ -23,6 +22,7 @@ body {
 html {
   /* when scrolling elements into view, don't scroll them to the very top edge where they're hidden by the nav bar (https://stackoverflow.com/a/61913557) */
   scroll-padding-top: 15em;
+  overflow-x: hidden;
 }
 a {
   color: var(--linkColor);
@@ -63,13 +63,13 @@ tbody tr:nth-child(odd) {
   background: var(--accentBg);
 }
 div.scroll {
-  overflow: scroll;
+  overflow: auto;
   margin: 1em auto;
   border: 1px solid var(--textColor);
   border-width: 0 1px;
 }
 main img {
-  max-width: 100%;
+  width: 100%;
 }
 .grid {
   display: grid;
@@ -170,9 +170,11 @@ section.green {
   padding: 1.5em calc(50vw - 50%);
   color: white;
 }
-section.blue a,
+section.blue a {
+  color: var(--green);
+}
 section.green a {
-  color: var(--lightBlue);
+  color: var(--darkBlue);
 }
 section.blue {
   background: var(--darkBlue);
@@ -197,11 +199,14 @@ div.box-list ul li {
   background: var(--darkBlue);
   flex: 1;
   text-align: center;
-  box-shadow: 0 0 1ex var(--shadow);
+  box-shadow: 0 0 2em -1em var(--shadow);
+}
+div.box-list ul li a {
+  color: var(--green);
 }
 section.blue div.box-list ul li {
   background: var(--green);
-  box-shadow: 0 0 1ex black;
+  box-shadow: 0 0 2em -1em black;
 }
 section.blue div.box-list ul li a {
   color: var(--darkBlue);

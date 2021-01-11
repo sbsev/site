@@ -221,7 +221,7 @@
     cursor: pointer;
     position: absolute;
     border-radius: 1ex;
-    overflow: scroll;
+    overflow: auto;
   }
   li {
     padding: 3pt 2ex;

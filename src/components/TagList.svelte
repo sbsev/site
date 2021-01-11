@@ -39,18 +39,19 @@
 
   let open = false
   let viewWidth
+  const style = `height: 18pt; vertical-align: middle; margin-right: 5pt;`
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
 
 <h2>
-  <Tags height="20" />Tags
+  <Tags style="height: 16pt; margin-right: 5pt;" />Tags
   {#if viewWidth < 750}
     <button on:click={() => (open = !open)} aria-label="Blog Tags öffnen">
       {#if open}
-        <CircleWithCross height="20" />
+        <CircleWithCross {style} />
       {:else}
-        <ChevronExpand height="20" />
+        <ChevronExpand {style} />
       {/if}
     </button>
   {/if}
@@ -99,6 +100,6 @@
   }
   ul > li > button.active {
     box-shadow: inset 0 0 1em -5pt black;
-    background: var(--buttonBg);
+    background: var(--green);
   }
 </style>

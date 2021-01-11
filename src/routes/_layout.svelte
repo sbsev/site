@@ -35,8 +35,8 @@
     })
   }
 
-  const { title, sys } = pageData
-  const date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
+  $: ({ title, sys } = pageData)
+  $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
   const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
 

@@ -4,20 +4,16 @@
 
   export let page
 
-  $: ({ title, subtitle, cover = {}, body = ``, toc } = page)
+  $: ({ title, cover = {}, body = ``, toc } = page)
+  $: ({ src, alt, base64 } = cover)
 </script>
 
 <hgroup>
-  <Img {cover} />
+  <Img {src} {alt} {base64} />
   {#if $$slots.title}
     <slot name="title" />
   {:else}
-    {#if title}
-      <h1>{title}</h1>
-    {/if}
-    {#if subtitle}
-      <h2>{subtitle}</h2>
-    {/if}
+    <h1>{title}</h1>
   {/if}
 </hgroup>
 <slot />
@@ -31,14 +27,12 @@
 <style>
   article {
     max-width: 42em;
-    padding: 2em;
+    padding: 1em;
     margin: auto;
-  }
-  article :global(img) {
-    width: 100%;
   }
   hgroup {
     position: relative;
+    overflow: hidden;
   }
   hgroup > :global(*:not(:first-child)) {
     color: white;
@@ -51,8 +45,7 @@
     transform: translate(calc(-50% - 1em), -50%);
     text-align: center;
     margin: 0 1em;
-  }
-  hgroup > :global(h2) {
-    font-weight: lighter;
+    width: max-content;
+    max-width: 80vw;
   }
 </style>

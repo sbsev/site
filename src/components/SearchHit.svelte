@@ -2,12 +2,12 @@
   export let hit
   export let clickHandler = () => {}
 
-  const { title, slug, body, cover, date, author } = hit
+  $: ({ title, slug, body, cover, date, author } = hit)
 </script>
 
 <div>
   {#if cover}
-    <a href={slug}><img src={cover.url + `?w=100`} alt={cover.description} /></a>
+    <a href={slug}><img src="{cover.src}?w=100&q=80" alt={cover.alt || cover.title} /></a>
   {/if}
   <h3>
     <a href={slug} on:click={clickHandler}>{@html title}</a>

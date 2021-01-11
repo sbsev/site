@@ -10,7 +10,8 @@
       .replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
 
   export async function preload() {
-    const chapters = await fetchChapters()
+    let chapters = await fetchChapters()
+    chapters.filter((chap) => chap.acceptsSignUps)
     const options = await fetchYaml(`Signup Form Options`)
 
     async function parseMicrocopy(title) {
@@ -111,9 +112,6 @@
   </section>
 {:else}
   <form on:submit|preventDefault={submit}>
-    <!-- Prevent implicit form submission on pressing enter in a text field (https://stackoverflow.com/a/51507806) -->
-    <button type="submit" disabled style="display: none" aria-hidden="true" />
-
     <h1>
       <Plant height="1em" style="vertical-align: -3pt;" />
       {@html text.page.title}
@@ -284,6 +282,6 @@
     padding: 1em;
   }
   pre {
-    overflow: scroll;
+    overflow: auto;
   }
 </style>
