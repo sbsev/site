@@ -10,18 +10,24 @@ import svelteSVG from 'rollup-plugin-svelte-svg'
 
 import pkg from './package.json'
 import { algoliaConfig } from './src/utils/algolia'
-import { graphiql, gqlEndPoint } from './src/utils/contentful'
+
+const ctfToken = process.env.CONTENTFUL_ACCESS_TOKEN
+const ctfId = process.env.CONTENTFUL_SPACE_ID
 
 const replacements = replace({
   'process.browser': true,
   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-  'process.env.gqlEndPoint': JSON.stringify(gqlEndPoint),
+  'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(ctfToken),
+  'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(ctfId),
 })
 const dev = process.env.NODE_ENV === `development`
 
-if (dev)
+if (dev) {
+  const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
+  const graphiql = `${ctfGqlUrl}/${ctfId}/explore?access_token=${ctfToken}`
   // eslint-disable-next-line no-console
   console.log(`Contentful GraphiQL:`, graphiql)
+}
 
 const onwarn = (warning, onwarn) =>
   (warning.code === `MISSING_EXPORT` && /'preload'/.test(warning.message)) ||

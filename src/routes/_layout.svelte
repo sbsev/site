@@ -6,7 +6,7 @@
     const footer = await fetchYaml(`Footer`)
     const social = await fetchYaml(`Social`)
     const chapters = await fetchChapters()
-    const pageData = (await fetchPage(path.substring(1))) || {}
+    const pageData = (await fetchPage(path.substring(1) || `/`)) || {}
 
     nav.find((el) => el.url === `/standorte`).subNav[0].span = true
     nav

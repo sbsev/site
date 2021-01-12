@@ -1,9 +1,7 @@
 import { fetchFaqs, fetchPages, fetchPosts } from './queries'
 
-import { gqlEndPoint } from './contentful'
-
 const bodyToPlainText = (fetchFunction) => async () => {
-  const items = await fetchFunction(gqlEndPoint)
+  const items = await fetchFunction()
   items.forEach((itm) => {
     if (!itm.id) itm.id = itm?.slug || itm?.title
     if (itm.body && itm.plainBody) {

@@ -29,10 +29,16 @@ const prefixSlug = (prefix) => (obj) => {
 }
 
 export const gqlFetch = async (query) => {
-  if (!process.env.gqlEndPoint)
-    throw `invalid process.env.gqlEndPoint: ${process.env.gqlEndPoint}`
+  const token = process.env.CONTENTFUL_ACCESS_TOKEN
+  const id = process.env.CONTENTFUL_SPACE_ID
 
-  const response = await fetch(process.env.gqlEndPoint, {
+  if (!token || !id)
+    throw `missing Contentful access token and/or space ID. please add it to .env`
+
+  const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
+  const ctfGraphqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
+
+  const response = await fetch(ctfGraphqlEndPoint, {
     method: `POST`,
     headers: { 'Content-Type': `application/json` },
     body: JSON.stringify({ query }),
@@ -77,7 +83,6 @@ const pageQuery = (slug) => `{
   ${slug ? `(where: {slug: "${slug}"})` : ``} {
     items {
       title
-      subtitle
       slug
       body
       toc
@@ -102,6 +107,7 @@ function renderBody(itm) {
 }
 
 export async function fetchPage(slug) {
+  if (!slug) throw `fetchPage requires a slug, got '${slug}'`
   const data = await gqlFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
   return renderBody(page)
@@ -148,6 +154,7 @@ function processPost(post) {
 }
 
 export async function fetchPost(slug) {
+  if (!slug) throw `fetchPost requires a slug, got '${slug}'`
   const data = await gqlFetch(postQuery(slug))
   const post = data?.posts?.items[0]
   return processPost(post)
@@ -160,7 +167,7 @@ export async function fetchPosts() {
 }
 
 const yamlQuery = (title) => `{
-  yml: yamlCollection${title ? `(where: {title: "${title}"})` : ``} {
+  yml: yamlCollection(where: {title: "${title}"}) {
     items {
       data
     }
@@ -168,6 +175,7 @@ const yamlQuery = (title) => `{
 }`
 
 export async function fetchYaml(title) {
+  if (!title) throw `fetchYaml requires a title, got '${title}'`
   const { yml } = await gqlFetch(yamlQuery(title))
   return yaml.load(yml?.items[0]?.data)
 }
