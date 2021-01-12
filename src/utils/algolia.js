@@ -1,4 +1,4 @@
-import { fetchFaqs, fetchPages, fetchPosts } from './queries'
+import { fetchYamlList, fetchPages, fetchPosts } from './queries'
 
 const bodyToPlainText = (fetchFunction) => async () => {
   const items = await fetchFunction()
@@ -19,7 +19,16 @@ export const algoliaConfig = {
   indices: [
     { name: `Seiten`, getData: bodyToPlainText(fetchPages) },
     { name: `Posts`, getData: bodyToPlainText(fetchPosts) },
-    { name: `FAQs`, getData: bodyToPlainText(fetchFaqs) },
+    {
+      name: `FAQs`,
+      getData: bodyToPlainText(() => fetchYamlList(`FAQ`, `faq#`)),
+    },
+    {
+      name: `Lernmaterial`,
+      getData: bodyToPlainText(() =>
+        fetchYamlList(`Lernmaterial`, `lernmaterial#`)
+      ),
+    },
   ],
   settings: {
     attributesToSnippet: [`body:20`],

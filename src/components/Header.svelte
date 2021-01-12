@@ -9,12 +9,11 @@
 <header>
   <Nav {nav} />
   <ColorMode />
-  <Search indices={[`Seiten`, `Posts`, `FAQs`]} />
+  <Search indices={[`Seiten`, `Posts`, `FAQs`, `Lernmaterial`]} />
 </header>
 
 <style>
   header {
-    font-size: 1.1em;
     place-content: center;
     place-items: center;
     gap: 2vw;
@@ -30,6 +29,7 @@
   }
   @media (max-width: 1000px) {
     header {
+      font-size: 1.4em;
       gap: 5vw;
       grid-template-columns: auto 1fr auto auto;
       grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
@@ -37,6 +37,7 @@
   }
   @media (min-width: 1001px) {
     header {
+      font-size: 1.2em;
       display: flex;
     }
   }

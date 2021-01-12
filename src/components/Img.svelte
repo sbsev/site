@@ -12,16 +12,18 @@
     { width: 400, height: 400 },
   ]
 
+  const { width, height } = sizes.slice(-1)[0] // grab the smallest width and height (if any)
+
   // equivalent GraphQL transformer to "{url}?fm=webp&q=80&w=400&h=300&fit=fill"
   // url(transform: {format: WEBP, quality: 80, width: 400, height: 300, resizeStrategy: FILL})
 </script>
 
 {#if src.endsWith(`.svg`)}
-  <img {src} alt={alt || title} style={imgStyle} />
+  <img {src} {alt} {title} {width} {height} style={imgStyle} />
 {:else}
   <picture style={pictureStyle}>
     {#if base64}
-      <img src={base64} {alt} class="base64" width="1500" height="500" />
+      <img src={base64} {alt} class="base64" {width} {height} />
     {/if}
     {#each sizes as { width = ``, height = `` }, idx}
       <source
@@ -31,9 +33,10 @@
     {/each}
     <img
       src="{src}?w={sizes[0].width}&h={sizes[0].height}&q=80"
-      alt={alt || title}
-      width="1500"
-      height="500"
+      {alt}
+      {width}
+      {height}
+      {title}
       style={imgStyle} />
   </picture>
 {/if}

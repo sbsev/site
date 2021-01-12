@@ -1,6 +1,6 @@
 <script>
   export let chapters
-  import Place from '@svg-icons/material-filled/place.svg'
+  import Place from '@svg-icons/material-sharp/place.svg'
 </script>
 
 <h1>

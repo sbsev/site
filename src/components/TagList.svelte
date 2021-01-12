@@ -83,7 +83,7 @@
   ul {
     font-size: 0.9em;
     padding: 0 1em 2em;
-    max-width: 45em;
+    max-width: 50em;
     display: flex;
     flex-wrap: wrap;
     gap: 1em;

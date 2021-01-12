@@ -1,13 +1,18 @@
 <script>
+  import Img from './Img.svelte'
+
   export let hit
   export let clickHandler = () => {}
 
-  $: ({ title, slug, body, cover, date, author } = hit)
+  $: ({ title, slug, body, cover = {}, date, author } = hit)
+  $: ({ src, alt = cover.title } = cover)
 </script>
 
 <div>
-  {#if cover}
-    <a href={slug}><img src="{cover.src}?w=100&q=80" alt={cover.alt || cover.title} /></a>
+  {#if src}
+    <a href={slug}>
+      <Img {src} {alt} sizes={[{ width: 150 }]} />
+    </a>
   {/if}
   <h3>
     <a href={slug} on:click={clickHandler}>{@html title}</a>
@@ -25,7 +30,7 @@
   div {
     background: var(--accentBg);
     padding: 1ex 1em;
-    border-radius: 1ex;
+    border-radius: 5pt;
     margin: 1em 0;
   }
   div > h3 {
@@ -37,9 +42,9 @@
   h3 :global(em) {
     color: white;
   }
-  img {
+  div :global(picture img) {
     float: right;
-    border-radius: 5pt;
-    margin-top: 2ex;
+    border-radius: 2pt;
+    margin: 1ex 0 1ex 1ex;
   }
 </style>

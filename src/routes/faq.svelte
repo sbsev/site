@@ -1,13 +1,16 @@
 <script context="module">
-  import { fetchFaqs } from '../utils/queries'
+  import { fetchYamlList } from '../utils/queries'
 
   export async function preload() {
-    const faqs = await fetchFaqs()
+    const faqs = await fetchYamlList(`FAQ`, `faq#`)
     return { faqs }
   }
 </script>
 
 <script>
+  import { flip } from 'svelte/animate'
+  import { scale } from 'svelte/transition'
+
   import ChalkboardTeacher from '@svg-icons/fa-solid/chalkboard-teacher.svg'
   import HandsHelping from '@svg-icons/fa-solid/hands-helping.svg'
   import SupportAgent from '@svg-icons/material-sharp/support-agent.svg'
@@ -16,7 +19,11 @@
   import ExitToApp from '@svg-icons/material-sharp/exit-to-app.svg'
   import MiscellaneousServices from '@svg-icons/material-sharp/miscellaneous-services.svg'
 
-  const iconMap = {
+  import Collapsible from '../components/Collapsible.svelte'
+
+  export let faqs
+
+  const icons = {
     'Rund ums Engagement': HandsHelping,
     Nachhilfe: ChalkboardTeacher,
     Vermittlung: SupportAgent,
@@ -25,10 +32,6 @@
     Vereinsaustritt: ExitToApp,
     Sonstiges: MiscellaneousServices,
   }
-
-  import Collapsible from '../components/Collapsible.svelte'
-
-  export let faqs
 
   let activeTag = `Alle`
   const email = `info@studenten-bilden-schueler.de`
@@ -52,18 +55,22 @@
 
 <h1>FAQs</h1>
 <ul class="tags">
-  {#each Object.entries(tags) as [tag, count]}
-    <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
-      <svelte:component this={iconMap[tag]} style="height: 2ex; vertical-align: -3pt;" />
-      {tag}
-      ({count})</button>
+  {#each Object.entries(tags) as [tag, count] (tag)}
+    <li>
+      <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
+        <svelte:component this={icons[tag]} style="height: 2ex; vertical-align: -3pt;" />
+        {tag}
+        ({count})</button>
+    </li>
   {/each}
 </ul>
 <ul class="faqs">
   {#each filteredFaqs as { title, id, body } (title)}
-    <Collapsible {title} {id} active={id === hash}>
-      {@html body}
-    </Collapsible>
+    <li animate:flip={{ duration: 200 }} transition:scale>
+      <Collapsible {title} {id} active={id === hash}>
+        {@html body}
+      </Collapsible>
+    </li>
   {/each}
 </ul>
 
@@ -76,6 +83,13 @@
 <style>
   h1 {
     margin-top: 2em;
+  }
+  ul,
+  div {
+    list-style: none;
+    max-width: 50em;
+    margin: auto;
+    padding: 0 1em 2em;
   }
   ul.tags {
     display: flex;
@@ -97,13 +111,6 @@
   button:hover {
     background: var(--green);
     transform: scale(1.03);
-  }
-  ul.faqs,
-  div {
-    list-style: none;
-    max-width: 50em;
-    margin: auto;
-    padding: 0 1em 2em;
   }
   ul.faqs :global(p) {
     margin: 0;

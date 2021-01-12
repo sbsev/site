@@ -9,6 +9,8 @@
 </script>
 
 <script>
+  import { flip } from 'svelte/animate'
+  import { scale } from 'svelte/transition'
   import PostPreview from '../../components/PostPreview.svelte'
   import Social from '../../components/Social.svelte'
   import TagList from '../../components/TagList.svelte'
@@ -35,16 +37,18 @@
 
 <ul>
   {#each filteredPosts as post (post.slug)}
-    <PostPreview {post} />
+    <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
+      <PostPreview {post} />
+    </li>
   {/each}
 </ul>
 
 <style>
   ul {
     list-style: none;
-    max-width: 50em;
+    max-width: 56em;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16em, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
     grid-gap: 1em;
     margin: auto;
     padding: 2em 1em;

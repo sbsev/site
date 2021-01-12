@@ -6,7 +6,7 @@
   import PeopleCircle from '@svg-icons/ionicons-solid/people-circle.svg'
   import Rss from '@svg-icons/fa-solid/rss-square.svg'
   import Contact from '@svg-icons/boxicons-solid/contact.svg'
-  import Place from '@svg-icons/material-filled/place.svg'
+  import Place from '@svg-icons/material-sharp/place.svg'
   import Plant from '@svg-icons/remix-fill/plant.svg'
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'

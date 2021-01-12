@@ -11,7 +11,7 @@
 
 <script>
   import ChapterMap from '../components/ChapterMap.svelte'
-  import Place from '@svg-icons/material-filled/place.svg'
+  import Place from '@svg-icons/material-sharp/place.svg'
   import UserGraduate from '@svg-icons/fa-solid/user-graduate.svg'
   import Child from '@svg-icons/fa-solid/child.svg'
   import Img from '../components/Img.svelte'
@@ -102,6 +102,7 @@
     place-items: center;
     padding: 5pt 1em;
     color: white;
+    font-size: calc(1em + 0.5vw);
   }
   .grid :global(img) {
     border-radius: 1ex;

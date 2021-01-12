@@ -215,7 +215,7 @@ function titleToSlug(itm) {
   return itm
 }
 
-export async function fetchFaqs() {
-  const faqs = await fetchYaml(`FAQ`)
-  return faqs.map(renderBody).map(titleToSlug).map(prefixSlug(`faq#`))
+export async function fetchYamlList(title, slugPrefix) {
+  const list = await fetchYaml(title)
+  return list.map(renderBody).map(titleToSlug).map(prefixSlug(slugPrefix))
 }

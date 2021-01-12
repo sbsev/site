@@ -1114,11 +1114,6 @@
   resolved "https://registry.yarnpkg.com/@svg-icons/ionicons-solid/-/ionicons-solid-1.30.0.tgz#5b448673108ff76c614fa0cdd1e6b290b53d0fbb"
   integrity sha512-W9xrg6GDJkvkpAXVgqVB2z3NO8mqMycobzkBHkmIgKW30tRc8N+4aQCjcH/ZueGA3YMKzZ/PGCqv990t/cfjLg==
 
-"@svg-icons/material-filled@^1.25.0":
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/@svg-icons/material-filled/-/material-filled-1.25.0.tgz#b51b52b8d7e6bf2702177a913652cfa9d401c132"
-  integrity sha512-KXweVmtYYLTcyd7pFoQiN+d6AP+TO++DMDvKg+w9fA/6I7zG5N+efMXhZezOM5piQC2SgpE+dUWX18ssRW6qZA==
-
 "@svg-icons/material-sharp@^1.25.0":
   version "1.25.0"
   resolved "https://registry.yarnpkg.com/@svg-icons/material-sharp/-/material-sharp-1.25.0.tgz#a5a8c5a999a825561dce811946c7806ba6731023"
@@ -1133,6 +1128,11 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@svg-icons/remix-fill/-/remix-fill-1.1.0.tgz#d7e78df5f2c7ac650e17cf5c93070b803f56684e"
   integrity sha512-0rE9Fb3YUBAokWWdX1PhsiSVnWPagF6xE8feydjmH+6XV6UhbP9c6s1CiLejy4AeMdopU0Cxe5pC1okuIBcq0Q==
+
+"@svg-icons/simple-icons@^1.32.0":
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/@svg-icons/simple-icons/-/simple-icons-1.32.0.tgz#a5adec7358fe409462aefa00d43a88ba3689a679"
+  integrity sha512-WncrbdFVSCHctfDGVhAiND9e2wZEbS8zOqDfXrCkNDQNJvk4Gngl0XFg/BW37lueq4RCdy5tBZYrY/lLXOCsog==
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
