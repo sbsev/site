@@ -97,6 +97,24 @@ const pageQuery = (slug) => `{
   }
 }`
 
+export async function base64Thumbnail(url, type = `jpg`) {
+  const response = await fetch(`${url}?w=15&h=5&q=80`)
+  try {
+    // server side (node) https://stackoverflow.com/a/52467372
+    const buffer = await response.buffer()
+    return `data:image/${type};base64,` + buffer.toString(`base64`)
+  } catch (err) {
+    // client side (browser) https://stackoverflow.com/a/20285053
+    const blob = await response.blob()
+    return await new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(blob)
+    })
+  }
+}
+
 function renderBody(itm) {
   if (!itm?.body) return itm
 
@@ -110,6 +128,8 @@ export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
   const data = await gqlFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
+  if (page?.cover?.src)
+    page.cover.base64 = await base64Thumbnail(page?.cover?.src)
   return renderBody(page)
 }
 
@@ -157,6 +177,8 @@ export async function fetchPost(slug) {
   if (!slug) throw `fetchPost requires a slug, got '${slug}'`
   const data = await gqlFetch(postQuery(slug))
   const post = data?.posts?.items[0]
+  if (post?.cover?.src)
+    post.cover.base64 = await base64Thumbnail(post?.cover?.src)
   return processPost(post)
 }
 

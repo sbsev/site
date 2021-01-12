@@ -33,6 +33,8 @@
   hgroup {
     position: relative;
     overflow: hidden;
+    height: 25em;
+    max-height: 50vh;
   }
   hgroup > :global(*:not(:first-child)) {
     color: white;

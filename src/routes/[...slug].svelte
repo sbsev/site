@@ -2,7 +2,7 @@
   import { fetchPage } from '../utils/queries'
 
   export async function preload({ params }) {
-    const page = await fetchPage(params.slug)
+    const page = await fetchPage(params.slug.join(`/`))
     return { page }
   }
 </script>
