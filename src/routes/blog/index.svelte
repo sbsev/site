@@ -14,13 +14,19 @@
   import PostPreview from '../../components/PostPreview.svelte'
   import Social from '../../components/Social.svelte'
   import TagList from '../../components/TagList.svelte'
+  import IntersectionObserver from '../../components/IntersectionObserver.svelte'
 
   export let posts, social
 
   let activeTag
+  let nVisible = 12
+  const onIntersect = () => (nVisible += 6)
+
   $: filteredPosts = posts.filter(
     (post) => activeTag === `Alle` || post.tags.includes(activeTag)
   )
+  $: visiblePosts = filteredPosts.slice(0, nVisible)
+
   // count tag occurences
   const tags = posts.reduce(
     (obj, faq) => {
@@ -36,12 +42,13 @@
 <TagList {tags} bind:activeTag />
 
 <ul>
-  {#each filteredPosts as post (post.slug)}
+  {#each visiblePosts as post (post.slug)}
     <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
       <PostPreview {post} />
     </li>
   {/each}
 </ul>
+<IntersectionObserver on:intersect={onIntersect} top={200} />
 
 <style>
   ul {
