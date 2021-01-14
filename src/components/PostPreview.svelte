@@ -14,11 +14,13 @@
   const { src, alt } = cover
 
   const style = `padding-right: 4pt; vertical-align: -1pt; height: 12pt;`
-  const imgStyle = `width: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
+  const authorImgStyle = `width: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
+  const coverStyle = `border-radius: 1ex 1ex 0 0;`
 </script>
 
 <section>
-  <a href={slug}><Img sizes={[{ width: 400, height: 300 }]} {src} {alt} /></a>
+  <a href={slug}
+    ><Img sizes={[{ width: 400, height: 300 }]} {src} {alt} imgStyle={coverStyle} /></a>
   <h3><a href={slug}>{title}</a></h3>
   <div class="metadata">
     <ToolTip>
@@ -26,7 +28,7 @@
         src={author.photo.url}
         alt={author.name}
         sizes={[{ width: 100, height: 100 }]}
-        {imgStyle} />{author.name}
+        imgStyle={authorImgStyle} />{author.name}
       <address slot="tip">
         {#if author.url}
           <a href={author.url}><Link {style} />{author.url}</a>
@@ -56,7 +58,11 @@
     border-radius: 1ex;
     display: grid;
     font-size: 0.9em;
-    overflow: hidden;
+    transition: 0.3s;
+  }
+  section:hover {
+    transform: translate(0, -1pt);
+    box-shadow: 0 0 1em -1ex var(--shadow);
   }
   section > *:not(:first-child) {
     margin: 1ex 1em;

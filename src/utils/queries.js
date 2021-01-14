@@ -28,12 +28,33 @@ const prefixSlug = (prefix) => (obj) => {
   return obj
 }
 
-export const gqlFetch = async (query) => {
+export async function airtableFetch(query, options = {}) {
+  const apiKey = process.env.AIRTABLE_CHAPTER_BASE_APP_ID
+
+  if (!apiKey) throw `Missing Airtable API key. Please add to .env`
+
+  const response = await fetch(
+    `https://api.baseql.com/airtable/graphql/${apiKey}`,
+    {
+      method: `POST`,
+      headers: { 'Content-Type': `application/json` },
+      body: JSON.stringify({ query }),
+      ...options,
+    }
+  )
+
+  const { data, error } = await response.json()
+
+  if (error) throw error
+  return data
+}
+
+export async function ctfFetch(query) {
   const token = process.env.CONTENTFUL_ACCESS_TOKEN
   const id = process.env.CONTENTFUL_SPACE_ID
 
   if (!token || !id)
-    throw `missing Contentful access token and/or space ID. please add it to .env`
+    throw `Missing Contentful access token and/or space ID. Please add to .env`
 
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
   const ctfGraphqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
@@ -66,7 +87,7 @@ const chaptersQuery = `{
 }`
 
 export async function fetchChapters() {
-  const { chapters } = await gqlFetch(chaptersQuery)
+  const { chapters } = await ctfFetch(chaptersQuery)
   return chapters?.items?.map(prefixSlug(`standorte/`))
 }
 
@@ -126,7 +147,7 @@ function renderBody(itm) {
 
 export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
-  const data = await gqlFetch(pageQuery(slug))
+  const data = await ctfFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
   if (page?.cover?.src)
     page.cover.base64 = await base64Thumbnail(page?.cover?.src)
@@ -134,7 +155,7 @@ export async function fetchPage(slug) {
 }
 
 export async function fetchPages() {
-  const data = await gqlFetch(pageQuery())
+  const data = await ctfFetch(pageQuery())
   return data?.pages?.items?.map(renderBody)
 }
 
@@ -175,7 +196,7 @@ function processPost(post) {
 
 export async function fetchPost(slug) {
   if (!slug) throw `fetchPost requires a slug, got '${slug}'`
-  const data = await gqlFetch(postQuery(slug))
+  const data = await ctfFetch(postQuery(slug))
   const post = data?.posts?.items[0]
   if (post?.cover?.src)
     post.cover.base64 = await base64Thumbnail(post?.cover?.src)
@@ -183,7 +204,7 @@ export async function fetchPost(slug) {
 }
 
 export async function fetchPosts() {
-  const data = await gqlFetch(postQuery())
+  const data = await ctfFetch(postQuery())
   const posts = data?.posts?.items
   return posts.map(processPost)
 }
@@ -198,7 +219,7 @@ const yamlQuery = (title) => `{
 
 export async function fetchYaml(title) {
   if (!title) throw `fetchYaml requires a title, got '${title}'`
-  const { yml } = await gqlFetch(yamlQuery(title))
+  const { yml } = await ctfFetch(yamlQuery(title))
   return yaml.load(yml?.items[0]?.data)
 }
 

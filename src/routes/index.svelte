@@ -5,6 +5,17 @@
     const page = await fetchPage(`/`)
     const chapters = await fetchChapters()
     const yaml = await fetchYaml(`Landing Page`)
+    // const { students, pupils } = await airtableFetch(
+    //   `{
+    //     students: studentenStatistiken {
+    //       id
+    //     }
+    //     pupils: schuelerStatistiken {
+    //       id
+    //     }
+    //   }`,
+    //   { cache: `force-cache` }
+    // )
     return { page, chapters, yaml }
   }
 </script>
@@ -21,7 +32,7 @@
   let windowWidth
 
   const style = `vertical-align: middle; margin-right: 6pt;`
-  const sizes = [{ width: 400 }]
+  const sizes = [{ width: 400 }, { width: 800 }]
   const textBgColors = [`green`, `orange`, `lightBlue`, `darkGreen`, `blue`]
 </script>
 
@@ -47,11 +58,11 @@
     <Place height="2.5ex" {style} />Standorte
   </div>
   <div style="background: var(--green);">
-    <span>1045</span>
+    <span>996</span>
     <UserGraduate height="2.5ex" {style} />Studierende
   </div>
   <div style="background: var(--orange);">
-    <span>1228</span>
+    <span>761</span>
     <Child height="2.5ex" {style} />Schüler
   </div>
 </section>

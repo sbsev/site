@@ -11,18 +11,25 @@ import svelteSVG from 'rollup-plugin-svelte-svg'
 import pkg from './package.json'
 import { algoliaConfig } from './src/utils/algolia'
 
-const ctfToken = process.env.CONTENTFUL_ACCESS_TOKEN
-const ctfId = process.env.CONTENTFUL_SPACE_ID
+const keys = [
+  `NODE_ENV`,
+  `CONTENTFUL_ACCESS_TOKEN`,
+  `CONTENTFUL_SPACE_ID`,
+  `AIRTABLE_CHAPTER_BASE_APP_ID`,
+]
 
 const replacements = replace({
   'process.browser': true,
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-  'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(ctfToken),
-  'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(ctfId),
+  ...Object.fromEntries(
+    keys.map((key) => [`process.env.${key}`, JSON.stringify(process.env[key])])
+  ),
 })
 const dev = process.env.NODE_ENV === `development`
 
 if (dev) {
+  const ctfToken = process.env.CONTENTFUL_ACCESS_TOKEN
+  const ctfId = process.env.CONTENTFUL_SPACE_ID
+
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
   const graphiql = `${ctfGqlUrl}/${ctfId}/explore?access_token=${ctfToken}`
   // eslint-disable-next-line no-console

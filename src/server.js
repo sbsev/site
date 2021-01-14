@@ -11,6 +11,7 @@ const keys = [
   `ALGOLIA_SEARCH_KEY`,
   `GOOGLE_MAPS_API_KEY`,
   `AIRTABLE_API_KEY`,
+  `AIRTABLE_CHAPTER_BASE_APP_ID`,
 ]
 
 const session = Object.fromEntries(

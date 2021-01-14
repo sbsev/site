@@ -60,21 +60,21 @@
     max-width: 42em;
     padding: 0 2em 2em;
     margin: auto;
-    display: grid;
+    display: flex;
     gap: 1em;
   }
   section span {
     display: grid;
-    align-content: space-between;
+    gap: 1em;
   }
   a.btn {
     width: 100%;
-    margin: 1ex;
     box-sizing: border-box;
+    margin: 0;
   }
-  @media (min-width: 850px) {
+  @media (max-width: 850px) {
     section {
-      grid-template-columns: auto auto auto;
+      flex-direction: column;
     }
   }
 </style>

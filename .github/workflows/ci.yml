@@ -22,6 +22,7 @@ jobs:
         env:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          AIRTABLE_CHAPTER_BASE_APP_ID: ${{ secrets.AIRTABLE_CHAPTER_BASE_APP_ID }}
 
       - name: Run Lighthouse
         run: lhci autorun
@@ -50,4 +51,5 @@ jobs:
         env:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
+          AIRTABLE_CHAPTER_BASE_APP_ID: ${{ secrets.AIRTABLE_CHAPTER_BASE_APP_ID }}
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
