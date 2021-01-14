@@ -32,7 +32,7 @@
   </div>
   <span
     >Diese Seite ist
-    <a href="https://github.com/sbsev/website">
+    <a href="https://github.com/sbsev/svelte-site">
       <OpenSource
         height="2.5ex"
         style="vertical-align: bottom; padding-right: 3pt;" />open source</a>

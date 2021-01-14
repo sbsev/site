@@ -53,6 +53,10 @@
     <time>
       <Update {style} />Zuletzt bearbeitet:
       {date}</time>
+    <address>
+      <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
+        >War diese Seite hilfreich?</a>
+    </address>
   {/if}
 </main>
 <Footer {...footer} {social} />
@@ -60,9 +64,14 @@
 <style>
   time {
     display: block;
-    text-align: right;
-    font-size: 0.6em;
-    padding: 2em;
+    font-size: 1ex;
+    margin: 2em;
     text-align: center;
+  }
+  address {
+    text-align: center;
+    font-size: 1.3ex;
+    font-style: normal;
+    margin: 2em;
   }
 </style>

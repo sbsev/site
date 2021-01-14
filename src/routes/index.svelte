@@ -66,7 +66,7 @@
 
 <style>
   .grid {
-    margin: 2em 1em;
+    margin: 2em 3vw;
     display: grid;
     grid-gap: 1ex;
     grid-template-columns: repeat(10, 1fr);

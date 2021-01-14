@@ -6,7 +6,7 @@
   "homepage": "https://studenten-bilden-schueler.de",
   "version": "1.0.0",
   "author": "Janosh Riebesell <janosh.riebesell@studenten-bilden-schueler.de>",
-  "repository": "https://github.com/sbsev/website",
+  "repository": "https://github.com/sbsev/svelte-site",
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build",
