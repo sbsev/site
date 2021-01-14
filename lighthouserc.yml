@@ -1,0 +1,10 @@
+# https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/configuration.md
+ci:
+  collect:
+    staticDistDir: ./__sapper__/export
+  assert:
+    presets: lighthouse:no-pwa
+    assertions:
+      categories:performance: [error, { minScore: 0.8 }]
+  upload:
+    target: temporary-public-storage
