@@ -3,11 +3,9 @@
 
   import { fetchYaml, fetchChapters } from '../utils/queries'
 
-  const stripOuterPTag = (str) =>
-    str
-      .replace(/^<p>/, ``)
-      .replace(/<\/p>\s*?$/, ``)
-      .replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
+  const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
+
+  const openLinkinNewTab = (str) => str.replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
 
   export async function preload() {
     let chapters = await fetchChapters()
@@ -18,12 +16,13 @@
       let copy = await fetchYaml(title)
       // iterate over name, phone, email, ...
       Object.entries(copy).forEach(([key, itm]) => {
-        if (typeof itm === `string`) copy[key] = stripOuterPTag(marked(itm))
+        if (typeof itm === `string`)
+          copy[key] = openLinkinNewTab(stripOuterPTag(marked(itm)))
         // iterate over title, note, ...
         else {
           copy[key].name = key // name is used by FormInput to link labels to their corresp. inputs
           Object.entries(itm).forEach(([innerKey, val]) => {
-            copy[key][innerKey] = stripOuterPTag(marked(val))
+            copy[key][innerKey] = openLinkinNewTab(stripOuterPTag(marked(val)))
           })
         }
       })

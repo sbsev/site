@@ -33,20 +33,18 @@ export async function searchStringInContentType(
   console.log(`items of type ${contentType} containing ${searchTerm}:`, items)
 }
 
-export async function convertBlogTagsToStr() {
+export async function convertCaptionToYaml() {
   const space = await getSpace()
 
   const env = await space.getEnvironment(`master`)
-  let { items: tags } = await env.getEntries({ content_type: `blogTag` })
-  let { items: posts } = await env.getEntries({ content_type: `post` })
-  tags = Object.fromEntries(
-    tags.map((tag) => [tag.sys.id, tag.fields.title.de])
-  )
-  posts.forEach((post) => {
-    post.fields.tags2 = {}
-    post.fields.tags2.de = post.fields.tags.de.map((tag) => tags[tag.sys.id])
-    post.update()
-    post.publish()
+  let { items } = await env.getEntries({ content_type: `page` })
+  items.forEach((page) => {
+    if (page.fields.caption) {
+      page.fields.yaml = {}
+      page.fields.yaml.de = `caption: ${page.fields.caption.de}`
+      page.update()
+      page.publish()
+    }
   })
 }
 
@@ -81,4 +79,4 @@ export async function createFAQEntries() {
 }
 
 // run with: node src/utils/contentful.js
-searchStringInContentType()
+convertCaptionToYaml()

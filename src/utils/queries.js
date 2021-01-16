@@ -107,7 +107,7 @@ const pageQuery = (slug) => `{
       slug
       body
       toc
-      caption
+      yaml
       cover {
         ${coverFragment}
       }
@@ -149,6 +149,12 @@ export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
   const data = await ctfFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
+  if (page?.yaml) {
+    page.yaml = yaml.load(page.yaml)
+    Object.entries(page.yaml).forEach(
+      ([key, val]) => (page.yaml[key] = marked.parseInline(val))
+    )
+  }
   if (page?.cover?.src)
     page.cover.base64 = await base64Thumbnail(page?.cover?.src)
   return renderBody(page)
