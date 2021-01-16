@@ -66,3 +66,45 @@ test(`signup form accepts minimal student data`, withPage, async (t, page) => {
 
   t.is(text, `🎉 ⭐ 🎉`)
 })
+
+test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
+  await page.goto(`http://localhost:3000/anmeldung?test=true`)
+
+  await page.$eval(`input[type='radio'][value='Schüler']`, (el) => el.click())
+
+  await page.waitForSelector(`#firstname`) // wait for DOM changes to be applied before proceeding after clicking the pupil button
+
+  await fillSingleSelect(page, `#chapter`, `Heidelberg`)
+
+  await fillSingleSelect(page, `#gender`, `Männlich`)
+
+  await fillInput(page, `#firstname`, `Foo Bar`)
+
+  await fillMultiSelect(page, `#subjects`, [`Mathe`, `Englisch`])
+
+  await fillSingleSelect(page, `#schoolType`, `Realschule`)
+
+  await fillInput(page, `#level`, `7`)
+
+  await fillInput(page, `#place`, `Stadtbücherei`)
+
+  await fillInput(page, `#nameContact`, `Baz Bar`)
+
+  await fillInput(page, `#phoneContact`, `012 345 678`)
+
+  await fillInput(page, `#emailContact`, `baz@bar.com`)
+
+  await fillInput(page, `#orgContact`, `Privat`)
+
+  await page.$eval(`#need`, (el) => el.click())
+
+  await page.$eval(`#dataProtection`, (el) => el.click())
+
+  await page.$eval(`button[type=submit]`, (el) => el.click())
+
+  const span = await page.waitForSelector(`main > section > span:first-child`)
+
+  const text = await (await span.getProperty(`textContent`)).jsonValue()
+
+  t.is(text, `🎉 ⭐ 🎉`)
+})

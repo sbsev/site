@@ -14,9 +14,7 @@ const keys = [
   `AIRTABLE_CHAPTER_BASE_APP_ID`,
 ]
 
-const session = Object.fromEntries(
-  Object.entries(process.env).filter(([key]) => keys.includes(key))
-)
+const session = Object.fromEntries(keys.map((key) => [key, process.env[key]]))
 
 const { PORT, NODE_ENV } = process.env
 const dev = NODE_ENV === `development`
