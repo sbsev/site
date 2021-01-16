@@ -88,7 +88,7 @@ const chaptersQuery = `{
 
 export async function fetchChapters() {
   const { chapters } = await ctfFetch(chaptersQuery)
-  return chapters?.items?.map(prefixSlug(`standorte/`))
+  return chapters?.items?.map(prefixSlug(`/standorte/`))
 }
 
 const coverFragment = `

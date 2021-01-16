@@ -39,7 +39,12 @@
   }
 
   const { page } = stores()
-  $: isCurrent = (url) => (url === $page.path ? `page` : undefined)
+  // isCurrent needs to be reactive to respond to changes in $page.path
+  $: isCurrent = (url) => {
+    if (url === $page.path) return `page`
+    if ($page.path !== `/` && $page.path.includes(url)) return `page`
+    return undefined
+  }
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -111,11 +116,7 @@
     color: var(--hoverColor);
   }
   a[aria-current] {
-    border-radius: 1ex;
-    padding: 3pt 5pt;
-    line-height: 0;
-    background: var(--lightBlue);
-    color: white;
+    color: var(--orange);
   }
   a.logo {
     grid-area: logo;
