@@ -1,10 +1,12 @@
 <script>
-  import { throttle } from 'lodash'
-  import { onMount } from 'svelte'
+  import { stores } from '@sapper/app'
   import { blur } from 'svelte/transition'
 
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
+  import { onMount } from 'svelte'
+
+  const { page } = stores()
 
   function accumulateOffsetTop(el, totalOffset = 0) {
     while (el) {
@@ -14,8 +16,20 @@
     return totalOffset
   }
 
+  function throttle(callback, limit) {
+    // execute `func` at most one every `limit` milliseconds
+    let wait = false
+    return function () {
+      if (!wait) {
+        callback.call()
+        wait = true
+        setTimeout(() => (wait = false), limit)
+      }
+    }
+  }
+
   // the default selector relies on BasePage.svelte wrapping body content in <article>
-  export let headingSelector = Array.from({ length: 6 }, (_, i) => `article h` + (i + 1))
+  export let headingSelector = [...Array(6).keys()].map((idx) => `article h` + (idx + 1))
   export let getTitle = (node) => node.innerText
   export let getDepth = (node) => Number(node.nodeName[1])
 
@@ -24,19 +38,6 @@
   let activeHeading = false
   let headings = []
   let nodes = []
-
-  onMount(() => {
-    nodes = Array.from(document.querySelectorAll(headingSelector))
-    const depths = nodes.map(getDepth)
-    const minDepth = Math.min(...depths)
-
-    headings = nodes.map((node, idx) => ({
-      title: getTitle(node),
-      depth: depths[idx] - minDepth,
-    }))
-    scrollHandler()
-  })
-
   const scrollHandler = throttle(() => {
     // Offsets need to be recomputed because lazily-loaded
     // content may increase offsets as user scrolls down.
@@ -46,6 +47,22 @@
     )
     activeHeading = activeIndex === -1 ? headings.length - 1 : activeIndex - 1
   }, 300)
+
+  function handleRouteChange() {
+    nodes = Array.from(document.querySelectorAll(headingSelector))
+    const depths = nodes.map(getDepth)
+    const minDepth = Math.min(...depths)
+
+    headings = nodes.map((node, idx) => ({
+      title: getTitle(node),
+      depth: depths[idx] - minDepth,
+    }))
+    scrollHandler()
+  }
+
+  // compute list of HTML headings on mount and on route changes
+  if (typeof window !== `undefined`) page.subscribe(() => handleRouteChange)
+  onMount(handleRouteChange)
 </script>
 
 <svelte:window on:scroll={scrollHandler} bind:innerWidth={windowWidth} />
@@ -99,14 +116,12 @@
     background: var(--accentBg);
     border-radius: 50%;
     padding: 2pt;
-    box-shadow: 0 0 1em -3pt black;
+    box-shadow: 0 0 1em -3pt var(--shadow);
   }
   nav {
     position: absolute;
-    width: 11em;
-    margin: 2em 1em;
+    margin: 1em 0;
     padding: 5pt 1ex 1ex 1.5ex;
-    background: var(--accentBg);
     border-radius: 6pt;
   }
   @media (max-width: 1600px) {
@@ -117,9 +132,13 @@
       right: 1em;
     }
     nav {
+      width: 11em;
       bottom: -1em;
       right: 0;
       z-index: -1;
+      background: var(--accentBg);
+      box-shadow: 0 0 1em -3pt var(--shadow);
+      margin: 2em 1em;
     }
   }
   @media (min-width: 1601px) {
@@ -130,6 +149,8 @@
     }
     nav {
       left: calc(100% + 2ex);
+      width: 16vw;
+      background: var(--transparent);
     }
     aside > button {
       display: none;

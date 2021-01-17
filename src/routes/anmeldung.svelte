@@ -8,8 +8,7 @@
   const openLinkinNewTab = (str) => str.replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
 
   export async function preload() {
-    let chapters = await fetchChapters()
-    chapters.filter((chap) => chap.acceptsSignUps)
+    let chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignUps)
     const options = await fetchYaml(`Signup Form Options`)
 
     async function parseMicrocopy(title) {

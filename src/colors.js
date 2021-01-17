@@ -41,6 +41,7 @@ export const modeColors = {
     headerColor: `white`,
     footerBg: colors.darkBlue,
     invert: 0,
+    transparent: `rgba(255, 255, 255, 0.8)`,
   },
   dark: {
     textColor: `white`,
@@ -56,5 +57,6 @@ export const modeColors = {
     headerColor: colors.lightBlue,
     footerBg: `black`,
     invert: 1,
+    transparent: `rgba(0, 0, 0, 0.5)`,
   },
 }

@@ -1,0 +1,65 @@
+<script context="module">
+  import { fetchYamlList, fetchPage } from '../utils/queries'
+
+  export async function preload() {
+    const page = await fetchPage(`auszeichnungen`)
+    const items = await fetchYamlList(`Auszeichnungen`, `auszeichnungen#`)
+    return { page, items }
+  }
+</script>
+
+<script>
+  import Calendar from '@svg-icons/octicons/calendar.svg'
+  import PriceRibbon from '@svg-icons/fa-solid/award.svg'
+
+  import Img from '../components/Img.svelte'
+  import BasePage from '../components/BasePage.svelte'
+
+  export let items, page
+
+  let hash
+
+  const imgStyle = `width: 175px; float: left; height: auto; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
+  const style = `height: 2.2ex; vertical-align: text-top; margin: 0 5pt 0 0;`
+</script>
+
+<!-- used to briefly flash an list item as active when it's hash is found in the URL -->
+<svelte:window on:hashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
+
+<BasePage {page} />
+
+<ul class="items">
+  {#each items as { title, id, img, url, date, prize } (title)}
+    <li>
+      <a href={url}><Img src={img} alt={title} sizes={[{ width: 175 }]} {imgStyle} /></a>
+      <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
+      <div>
+        <span><Calendar {style} />{date}</span>
+        <span><PriceRibbon {style} />{prize}</span>
+      </div>
+    </li>
+  {/each}
+</ul>
+
+<style>
+  ul.items {
+    list-style: none;
+    max-width: 50em;
+    margin: auto;
+    padding: 0 1em 2em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+    grid-gap: 1em;
+  }
+  ul.items > li {
+    font-size: 0.85em;
+    background: var(--accentBg);
+    padding: 1ex 1em;
+    border-radius: 4pt;
+  }
+  ul.items > li > div {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+  }
+</style>

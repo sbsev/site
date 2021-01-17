@@ -42,7 +42,7 @@
 {/if}
 
 <style>
-  picture img {
+  img {
     object-fit: cover;
     height: 100%;
   }

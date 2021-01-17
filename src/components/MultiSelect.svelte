@@ -207,6 +207,8 @@
     padding: 0;
     width: 1pt;
     padding: 1pt;
+    /* needed to hide red shadow around required inputs in some browsers */
+    box-shadow: none;
   }
 
   ul {

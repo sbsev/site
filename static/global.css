@@ -46,11 +46,6 @@ button {
   cursor: pointer;
   outline: none;
 }
-.multi-col-list ul {
-  display: grid;
-  grid-gap: 0 2em;
-  grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
-}
 table {
   border-collapse: collapse;
   width: 100%;
@@ -62,12 +57,6 @@ table th {
 }
 tbody tr:nth-child(odd) {
   background: var(--accentBg);
-}
-div.scroll {
-  overflow: auto;
-  margin: 1em auto;
-  border: 1px solid var(--textColor);
-  border-width: 0 1px;
 }
 main img {
   width: 100%;

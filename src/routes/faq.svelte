@@ -35,7 +35,7 @@
 
   let activeTag = `Alle`
   const email = `info@studenten-bilden-schueler.de`
-  let hash
+  let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
   $: filteredFaqs = faqs.filter(
     (faq) => activeTag === `Alle` || faq.tags.includes(activeTag)

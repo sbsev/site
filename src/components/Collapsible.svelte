@@ -9,7 +9,10 @@
 
   let isOpen = false
 
-  $: if (active) setTimeout(() => (active = false), 1000)
+  $: if (active) {
+    toggle()
+    setTimeout(() => (active = false), 2000)
+  }
 
   function toggle() {
     isOpen = !isOpen
@@ -37,11 +40,12 @@
     margin: 1em auto;
     transition: 0.3s;
     max-width: 100%;
-    transition: 0.4s;
+    transition: 0.6s;
   }
-  h3:hover,
-  h3.active {
+  h3:hover {
     transform: scale(1.01);
+  }
+  h3.active {
     background: rgba(255, 255, 255, 0.4);
   }
   /* used to scroll a heading into the page center (rather than the top
