@@ -12,7 +12,7 @@
   <Img {src} {alt} {base64} />
   {#if $$slots.title}
     <slot name="title" />
-  {:else}
+  {:else if title}
     <h1>{title}</h1>
   {/if}
   {#if yaml?.caption}

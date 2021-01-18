@@ -5,6 +5,7 @@ main {
 main h1 {
   text-align: center;
   color: var(--headingColor);
+  font-size: 3ex;
 }
 body {
   display: grid;
@@ -45,6 +46,12 @@ button {
   border-radius: 5px;
   cursor: pointer;
   outline: none;
+}
+blockquote {
+  border-left: 3pt solid var(--linkColor);
+  padding-left: 1em;
+  margin: 1ex;
+  background: var(--lightBg);
 }
 table {
   border-collapse: collapse;

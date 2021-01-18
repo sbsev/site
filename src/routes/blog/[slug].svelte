@@ -15,17 +15,19 @@
   import PersonCircle from '@svg-icons/bootstrap/person-circle.svg'
   import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
   import HistoryEdu from '@svg-icons/material-sharp/history-edu.svg'
+  import Img from '../../components/Img.svelte'
 
   export let post
 
-  const { author = {}, date } = post
-  const { bio, fieldOfStudy, name, photo } = author
+  $: ({ title, ...post } = post)
+  $: ({ bio, fieldOfStudy, name, photo } = post.author)
   const style = `height: 18pt; vertical-align: -3pt; padding: 0 3pt;`
 </script>
 
 <BasePage page={post}>
-  <blockquote>
-    <img src={photo.url} alt={name} />
+  <section>
+    <h1>{title}</h1>
+    <Img sizes={[{ width: 150 }]} src={photo.url} alt={name} />
     <span>
       von
       {#if bio || fieldOfStudy}
@@ -50,20 +52,20 @@
       {/if}
       am
       <Calendar {style} />
-      <strong>{new Date(date).toLocaleDateString(`de`)}</strong>
+      <strong>{new Date(post.date).toLocaleDateString(`de`)}</strong>
     </span>
-  </blockquote>
+  </section>
 </BasePage>
 
 <style>
-  blockquote {
+  section {
     text-align: center;
     max-width: 42em;
     padding: 2em;
     margin: auto;
     font-weight: lighter;
   }
-  blockquote img {
+  section :global(img) {
     margin: 1em auto;
     display: block;
     width: 3em;
