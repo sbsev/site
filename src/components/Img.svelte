@@ -1,9 +1,12 @@
 <script>
   export let src, alt
+  export let width = undefined
+  export let height = undefined
   export let base64 = ``
   export let title = ``
   export let pictureStyle = ``
   export let imgStyle = ``
+  export let inline = false
   export let sizes = [
     { width: 1500, height: 500 },
     { width: 1200, height: 400 },
@@ -12,7 +15,9 @@
     { width: 400, height: 400 },
   ]
 
-  const { width, height } = sizes.slice(-1)[0] // grab the smallest width and height (if any)
+  let [naturalWidth, naturalHeight] = [width, height]
+  $: ({ width, height } = sizes.slice(-1)[0]) // grab the smallest width and height (if any)
+  $: if (!height) height = (width * naturalHeight) / naturalWidth
 
   // equivalent GraphQL transformer to "{url}?fm=webp&q=80&w=400&h=300&fit=fill"
   // url(transform: {format: WEBP, quality: 80, width: 400, height: 300, resizeStrategy: FILL})
@@ -21,7 +26,7 @@
 {#if src.endsWith(`.svg`)}
   <img {src} {alt} {title} {width} {height} style={imgStyle} />
 {:else}
-  <picture style={pictureStyle}>
+  <picture style={pictureStyle} class:inline>
     {#if base64}
       <img src={base64} {alt} class="base64" {width} {height} />
     {/if}
@@ -45,6 +50,12 @@
   img {
     object-fit: cover;
     height: 100%;
+  }
+  picture {
+    position: relative;
+  }
+  picture:not(.inline) {
+    display: flex;
   }
   img.base64 {
     position: absolute;

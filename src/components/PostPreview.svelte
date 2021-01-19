@@ -11,7 +11,6 @@
   export let post
 
   const { title, slug, cover, date, author, tags, plainBody } = post
-  const { src, alt } = cover
 
   const style = `padding-right: 4pt; vertical-align: -1pt; height: 12pt;`
   const authorImgStyle = `width: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
@@ -20,7 +19,7 @@
 
 <section>
   <a href={slug}
-    ><Img sizes={[{ width: 400, height: 300 }]} {src} {alt} imgStyle={coverStyle} /></a>
+    ><Img sizes={[{ width: 400, height: 300 }]} {...cover} imgStyle={coverStyle} /></a>
   <h3><a href={slug}>{title}</a></h3>
   <div class="metadata">
     <ToolTip>
@@ -28,7 +27,8 @@
         src={author.photo.url}
         alt={author.name}
         sizes={[{ width: 100, height: 100 }]}
-        imgStyle={authorImgStyle} />{author.name}
+        imgStyle={authorImgStyle}
+        inline />{author.name}
       <address slot="tip">
         {#if author.url}
           <a href={author.url}><Link {style} />{author.url}</a>

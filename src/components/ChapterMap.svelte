@@ -1,4 +1,6 @@
 <script>
+  import { goto } from '@sapper/app'
+
   import Map from '../components/Map.svelte'
 
   export let chapters
@@ -14,9 +16,7 @@
         label: title.slice(0, 2),
         title,
       })
-      marker.addListener(`click`, () => {
-        window.location.href = slug
-      })
+      marker.addListener(`click`, () => goto(slug))
     })
   }
   const mapProps = { disableDefaultUI: true }

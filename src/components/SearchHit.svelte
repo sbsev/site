@@ -5,13 +5,12 @@
   export let clickHandler = () => {}
 
   $: ({ title, slug, body, cover = {}, date, author } = hit)
-  $: ({ src, alt = cover.title } = cover)
 </script>
 
 <div>
-  {#if src}
+  {#if cover.src}
     <a href={slug}>
-      <Img {src} {alt} sizes={[{ width: 150 }]} />
+      <Img {...cover} sizes={[{ width: 150 }]} />
     </a>
   {/if}
   <h3>

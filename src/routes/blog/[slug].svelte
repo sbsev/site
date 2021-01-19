@@ -8,7 +8,6 @@
 </script>
 
 <script>
-  import BasePage from '../../components/BasePage.svelte'
   import ToolTip from '../../components/ToolTip.svelte'
 
   import Calendar from '@svg-icons/octicons/calendar.svg'
@@ -19,12 +18,15 @@
 
   export let post
 
-  $: ({ title, ...post } = post)
+  $: ({ title, body, cover } = post)
   $: ({ bio, fieldOfStudy, name, photo } = post.author)
   const style = `height: 18pt; vertical-align: -3pt; padding: 0 3pt;`
 </script>
 
-<BasePage page={post}>
+<article>
+  <Img
+    sizes={[{ width: 1000 }, { width: 700 }, { width: 500 }, { width: 300 }]}
+    {...cover} />
   <section>
     <h1>{title}</h1>
     <Img sizes={[{ width: 150 }]} src={photo.url} alt={name} />
@@ -55,14 +57,17 @@
       <strong>{new Date(post.date).toLocaleDateString(`de`)}</strong>
     </span>
   </section>
-</BasePage>
+  {@html body}
+</article>
 
 <style>
-  section {
-    text-align: center;
+  article {
     max-width: 42em;
     padding: 2em;
     margin: auto;
+  }
+  section {
+    text-align: center;
     font-weight: lighter;
   }
   section :global(img) {

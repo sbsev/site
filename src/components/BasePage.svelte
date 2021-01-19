@@ -9,7 +9,7 @@
 </script>
 
 <figure>
-  <Img {src} {alt} {base64} />
+  <Img {...cover} />
   {#if $$slots.title}
     <slot name="title" />
   {:else if title}

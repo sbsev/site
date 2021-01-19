@@ -31,7 +31,8 @@
 <ul class="items">
   {#each items as { title, id, img, url, date, prize } (title)}
     <li>
-      <a href={url}><Img src={img} alt={title} sizes={[{ width: 175 }]} {imgStyle} /></a>
+      <a href={url}
+        ><Img src={img} alt={title} sizes={[{ width: 175 }]} {imgStyle} inline /></a>
       <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
       <div>
         <span><Calendar {style} />{date}</span>
