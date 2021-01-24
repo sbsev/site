@@ -79,7 +79,7 @@
   {#each filtered as { title, id, img, body, tags, url } (title)}
     <li animate:flip={{ duration: 200 }} transition:scale>
       <a href={url}
-        ><Img src={img} alt={title} sizes={[{ width: 150 }]} {imgStyle} inline /></a>
+        ><Img src={img} alt={title} sizes={[{ w: 150 }]} {imgStyle} inline /></a>
       <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
       <span><Tags {style} /> {tags.join(`, `)}</span>
       {@html body}

@@ -24,12 +24,10 @@
 </script>
 
 <article>
-  <Img
-    sizes={[{ width: 1000 }, { width: 700 }, { width: 500 }, { width: 300 }]}
-    {...cover} />
+  <Img sizes={[{ w: 1000 }, { w: 700 }, { w: 500 }, { w: 300 }]} {...cover} />
   <section>
     <h1>{title}</h1>
-    <Img sizes={[{ width: 150 }]} src={photo.url} alt={name} />
+    <Img sizes={[{ w: 150 }]} src={photo.url} alt={name} />
     <span>
       von
       {#if bio || fieldOfStudy}

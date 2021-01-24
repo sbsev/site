@@ -19,14 +19,14 @@
 
 <section>
   <a sapper:prefetch href={slug}
-    ><Img sizes={[{ width: 400, height: 300 }]} {...cover} imgStyle={coverStyle} /></a>
+    ><Img sizes={[{ w: 400, h: 300 }]} {...cover} imgStyle={coverStyle} /></a>
   <h3><a sapper:prefetch href={slug}>{title}</a></h3>
   <div class="metadata">
     <ToolTip>
       <Img
         src={author.photo.url}
         alt={author.name}
-        sizes={[{ width: 100, height: 100 }]}
+        sizes={[{ w: 100, h: 100 }]}
         imgStyle={authorImgStyle}
         inline />{author.name}
       <address slot="tip">
