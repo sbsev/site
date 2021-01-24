@@ -1,5 +1,5 @@
 <script>
-  import { goto } from '@sapper/app'
+  import { goto, prefetch } from '@sapper/app'
 
   import Map from '../components/Map.svelte'
 
@@ -16,6 +16,7 @@
         label: title.slice(0, 2),
         title,
       })
+      marker.addListener(`mouseover`, () => prefetch(slug))
       marker.addListener(`click`, () => goto(slug))
     })
   }

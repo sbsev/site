@@ -4,6 +4,7 @@ import marked from 'marked'
 import yaml from 'js-yaml'
 
 const renderer = {
+  // responsive markdown images
   image(href, title, text) {
     if (href?.includes(`images.ctfassets.net`) && !href.endsWith(`.svg`)) {
       title = title ? `title="${title}"` : ``
@@ -18,6 +19,35 @@ const renderer = {
     }
 
     return false // delegate to default marked image renderer
+  },
+  // add Sapper prefetching for local markdown links
+  link(href, title, text) {
+    if (href.startsWith(`/`)) {
+      title = title ? `title="${title}"` : ``
+      return `<a sapper:prefetch href="${href}" ${title}>${text}</a>`
+    }
+    return false // delegate to default marked link renderer
+  },
+  // responsive iframes for video embeds
+  codespan(code) {
+    if (code.startsWith(`youtube:`) || code.startsWith(`vimeo:`)) {
+      const [platform, id] = code.split(/:\s?/)
+      const embed = {
+        youtube: (id) => `https://youtube.com/embed/${id}`,
+        vimeo: (id) => `https://player.vimeo.com/video/${id}`,
+      }
+
+      return `
+        <div style="padding-top: 56.25%; position: relative;">
+        <iframe
+          title="Video"
+          src="${embed[platform](id)}"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+          allow="autoplay; fullscreen"
+          allowfullscreen></iframe>
+      </div>`
+    }
+    return false // delegate to default marked codespan renderer
   },
 }
 
@@ -91,33 +121,6 @@ export async function fetchChapters() {
   return chapters?.items?.map(prefixSlug(`/standorte/`))
 }
 
-const coverFragment = `
-  src: url
-  alt: description
-  title
-  width
-  height
-`
-
-const pageQuery = (slug) => `{
-  pages: pageCollection
-  ${slug ? `(where: {slug: "${slug}"})` : ``} {
-    items {
-      title
-      slug
-      body
-      toc
-      yaml
-      cover {
-        ${coverFragment}
-      }
-      sys {
-        publishedAt
-      }
-    }
-  }
-}`
-
 export async function base64Thumbnail(url, type = `jpg`) {
   const response = await fetch(`${url}?w=15&h=5&q=80`)
   try {
@@ -145,6 +148,42 @@ function renderBody(itm) {
   return itm
 }
 
+const coverFragment = `
+  cover {
+    src: url
+    alt: description
+    title
+    width
+    height
+  }
+`
+
+const pageFragment = `
+  items {
+    title
+    slug
+    body
+    toc
+    yaml
+    ${coverFragment}
+    sys {
+      publishedAt
+    }
+  }
+`
+
+const pageQuery = (slug) => `{
+  pages: pageCollection(where: {slug_in: ["${slug}", "/${slug}"]}) {
+    ${pageFragment}
+  }
+}`
+
+const pagesQuery = `{
+  pages: pageCollection {
+    ${pageFragment}
+  }
+}`
+
 export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
   const data = await ctfFetch(pageQuery(slug))
@@ -161,36 +200,42 @@ export async function fetchPage(slug) {
 }
 
 export async function fetchPages() {
-  const data = await ctfFetch(pageQuery())
+  const data = await ctfFetch(pagesQuery)
   return data?.pages?.items?.map(renderBody)
 }
 
-const postQuery = (slug) => `{
-  posts: postCollection(order: date_DESC, ${
-    slug ? `where: {slug: "${slug}"}` : ``
-  }) {
-    items {
-      title
-      slug
-      date
-      body
-      cover {
-        ${coverFragment}
-      }
-      tags
-      author {
-        name
-        email
+const postFragment = `
+  items {
+    title
+    slug
+    date
+    body
+    ${coverFragment}
+    tags
+    author {
+      name
+      email
+      url
+      bio
+      fieldOfStudy
+      photo {
+        title
+        description
         url
-        bio
-        fieldOfStudy
-        photo {
-          title
-          description
-          url
-        }
       }
     }
+  }
+`
+
+const postQuery = (slug) => `{
+  posts: postCollection(order: date_DESC, where: {slug_in: ["${slug}", "/${slug}"]}) {
+    ${postFragment}
+  }
+}`
+
+const postsQuery = `{
+  posts: postCollection(order: date_DESC) {
+    ${postFragment}
   }
 }`
 
@@ -210,7 +255,7 @@ export async function fetchPost(slug) {
 }
 
 export async function fetchPosts() {
-  const data = await ctfFetch(postQuery())
+  const data = await ctfFetch(postsQuery)
   const posts = data?.posts?.items
   return posts.map(processPost)
 }

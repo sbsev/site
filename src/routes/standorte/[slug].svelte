@@ -24,17 +24,22 @@
   <section>
     <span>
       Willst du bei uns mitmachen?
-      <a href="/anmeldung?type=Student&chapter={page.title}" class="btn blue"
-        ><GraduationCap {style} />Als Student anmelden</a>
-      <a href="mitmachen/nachhilfelehrer" class="btn blue stroke"
+      <a
+        sapper:prefetch
+        href="/anmeldung?type=Student&chapter={page.title}"
+        class="btn blue"><GraduationCap {style} />Als Student anmelden</a>
+      <a sapper:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
         ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
     </span>
     <span>
       Suchst du Nachhilfe?
-      <a href="/anmeldung?type=Schüler&chapter={page.title}" class="btn green"
+      <a
+        sapper:prefetch
+        href="/anmeldung?type=Schüler&chapter={page.title}"
+        class="btn green"
         ><Child {style} />
         Als Schüler anmelden</a>
-      <a href="mitmachen/schueler" class="btn green stroke">
+      <a sapper:prefetch href="mitmachen/schueler" class="btn green stroke">
         <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler</a>
     </span>
     <span>
@@ -44,7 +49,7 @@
         class="btn orange"
         ><Email {style} />
         Schreib uns</a>
-      <a href="mitmachen/standortleiter" class="btn orange stroke">
+      <a sapper:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
         <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleiter</a>
     </span>
   </section>

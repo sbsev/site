@@ -9,11 +9,14 @@
 </h1>
 <ol>
   {#each chapters as { title, slug }}
-    <li><a href={slug}>{title}</a></li>
+    <li><a sapper:prefetch href={slug}>{title}</a></li>
   {/each}
 </ol>
 
 <style>
+  h1 {
+    margin-top: 2em;
+  }
   ol {
     max-width: 45em;
     margin: 2em auto 4em;

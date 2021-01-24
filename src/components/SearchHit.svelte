@@ -9,12 +9,12 @@
 
 <div>
   {#if cover.src}
-    <a href={slug}>
+    <a sapper:prefetch href={slug}>
       <Img {...cover} sizes={[{ width: 150 }]} />
     </a>
   {/if}
   <h3>
-    <a href={slug} on:click={clickHandler}>{@html title}</a>
+    <a sapper:prefetch href={slug} on:click={clickHandler}>{@html title}</a>
   </h3>
   {#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
   {#if author}<span>{author.name}</span>{/if}

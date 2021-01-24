@@ -18,9 +18,9 @@
 </script>
 
 <section>
-  <a href={slug}
+  <a sapper:prefetch href={slug}
     ><Img sizes={[{ width: 400, height: 300 }]} {...cover} imgStyle={coverStyle} /></a>
-  <h3><a href={slug}>{title}</a></h3>
+  <h3><a sapper:prefetch href={slug}>{title}</a></h3>
   <div class="metadata">
     <ToolTip>
       <Img

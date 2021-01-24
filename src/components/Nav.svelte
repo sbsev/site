@@ -55,7 +55,7 @@
   <Menu height="2.9ex" style="vertical-align: middle;" />
 </button>
 
-<a on:click={close} class="logo" href="/" rel="prefetch" aria-current={isCurrent(`/`)}
+<a on:click={close} class="logo" href="/" sapper:prefetch aria-current={isCurrent(`/`)}
   ><img src="favicon.svg" alt="SbS Logo" style="height: 2em;" /></a>
 
 <nav class:isOpen use:onClickOutside={close} bind:this={resultsDiv}>
@@ -65,17 +65,17 @@
         on:mouseenter={() => (hovered = idx)}
         on:mouseleave={() => (hovered = null)}
         class:hover={hovered === idx}>
-        <a on:click={close} rel="prefetch" aria-current={isCurrent(url)} href={url}>
+        <a on:click={close} sapper:prefetch aria-current={isCurrent(url)} href={url}>
           <svelte:component
             this={icons[title]}
             height="1em"
-            style="vertical-align: -2pt; padding-right: 2pt;" />
+            style="vertical-align: middle; padding-right: 2pt;" />
           {title}</a>
         {#if subNav}
           <button on:click={setActiveSubNav(idx)} aria-label="Untermenü {title} öffnen">
             <ChevronExpand
               height="1em"
-              style="vertical-align: text-bottom; color: var(--green);" />
+              style="vertical-align: middle; color: var(--green);" />
           </button>
         {/if}
         {#if subNav && (activeSubNav === idx || viewWidth > 1000)}
@@ -86,7 +86,7 @@
               <li class:span>
                 <a
                   on:click={close}
-                  rel="prefetch"
+                  sapper:prefetch
                   aria-current={isCurrent(url)}
                   href={url}>{title}</a>
               </li>

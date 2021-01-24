@@ -15,8 +15,7 @@
     Satzung: DocumentText,
   }
 
-  export let social
-  export let links
+  export let social, links
   const style = `height: 1em; vertical-align: -3pt; padding-right: 2pt;`
 </script>
 
@@ -25,7 +24,7 @@
   <span>© 2020 Studenten bilden Schüler e.V.</span>
   <div>
     {#each links as { title, url }}
-      <a href={url}>
+      <a sapper:prefetch href={url}>
         <svelte:component this={icons[title]} {style} />
         {title}</a>
     {/each}
@@ -40,7 +39,8 @@
     <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
       keine
       <Cookie height="2.2ex" style="vertical-align: middle;" />
-      Cookies.</a></span>
+      Cookies.</a
+    ></span>
   <Social {social} style="margin-top: 1ex;" />
 </footer>
 

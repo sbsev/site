@@ -38,8 +38,8 @@
 
 <h1>Studenten bilden Schüler e.V.</h1>
 <div class="grid">
-  {#each yaml.images.slice(0, windowWidth > 800 ? 9 : windowWidth < 500 ? 3 : 6) as { src, alt }, idx}
-    <Img {src} {alt} {sizes} pictureStyle="grid-area: img{idx + 1};" />
+  {#each yaml.images.slice(0, windowWidth > 800 ? 9 : windowWidth < 500 ? 3 : 6) as img, idx}
+    <Img {...img} {sizes} pictureStyle="grid-area: img{idx + 1};" />
   {/each}
   {#each Object.values(yaml.text) as text, idx}
     <div style="grid-area: txt{idx + 1}; background: var(--{textBgColors[idx]})">
@@ -67,7 +67,9 @@
   </div>
 </section>
 
-<h2>Wähle deinen <a href="/standorte"><strong>Standort</strong></a> auf der Karte!</h2>
+<h2>
+  Wähle deinen <a sapper:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!
+</h2>
 
 <ChapterMap {chapters} />
 

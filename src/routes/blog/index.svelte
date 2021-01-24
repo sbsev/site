@@ -29,8 +29,8 @@
 
   // count tag occurences
   const tags = posts.reduce(
-    (obj, faq) => {
-      faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
+    (obj, post) => {
+      post.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
       return obj
     },
     { Alle: posts.length }
