@@ -63,6 +63,7 @@
   }
   picture {
     position: relative;
+    height: 100%;
   }
   picture:not(.inline) {
     display: flex;

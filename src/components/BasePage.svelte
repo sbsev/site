@@ -4,8 +4,7 @@
 
   export let page
 
-  $: ({ title, cover = {}, body = ``, toc, yaml } = page)
-  $: ({ src, alt, base64 } = cover)
+  $: ({ title, cover, body, toc, yaml } = page)
 </script>
 
 <figure>
@@ -36,7 +35,7 @@
   figure {
     position: relative;
     overflow: hidden;
-    height: 25em;
+    height: calc(25em + 3vw);
     max-height: 50vh;
     margin: 0;
   }

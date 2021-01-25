@@ -6,12 +6,7 @@
   NODE_VERSION = "15.5.0"
   YARN_VERSION = "1.22.10"
 
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  # optional, fails build when a category is below a threshold
-  [plugins.inputs.thresholds]
-    performance = 0.3
-    accessibility = 0.9
-    best-practices = 0.8
-    seo = 0.9
+[[redirects]]
+  from = "https://sbsev.netlify.com/*"
+  to = "https://studenten-bilden-schueler.de/:splat"
+  force = true

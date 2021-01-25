@@ -106,7 +106,6 @@
     font-size: 1em;
     background: var(--accentBg);
     border-radius: 5pt;
-    color: var(--linkColor);
     border: 0;
     outline: none;
     width: 0;
@@ -115,9 +114,8 @@
     opacity: 0;
     padding: 0;
     height: 2.5ex;
-  }
-  input::placeholder {
-    color: var(--linkColor);
+    line-height: inherit;
+    color: var(--gray);
   }
   input.hasFocus {
     opacity: 1;
@@ -125,8 +123,11 @@
     margin-left: -2.5ex;
     padding-left: 3ex;
   }
+  input::placeholder {
+    color: var(--gray);
+  }
   input.hasFocus + button {
-    color: var(--linkColor);
+    color: var(--gray);
   }
   div.results {
     z-index: 1;

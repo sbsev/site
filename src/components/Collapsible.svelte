@@ -23,7 +23,7 @@
 <h3 on:click={toggle} style="--angle: {$angle}" class:active>
   <span class="anchor" {id} />
   {title}
-  <span style="display:inline-block; transform: rotate({$angle}deg);">👆</span>
+  <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
 </h3>
 {#if isOpen}
   <div transition:slide={{ duration }}>

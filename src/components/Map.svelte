@@ -32,6 +32,7 @@
 <style>
   div {
     height: 700px;
-    max-height: 95vh;
+    max-height: 75vh;
+    min-height: 530px;
   }
 </style>

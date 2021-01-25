@@ -33,11 +33,12 @@
 
   const style = `vertical-align: middle; margin-right: 6pt;`
   const textBgColors = [`green`, `orange`, `lightBlue`, `darkGreen`, `blue`]
+  $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
 
 <h1>Studenten bilden Schüler e.V.</h1>
 <div class="grid">
-  {#each yaml.images.slice(0, windowWidth > 800 ? 9 : windowWidth < 500 ? 3 : 6) as img, idx}
+  {#each yaml.images.slice(0, nImages) as img, idx}
     <Img
       {...img}
       sizes={[{ w: 400 }, { w: 800 }]}
@@ -60,11 +61,11 @@
     <Place height="2.5ex" {style} />Standorte
   </div>
   <div style="background: var(--green);">
-    <span>996</span>
+    <span>1172</span>
     <UserGraduate height="2.5ex" {style} />Studierende
   </div>
   <div style="background: var(--orange);">
-    <span>761</span>
+    <span>1286</span>
     <Child height="2.5ex" {style} />Schüler
   </div>
 </section>
@@ -89,12 +90,13 @@
     grid-gap: 1ex;
     font-weight: bolder;
     grid-template-columns: repeat(11, 1fr);
+    grid-auto-rows: 15em;
     grid-template-areas:
-      'img8 img8 img8 img3 img3 img3 txt2 txt2 img2 img2 img2'
-      'img4 img4 img4 txt1 txt1 txt1 img9 img9 img6 img6 img6'
-      'img5 img5 img5 img7 img7 img7 txt3 img1 img1 img1 img1';
+      '. img1 img1 img1 img1 txt2 txt2 img3 img3 img3 .'
+      'img6 img6 img6 txt1 txt1 txt1 img2 img2 img2 img4 img4'
+      '. . img7 img7 img7 txt3 txt3 img5 img5 img5 .';
   }
-  @media (max-width: 800px) {
+  @media (max-width: 1100px) {
     .grid {
       grid-template-columns: repeat(3, 1fr);
       grid-auto-rows: calc(10em + 6vw);
@@ -104,7 +106,7 @@
         'img5 img6 txt3';
     }
   }
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     .grid {
       grid-template-columns: 1fr 1fr;
       grid-template-areas:
