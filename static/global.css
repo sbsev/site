@@ -1,3 +1,26 @@
+html {
+  /* when scrolling elements into view, don't scroll them to the very top edge where they're hidden by the nav bar (https://stackoverflow.com/a/61913557) */
+  scroll-padding-top: 15em;
+  overflow-x: hidden;
+}
+body {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, 'Helvetica Neue',
+    sans-serif;
+  line-height: 1.5;
+  font-size: calc(0.8em + 0.5vw);
+  transition: 0.3s;
+  background: var(--bodyBg);
+  color: var(--textColor);
+}
+@media (min-width: 1600px) {
+  body {
+    font-size: 1.4em;
+  }
+}
 main {
   hyphens: auto;
   width: 100vw;
@@ -7,24 +30,8 @@ main h1 {
   color: var(--headingColor);
   font-size: 3ex;
 }
-body {
-  display: grid;
-  min-height: 100vh;
-  grid-template-rows: auto 1fr auto;
-  margin: 0;
-  background: var(--body-bg);
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, 'Helvetica Neue',
-    sans-serif;
-  line-height: 1.5;
-  font-size: calc(0.8em + 0.5vw);
-  transition: 0.3s;
-  background: var(--bodyBg);
-  color: var(--textColor);
-}
-html {
-  /* when scrolling elements into view, don't scroll them to the very top edge where they're hidden by the nav bar (https://stackoverflow.com/a/61913557) */
-  scroll-padding-top: 15em;
-  overflow-x: hidden;
+main img {
+  width: 100%;
 }
 a {
   color: var(--linkColor);
@@ -32,11 +39,6 @@ a {
 }
 a:hover {
   color: var(--hoverColor);
-}
-@media (min-width: 1600px) {
-  body {
-    font-size: 1.4em;
-  }
 }
 button {
   color: var(--textColor);
@@ -46,6 +48,16 @@ button {
   border-radius: 5px;
   cursor: pointer;
   outline: none;
+}
+input,
+select {
+  font-size: 1em;
+  border-radius: 5pt;
+  border: 1px solid var(--lightBg);
+  color: var(--textColor);
+  padding: 3pt 1ex;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 blockquote {
   border-left: 3pt solid var(--linkColor);
@@ -64,9 +76,6 @@ table th {
 }
 tbody tr:nth-child(odd) {
   background: var(--accentBg);
-}
-main img {
-  width: 100%;
 }
 .grid {
   display: grid;
@@ -93,16 +102,6 @@ main img {
 .grid.disk-img img {
   grid-gap: 2em;
   border-radius: 50%;
-}
-input,
-select {
-  font-size: 1em;
-  border-radius: 5pt;
-  border: 1px solid var(--lightBg);
-  color: var(--textColor);
-  padding: 3pt 1ex;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 /* anchor tags styled as buttons */
