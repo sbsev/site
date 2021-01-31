@@ -44,7 +44,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     Klassenstufen: toStr(data.levels), // for students
     Klassenstufe: toStr(data.level), // for pupils
     Fächer: data.subjects,
-    Schulform: data.schoolTypes, // for pupils
+    Schulform: data.schoolType || data.schoolTypes, // for pupils or students
     Werbemaßnahme: data.discovery,
     Geschlecht: data.gender,
     'Semester Anmeldung': Number(data.semester) || undefined, // for students
@@ -62,6 +62,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     'E-Mail Kontaktperson': toStr(data.emailContact), // for pupils
     'Telefon Kontaktperson': toStr(data.phoneContact), // for pupils
     'Organisation Kontaktperson': toStr(data.orgContact), // for pupils
+    Online : data.online, // for pupils
     Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
   }
 

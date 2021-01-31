@@ -6,7 +6,6 @@ import * as sapper from '@sapper/server'
 
 const keys = [
   `NODE_ENV`,
-  `GOOGLE_ANALYTICS_ID`,
   `ALGOLIA_APP_ID`,
   `ALGOLIA_SEARCH_KEY`,
   `GOOGLE_MAPS_API_KEY`,

@@ -194,6 +194,8 @@
 
       <FormInput {...text.age} bind:node={inputs.age} type="number" />
 
+      <FormInput {...text.online} bind:node={inputs.online} type="toggle" required />
+
       <FormInput {...text.remarks} bind:node={inputs.remarks} />
 
       <FormInput {...text.nameContact} bind:node={inputs.nameContact} required />

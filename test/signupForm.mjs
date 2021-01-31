@@ -88,6 +88,8 @@ test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
 
   await fillInput(page, `#place`, `Stadtbücherei`)
 
+  await page.$eval(`#online`, (el) => el.click())
+
   await fillInput(page, `#nameContact`, `Baz Bar`)
 
   await fillInput(page, `#phoneContact`, `012 345 678`)
