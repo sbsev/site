@@ -1,11 +1,20 @@
 <script>
+  import Update from '@svg-icons/material-sharp/update.svg'
+
   import Img from '../components/Img.svelte'
   import Toc from '../components/Toc.svelte'
 
   export let page
 
-  $: ({ title, cover, body, toc, yaml } = page)
+  $: ({ title, slug, cover, body, toc, yaml, sys } = page)
+  $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
+  const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
+
+<svelte:head>
+  <title>{title ? `${title} - SbS` : `SbS`}</title>
+  <meta name="date" content={date} />
+</svelte:head>
 
 <figure>
   <Img {...cover} />
@@ -24,6 +33,15 @@
     <Toc />
   {/if}
   {@html body}
+  {#if sys?.publishedAt && !slug.includes(`blog`)}
+    <time>
+      <Update {style} />Zuletzt bearbeitet:
+      {date}</time>
+    <address>
+      <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
+        >War diese Seite hilfreich?</a>
+    </address>
+  {/if}
 </article>
 
 <style>
@@ -65,5 +83,17 @@
   }
   figcaption :global(a) {
     color: var(--lightBlue);
+  }
+  time {
+    display: block;
+    font-size: 1ex;
+    margin: 2em;
+    text-align: center;
+  }
+  address {
+    text-align: center;
+    font-size: 1.3ex;
+    font-style: normal;
+    margin: 2em;
   }
 </style>
