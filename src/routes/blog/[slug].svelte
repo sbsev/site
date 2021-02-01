@@ -30,7 +30,7 @@
     pictureStyle="margin: -2em -2em 3em -2em" />
   <h1>{title}</h1>
   <section>
-    <Img sizes={[{ w: 150 }]} src={photo.url} alt={name} />
+    <Img sizes={[{ w: 150 }]} {...photo} alt={name} />
     <span>
       von
       {#if bio || fieldOfStudy}

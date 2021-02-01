@@ -1,10 +1,14 @@
 <script context="module">
-  import { fetchChapters, fetchPage, fetchYaml } from '../utils/queries'
+  import { fetchChapters, fetchPage, fetchYaml, base64Thumbnail } from '../utils/queries'
 
   export async function preload() {
     const page = await fetchPage(`/`)
     const chapters = await fetchChapters()
     const yaml = await fetchYaml(`Landing Page`)
+    for (const img of yaml?.images) {
+      img.base64 = await base64Thumbnail(img.src)
+    }
+
     // const { students, pupils } = await airtableFetch(
     //   `{
     //     students: studentenStatistiken {

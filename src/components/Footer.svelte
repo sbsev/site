@@ -3,7 +3,7 @@
   import Cookie from '@svg-icons/boxicons-solid/cookie.svg'
   import Law from '@svg-icons/octicons/law.svg'
   import PrivacyTip from '@svg-icons/material-sharp/privacy-tip.svg'
-  import AlternateEmail from '@svg-icons/material-sharp/alternate-email.svg'
+  import Euro from '@svg-icons/material-sharp/euro.svg'
   import DocumentText from '@svg-icons/ionicons-solid/document-text.svg'
 
   import Social from './Social.svelte'
@@ -11,7 +11,7 @@
   const icons = {
     Impressum: Law,
     Datenschutz: PrivacyTip,
-    Kontakt: AlternateEmail,
+    Spenden: Euro,
     Satzung: DocumentText,
   }
 

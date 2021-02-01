@@ -121,8 +121,11 @@ export async function fetchChapters() {
   return chapters?.items?.map(prefixSlug(`/standorte/`))
 }
 
-export async function base64Thumbnail(url, type = `jpg`) {
-  const response = await fetch(`${url}?w=15&h=5&q=80`)
+export async function base64Thumbnail(url, options = {}) {
+  const { type = `jpg`, w = 10, h = 10 } = options
+
+  const response = await fetch(`${url}?w=${w}&h=${h}&q=80`)
+
   try {
     // server side (node) https://stackoverflow.com/a/52467372
     const buffer = await response.buffer()
@@ -188,14 +191,14 @@ export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
   const data = await ctfFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
+  if (!page) return null
   if (page?.yaml) {
     page.yaml = yaml.load(page.yaml)
     Object.entries(page.yaml).forEach(
       ([key, val]) => (page.yaml[key] = marked.parseInline(val))
     )
   }
-  if (page?.cover?.src)
-    page.cover.base64 = await base64Thumbnail(page?.cover?.src)
+  page.cover.base64 = await base64Thumbnail(page.cover.src)
   return renderBody(page)
 }
 
@@ -219,9 +222,9 @@ const postFragment = `
       bio
       fieldOfStudy
       photo {
-        title
-        description
-        url
+        src: url
+        width
+        height
       }
     }
   }
@@ -239,9 +242,14 @@ const postsQuery = `{
   }
 }`
 
-function processPost(post) {
+async function processPost(post) {
   renderBody(post)
   prefixSlug(`blog/`)(post)
+  post.author.photo.base64 = await base64Thumbnail(post.author.photo.src, {
+    w: 3,
+    h: 3,
+  })
+  post.cover.base64 = await base64Thumbnail(post.cover.src)
   return post
 }
 
@@ -249,15 +257,14 @@ export async function fetchPost(slug) {
   if (!slug) throw `fetchPost requires a slug, got '${slug}'`
   const data = await ctfFetch(postQuery(slug))
   const post = data?.posts?.items[0]
-  if (post?.cover?.src)
-    post.cover.base64 = await base64Thumbnail(post?.cover?.src)
-  return processPost(post)
+  await processPost(post)
+  return post
 }
 
 export async function fetchPosts() {
   const data = await ctfFetch(postsQuery)
   const posts = data?.posts?.items
-  return posts.map(processPost)
+  return await Promise.all(posts.map(processPost))
 }
 
 const yamlQuery = (title) => `{

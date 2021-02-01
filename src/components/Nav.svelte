@@ -1,15 +1,14 @@
 <script>
   import { stores } from '@sapper/app'
   import { slide } from 'svelte/transition'
-  import Euro from '@svg-icons/material-sharp/euro.svg'
   import QuestionAnswer from '@svg-icons/material-sharp/question-answer.svg'
   import PeopleCircle from '@svg-icons/ionicons-solid/people-circle.svg'
   import Rss from '@svg-icons/fa-solid/rss-square.svg'
-  import Contact from '@svg-icons/boxicons-solid/contact.svg'
   import Place from '@svg-icons/material-sharp/place.svg'
   import Plant from '@svg-icons/remix-fill/plant.svg'
   import Menu from '@svg-icons/heroicons-solid/menu.svg'
   import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
+  import AlternateEmail from '@svg-icons/material-sharp/alternate-email.svg'
 
   import { onClickOutside } from '../utils/actions'
 
@@ -18,11 +17,10 @@
   const icons = {
     'Über Uns': Plant,
     Standorte: Place,
-    Spenden: Euro,
     FAQ: QuestionAnswer,
     Mitmachen: PeopleCircle,
     Blog: Rss,
-    Kontakt: Contact,
+    Kontakt: AlternateEmail,
   }
 
   let isOpen = false
