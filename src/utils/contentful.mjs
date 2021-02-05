@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 import 'dotenv/config.js'
-import fs from 'fs'
-import yaml from 'js-yaml'
 import contentful from 'contentful-management'
+// import { Translate } from '@google-cloud/translate/v2'
 
 // to use any of the functions in this file, generate a Content Management Token (CMT) at
 // https://app.contentful.com/spaces/gi9muc70s4ub/api/cma_tokens and add it to your .env
@@ -12,71 +12,53 @@ import contentful from 'contentful-management'
 // published(). The data in entry.sys can be consumed but is non-user editable. The API will throw
 // if you modify sys and then try to publish()/update() an entry.
 
-const getSpace = async () =>
-  await contentful
-    .createClient({
-      accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
-    })
-    .getSpace(process.env.CONTENTFUL_SPACE_ID)
+// See https://github.com/contentful/contentful-management.js/issues/57 for how to link entries/assets.
 
-export async function searchStringInContentType(
-  searchTerm = process.argv[2],
-  contentType = process.argv[3] || `page`
-) {
+async function getSpace() {
+  const client = contentful.createClient({
+    accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
+  })
+  return await client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+}
+
+export async function searchStringInContentType() {
+  const cli_args = process.argv.slice(2)
+  if (cli_args.length < 1 || cli_args.length > 3)
+    throw `wrong number of CLI args, expected between 1 and 3, got ${cli_args.length}`
+
+  const [searchTerm, contentType = `page`, field = `body`] = cli_args
+
   const space = await getSpace()
 
   const env = await space.getEnvironment(`master`)
   let { items } = await env.getEntries({ content_type: contentType })
-  items = items.filter((item) => item?.fields?.body?.de?.includes(searchTerm))
-  items = items.map((item) => item.fields.title.de)
-  // eslint-disable-next-line no-console
-  console.log(`items of type ${contentType} containing ${searchTerm}:`, items)
+  items = items.filter((item) => item?.fields[field]?.en?.includes(searchTerm))
+  items = items.map((item) => item.fields.slug.en)
+  console.log(
+    `'${contentType}' items containing '${searchTerm}' in field '${field}': ${items}`
+  )
 }
 
-export async function convertCaptionToYaml() {
+export async function replaceStringInContentType() {
+  const cli_args = process.argv.slice(2)
+  if (cli_args.length !== 4)
+    throw `wrong number of CLI args, expected 4, got ${cli_args.length}`
+
+  const [searchTerm, replaceTerm, contentType, field] = cli_args
   const space = await getSpace()
 
   const env = await space.getEnvironment(`master`)
-  let { items } = await env.getEntries({ content_type: `page` })
-  items.forEach((page) => {
-    if (page.fields.caption) {
-      page.fields.yaml = {}
-      page.fields.yaml.de = `caption: ${page.fields.caption.de}`
-      page.update()
-      page.publish()
-    }
+  let { items } = await env.getEntries({ content_type: contentType })
+  items = items.filter((itm) => itm?.fields[field]?.en?.includes(searchTerm))
+  items.forEach((itm) => {
+    itm.fields[field].en = itm?.fields[field]?.en?.replaceAll(
+      searchTerm,
+      replaceTerm
+    )
+    itm.update()
+    // itm.publish()
   })
 }
 
-export async function copyEntries() {
-  // Microcopy to Yaml
-  const space = await getSpace()
-
-  const env = await space.getEnvironment(`master`)
-  let { items } = await env.getEntries({ content_type: `microcopy` })
-  items.forEach(async (itm) => {
-    const entry = await env.createEntry(`yaml`, itm)
-    await entry.publish()
-  })
-}
-
-export async function createFAQEntries() {
-  const faqs = yaml.load(fs.readFileSync(`./faq.yml`))
-
-  const space = await getSpace()
-
-  const env = await space.getEnvironment(`master`)
-
-  faqs.forEach(async ({ title, body, tags }) => {
-    await env.createEntry(`faq`, {
-      fields: {
-        title: { de: title },
-        tags: { de: tags },
-        body: { de: body },
-      },
-    })
-  })
-}
-
-// run with: node src/utils/contentful.js
-convertCaptionToYaml()
+// run with: node src/utils/contentful.mjs
+searchStringInContentType()

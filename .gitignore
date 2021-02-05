@@ -10,3 +10,4 @@ __sapper__
 
 # secrets
 .env
+googleTranslateApiKey.json
