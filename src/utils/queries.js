@@ -10,11 +10,10 @@ const renderer = {
       title = title ? `title="${title}"` : ``
       return `
       <picture>
-        <source media="(min-width: 1000px)" type="image/webp" srcset="${href}?w=1000&q=80&fm=webp" />
         <source media="(min-width: 800px)" type="image/webp" srcset="${href}?w=800&q=80&fm=webp" />
         <source media="(min-width: 600px)" type="image/webp" srcset="${href}?w=600&q=80&fm=webp" />
         <source media="(min-width: 400px)" type="image/webp" srcset="${href}?w=400&q=80&fm=webp" />
-        <img src="${href}?w=1000&q=80" alt="${text}" ${title} loading="lazy" />
+        <img src="${href}?w=800&q=80" alt="${text}" ${title} loading="lazy" />
       </picture>`
     }
 
@@ -36,16 +35,17 @@ const renderer = {
         youtube: (id) => `https://youtube.com/embed/${id}`,
         vimeo: (id) => `https://player.vimeo.com/video/${id}`,
       }
-
+      // padding-top: 56.25%; corresponds to 16/9 = most common video aspect ratio
       return `
         <div style="padding-top: 56.25%; position: relative;">
-        <iframe
-          title="Video"
-          src="${embed[platform](id)}"
-          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
-          allow="autoplay; fullscreen"
-          allowfullscreen></iframe>
-      </div>`
+          <iframe
+            title="${platform} video"
+            loading="lazy"
+            src="${embed[platform](id)}"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;"
+            allowfullscreen></iframe>
+        </div>`
     }
     return false // delegate to default marked codespan renderer
   },
