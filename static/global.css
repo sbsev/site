@@ -197,6 +197,13 @@ div.box-list ul li {
   flex: 1;
   text-align: center;
   box-shadow: 0 0 2em -1em var(--shadow);
+  display: flex;
+  place-content: center;
+  place-items: center;
+  gap: 3pt;
+}
+div.box-list ul li em {
+  font-style: normal;
 }
 div.box-list ul li a {
   color: var(--green);

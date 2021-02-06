@@ -1,8 +1,8 @@
-// https://github.com/avajs/ava/blob/master/docs/recipes/puppeteer.md
-
 import test from 'ava'
 import puppeteer from 'puppeteer'
 
+// taken from https://github.com/avajs/ava/blob/master/docs/recipes/puppeteer.md
+// makes Puppeteer page available inside test functions
 async function withPage(t, run) {
   const browser = await puppeteer.launch({
     headless: true, // set to false to see the test in action

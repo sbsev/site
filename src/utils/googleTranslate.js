@@ -1,21 +1,13 @@
-// call with `node src/utils/translate.js`
+// call with `node src/utils/googleTranslate.js`
 // requires the credentials for a Google Cloud Translate service account
 // to be in a file named googleTranslateApiKey.json at the project root
 
 require(`dotenv`).config()
 
+// not ESM compatible (hence this is not a .mjs file)
 const { Translate } = require(`@google-cloud/translate`).v2
 const contentful = require(`contentful-management`)
-const marked = require(`marked`)
-const Turndown = require(`turndown`)
 const prettier = require(`prettier`)
-
-const turndown = new Turndown({
-  headingStyle: `atx`,
-  hr: `---`,
-  bulletListMarker: `-`,
-  codeBlockStyle: `fenced`,
-})
 
 async function getSpace() {
   const client = contentful.createClient({
@@ -32,7 +24,7 @@ async function translateContentfulEntries() {
       throw `wrong number of CLI args, expected between 0 and 4, got ${cli_args.length}`
 
     const [
-      targetLocale = `en`,
+      targetLocale = `ar`, // arabic
       sourceLocale = `de`,
       contentType = `page`,
       field = `body`,
@@ -48,16 +40,22 @@ async function translateContentfulEntries() {
 
     for (const itm of items) {
       const text = itm.fields[field][sourceLocale]
-      // google translate supports HTML markup so we parse markdown and revert after translation
-      const html = marked(text)
 
-      let [translation] = await translate.translate(html, targetLocale)
+      // google translate supports HTML markup so we could parse markdown and revert after translation
+      // this leaves links/slugs untranslated but drops HTML tags like <span class="foo">
+      // that were in the MD before parsing
+      let [translation] = await translate.translate(text, targetLocale)
 
-      const md = turndown.turndown(translation)
-      const formatted = prettier.format(md, { parser: `markdown` })
+      const formatted = prettier.format(translation, { parser: `markdown` })
 
       itm.fields[field][targetLocale] = formatted
       await itm.update()
+      await itm.publish()
+      const title = itm.fields.title[sourceLocale]
+      // eslint-disable-next-line no-console
+      console.log(
+        `successfully translated ${contentType} '${title}' to ${targetLocale}`
+      )
     }
   } catch (error) {
     console.error(error)
