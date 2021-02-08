@@ -45,6 +45,8 @@
   {#each yaml.images.slice(0, nImages) as img, idx}
     <Img
       {...img}
+      width="400"
+      height="300"
       sizes={[{ w: 400 }, { w: 800 }]}
       pictureStyle="grid-area: img{idx + 1};" />
   {/each}

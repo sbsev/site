@@ -6,7 +6,7 @@
   export let title = ``
   export let pictureStyle = ``
   export let imgStyle = ``
-  export let sizes = [{ w: 1500 }, { w: 1200 }, { w: 900 }, { w: 500 }, { w: 400 }]
+  export let sizes = [{ w: 1500 }, { w: 1200 }, { w: 900 }, { w: 600 }, { w: 400 }]
 
   // heights are optional but widths are required for media=min-width below
   if (!sizes.every((s) => s.w)) throw `Img with src="${src}" size missing width`
@@ -22,19 +22,19 @@
       .map(([key, val]) => `${key}=${val}`)
       .join(`&`)
 
-  $: style = `background-image: url('${base64}'); ${imgStyle}`
+  // must be reactive to render changes to src and sizes
+  $: srcSet = (params) =>
+    sizes.map((size) => `${src}?${toQueryStr(size)}&${params} ${size.w}w`).join(`, `)
+
+  $: style = `background-image: url('${base64}');${imgStyle}`
 </script>
 
 {#if src.endsWith(`.svg`)}
   <img {src} {alt} {title} {width} {height} style={imgStyle} />
 {:else}
   <picture style={pictureStyle} class>
-    {#each sizes as size, idx}
-      <source
-        media="(min-width: {idx + 1 === sizes.length ? 0 : size.w}px)"
-        type="image/webp"
-        srcset="{src}?{toQueryStr(size)}&q=80&fit=fill&fm=webp" />
-    {/each}
+    <source srcset={srcSet(`q=80&fit=fill&fm=webp`)} type="image/webp" />
+    <source srcset={srcSet(`q=80&fit=fill`)} />
     <img src="{src}?{toQueryStr(sizes[0])}&q=80" {alt} {width} {height} {title} {style} />
   </picture>
 {/if}
@@ -43,7 +43,7 @@
   img {
     object-fit: cover;
     height: 100%;
-    background: no-repeat center center;
+    background: no-repeat center;
     background-size: cover;
   }
 </style>

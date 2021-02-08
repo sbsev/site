@@ -75,11 +75,14 @@
   figcaption {
     position: absolute;
     bottom: 0;
-    right: 1em;
+    right: 0;
+    font-size: 1px;
     background: rgba(0, 0, 0, 0.7);
     padding: 0 8pt;
     border-radius: 4pt 4pt 0 0;
     color: white;
+    margin: 0 10px;
+    text-align: center;
   }
   figcaption :global(a) {
     color: var(--lightBlue);
