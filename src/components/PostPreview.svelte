@@ -14,14 +14,14 @@
 
   const style = `padding-right: 4pt; vertical-align: -1pt; height: 12pt;`
   const authorImgStyle = `width: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
-  const coverStyle = `border-radius: 1ex 1ex 0 0;`
+  const imgStyle = `border-radius: 1ex 1ex 0 0;`
 </script>
 
 <section>
   <a sapper:prefetch href={slug}
-    ><Img sizes={[{ w: 400, h: 300 }]} {...cover} imgStyle={coverStyle} /></a>
+    ><Img sizes={[{ w: 400, h: 300 }]} {...cover} {imgStyle} /></a>
   <h3><a sapper:prefetch href={slug}>{title}</a></h3>
-  <div class="metadata">
+  <div>
     <ToolTip>
       <Img
         {...author.photo}
@@ -44,11 +44,11 @@
     </ToolTip>
     <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
     <span><Tags {style} />{tags.join(`, `)}</span>
-    <p>
-      {plainBody.slice(0, 150) + `...`}
-      [<a href={slug}>weiterlesen</a>]
-    </p>
   </div>
+  <p>
+    {plainBody.slice(0, 150) + `...`}
+    [<a href={slug}>weiterlesen</a>]
+  </p>
 </section>
 
 <style>
@@ -57,17 +57,12 @@
     border-radius: 1ex;
     display: grid;
     font-size: 0.9em;
-    transition: 0.3s;
-  }
-  section:hover {
-    transform: translate(0, -1pt);
-    box-shadow: 0 0 1em -1ex var(--shadow);
   }
   section > *:not(:first-child) {
-    margin: 1ex 1em;
+    margin-left: 2.5ex;
+    margin-right: 2.5ex;
   }
-  div.metadata {
-    padding: 1ex;
+  div {
     display: flex;
     flex-wrap: wrap;
     gap: 2ex;

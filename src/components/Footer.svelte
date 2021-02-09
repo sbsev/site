@@ -21,7 +21,7 @@
 
 <footer>
   <img src="favicon.svg" alt="SbS Logo" height="60" />
-  <span>© 2020 Studenten bilden Schüler e.V.</span>
+  <span>© {new Date().getFullYear()} Studenten bilden Schüler e.V.</span>
   <div>
     {#each links as { title, url }}
       <a sapper:prefetch href={url}>

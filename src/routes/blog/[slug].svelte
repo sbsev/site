@@ -34,7 +34,7 @@
     <span>
       von
       {#if bio || fieldOfStudy}
-        <ToolTip>
+        <ToolTip minWidth="18em">
           <PersonCircle {style} />
           <strong>{name}</strong>
           <span slot="tip">

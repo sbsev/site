@@ -1,11 +1,12 @@
 <script>
-  export let width = `14em`
+  export let maxWidth = `14em`
+  export let minWidth = `8em`
 </script>
 
 {#if $$slots.tip}
   <span>
     <slot />
-    <div style="width: {width};">
+    <div style="min-width: {minWidth}; max-width: {maxWidth};">
       <slot name="tip" />
     </div>
   </span>
@@ -17,7 +18,7 @@
   span {
     position: relative;
   }
-  div {
+  span > div {
     visibility: hidden;
     opacity: 0;
     cursor: default;
@@ -31,8 +32,9 @@
     transform: translate(-50%, 1ex);
     z-index: 1;
     box-shadow: 0 0 1ex -3pt black;
+    width: fit-content;
   }
-  div::before {
+  span > div::before {
     content: '';
     width: 1ex;
     position: absolute;
