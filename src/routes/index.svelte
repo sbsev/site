@@ -96,7 +96,7 @@
     grid-gap: 1ex;
     font-weight: bolder;
     grid-template-columns: repeat(11, 1fr);
-    grid-auto-rows: 15em;
+    grid-auto-rows: 10em;
     grid-template-areas:
       '. img1 img1 img1 img1 txt2 txt2 img3 img3 img3 .'
       'img6 img6 img6 txt1 txt1 txt1 img2 img2 img2 img4 img4'

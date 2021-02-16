@@ -49,8 +49,9 @@
 
 <button
   on:click|preventDefault={() => (isOpen = true)}
-  aria-label="Navigationsmenü öffnen">
-  <Menu height="2.9ex" style="vertical-align: middle;" />
+  aria-label="Navigationsmenü öffnen"
+  style="grid-area: nav;">
+  <Menu height="3ex" />
 </button>
 
 <a on:click={close} class="logo" href="/" sapper:prefetch aria-current={isCurrent(`/`)}
@@ -63,19 +64,18 @@
         on:mouseenter={() => (hovered = idx)}
         on:mouseleave={() => (hovered = null)}
         class:hover={hovered === idx}>
-        <a on:click={close} sapper:prefetch aria-current={isCurrent(url)} href={url}>
-          <svelte:component
-            this={icons[title]}
-            height="1em"
-            style="vertical-align: middle; padding-right: 2pt;" />
-          {title}</a>
-        {#if subNav}
-          <button on:click={setActiveSubNav(idx)} aria-label="Untermenü {title} öffnen">
-            <ChevronExpand
-              height="1em"
-              style="vertical-align: middle; color: var(--green);" />
-          </button>
-        {/if}
+        <span>
+          <a on:click={close} sapper:prefetch aria-current={isCurrent(url)} href={url}>
+            <svelte:component
+              this={icons[title]}
+              style="padding-right: 4pt; height: 1em;" />
+            {title}</a>
+          {#if subNav}
+            <button on:click={setActiveSubNav(idx)} aria-label="Untermenü {title} öffnen">
+              <ChevronExpand height="20" />
+            </button>
+          {/if}
+        </span>
         {#if subNav && (activeSubNav === idx || viewWidth > 1000)}
           <ul
             transition:slide
@@ -98,17 +98,13 @@
 
 <style>
   button {
-    grid-area: nav;
-    padding: 0;
+    display: flex;
   }
   a,
   button {
     transition: 0.4s;
     color: var(--headerColor);
     border-radius: 50%;
-  }
-  button:hover {
-    background: var(--gray);
   }
   a:hover {
     color: var(--hoverColor);
@@ -119,7 +115,7 @@
   a.logo {
     grid-area: logo;
     border-radius: 50%;
-    padding: 2pt;
+    margin: 2pt;
     display: flex;
   }
   ul {
@@ -128,11 +124,23 @@
   li::marker {
     color: var(--headerColor);
   }
-  nav > ul > li > ul {
-    padding-left: 2ex;
-  }
   nav {
     overflow: auto;
+  }
+  nav > ul > li > span {
+    display: flex;
+    place-items: center;
+  }
+  nav > ul > li > span > a {
+    display: contents;
+  }
+  nav > ul > li > span > button {
+    margin-left: 3pt;
+    padding: 1pt;
+    color: var(--green);
+  }
+  nav > ul > li > span > button:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
   @media (max-width: 1000px) {
     /* mobile styles */
@@ -160,6 +168,8 @@
     }
     nav > ul > li > ul {
       margin-top: 1ex;
+      list-style: disc;
+      padding-left: 2ex;
     }
     a.logo {
       /* needed for centering logo since menu button takes less space than colormode + search */

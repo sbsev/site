@@ -93,6 +93,7 @@
   <a href="mailto:{email}">{email}</a> und wir fügen sie gerne hinzu.
 </div>
 
+<!-- used to briefly flash an list item as active when it's hash is found in the URL -->
 <style>
   ul,
   div {
@@ -133,7 +134,7 @@
   ul.items li {
     font-size: 0.85em;
     background: var(--accentBg);
-    padding: 1ex 1em;
+    padding: 1ex 3ex;
     border-radius: 4pt;
   }
   ul.items li :global(ul) {
