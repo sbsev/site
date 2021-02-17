@@ -21,6 +21,7 @@
 
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
+  import GoogleAnalytics from '../components/GoogleAnalytics.svelte'
 
   export let nav, footer, social
 
@@ -35,6 +36,7 @@
     })
 </script>
 
+<GoogleAnalytics />
 <Header {nav} />
 <main>
   <slot />
