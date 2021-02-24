@@ -20,7 +20,7 @@
     gtag('js', new Date())
 
     // generate random, but almost certainly unique ID that carries no
-    // user data but allows us to prevent double-counting visitors
+    // user data but allows us to avoid double-counting visitors
     if (!localStorage.gaID) localStorage.gaID = Math.random().toString(16).slice(2)
 
     gtag('config', 'G-LZW9SF70F3', {

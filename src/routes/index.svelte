@@ -1,8 +1,17 @@
 <script context="module">
-  import { fetchChapters, fetchPage, fetchYaml, base64Thumbnail } from '../utils/queries'
+  import {
+    fetchChapters,
+    fetchPage,
+    fetchPages,
+    fetchPosts,
+    fetchYaml,
+    base64Thumbnail,
+  } from '../utils/queries'
 
   export async function preload() {
     const page = await fetchPage(`/`)
+    const pages = await fetchPages()
+    const posts = await fetchPosts()
     const chapters = await fetchChapters()
     const yaml = await fetchYaml(`Landing Page`)
     for (const img of yaml?.images) {
@@ -20,7 +29,7 @@
     //   }`,
     //   { cache: `force-cache` }
     // )
-    return { page, chapters, yaml }
+    return { page, chapters, yaml, pages, posts }
   }
 </script>
 
@@ -31,7 +40,7 @@
   import Child from '@svg-icons/fa-solid/child.svg'
   import Img from '../components/Img.svelte'
 
-  export let chapters, page, yaml
+  export let chapters, page, yaml, pages, posts
 
   let windowWidth
 
@@ -39,6 +48,17 @@
   const textBgColors = [`green`, `orange`, `lightBlue`, `darkGreen`, `blue`]
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
+
+<!-- placed here so sapper crawls all pages and posts (won't be needed with svelte-kit) -->
+<!-- https://stackoverflow.com/a/63388587 -->
+<ul style="visibility: hidden; position: absolute;">
+  {#each pages as { title, slug }}
+    <a href={slug}>{title}</a>
+  {/each}
+  {#each posts as { title, slug }}
+    <a href={slug}>{title}</a>
+  {/each}
+</ul>
 
 <h1>Studenten bilden Schüler e.V.</h1>
 <div class="grid">
