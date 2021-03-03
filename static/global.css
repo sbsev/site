@@ -59,8 +59,7 @@ select {
 }
 blockquote {
   border-left: 3pt solid var(--linkColor);
-  padding-left: 1em;
-  margin: 1ex;
+  padding: 3pt 8pt;
   background: var(--lightBg);
 }
 table {
