@@ -117,6 +117,7 @@ const chaptersQuery = `{
       }
       baseId
       acceptsSignUps
+      notYetFounded
     }
   }
 }`
@@ -177,6 +178,7 @@ const pageFragment = `
     sys {
       publishedAt
     }
+    noButtons
   }
 `
 
