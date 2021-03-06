@@ -116,7 +116,7 @@ const chaptersQuery = `{
         lng: lon
       }
       baseId
-      acceptsSignUps
+      acceptsSignups
     }
   }
 }`
