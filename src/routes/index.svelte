@@ -44,7 +44,7 @@
 
   let windowWidth
 
-  const style = `vertical-align: middle; margin-right: 6pt;`
+  const style = `vertical-align: middle;`
   const textBgColors = [`green`, `orange`, `lightBlue`, `darkGreen`, `blue`]
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
@@ -83,7 +83,7 @@
 
 <section>
   <div style="background: var(--lightBlue);">
-    <span>{chapters.length}</span>
+    <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <Place height="2.5ex" {style} />Standorte
   </div>
   <div style="background: var(--green);">

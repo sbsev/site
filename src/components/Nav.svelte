@@ -80,8 +80,8 @@
           <ul
             transition:slide
             style="grid-template-columns: repeat({Math.ceil(subNav.length / 13)}, 1fr);">
-            {#each subNav as { title, url, span }}
-              <li class:span>
+            {#each subNav as { title, url, spanCols, lightFont }}
+              <li class:spanCols class:lightFont>
                 <a
                   on:click={close}
                   sapper:prefetch
@@ -141,6 +141,10 @@
   }
   nav > ul > li > span > button:hover {
     background: rgba(255, 255, 255, 0.3);
+  }
+  nav > ul > li > ul > li.lightFont {
+    font-weight: lighter;
+    opacity: 0.6;
   }
   @media (max-width: 1000px) {
     /* mobile styles */
@@ -202,7 +206,7 @@
       overflow-y: auto;
       overscroll-behavior: none;
     }
-    nav > ul > li > ul > li.span {
+    nav > ul > li > ul > li.spanCols {
       grid-column: 1/-1;
       border-top: 1px solid var(--headerColor);
       padding-top: 6pt;

@@ -7,10 +7,16 @@
     const social = await fetchYaml(`Social`)
     const chapters = await fetchChapters()
 
-    nav.find((el) => el.url === `/standorte`).subNav[0].span = true
-    nav
-      .find((el) => el.url === `/standorte`)
-      .subNav.unshift(...chapters.map((el) => ({ ...el, url: el.slug })))
+    // ensure the non-chapter link spans all chapter subnav columns
+    nav.find((el) => el.url === `/standorte`).subNav[0].spanCols = true
+
+    // create { title, url } array containing all chapters
+    const chapterLinks = chapters.map((chapter) => {
+      const { title, slug, acceptsSignups } = chapter
+      return { title, url: slug, lightFont: !acceptsSignups }
+    })
+    // prepend chapter links into chapter subnav
+    nav.find((el) => el.url === `/standorte`).subNav.unshift(...chapterLinks)
 
     return { nav, footer, social }
   }
