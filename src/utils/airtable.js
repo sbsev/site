@@ -62,8 +62,15 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     'E-Mail Kontaktperson': toStr(data.emailContact), // for pupils
     'Telefon Kontaktperson': toStr(data.phoneContact), // for pupils
     'Organisation Kontaktperson': toStr(data.orgContact), // for pupils
-    Online : data.online, // for pupils
+    Online: data.online, // for pupils
     Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
+  }
+
+  // fields not present in local chapter tables
+  const globalFields = {
+    ...fields,
+    Standort: data.chapter,
+    Spur: window.locations.join(`,\n`),
   }
 
   // some chapters organize contact persons little differently than others
@@ -74,12 +81,6 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     fields[`Organisation Kontaktperson`] = undefined
   }
 
-  // fields not present in local chapter tables
-  const globalFields = {
-    ...fields,
-    Standort: data.chapter,
-    Spur: window.locations.join(`,\n`),
-  }
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }
 
   const globalBaseId = `appSswal9DNdJKRB8`

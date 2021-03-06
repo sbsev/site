@@ -3,6 +3,7 @@
 
   export async function preload({ path }) {
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
+
     return { page }
   }
 </script>
@@ -14,45 +15,46 @@
   import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
   import Child from '@svg-icons/fa-solid/child.svg'
   import InfoCircle from '@svg-icons/entypo/info-with-circle.svg'
-
   export let page
   const style = `vertical-align: -3pt; height: 18pt; margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
-  <h2>Anmeldungen</h2>
-  <section>
-    <span>
-      Willst du bei uns mitmachen?
-      <a
-        sapper:prefetch
-        href="/anmeldung?type=Student&chapter={page.title}"
-        class="btn blue"><GraduationCap {style} />Als Student anmelden</a>
-      <a sapper:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
-        ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
-    </span>
-    <span>
-      Suchst du Nachhilfe?
-      <a
-        sapper:prefetch
-        href="/anmeldung?type=Schüler&chapter={page.title}"
-        class="btn green"
-        ><Child {style} />
-        Als Schüler anmelden</a>
-      <a sapper:prefetch href="mitmachen/schueler" class="btn green stroke">
-        <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler</a>
-    </span>
-    <span>
-      Interesse an Standortleitung?
-      <a
-        href="mailto:info.{page.slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
-        class="btn orange"
-        ><Email {style} />
-        Schreib uns</a>
-      <a sapper:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
-        <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleiter</a>
-    </span>
-  </section>
+  {#if !(page?.yaml?.showSignupButtons == false)}
+    <h2>Anmeldungen</h2>
+    <section>
+      <span>
+        Willst du bei uns mitmachen?
+        <a
+          sapper:prefetch
+          href="/anmeldung?type=Student&chapter={page.title}"
+          class="btn blue"><GraduationCap {style} />Als Student anmelden</a>
+        <a sapper:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
+          ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
+      </span>
+      <span>
+        Suchst du Nachhilfe?
+        <a
+          sapper:prefetch
+          href="/anmeldung?type=Schüler&chapter={page.title}"
+          class="btn green"
+          ><Child {style} />
+          Als Schüler anmelden</a>
+        <a sapper:prefetch href="mitmachen/schueler" class="btn green stroke">
+          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler</a>
+      </span>
+      <span>
+        Interesse an Standortleitung?
+        <a
+          href="mailto:info.{page.slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
+          class="btn orange"
+          ><Email {style} />
+          Schreib uns</a>
+        <a sapper:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
+          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleiter</a>
+      </span>
+    </section>
+  {/if}
 </BasePage>
 
 <style>

@@ -9,11 +9,12 @@
   // if chapters might change and we wanted the markers to rerender,
   // it would need to be part of the map's props
   const addMarkers = (map) => {
-    chapters.forEach(({ title, slug, coords }) => {
+    chapters.forEach(({ title, slug, coords, acceptsSignups }) => {
+      const color = acceptsSignups ? 'black' : 'white'
       const marker = new window.google.maps.Marker({
         map,
         position: coords,
-        label: title.slice(0, 2),
+        label: { text: title.slice(0, 2), color },
         title,
       })
       marker.addListener(`mouseover`, () => prefetch(slug))
