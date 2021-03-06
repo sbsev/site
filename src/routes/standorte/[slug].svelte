@@ -3,6 +3,7 @@
 
   export async function preload({ path }) {
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
+
     return { page }
   }
 </script>
@@ -14,13 +15,12 @@
   import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
   import Child from '@svg-icons/fa-solid/child.svg'
   import InfoCircle from '@svg-icons/entypo/info-with-circle.svg'
-
   export let page
   const style = `vertical-align: -3pt; height: 18pt; margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
-  {#if !page.noButtons}
+  {#if !(page?.yaml?.showSignupButtons == false)}
     <h2>Anmeldungen</h2>
     <section>
       <span>

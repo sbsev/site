@@ -1,17 +1,34 @@
 <script>
   export let chapters
+
   import Place from '@svg-icons/material-sharp/place.svg'
+
+  const openChapters = chapters.filter((ch) => ch.acceptsSignups)
+  const startingChapters = chapters.filter((ch) => !ch.acceptsSignups)
+
+  const style = 'vertical-align: -4pt;'
 </script>
 
 <h1>
-  <Place height="1em" style="vertical-align: -5pt;" />
+  <Place height="2.2ex" {style} />
   Unsere Standorte
 </h1>
 <ol>
-  {#each chapters as { title, slug }}
+  {#each openChapters as { title, slug }}
     <li><a sapper:prefetch href={slug}>{title}</a></li>
   {/each}
 </ol>
+<h1>
+  <Place height="2.2ex" {style} />
+  Standorte in Gründung
+</h1>
+{#if startingChapters.length > 2}
+  <ol>
+    {#each startingChapters as { title, slug }}
+      <li><a sapper:prefetch href={slug}>{title}</a></li>
+    {/each}
+  </ol>
+{/if}
 
 <style>
   h1 {

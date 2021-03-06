@@ -116,8 +116,7 @@ const chaptersQuery = `{
         lng: lon
       }
       baseId
-      acceptsSignUps
-      notYetFounded
+      acceptsSignups
     }
   }
 }`
@@ -178,7 +177,6 @@ const pageFragment = `
     sys {
       publishedAt
     }
-    noButtons
   }
 `
 
@@ -201,9 +199,9 @@ export async function fetchPage(slug) {
   if (!page) return null
   if (page?.yaml) {
     page.yaml = yaml.load(page.yaml)
-    Object.entries(page.yaml).forEach(
-      ([key, val]) => (page.yaml[key] = marked.parseInline(val))
-    )
+    Object.entries(page.yaml).forEach(([key, val]) => {
+      if (typeof val === 'string') page.yaml[key] = marked.parseInline(val)
+    })
   }
   page.cover.base64 = await base64Thumbnail(page.cover.src)
   return renderBody(page)

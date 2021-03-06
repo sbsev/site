@@ -61,6 +61,7 @@ blockquote {
   border-left: 3pt solid var(--linkColor);
   padding: 3pt 8pt;
   background: var(--lightBg);
+  margin: 1em 0;
 }
 table {
   border-collapse: collapse;
