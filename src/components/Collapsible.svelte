@@ -2,7 +2,7 @@
   import { slide } from 'svelte/transition'
   import { tweened } from 'svelte/motion'
 
-  export let title, id, active
+  export let id, active
 
   const duration = 200
   const angle = tweened(180, { duration })
@@ -22,8 +22,8 @@
 
 <h3 on:click={toggle} style="--angle: {$angle}" class:active>
   <span class="anchor" {id} />
-  {title}
   <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
+  <slot name="title" />
 </h3>
 {#if isOpen}
   <div transition:slide={{ duration }}>

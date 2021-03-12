@@ -18,6 +18,7 @@
   import FilterFrames from '@svg-icons/material-sharp/filter-frames.svg'
   import ExitToApp from '@svg-icons/material-sharp/exit-to-app.svg'
   import MiscellaneousServices from '@svg-icons/material-sharp/miscellaneous-services.svg'
+  import Tags from '@svg-icons/fa-solid/tags.svg'
 
   import Collapsible from '../components/Collapsible.svelte'
 
@@ -65,9 +66,14 @@
   {/each}
 </ul>
 <ul class="faqs">
-  {#each filteredFaqs as { title, id, body } (title)}
+  {#each filteredFaqs as { title, id, body, tags } (title)}
     <li animate:flip={{ duration: 200 }} transition:scale>
-      <Collapsible {title} {id} active={id === hash}>
+      <Collapsible {id} active={id === hash}>
+        <span slot="title">
+          {title}
+          <Tags width="1.4ex" style="margin: 0 3pt 0 1ex" /><small
+            >{tags.join(`, `)}</small>
+        </span>
         {@html body}
       </Collapsible>
     </li>
@@ -112,7 +118,13 @@
     background: var(--green);
     transform: scale(1.03);
   }
+  button.active {
+    background: var(--blue);
+  }
   ul.faqs :global(p) {
     margin: 0;
+  }
+  small {
+    font-weight: 200;
   }
 </style>
