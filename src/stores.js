@@ -1,25 +1,27 @@
 import { writable } from 'svelte/store'
 
+const hasSessionStore = typeof sessionStorage !== `undefined`
+const hasLocalStore = typeof localStorage !== `undefined`
+
 export const colorModeKey = `colorMode`
 
-export const colorMode = writable(`auto`)
+export const colorMode = writable(
+  (hasLocalStore && localStorage[colorModeKey]) ?? `auto`
+)
 
 colorMode.subscribe(
-  (val) =>
-    typeof localStorage !== `undefined` && (localStorage[colorModeKey] = val)
+  (val) => hasLocalStore && (localStorage[colorModeKey] = val)
 )
 
 function createSessionStore(name, defaultValue) {
   const store = writable(
-    typeof sessionStorage !== `undefined` && sessionStorage[name]
+    hasSessionStore && sessionStorage[name]
       ? JSON.parse(sessionStorage[name])
       : defaultValue
   )
 
   store.subscribe(
-    (val) =>
-      typeof sessionStorage !== `undefined` &&
-      (sessionStorage[name] = JSON.stringify(val))
+    (val) => hasSessionStore && (sessionStorage[name] = JSON.stringify(val))
   )
 
   return store

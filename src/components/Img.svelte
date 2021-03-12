@@ -12,8 +12,8 @@
   if (!sizes.every((s) => s.w)) throw `Img with src="${src}" size missing width`
 
   let [naturalWidth, naturalHeight] = [width, height]
-  $: ({ w: width, h: height } = sizes.slice(-1)[0]) // grab the smallest width and height (if any)
-  // compute natural height if custom height was not specified
+  $: ({ w: width, h: height } = sizes[0]) // grab first smallest width and height (if any)
+  // to compute natural height if custom height was not specified
   // (used to prevent layout shift by passing as <img {width} {height} />)
   $: if (!height) height = (width * naturalHeight) / naturalWidth
 
@@ -42,7 +42,6 @@
 <style>
   img {
     object-fit: cover;
-    height: 100%;
     background: no-repeat center;
     background-size: cover;
   }

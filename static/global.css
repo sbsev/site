@@ -67,8 +67,7 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
-table td,
-table th {
+table :is(td, th) {
   border: 1px solid var(--textColor);
   padding: 0.4em 0.8em;
 }
@@ -88,12 +87,10 @@ tbody tr:nth-child(odd) {
 .grid.fit {
   grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
 }
-.grid h2,
-.grid h3 {
+.grid :is(h2, h3) {
   grid-column: 1 / -1;
 }
-.grid em,
-.grid strong {
+.grid :is(em, strong) {
   font-style: normal;
   display: block;
 }
@@ -156,8 +153,7 @@ tbody tr:nth-child(odd) {
   border: 2pt solid transparent;
 }
 
-section.blue,
-section.green {
+section:is(.blue, .green) {
   position: relative;
   box-sizing: border-box;
   width: 100vw;
@@ -216,8 +212,7 @@ section.blue div.box-list ul li a {
   color: var(--darkBlue);
 }
 /* captions */
-p > picture + em,
-p > a + em {
+p > :is(picture + em, a + em) {
   text-align: center;
   display: block;
 }

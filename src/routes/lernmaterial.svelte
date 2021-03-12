@@ -56,7 +56,7 @@
     },
     { Alle: studyPlatforms.length }
   )
-  const imgStyle = `width: 125px; float: right; height: auto; margin: 1ex 0 1em 1em; border-radius: 2pt;`
+  const imgStyle = `width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: -3pt;`
 </script>
 

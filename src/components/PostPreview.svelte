@@ -13,7 +13,7 @@
   const { title, slug, cover, date, author, tags, plainBody } = post
 
   const style = `padding-right: 4pt; vertical-align: -1pt; height: 12pt;`
-  const authorImgStyle = `width: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
+  const authorImgStyle = `width: 4ex; height: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
   const imgStyle = `border-radius: 1ex 1ex 0 0;`
 </script>
 

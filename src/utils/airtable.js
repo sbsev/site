@@ -1,4 +1,5 @@
 export function tryParse(str) {
+  // try to parse as JSON, just return unchanged if that fails
   try {
     return JSON.parse(str)
   } catch (_) {

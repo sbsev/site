@@ -75,6 +75,7 @@
     margin: 1em auto;
     display: block;
     width: 3em;
+    height: 3em;
     border-radius: 50%;
   }
 </style>

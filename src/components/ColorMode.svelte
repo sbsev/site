@@ -12,6 +12,10 @@
     applyColors()
   }
 
+  const makeLight = setModeFactory(`light`)
+  const makeDark = setModeFactory(`dark`)
+  const makeAuto = setModeFactory(`auto`)
+
   function applyColors() {
     // 🎨
     // If colorMode is `auto` we pick dark or light depending on prefersDark media query.
@@ -48,9 +52,9 @@
 
   const handleKeydown = (event) => {
     if (!event.ctrlKey) return
-    if (event.key === `1`) setModeFactory(`light`)()
-    if (event.key === `2`) setModeFactory(`dark`)()
-    if (event.key === `3`) setModeFactory(`auto`)()
+    if (event.key === `1`) makeLight()
+    if (event.key === `2`) makeDark()
+    if (event.key === `3`) makeAuto()
   }
 </script>
 
@@ -63,10 +67,11 @@
 {#if open}
   <Modal on:close={() => (open = false)} style="width: max-content; max-width: 90vw;">
     <div>
-      <button on:click={setModeFactory(`light`)} class="choice light"><Sun />Hell</button>
-      <button on:click={setModeFactory(`dark`)} class="choice dark">
+      <button on:click={makeLight} class="choice light" title="ctrl+1">
+        <Sun />Hell</button>
+      <button on:click={makeDark} class="choice dark" title="ctrl+2">
         <Moon color="yellow" />Dunkel</button>
-      <button on:click={setModeFactory(`auto`)} class="choice auto">
+      <button on:click={makeAuto} class="choice auto" title="ctrl+3">
         <BrightnessAuto color="var(--bodyBg)" />Auto</button>
     </div>
   </Modal>

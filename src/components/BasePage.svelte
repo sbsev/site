@@ -39,7 +39,7 @@
       {date}</time>
     <address>
       <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
-        >War diese Seite hilfreich?</a>
+        >Feedback zu dieser Seite?</a>
     </address>
   {/if}
 </article>
@@ -57,8 +57,7 @@
     max-height: 50vh;
     margin: 0;
   }
-  figure > h1,
-  figure > :global([slot='title']) {
+  figure > :is(h1, :global([slot='title'])) {
     color: white;
     background: rgba(0, 0, 0, 0.6);
     padding: 5pt 1ex;

@@ -19,7 +19,7 @@
 
   let hash
 
-  const imgStyle = `width: 175px; float: left; height: auto; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
+  const imgStyle = `width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-top; margin: 0 5pt 0 0;`
 </script>
 

@@ -87,11 +87,11 @@
     <Place height="2.5ex" {style} />Standorte
   </div>
   <div style="background: var(--green);">
-    <span>1172</span>
+    <span>1672</span>
     <UserGraduate height="2.5ex" {style} />Studierende
   </div>
   <div style="background: var(--orange);">
-    <span>1286</span>
+    <span>1886</span>
     <Child height="2.5ex" {style} />Schüler
   </div>
 </section>
