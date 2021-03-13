@@ -35,4 +35,8 @@
     max-height: 75vh;
     min-height: 530px;
   }
+  /* hide footer https://stackoverflow.com/a/22581969 */
+  :global(.gm-style-cc) {
+    display: none;
+  }
 </style>

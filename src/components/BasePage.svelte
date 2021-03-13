@@ -17,7 +17,7 @@
 </svelte:head>
 
 <figure>
-  <Img {...cover} />
+  <Img {...cover} imgStyle="height: 100%" />
   {#if $$slots.title}
     <slot name="title" />
   {:else if title}
