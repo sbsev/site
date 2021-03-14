@@ -32,7 +32,11 @@
   {#if toc}
     <Toc />
   {/if}
+
   {@html body}
+
+  <slot name="afterBody" />
+
   {#if sys?.publishedAt && !slug.includes(`blog`)}
     <time>
       <Update {style} />Zuletzt bearbeitet:
@@ -89,7 +93,7 @@
   time {
     display: block;
     font-size: 1ex;
-    margin: 2em;
+    margin: 8em 2em 2em;
     text-align: center;
   }
   address {

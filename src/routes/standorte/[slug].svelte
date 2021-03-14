@@ -1,10 +1,10 @@
 <script context="module">
   import { fetchPage } from '../../utils/queries'
 
-  export async function preload({ path }) {
+  export async function preload({ path, params: { slug } }) {
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
 
-    return { page }
+    return { page, slug }
   }
 </script>
 
@@ -15,13 +15,15 @@
   import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
   import Child from '@svg-icons/fa-solid/child.svg'
   import InfoCircle from '@svg-icons/entypo/info-with-circle.svg'
-  export let page
+
+  export let page, slug
+
   const style = `vertical-align: -3pt; height: 18pt; margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
-  {#if !(page?.yaml?.showSignupButtons == false)}
-    <h2>Anmeldungen</h2>
+  {#if page?.yaml?.showSignupButtons !== false}
+    <h2 style="text-align: center; margin-top: 2em;">Anmeldungen</h2>
     <section>
       <span>
         Willst du bei uns mitmachen?
@@ -46,7 +48,7 @@
       <span>
         Interesse an Standortleitung?
         <a
-          href="mailto:info.{page.slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
+          href="mailto:info.{slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
           class="btn orange"
           ><Email {style} />
           Schreib uns</a>
@@ -55,18 +57,50 @@
       </span>
     </section>
   {/if}
+
+  <svelte:fragment slot="afterBody">
+    {#if page?.yaml?.showSignupButtons !== false}
+      <h2 id="kontakt">Kontakt</h2>
+      <p>Noch Fragen? Schreib uns eine Mail!</p>
+      <ul class="contact">
+        <li>
+          <a
+            href="mailto:studenten.{slug}@studenten-bilden-schueler.de"
+            title="studenten.{slug}@studenten-bilden-schueler.de"
+            class="btn blue"
+            ><Email
+              style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />studenten.{slug}@studenten-bilden-schueler.de</a>
+          für Studierende
+        </li>
+        <li>
+          <a
+            href="mailto:schueler.{slug}@studenten-bilden-schueler.de"
+            title="schueler.{slug}@studenten-bilden-schueler.de"
+            class="btn green"
+            ><Email
+              style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />schueler.{slug}@studenten-bilden-schueler.de</a>
+          für Soziale Einrichtungen und Nachhilfeanfragen
+        </li>
+        <li>
+          <a
+            href="mailto:info.{slug}@studenten-bilden-schueler.de"
+            title="info.{slug}@studenten-bilden-schueler.de"
+            class="btn orange"
+            ><Email
+              style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />info.{slug}@studenten-bilden-schueler.de</a>
+          für Allgemeine Anfragen
+        </li>
+      </ul>
+    {/if}
+  </svelte:fragment>
 </BasePage>
 
 <style>
-  h2 {
-    text-align: center;
-    margin-top: 2em;
-  }
   section {
     text-align: center;
     max-width: 42em;
-    padding: 0 2em 2em;
     margin: auto;
+    padding: 0 1em;
     display: flex;
     gap: 1em;
   }
@@ -79,9 +113,31 @@
     box-sizing: border-box;
     margin: 0;
   }
-  @media (max-width: 850px) {
+  ul.contact {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    justify-content: space-between;
+  }
+  ul.contact > li {
+    text-align: center;
+    width: 32%;
+    margin: 1ex 0;
+  }
+  ul.contact > li > a.btn {
+    margin: 1ex 0;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+  }
+  @media (max-width: 700px) {
     section {
       flex-direction: column;
+    }
+    ul.contact {
+      flex-direction: column;
+    }
+    ul.contact > li {
+      width: 100%;
     }
   }
 </style>

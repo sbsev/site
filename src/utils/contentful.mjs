@@ -2,8 +2,9 @@
 import 'dotenv/config.js'
 import contentful from 'contentful-management'
 import prettier from 'prettier'
+
 // Before running any of the functions in this file, first generate a Content Management Token (CMT) at
-// https://app.contentful.com/spaces/gi9muc70s4ub/api/cma_tokens and add it to your .env
+// https://app.contentful.com/spaces/<space-id>/api/cma_tokens and add it to your .env
 // file along with the space ID.
 
 // Contentful entries returned by env.getEntries() are objects with update/publish/archive/etc. methods
@@ -32,7 +33,7 @@ export async function searchStringInContentType(args) {
       locale = `de`,
     } = args
 
-    console.log(`Now running searchStringInContentType with args:`, {
+    console.log(`Now running searchStringInContentType with args = `, {
       searchTerm,
       contentType,
       field,
