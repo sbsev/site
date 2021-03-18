@@ -14,7 +14,7 @@
 
   const style = `padding-right: 4pt; vertical-align: -1pt; height: 12pt;`
   const authorImgStyle = `width: 4ex; height: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;`
-  const imgStyle = `border-radius: 1ex 1ex 0 0;`
+  const imgStyle = `border-radius: 1ex 1ex 0 0; height: 15em;`
 </script>
 
 <section>
@@ -59,8 +59,7 @@
     font-size: 0.9em;
   }
   section > *:not(:first-child) {
-    margin-left: 2.5ex;
-    margin-right: 2.5ex;
+    margin: 1ex 2.5ex;
   }
   div {
     display: flex;

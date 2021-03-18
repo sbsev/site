@@ -92,11 +92,11 @@
     list-style: none;
   }
   ul > li > button {
-    border: 1px dotted;
     padding: 3pt 7pt;
     transition: 0.4s;
     display: flex;
     align-items: center;
+    background: var(--accentBg);
   }
   ul > li > button.active {
     box-shadow: inset 0 0 1em -5pt black;
