@@ -36,12 +36,10 @@
   }
   span > div::before {
     content: '';
-    width: 1ex;
     position: absolute;
     left: 50%;
     bottom: 100%;
     transform: translate(-50%);
-    height: 1ex;
     border: 1ex solid;
     border-color: transparent transparent var(--lightBg) transparent;
     box-sizing: border-box;
