@@ -51,7 +51,7 @@
 
 <!-- placed here so sapper crawls all pages and posts (won't be needed with svelte-kit) -->
 <!-- https://stackoverflow.com/a/63388587 -->
-<ul style="visibility: hidden; position: absolute;">
+<ul style="visibility: hidden; position: absolute; max-width: 50vw; overflow: hidden;">
   {#each pages as { title, slug }}
     <a href={slug}>{title}</a>
   {/each}

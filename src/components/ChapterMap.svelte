@@ -64,7 +64,7 @@
     display: inline-block;
     border-radius: 5pt;
     box-shadow: 0 0 2pt;
-    vertical-align: middle;
+    vertical-align: text-bottom;
   }
   :global(div.chap) {
     opacity: 0.9;

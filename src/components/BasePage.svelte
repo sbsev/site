@@ -61,10 +61,10 @@
     max-height: 50vh;
     margin: 0;
   }
-  figure > :is(h1, :global([slot='title'])) {
+  figure > h1 {
     color: white;
     background: rgba(0, 0, 0, 0.6);
-    padding: 5pt 1ex;
+    padding: 1pt 1ex;
     border-radius: 1ex;
     position: absolute;
     top: 50%;

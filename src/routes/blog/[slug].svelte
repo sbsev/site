@@ -27,7 +27,7 @@
   <Img
     sizes={[{ w: 1000 }, { w: 700 }, { w: 500 }, { w: 300 }]}
     {...cover}
-    pictureStyle="margin: -2em -2em 3em -2em" />
+    pictureStyle="margin: -2em 0 3em 0" />
   <h1>{title}</h1>
   <section>
     <Img sizes={[{ w: 150 }]} {...photo} alt={name} />
