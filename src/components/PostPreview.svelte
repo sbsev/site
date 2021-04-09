@@ -1,9 +1,9 @@
 <script>
-  import Tags from '@svg-icons/fa-solid/tags.svg'
-  import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
-  import Email from '@svg-icons/material-sharp/email.svg'
-  import Link from '@svg-icons/boxicons-regular/link.svg'
-  import Calendar from '@svg-icons/octicons/calendar.svg'
+  import Tags from '@svicons/fa-solid/tags.svelte'
+  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
+  import Email from '@svicons/material-sharp/email.svelte'
+  import Link from '@svicons/boxicons-regular/link.svelte'
+  import Calendar from '@svicons/octicons/calendar.svelte'
 
   import ToolTip from './ToolTip.svelte'
   import Img from './Img.svelte'
@@ -18,9 +18,9 @@
 </script>
 
 <section>
-  <a sapper:prefetch href={slug}
+  <a sveltekit:prefetch href={slug}
     ><Img sizes={[{ w: 400, h: 300 }]} {...cover} {imgStyle} /></a>
-  <h3><a sapper:prefetch href={slug}>{title}</a></h3>
+  <h3><a sveltekit:prefetch href={slug}>{title}</a></h3>
   <div>
     <ToolTip>
       <Img

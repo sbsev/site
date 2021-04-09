@@ -3,7 +3,7 @@
   // formatted address and lat/lng coordinates.
   import Map from './Map.svelte'
   import AutoCompletePlace from './AutoCompletePlace.svelte'
-  import Delete from '@svg-icons/material-sharp/delete.svg'
+  import Delete from '@svicons/material-sharp/delete.svelte'
 
   export let placeholder = ``
   export let required = false

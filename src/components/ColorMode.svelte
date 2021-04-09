@@ -1,10 +1,72 @@
 <script>
   import Modal from './Modal.svelte'
   import { colorMode, colorModeKey } from '../stores'
-  import { modeColors, colors } from '../colors'
-  import Sun from '@svg-icons/fa-solid/sun.svg'
-  import Moon from '@svg-icons/entypo/moon.svg'
-  import BrightnessAuto from '@svg-icons/material-sharp/brightness-auto.svg'
+  const colors = {
+    blue: `#0b4abf`,
+    darkBlue: `#003056`,
+    darkerBlue: `#061725`,
+    lightBlue: `#00a1ff`,
+    lighterBlue: `#06c5ff`,
+
+    green: `#89ba17`,
+    darkGreen: `#4d8711`,
+    darkerGreen: `#3c660f`,
+    lightGreen: `#95d50f`,
+    lighterGreen: `#caef76`,
+
+    yellow: `#f9ff00`,
+    darkYellow: `#ffca35`,
+    lightYellow: `#fbff6c`,
+
+    orange: `#e8ab00`,
+    darkOrange: `#d88100`,
+    lightOrange: `#ffca29`,
+
+    gray: `#464849`,
+    lightGray: `#d8d8d8`,
+    lighterGray: `#efefef`,
+    lightestGray: `#f6f6f6`,
+    darkGray: `#2a2c30`,
+  }
+
+  const modeColors = {
+    light: {
+      textColor: `black`,
+      linkColor: colors.blue,
+      hoverColor: colors.lightBlue,
+      bodyBg: colors.lightestGray,
+      accentBg: `white`,
+      lightBg: colors.lighterGray,
+      shadow: colors.gray,
+      borderColor: colors.lightBlue,
+      headingColor: colors.lightBlue,
+      headerBg: colors.darkBlue,
+      headerColor: `white`,
+      footerBg: colors.darkBlue,
+      invert: 0,
+      transparent: `rgba(255, 255, 255, 0.8)`,
+    },
+    dark: {
+      textColor: `white`,
+      linkColor: colors.lightBlue,
+      hoverColor: colors.green,
+      bodyBg: colors.darkerBlue,
+      accentBg: `black`,
+      lightBg: colors.darkGray,
+      shadow: `black`,
+      borderColor: colors.darkGreen,
+      headingColor: colors.lightGreen,
+      headerBg: colors.darkerBlue,
+      headerColor: colors.lightBlue,
+      footerBg: `black`,
+      invert: 1,
+      transparent: `rgba(0, 0, 0, 0.5)`,
+    },
+  }
+
+  import Sun from '@svicons/fa-solid/sun.svelte'
+  import Moon from '@svicons/entypo/moon.svelte'
+  import BrightnessAuto from '@svicons/material-sharp/brightness-auto.svelte'
 
   const setModeFactory = (mode) => () => {
     open = false

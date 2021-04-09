@@ -2,7 +2,7 @@
   // This component uses the Google Maps Places API to turn user text input into a
   // formatted address and lat/lng coordinates.
   import { onMount } from 'svelte'
-  import { stores } from '@sapper/app'
+  import { session } from '$app/stores'
 
   export let selectHandler
   export let placeholder = ``
@@ -10,7 +10,6 @@
   export let name = ``
   export let inputNode = undefined
 
-  const { session } = stores()
   let autocomplete
 
   const autocompleteOptions = {

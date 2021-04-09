@@ -1,12 +1,10 @@
 <script>
-  import { stores } from '@sapper/app'
+  import { page } from '$app/stores'
   import { blur } from 'svelte/transition'
 
-  import Menu from '@svg-icons/heroicons-solid/menu.svg'
-  import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
+  import Menu from '@svicons/heroicons-solid/menu.svelte'
+  import CircleWithCross from '@svicons/entypo/circle-with-cross.svelte'
   import { onMount } from 'svelte'
-
-  const { page } = stores()
 
   function accumulateOffsetTop(el, totalOffset = 0) {
     while (el) {

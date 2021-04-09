@@ -8,7 +8,7 @@
     base64Thumbnail,
   } from '../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const page = await fetchPage(`/`)
     const pages = await fetchPages()
     const posts = await fetchPosts()
@@ -29,15 +29,15 @@
     //   }`,
     //   { cache: `force-cache` }
     // )
-    return { page, chapters, yaml, pages, posts }
+    return { props: { page, chapters, yaml, pages, posts } }
   }
 </script>
 
 <script>
   import ChapterMap from '../components/ChapterMap.svelte'
-  import Place from '@svg-icons/material-sharp/place.svg'
-  import UserGraduate from '@svg-icons/fa-solid/user-graduate.svg'
-  import Child from '@svg-icons/fa-solid/child.svg'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
+  import Child from '@svicons/fa-solid/child.svelte'
   import Img from '../components/Img.svelte'
 
   export let chapters, page, yaml, pages, posts
@@ -49,7 +49,7 @@
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
 
-<!-- placed here so sapper crawls all pages and posts (won't be needed with svelte-kit) -->
+<!-- placed here so sveltekit crawls all pages and posts (won't be needed with svelte-kit) -->
 <!-- https://stackoverflow.com/a/63388587 -->
 <ul style="visibility: hidden; position: absolute; max-width: 50vw; overflow: hidden;">
   {#each pages as { title, slug }}
@@ -99,7 +99,8 @@
 </section>
 
 <h2>
-  Wähle deinen <a sapper:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!
+  Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der
+  Karte!
 </h2>
 
 <ChapterMap {chapters} />

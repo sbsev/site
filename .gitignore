@@ -1,9 +1,9 @@
 # dependenices
 node_modules
-src/node_modules/@sapper
 
 # build
-__sapper__
+.svelte-kit
+build
 
 # deploy config
 .netlify

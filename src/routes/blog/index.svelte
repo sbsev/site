@@ -1,10 +1,11 @@
 <script context="module">
   import { fetchYaml, fetchPosts } from '../../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const posts = await fetchPosts()
     const social = await fetchYaml(`Social`)
-    return { posts, social }
+
+    return { props: { posts, social } }
   }
 </script>
 

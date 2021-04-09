@@ -17,6 +17,8 @@ async function withPage(t, run) {
 
   try {
     await run(t, page)
+  } catch (err) {
+    console.error(err)
   } finally {
     await page.close()
     await browser.close()

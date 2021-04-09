@@ -1,10 +1,10 @@
 <script>
-  import OpenSource from '@svg-icons/remix-fill/open-source.svg'
-  import Cookie from '@svg-icons/boxicons-solid/cookie.svg'
-  import Law from '@svg-icons/octicons/law.svg'
-  import PrivacyTip from '@svg-icons/material-sharp/privacy-tip.svg'
-  import Euro from '@svg-icons/material-sharp/euro.svg'
-  import DocumentText from '@svg-icons/ionicons-solid/document-text.svg'
+  import OpenSource from '@svicons/remix-fill/open-source.svelte'
+  import Cookie from '@svicons/boxicons-solid/cookie.svelte'
+  import Law from '@svicons/octicons/law.svelte'
+  import PrivacyTip from '@svicons/material-sharp/privacy-tip.svelte'
+  import Euro from '@svicons/material-sharp/euro.svelte'
+  import DocumentText from '@svicons/ionicons-solid/document-text.svelte'
 
   import Social from './Social.svelte'
 
@@ -24,7 +24,7 @@
   <span>© {new Date().getFullYear()} Studenten bilden Schüler e.V.</span>
   <div>
     {#each links as { title, url }}
-      <a sapper:prefetch href={url}>
+      <a sveltekit:prefetch href={url}>
         <svelte:component this={icons[title]} {style} />
         {title}</a>
     {/each}

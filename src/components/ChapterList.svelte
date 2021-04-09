@@ -1,8 +1,8 @@
 <script>
   export let chapters
 
-  import Place from '@svg-icons/material-sharp/place.svg'
-  import Construction from '@svg-icons/material-sharp/construction.svg'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import Construction from '@svicons/material-sharp/construction.svelte'
 
   const openChapters = chapters.filter((ch) => ch.acceptsSignups)
   const startingChapters = chapters.filter((ch) => !ch.acceptsSignups)
@@ -16,7 +16,7 @@
 </h1>
 <ol>
   {#each openChapters as { title, slug }}
-    <li><a sapper:prefetch href={slug}>{title}</a></li>
+    <li><a sveltekit:prefetch href={slug}>{title}</a></li>
   {/each}
 </ol>
 {#if startingChapters.length > 2}
@@ -26,7 +26,7 @@
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}
-      <li><a sapper:prefetch href={slug}>{title}</a></li>
+      <li><a sveltekit:prefetch href={slug}>{title}</a></li>
     {/each}
   </ol>
 {/if}

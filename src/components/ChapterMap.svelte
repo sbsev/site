@@ -1,5 +1,5 @@
 <script>
-  import { goto, prefetch } from '@sapper/app'
+  import { goto, prefetch } from '$app/navigation'
 
   import Map from '../components/Map.svelte'
 

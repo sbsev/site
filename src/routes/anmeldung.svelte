@@ -33,13 +33,13 @@
     const studentText = await parseMicrocopy(`Student Form`)
     const pupilText = await parseMicrocopy(`Pupil Form`)
 
-    return { chapters, options, studentText, pupilText }
+    return { props: { chapters, options, studentText, pupilText } }
   }
 </script>
 
 <script>
-  import { stores } from '@sapper/app'
-  import Plant from '@svg-icons/remix-fill/plant.svg'
+  import { session, page } from '$app/stores'
+  import Plant from '@svicons/remix-fill/plant.svelte'
   import { onDestroy, onMount } from 'svelte'
 
   import FormInput from '../components/FormInput.svelte'
@@ -51,7 +51,6 @@
 
   export let chapters, options, studentText, pupilText
 
-  const { session, page } = stores()
   let { type = `Student`, chapter = ``, test } = $page.query
   const inputs = {}
   let response = {}

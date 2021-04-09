@@ -1,10 +1,11 @@
 <script context="module">
   import { fetchChapters, fetchPage } from '../../utils/queries'
 
-  export async function preload({ path }) {
+  export async function load({ page: { path } }) {
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
     const chapters = await fetchChapters()
-    return { page, chapters }
+
+    return { props: { page, chapters } }
   }
 </script>
 

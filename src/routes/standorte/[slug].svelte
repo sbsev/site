@@ -1,20 +1,21 @@
 <script context="module">
   import { fetchPage } from '../../utils/queries'
 
-  export async function preload({ path, params: { slug } }) {
+  export async function load({ page: { path, params } }) {
+    const { slug } = params
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
 
-    return { page, slug }
+    return { props: { page, slug } }
   }
 </script>
 
 <script>
   import BasePage from '../../components/BasePage.svelte'
 
-  import Email from '@svg-icons/material-sharp/email.svg'
-  import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
-  import Child from '@svg-icons/fa-solid/child.svg'
-  import InfoCircle from '@svg-icons/entypo/info-with-circle.svg'
+  import Email from '@svicons/material-sharp/email.svelte'
+  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
+  import Child from '@svicons/fa-solid/child.svelte'
+  import InfoCircle from '@svicons/entypo/info-with-circle.svelte'
 
   export let page, slug
 
@@ -28,21 +29,21 @@
       <span>
         Willst du bei uns mitmachen?
         <a
-          sapper:prefetch
+          sveltekit:prefetch
           href="/anmeldung?type=Student&chapter={page.title}"
           class="btn blue"><GraduationCap {style} />Als Student anmelden</a>
-        <a sapper:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
+        <a sveltekit:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
           ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
       </span>
       <span>
         Suchst du Nachhilfe?
         <a
-          sapper:prefetch
+          sveltekit:prefetch
           href="/anmeldung?type=Schüler&chapter={page.title}"
           class="btn green"
           ><Child {style} />
           Als Schüler anmelden</a>
-        <a sapper:prefetch href="mitmachen/schueler" class="btn green stroke">
+        <a sveltekit:prefetch href="mitmachen/schueler" class="btn green stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler</a>
       </span>
       <span>
@@ -52,7 +53,7 @@
           class="btn orange"
           ><Email {style} />
           Schreib uns</a>
-        <a sapper:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
+        <a sveltekit:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleiter</a>
       </span>
     </section>

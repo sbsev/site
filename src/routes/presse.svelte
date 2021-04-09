@@ -1,17 +1,17 @@
 <script context="module">
   import { fetchYamlList, fetchPage } from '../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const page = await fetchPage(`presse`)
     const items = await fetchYamlList(`Presse`, `presse#`)
-    return { page, items }
+    return { props: { page, items } }
   }
 </script>
 
 <script>
-  import Calendar from '@svg-icons/octicons/calendar.svg'
-  import Place from '@svg-icons/material-sharp/place.svg'
-  import Newspaper from '@svg-icons/ionicons-solid/newspaper.svg'
+  import Calendar from '@svicons/octicons/calendar.svelte'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import Newspaper from '@svicons/ionicons-solid/newspaper.svelte'
 
   import Img from '../components/Img.svelte'
   import BasePage from '../components/BasePage.svelte'

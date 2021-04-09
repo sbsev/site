@@ -1,12 +1,12 @@
 <script>
-  import Update from '@svg-icons/material-sharp/update.svg'
+  import Update from '@svicons/material-sharp/update.svelte'
 
   import Img from '../components/Img.svelte'
   import Toc from '../components/Toc.svelte'
 
   export let page
 
-  $: ({ title, slug, cover, body, toc, yaml, sys } = page)
+  $: ({ title, slug, cover, body, toc, yaml, sys } = page || {})
   $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
   const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
@@ -16,36 +16,39 @@
   <meta name="date" content={date} />
 </svelte:head>
 
-<figure>
-  <Img {...cover} imgStyle="height: 100%" />
-  {#if $$slots.title}
-    <slot name="title" />
-  {:else if title}
-    <h1>{title}</h1>
-  {/if}
-  {#if yaml?.caption}
-    <figcaption>{@html yaml.caption}</figcaption>
-  {/if}
-</figure>
-{#if toc}
-  <Toc />
-{/if}
-<slot />
-<article>
-  {@html body}
-  <slot name="afterBody" />
-</article>
+{#if page}
+  <figure>
+    <Img {...cover} imgStyle="height: 100%" />
+    {#if $$slots.title}
+      <slot name="title" />
+    {:else if title}
+      <h1>{title}</h1>
+    {/if}
+    {#if yaml?.caption}
+      <figcaption>{@html yaml.caption}</figcaption>
+    {/if}
+  </figure>
+  <slot />
+  <article>
+    {#if toc}
+      <Toc />
+    {/if}
 
-<slot name="afterArticle" />
+    {@html body}
+    <slot name="afterBody" />
+  </article>
 
-{#if sys?.publishedAt && !slug.includes(`blog`)}
-  <time>
-    <Update {style} />Zuletzt bearbeitet:
-    {date}</time>
-  <address>
-    <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
-      >Feedback zu dieser Seite?</a>
-  </address>
+  <slot name="afterArticle" />
+
+  {#if sys?.publishedAt && !slug.includes(`blog`)}
+    <time>
+      <Update {style} />Zuletzt bearbeitet:
+      {date}</time>
+    <address>
+      <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
+        >Feedback zu dieser Seite?</a>
+    </address>
+  {/if}
 {/if}
 
 <style>
@@ -58,7 +61,7 @@
     position: relative;
     overflow: hidden;
     height: calc(25em + 3vw);
-    max-height: 50vh;
+    max-height: 65vh;
     margin: 0;
   }
   figure > h1 {

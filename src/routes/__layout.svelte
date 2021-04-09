@@ -1,7 +1,7 @@
 <script context="module">
   import { fetchYaml, fetchChapters } from '../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const nav = await fetchYaml(`Nav`)
     const footer = await fetchYaml(`Footer`)
     const social = await fetchYaml(`Social`)
@@ -18,19 +18,17 @@
     // prepend chapter links into chapter subnav
     nav.find((el) => el.url === `/standorte`).subNav.unshift(...chapterLinks)
 
-    return { nav, footer, social }
+    return { props: { nav, footer, social } }
   }
 </script>
 
 <script>
-  import { stores } from '@sapper/app'
+  import { page } from '$app/stores'
 
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
 
   export let nav, footer, social
-
-  const { page } = stores()
 
   if (typeof window !== `undefined`)
     page.subscribe(() => {
