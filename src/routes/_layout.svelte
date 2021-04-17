@@ -42,7 +42,15 @@
     })
 </script>
 
+<svelte:head>
+  <script
+    async
+    defer
+    data-domain="studenten-bilden-schueler.de"
+    src="https://plausible.io/js/plausible.js"></script>
+</svelte:head>
 <GoogleAnalytics />
+
 <Header {nav} />
 <main>
   <slot />
