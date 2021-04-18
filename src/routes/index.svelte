@@ -60,7 +60,9 @@
   {/each}
 </ul>
 
-<h1>Studenten bilden Schüler e.V.</h1>
+<h1>
+  <img src="name.svg" alt="Studenten bilden Schüler" />
+</h1>
 <div class="grid">
   {#each yaml.images.slice(0, nImages) as img, idx}
     <Img
@@ -107,8 +109,11 @@
 </article>
 
 <style>
-  h1 {
-    font-size: calc(1em + 2vw);
+  h1 img {
+    margin: 3ex auto;
+    display: block;
+    max-width: 750pt;
+    width: calc(100vw - 3em);
   }
   .grid {
     margin: 1em 2vw 2em;
