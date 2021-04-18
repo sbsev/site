@@ -1,122 +1,71 @@
 <script>
   // This component uses the Google Maps Places API to turn user text input into a
   // formatted address and lat/lng coordinates.
-  import Map from './Map.svelte'
+  import { onMount, onDestroy } from 'svelte'
+  import { stores } from '@sapper/app'
 
   export let placeholder = ``
   export let required = false
   export let name = ``
-  export let input = undefined // input field whose value is read when submitting the form
+  export let inputNode = undefined
+  export let place = {}
 
-  let enterInput // field that users interact with
-  let map, infoWindowDiv, place
+  const { session } = stores()
+
+  const autocompleteOptions = {
+    componentRestrictions: { country: `de` },
+    fields: [`formatted_address`, `geometry`, `name`],
+    // origin: map.getCenter(),
+    strictBounds: false,
+    types: [`geocode`],
+  }
 
   function mountInput() {
-    // autocomplete options
-    const options = {
-      componentRestrictions: { country: `de` },
-      fields: [`formatted_address`, `geometry`, `name`],
-      origin: map.getCenter(),
-      strictBounds: false,
-      types: [`geocode`],
-    }
-
-    const autocomplete = new window.google.maps.places.Autocomplete(enterInput, options)
-    // Bind the map's bounds (viewport) property to the autocomplete object,
-    // so that the autocomplete requests use the current map bounds for the
-    // bounds option in the request.
-    autocomplete.bindTo(`bounds`, map)
-    const infoWindow = new window.google.maps.InfoWindow()
-    infoWindow.setContent(infoWindowDiv)
-
-    const anchorPoint = new window.google.maps.Point(0, -29)
-    const marker = new window.google.maps.Marker({ map, anchorPoint })
-
+    const autocomplete = new window.google.maps.places.Autocomplete(
+      inputNode,
+      autocompleteOptions
+    )
     autocomplete.addListener(`place_changed`, () => {
-      infoWindow.close()
-      marker.setVisible(false)
-      place = autocomplete.getPlace()
-      const lat = place.geometry?.location.lat()
-      const lng = place.geometry?.location.lng()
-      input.value = JSON.stringify({
-        address: place.formatted_address,
-        coords: { lat, lng },
-      })
-
-      if (!place.geometry?.location) {
+      const completion = autocomplete.getPlace()
+      if (!completion.geometry?.location) {
         // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Details request failed.
-        window.alert(`Für '${place.name}' konnte keine Adresse gefunden werden!`)
+        // pressed the Enter key, or the place details request failed.
+        window.alert(`Für '${completion.name}' konnte keine Adresse gefunden werden!`)
         return
       }
 
-      // If the place has a geometry, then present it on a map.
-      if (place.geometry?.viewport) {
-        map.fitBounds(place.geometry.viewport)
-      } else {
-        map.setCenter(place.geometry.location)
-        map.setZoom(17)
-      }
-      marker.setPosition(place.geometry.location)
-      marker.setVisible(true)
-
-      infoWindowDiv.children[`place-name`].textContent = place.name
-      infoWindowDiv.children[`place-address`].textContent = place.formatted_address
-      infoWindow.open(map, marker)
+      const lat = completion.geometry?.location.lat()
+      const lng = completion.geometry?.location.lng()
+      place = { address: completion.formatted_address, coords: [lat, lng] }
     })
+
+    return () => window.google.maps.event.clearInstanceListeners(autocomplete)
   }
+
+  onMount(() => {
+    if (!window.google?.maps?.places) {
+      const script = document.createElement(`script`)
+      script.async = true
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}&libraries=places`
+      document.head.append(script)
+      script.addEventListener(`load`, mountInput)
+      return () => script.removeEventListener(`load`, mountInput)
+    } else return mountInput()
+  })
+
+  onDestroy(() => {
+    place = null
+  })
 </script>
 
-<!-- for holding the component's value in a way accessible to the DOM -->
-<input
-  bind:this={input}
-  {required}
-  {name}
-  id={name}
-  on:focus={() => enterInput.focus()}
-  class="hidden" />
-<input bind:this={enterInput} type="text" {placeholder} {required} />
-
-<Map
-  bind:map
-  onLoad={mountInput}
-  mapDivCss="height: 300px; margin: 1em 0; border-radius: 3pt;" />
-
-<div bind:this={infoWindowDiv}>
-  <strong id="place-name" /><br />
-  <span id="place-address" />
-</div>
+<input bind:this={inputNode} {name} type="text" {placeholder} {required} />
 
 <style>
   input {
     background: var(--accentBg);
     width: 100%;
     text-overflow: ellipsis;
-  }
-  input.hidden {
-    border: none;
-    outline: none;
-    background: none;
-    padding: 0;
-    width: 1pt;
-    padding: 1pt;
-    /* needed to hide red shadow around required inputs in some browsers */
-    box-shadow: none;
-  }
-  /* make autocomplete suggestions color-mode responsive */
-  /* https://developers.google.com/maps/documentation/javascript/places-autocomplete#style-autocomplete */
-  :global(.pac-container) {
-    background: var(--bodyBg);
-    border-radius: 3pt;
-  }
-  :global(.pac-item:hover) {
-    background: var(--accentBg);
-  }
-  :global(.pac-item span) {
-    color: var(--textColor);
-  }
-  /* hide google logo from autocomplete suggestions */
-  :global(.pac-logo:after) {
-    display: none;
+    height: 2em;
+    margin: 1ex 0;
   }
 </style>

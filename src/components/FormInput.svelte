@@ -1,7 +1,7 @@
 <script>
   import Toggle from './Toggle.svelte'
   import MultiSelect from './MultiSelect.svelte'
-  import AutoCompletePlace from './AutoCompletePlace.svelte'
+  import CompletedPlacesMap from './CompletedPlacesMap.svelte'
 
   // display props
   export let title = ``
@@ -37,7 +37,7 @@
 {:else if type === `toggle`}
   <Toggle {name} {required} bind:input />
 {:else if type === `placeComplete`}
-  <AutoCompletePlace {name} {required} bind:input {placeholder} />
+  <CompletedPlacesMap {name} {required} bind:input {placeholder} />
 {:else}
   <input
     {type}

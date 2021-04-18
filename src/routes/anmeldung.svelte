@@ -52,7 +52,8 @@
   const { session, page } = stores()
   let { type = `Student`, chapter = ``, test } = $page.query
   const inputs = {}
-  let response, isSubmitting, modalOpen
+  let response = {}
+  let isSubmitting, modalOpen
 
   function getFormVals() {
     return Object.fromEntries(
@@ -97,7 +98,13 @@
       throw Error(`baseId could not be determined`)
     }
 
-    response = await airtableSubmit(baseId, formValues, $session.AIRTABLE_API_KEY, test)
+    try {
+      response = await airtableSubmit(baseId, formValues, $session.AIRTABLE_API_KEY, test)
+    } catch (error) {
+      console.error(error)
+      modalOpen = true
+      response.error = error
+    }
     if (!response.error) window.scrollTo({ top: 0, behavior: `smooth` })
     else modalOpen = true
     isSubmitting = false
@@ -161,7 +168,7 @@
 
       <FormInput
         {...text.placeSelect}
-        bind:input={inputs.place}
+        bind:input={inputs.places}
         required
         placeholder="Ort der Nachhilfe"
         type="placeComplete" />

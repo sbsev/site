@@ -39,6 +39,13 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     data.birthDate = date
   }
 
+  const Adressen = Object.values(data.places)
+    .map((place) => place.address)
+    .join(`\n`)
+  const Koordinaten = Object.values(data.places)
+    .map((place) => place.coords.join(`,`))
+    .join(`;`)
+
   const fields = {
     'Vor- und Nachname': data.fullname, // for students
     Vorname: data.firstname, // for pupils
@@ -46,8 +53,8 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     'E-Mail': toStr(data.email),
     Bemerkung: toStr(data.remarks),
     'Geografische Präferenz': toStr(data.place),
-    Adressen: data.place.address, // formatted address provided by Google Maps Places API
-    Koordinaten: data.place.coords.values().join(`, `),
+    Adressen, // formatted address provided by Google Maps Places API
+    Koordinaten,
     Klassenstufen: toStr(data.levels), // for students
     Klassenstufe: toStr(data.level), // for pupils
     Fächer: data.subjects,
