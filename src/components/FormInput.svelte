@@ -1,13 +1,14 @@
 <script>
   import Toggle from './Toggle.svelte'
   import MultiSelect from './MultiSelect.svelte'
+  import AutoCompletePlace from './AutoCompletePlace.svelte'
 
   // display props
   export let title = ``
   export let note = ``
 
   // input props
-  export let node = undefined
+  export let input = undefined
   export let name = ``
   export let placeholder = title
   export let select = []
@@ -27,23 +28,26 @@
 
 {#if select.length || multiselect.length}
   <MultiSelect
-    bind:input={node}
+    bind:input
     {name}
     {placeholder}
     options={select.length ? select : multiselect}
     single={select.length ? true : false}
     {required} />
 {:else if type === `toggle`}
-  <Toggle {name} {required} bind:node />
+  <Toggle {name} {required} bind:input />
+{:else if type === `placeComplete`}
+  <AutoCompletePlace {name} {required} bind:input {placeholder} />
 {:else}
   <input
     {type}
-    bind:this={node}
+    bind:this={input}
     id={name}
     {name}
     {placeholder}
     {required}
-    on:mousewheel={() => type === `number` && node.blur()} />
+    on:mousewheel={() => type === `number` && input.blur()} />
+  <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
 {/if}
 
 <style>
@@ -63,6 +67,9 @@
     background: var(--accentBg);
     width: 100%;
     height: 2em;
+  }
+  input:focus {
+    border: 1px solid var(--linkColor);
   }
   ::-webkit-calendar-picker-indicator {
     filter: invert(var(--invert));

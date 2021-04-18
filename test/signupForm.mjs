@@ -1,3 +1,5 @@
+// run tests in this file with `yarn ci`
+
 import test from 'ava'
 import puppeteer from 'puppeteer'
 
@@ -5,7 +7,7 @@ import puppeteer from 'puppeteer'
 // makes Puppeteer page available inside test functions
 async function withPage(t, run) {
   const browser = await puppeteer.launch({
-    headless: true, // set to false to see the test in action
+    headless: false, // set to false to see the test in action
     defaultViewport: null,
   })
 
@@ -22,6 +24,13 @@ async function withPage(t, run) {
 async function fillInput(page, id, value) {
   await page.focus(id)
   await page.keyboard.type(value)
+}
+
+async function fillPlaceAutoComplete(page, id, value) {
+  await page.focus(id)
+  await page.keyboard.type(value)
+  await page.keyboard.press(`ArrowDown`)
+  await page.keyboard.press(`Enter`)
 }
 
 async function fillSingleSelect(page, id, value) {
@@ -50,7 +59,7 @@ test(`signup form accepts minimal student data`, withPage, async (t, page) => {
 
   await fillMultiSelect(page, `#subjects`, [`Mathe`, `Physik`])
 
-  await fillInput(page, `#place`, `Bibliothek`)
+  await fillPlaceAutoComplete(page, `#place`, `test`)
 
   await fillSingleSelect(page, `#discovery`, `Freunde`)
 
@@ -86,7 +95,7 @@ test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
 
   await fillInput(page, `#level`, `7`)
 
-  await fillInput(page, `#place`, `Stadtbücherei`)
+  await fillPlaceAutoComplete(page, `#place`, `test`)
 
   await page.$eval(`#online`, (el) => el.click())
 

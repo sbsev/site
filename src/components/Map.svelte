@@ -1,33 +1,39 @@
 <script>
-  import { onMount } from 'svelte'
   import { stores } from '@sapper/app'
 
+  export let map = undefined
   export let onLoad = () => {}
+  export let mapDiv = undefined
   export let mapProps = {}
+  export let mapDivCss = `height: 700px; max-height: 75vh; min-height: 530px;`
 
   const { session } = stores()
-  let div, map
 
   // default map props
-  mapProps = { center: { lat: 51.5, lng: 10 }, zoom: 6, ...mapProps }
+  mapProps = {
+    center: { lat: 51.5, lng: 10 },
+    zoom: 6,
+    disableDefaultUI: true,
+    ...mapProps,
+  }
 
-  const mountMap = () => (map = new window.google.maps.Map(div, mapProps))
+  const mountMap = () => (map = new window.google.maps.Map(mapDiv, mapProps))
 
-  onMount(() => {
-    if (!window.google) {
-      const script = document.createElement(`script`)
-      script.async = true
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}`
-      document.head.append(script)
-      script.addEventListener(`load`, mountMap)
-      return () => script.removeEventListener(`load`, mountMap)
-    } else mountMap()
-  })
+  // This includes the places library to avoid needing to reimport Google Maps in
+  // AutoCompletePlace.svelte which would warn "You have included the Google Maps
+  // JavaScript API multiple times on this page. This may cause unexpected errors."
+  const src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}&libraries=places`
 
   $: if (map && typeof onLoad === `function`) onLoad(map)
 </script>
 
-<div bind:this={div} />
+<svelte:head>
+  {#if typeof window !== `undefined` && !window.google}
+    <script async {src} on:load={mountMap}></script>
+  {/if}
+</svelte:head>
+
+<div bind:this={mapDiv} style={mapDivCss} />
 
 <style>
   div {

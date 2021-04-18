@@ -44,7 +44,7 @@
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import RadioButton from '../components/RadioButton.svelte'
   import Modal from '../components/Modal.svelte'
-  import { airtableSubmit, tryParse } from '../utils/airtable'
+  import { airtableSubmit } from '../utils/airtable'
   import { studentSignupStore, pupilSignupStore } from '../stores'
 
   export let chapters, options, studentText, pupilText
@@ -56,7 +56,7 @@
 
   function getFormVals() {
     return Object.fromEntries(
-      Object.entries(inputs).map(([key, inp]) => [key, tryParse(inp?.value)])
+      Object.entries(inputs).map(([key, input]) => [key, input?.value])
     )
   }
   function setFormVals(values) {
@@ -90,7 +90,8 @@
     isSubmitting = true
     let formValues = { type, ...getFormVals() }
 
-    const baseId = chapters?.find(({ title }) => title === formValues?.chapter)?.baseId
+    const baseId = chapters?.find(({ title }) => formValues?.chapter?.includes(title))
+      ?.baseId
     if (!baseId) {
       isSubmitting = false
       throw Error(`baseId could not be determined`)
@@ -121,105 +122,112 @@
     <FormInput
       select={chapters.map((c) => c.title)}
       {...text.chapter}
-      bind:node={inputs.chapter}
+      bind:input={inputs.chapter}
       required />
 
     <FormInput
       select={options.genders}
       {...text.gender}
-      bind:node={inputs.gender}
+      bind:input={inputs.gender}
       required />
 
     {#if type === `Student`}
-      <FormInput {...text.fullname} bind:node={inputs.fullname} required />
+      <FormInput {...text.fullname} bind:input={inputs.fullname} required />
 
-      <FormInput {...text.phone} bind:node={inputs.phone} type="phone" />
+      <FormInput {...text.phone} bind:input={inputs.phone} type="phone" />
 
-      <FormInput {...text.email} bind:node={inputs.email} required type="email" />
+      <FormInput {...text.email} bind:input={inputs.email} required type="email" />
 
-      <FormInput {...text.studySubject} bind:node={inputs.studySubject} />
+      <FormInput {...text.studySubject} bind:input={inputs.studySubject} />
 
-      <FormInput {...text.semester} bind:node={inputs.semester} type="number" />
+      <FormInput {...text.semester} bind:input={inputs.semester} type="number" />
 
-      <FormInput {...text.birthPlace} bind:node={inputs.birthPlace} />
+      <FormInput {...text.birthPlace} bind:input={inputs.birthPlace} />
 
-      <FormInput {...text.birthDate} bind:node={inputs.birthDate} type="date" />
+      <FormInput {...text.birthDate} bind:input={inputs.birthDate} type="date" />
 
       <FormInput
         {...text.subjects}
-        bind:node={inputs.subjects}
+        bind:input={inputs.subjects}
         multiselect={options.subjects}
         required />
 
       <FormInput
         {...text.schoolTypes}
-        bind:node={inputs.schoolTypes}
+        bind:input={inputs.schoolTypes}
         multiselect={options.schoolTypes} />
 
-      <FormInput {...text.levels} bind:node={inputs.levels} />
+      <FormInput {...text.levels} bind:input={inputs.levels} />
 
-      <FormInput {...text.place} bind:node={inputs.place} required />
+      <FormInput
+        {...text.placeSelect}
+        bind:input={inputs.place}
+        required
+        placeholder="Ort der Nachhilfe"
+        type="placeComplete" />
 
-      <FormInput {...text.remarks} bind:node={inputs.remarks} />
+      <FormInput {...text.mobility} bind:input={inputs.mobility} type="number" />
+
+      <FormInput {...text.remarks} bind:input={inputs.remarks} />
 
       <FormInput
         select={options.discoveries}
         {...text.discovery}
-        bind:node={inputs.discovery}
+        bind:input={inputs.discovery}
         required />
 
       <FormInput
         {...text.agreement}
-        bind:node={inputs.agreement}
+        bind:input={inputs.agreement}
         type="toggle"
         required />
     {:else if type === `Schüler`}
-      <FormInput {...text.firstname} bind:node={inputs.firstname} required />
+      <FormInput {...text.firstname} bind:input={inputs.firstname} required />
 
       <FormInput
         {...text.subjects}
-        bind:node={inputs.subjects}
+        bind:input={inputs.subjects}
         multiselect={options.subjects}
         required />
 
       <FormInput
         select={options.schoolTypes}
         {...text.schoolType}
-        bind:node={inputs.schoolType}
+        bind:input={inputs.schoolType}
         required />
 
-      <FormInput {...text.level} bind:node={inputs.level} required type="number" />
+      <FormInput {...text.level} bind:input={inputs.level} required type="number" />
 
-      <FormInput {...text.place} bind:node={inputs.place} required />
+      <FormInput {...text.place} bind:input={inputs.place} required />
 
-      <FormInput {...text.age} bind:node={inputs.age} type="number" />
+      <FormInput {...text.age} bind:input={inputs.age} type="number" />
 
-      <FormInput {...text.online} bind:node={inputs.online} type="toggle" />
+      <FormInput {...text.online} bind:input={inputs.online} type="toggle" />
 
-      <FormInput {...text.remarks} bind:node={inputs.remarks} />
+      <FormInput {...text.remarks} bind:input={inputs.remarks} />
 
-      <FormInput {...text.nameContact} bind:node={inputs.nameContact} required />
+      <FormInput {...text.nameContact} bind:input={inputs.nameContact} required />
 
       <FormInput
         {...text.phoneContact}
-        bind:node={inputs.phoneContact}
+        bind:input={inputs.phoneContact}
         type="phone"
         required />
 
       <FormInput
         {...text.emailContact}
-        bind:node={inputs.emailContact}
+        bind:input={inputs.emailContact}
         type="email"
         required />
 
-      <FormInput {...text.orgContact} bind:node={inputs.orgContact} required />
+      <FormInput {...text.orgContact} bind:input={inputs.orgContact} required />
 
-      <FormInput {...text.need} bind:node={inputs.need} type="toggle" required />
+      <FormInput {...text.need} bind:input={inputs.need} type="toggle" required />
     {/if}
 
     <FormInput
       {...text.dataProtection}
-      bind:node={inputs.dataProtection}
+      bind:input={inputs.dataProtection}
       type="toggle"
       required />
 

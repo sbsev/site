@@ -9,7 +9,6 @@
   "repository": "https://github.com/sbsev/svelte-site",
   "scripts": {
     "dev": "sapper dev",
-    "build": "sapper build",
     "export": "sapper export",
     "start": "sapper dev",
     "serve": "sapper export && sirv __sapper__/export",
