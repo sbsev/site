@@ -28,9 +28,7 @@
 </script>
 
 <svelte:head>
-  {#if typeof window !== `undefined` && !window.google}
-    <script async {src} on:load={mountMap}></script>
-  {/if}
+  <script id="gm-js-api" async {src} on:load={mountMap}></script>
 </svelte:head>
 
 <div bind:this={mapDiv} style={mapDivCss} />

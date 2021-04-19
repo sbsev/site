@@ -34,19 +34,20 @@
   {/if}
 
   {@html body}
-
   <slot name="afterBody" />
-
-  {#if sys?.publishedAt && !slug.includes(`blog`)}
-    <time>
-      <Update {style} />Zuletzt bearbeitet:
-      {date}</time>
-    <address>
-      <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
-        >Feedback zu dieser Seite?</a>
-    </address>
-  {/if}
 </article>
+
+<slot name="afterArticle" />
+
+{#if sys?.publishedAt && !slug.includes(`blog`)}
+  <time>
+    <Update {style} />Zuletzt bearbeitet:
+    {date}</time>
+  <address>
+    <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
+      >Feedback zu dieser Seite?</a>
+  </address>
+{/if}
 
 <style>
   article {

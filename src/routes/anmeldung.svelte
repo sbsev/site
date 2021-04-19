@@ -171,7 +171,7 @@
         bind:input={inputs.places}
         required
         placeholder="Ort der Nachhilfe"
-        type="placeComplete" />
+        type="placeSelect" />
 
       <FormInput {...text.mobility} bind:input={inputs.mobility} type="number" />
 
