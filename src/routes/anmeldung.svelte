@@ -170,7 +170,7 @@
         placeholder="Ort der Nachhilfe"
         type="placeSelect" />
 
-      <FormInput {...text.mobility} bind:input={inputs.mobility} type="number" />
+      <!-- <FormInput {...text.mobility} bind:input={inputs.mobility} type="number" /> -->
 
       <FormInput {...text.remarks} bind:input={inputs.remarks} />
 
@@ -251,6 +251,11 @@
 {/if}
 
 <style>
+  /* ensures minimum font-size > 16px so iOS doesn't zoom in when focusing inputs
+  https://stackoverflow.com/a/6394497 */
+  :global(input) {
+    font-size: calc(16px + 0.1vw);
+  }
   form {
     max-width: 40em;
     margin: 2em auto;

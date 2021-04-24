@@ -7,7 +7,8 @@ import puppeteer from 'puppeteer'
 // makes Puppeteer page available inside test functions
 async function withPage(t, run) {
   const browser = await puppeteer.launch({
-    headless: false, // set to false to see the test in action
+    headless: true, // set to false to see the test in action, don't push to GitHub with true
+    // as action runner has no UI, will fail the test
     defaultViewport: null,
     // slowMo: 20, // slow down by 250ms to help see what's going on (good in combination with headless: false)
   })

@@ -67,7 +67,7 @@
 <ol>
   {#each places as place, idx}
     <li>
-      <span>{idx + 1}</span><input type="text" value={place.address} />
+      <span>{idx + 1}</span><input type="text" value={place.address} disabled />
       <button on:click={deletePlace(idx)} type="button">
         <Delete style="width: 3ex; vertical-align: middle;" /></button>
     </li>
