@@ -32,7 +32,6 @@
     Alle: SelectAll,
     Mathe: Functions,
     Wissenschaft: Science,
-    // Physik: Grav,
     'Lernen mit Karteikarten': CardText,
     'Viele Fächer': GroupWork,
     'Deutsche Sprache': Language,
@@ -58,40 +57,46 @@
   )
   const imgStyle = `width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: -3pt;`
+
+  function setHash() {
+    hash = window.location.hash.replace(`#`, ``)
+  }
 </script>
 
 <!-- used to briefly flash an list item as active when it's hash is found in the URL -->
-<svelte:window on:hashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
+<svelte:window on:hashchange={setHash} />
 
-<BasePage {page} />
+<BasePage {page}>
+  <svelte:fragment slot="afterArticle">
+    <ul class="tags">
+      {#each Object.entries(tags) as [tag, count]}
+        <li>
+          <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
+            <svelte:component this={icons[tag]} {style} />
+            {tag}
+            ({count})</button>
+        </li>
+      {/each}
+    </ul>
+    <ul class="items">
+      {#each filtered as { title, id, img, body, tags, url } (title)}
+        <li animate:flip={{ duration: 200 }} transition:scale>
+          <a href={url}><Img src={img} alt={title} sizes={[{ w: 150 }]} {imgStyle} /></a>
+          <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
+          <span><Tags {style} /> {tags.join(`, `)}</span>
+          {@html body}
+        </li>
+      {/each}
+    </ul>
 
-<ul class="tags">
-  {#each Object.entries(tags) as [tag, count]}
-    <li>
-      <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
-        <svelte:component this={icons[tag]} {style} />
-        {tag}
-        ({count})</button>
-    </li>
-  {/each}
-</ul>
-<ul class="items">
-  {#each filtered as { title, id, img, body, tags, url } (title)}
-    <li animate:flip={{ duration: 200 }} transition:scale>
-      <a href={url}><Img src={img} alt={title} sizes={[{ w: 150 }]} {imgStyle} /></a>
-      <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
-      <span><Tags {style} /> {tags.join(`, `)}</span>
-      {@html body}
-    </li>
-  {/each}
-</ul>
-
-<div>
-  <h2>Fehlt was?</h2>
-  Du kennst noch weitere gute Lernmaterialien, die in unserer Liste nicht auftauchen? Schreib
-  uns direkt an
-  <a href="mailto:{email}">{email}</a> und wir fügen sie gerne hinzu.
-</div>
+    <div>
+      <h2>Fehlt was?</h2>
+      Du kennst noch weitere gute Lernmaterialien, die in unserer Liste nicht auftauchen? Schreib
+      uns direkt an
+      <a href="mailto:{email}">{email}</a> und wir fügen sie gerne hinzu.
+    </div>
+  </svelte:fragment>
+</BasePage>
 
 <!-- used to briefly flash an list item as active when it's hash is found in the URL -->
 <style>

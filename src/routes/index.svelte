@@ -112,8 +112,8 @@
   h1 img {
     margin: 3ex auto;
     display: block;
-    max-width: 750pt;
-    width: calc(100vw - 3em);
+    max-width: 650pt;
+    width: calc(100vw - 4em);
   }
   .grid {
     margin: 1em 2vw 2em;

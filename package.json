@@ -9,11 +9,10 @@
   "repository": "https://github.com/sbsev/svelte-site",
   "scripts": {
     "dev": "sapper dev",
-    "build": "sapper build",
     "export": "sapper export",
     "start": "sapper dev",
     "serve": "sapper export && sirv __sapper__/export",
-    "test": "ava --timeout=2m",
+    "test": "ava --timeout=1m",
     "ci": "start-server-and-test http://localhost:3000"
   },
   "dependencies": {

@@ -25,6 +25,10 @@ async function airtablePost(baseId, table, data, apiKey) {
 const toStr = (str) => (str ? String(str) : undefined)
 
 export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
+  data = Object.fromEntries(
+    Object.entries(data).map(([key, val]) => [key, tryParse(val)])
+  )
+
   if (!apiKey) throw `missing Airtable API key, got ${apiKey}`
   const table = data.type === `Student` ? `Studenten` : `Schüler`
 
@@ -35,6 +39,13 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     data.birthDate = date
   }
 
+  const Adressen = Object.values(data.places)
+    .map((place) => place.address)
+    .join(`\n`)
+  const Koordinaten = Object.values(data.places)
+    .map((place) => place.coords.join(`,`))
+    .join(`;`)
+
   const fields = {
     'Vor- und Nachname': data.fullname, // for students
     Vorname: data.firstname, // for pupils
@@ -42,6 +53,8 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     'E-Mail': toStr(data.email),
     Bemerkung: toStr(data.remarks),
     'Geografische Präferenz': toStr(data.place),
+    Adressen, // formatted address provided by Google Maps Places API
+    Koordinaten,
     Klassenstufen: toStr(data.levels), // for students
     Klassenstufe: toStr(data.level), // for pupils
     Fächer: data.subjects,
@@ -84,8 +97,8 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
 
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }
 
-  const globalBaseId = `appSswal9DNdJKRB8`
-  const testBaseId = `appe3hVONuwBkuQv1` // id of test base called 'Verification' in Airtable
+  const globalBaseId = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
+  const testBaseId = `appe3hVONuwBkuQv1` // test base called 'Verification' in Airtable
 
   if (test) return await airtablePost(testBaseId, table, chapterFields, apiKey)
   // use Promise.all to fail fast if one record creation fails

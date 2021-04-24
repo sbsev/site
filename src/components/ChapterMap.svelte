@@ -35,11 +35,10 @@
       marker.addListener(`click`, () => goto(slug))
     })
   }
-  const mapProps = { disableDefaultUI: true }
 </script>
 
 <div>
-  <Map {mapProps} onLoad={addMarkers} />
+  <Map onLoad={addMarkers} />
   <legend
     ><span style="background: var(--darkGreen)" /> aktiver Standort&ensp;
     <span style="background: var(--blue)" /> in Gründung</legend>

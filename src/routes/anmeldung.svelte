@@ -12,20 +12,21 @@
     const options = await fetchYaml(`Signup Form Options`)
 
     async function parseMicrocopy(title) {
-      let copy = await fetchYaml(title)
+      let obj = await fetchYaml(title)
       // iterate over name, phone, email, ...
-      Object.entries(copy).forEach(([key, itm]) => {
+      Object.entries(obj).forEach(([key, itm]) => {
         if (typeof itm === `string`)
-          copy[key] = openLinkinNewTab(stripOuterPTag(marked(itm)))
+          obj[key] = openLinkinNewTab(stripOuterPTag(marked(itm)))
         // iterate over title, note, ...
-        else {
-          copy[key].name = key // name is used by FormInput to link labels to their corresp. inputs
+        else if (typeof itm === `object` && itm !== null) {
+          obj[key].name = key // name is used by FormInput as id to link labels to their corresp. inputs
           Object.entries(itm).forEach(([innerKey, val]) => {
-            copy[key][innerKey] = openLinkinNewTab(stripOuterPTag(marked(val)))
+            if (typeof val === `string`)
+              obj[key][innerKey] = openLinkinNewTab(stripOuterPTag(marked(val)))
           })
         }
       })
-      return copy
+      return obj
     }
 
     const studentText = await parseMicrocopy(`Student Form`)
@@ -42,9 +43,9 @@
 
   import FormInput from '../components/FormInput.svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
-  import RadioButton from '../components/RadioButton.svelte'
   import Modal from '../components/Modal.svelte'
-  import { airtableSubmit, tryParse } from '../utils/airtable'
+  import RadioButtons from '../components/RadioButtons.svelte'
+  import { airtableSubmit } from '../utils/airtable'
   import { studentSignupStore, pupilSignupStore } from '../stores'
 
   export let chapters, options, studentText, pupilText
@@ -52,11 +53,12 @@
   const { session, page } = stores()
   let { type = `Student`, chapter = ``, test } = $page.query
   const inputs = {}
-  let response, isSubmitting, modalOpen
+  let response = {}
+  let isSubmitting, modalOpen
 
   function getFormVals() {
     return Object.fromEntries(
-      Object.entries(inputs).map(([key, inp]) => [key, tryParse(inp?.value)])
+      Object.entries(inputs).map(([key, input]) => [key, input?.value])
     )
   }
   function setFormVals(values) {
@@ -90,13 +92,20 @@
     isSubmitting = true
     let formValues = { type, ...getFormVals() }
 
-    const baseId = chapters?.find(({ title }) => title === formValues?.chapter)?.baseId
+    const baseId = chapters?.find(({ title }) => formValues?.chapter?.includes(title))
+      ?.baseId
     if (!baseId) {
       isSubmitting = false
       throw Error(`baseId could not be determined`)
     }
 
-    response = await airtableSubmit(baseId, formValues, $session.AIRTABLE_API_KEY, test)
+    try {
+      response = await airtableSubmit(baseId, formValues, $session.AIRTABLE_API_KEY, test)
+    } catch (error) {
+      console.error(error)
+      modalOpen = true
+      response.error = error
+    }
     if (!response.error) window.scrollTo({ top: 0, behavior: `smooth` })
     else modalOpen = true
     isSubmitting = false
@@ -115,113 +124,104 @@
       {@html text.page.title}
     </h1>
 
-    <RadioButton options={options.types} bind:value={type} />
+    <RadioButtons
+      options={options.types}
+      bind:selected={type}
+      style="margin: 1em auto;" />
 
     {@html text.page.note}
     <FormInput
       select={chapters.map((c) => c.title)}
       {...text.chapter}
-      bind:node={inputs.chapter}
-      required />
+      bind:input={inputs.chapter} />
 
-    <FormInput
-      select={options.genders}
-      {...text.gender}
-      bind:node={inputs.gender}
-      required />
+    <FormInput select={options.genders} {...text.gender} bind:input={inputs.gender} />
 
     {#if type === `Student`}
-      <FormInput {...text.fullname} bind:node={inputs.fullname} required />
+      <FormInput {...text.fullname} bind:input={inputs.fullname} />
 
-      <FormInput {...text.phone} bind:node={inputs.phone} type="phone" />
+      <FormInput {...text.phone} bind:input={inputs.phone} type="phone" />
 
-      <FormInput {...text.email} bind:node={inputs.email} required type="email" />
+      <FormInput {...text.email} bind:input={inputs.email} type="email" />
 
-      <FormInput {...text.studySubject} bind:node={inputs.studySubject} />
+      <FormInput {...text.studySubject} bind:input={inputs.studySubject} />
 
-      <FormInput {...text.semester} bind:node={inputs.semester} type="number" />
+      <FormInput {...text.semester} bind:input={inputs.semester} type="number" />
 
-      <FormInput {...text.birthPlace} bind:node={inputs.birthPlace} />
+      <FormInput {...text.birthPlace} bind:input={inputs.birthPlace} />
 
-      <FormInput {...text.birthDate} bind:node={inputs.birthDate} type="date" />
+      <FormInput {...text.birthDate} bind:input={inputs.birthDate} type="date" />
 
       <FormInput
         {...text.subjects}
-        bind:node={inputs.subjects}
-        multiselect={options.subjects}
-        required />
+        bind:input={inputs.subjects}
+        multiselect={options.subjects} />
 
       <FormInput
         {...text.schoolTypes}
-        bind:node={inputs.schoolTypes}
+        bind:input={inputs.schoolTypes}
         multiselect={options.schoolTypes} />
 
-      <FormInput {...text.levels} bind:node={inputs.levels} />
+      <FormInput {...text.levels} bind:input={inputs.levels} />
 
-      <FormInput {...text.place} bind:node={inputs.place} required />
+      <FormInput
+        {...text.places}
+        bind:input={inputs.places}
+        placeholder="Ort der Nachhilfe"
+        type="placeSelect" />
 
-      <FormInput {...text.remarks} bind:node={inputs.remarks} />
+      <FormInput {...text.mobility} bind:input={inputs.mobility} type="number" />
+
+      <FormInput {...text.remarks} bind:input={inputs.remarks} />
 
       <FormInput
         select={options.discoveries}
         {...text.discovery}
-        bind:node={inputs.discovery}
-        required />
+        bind:input={inputs.discovery} />
 
-      <FormInput
-        {...text.agreement}
-        bind:node={inputs.agreement}
-        type="toggle"
-        required />
+      <FormInput {...text.agreement} bind:input={inputs.agreement} type="toggle" />
     {:else if type === `Schüler`}
-      <FormInput {...text.firstname} bind:node={inputs.firstname} required />
+      <FormInput {...text.firstname} bind:input={inputs.firstname} />
 
       <FormInput
         {...text.subjects}
-        bind:node={inputs.subjects}
-        multiselect={options.subjects}
-        required />
+        bind:input={inputs.subjects}
+        multiselect={options.subjects} />
 
       <FormInput
         select={options.schoolTypes}
         {...text.schoolType}
-        bind:node={inputs.schoolType}
-        required />
+        bind:input={inputs.schoolType} />
 
-      <FormInput {...text.level} bind:node={inputs.level} required type="number" />
-
-      <FormInput {...text.place} bind:node={inputs.place} required />
-
-      <FormInput {...text.age} bind:node={inputs.age} type="number" />
-
-      <FormInput {...text.online} bind:node={inputs.online} type="toggle" />
-
-      <FormInput {...text.remarks} bind:node={inputs.remarks} />
-
-      <FormInput {...text.nameContact} bind:node={inputs.nameContact} required />
+      <FormInput {...text.level} bind:input={inputs.level} type="number" />
 
       <FormInput
-        {...text.phoneContact}
-        bind:node={inputs.phoneContact}
-        type="phone"
-        required />
+        {...text.places}
+        bind:input={inputs.places}
+        placeholder="Ort der Nachhilfe"
+        type="placeSelect" />
 
-      <FormInput
-        {...text.emailContact}
-        bind:node={inputs.emailContact}
-        type="email"
-        required />
+      <FormInput {...text.age} bind:input={inputs.age} type="number" />
 
-      <FormInput {...text.orgContact} bind:node={inputs.orgContact} required />
+      <FormInput {...text.online} bind:input={inputs.online} type="toggle" />
 
-      <FormInput {...text.need} bind:node={inputs.need} type="toggle" required />
+      <FormInput {...text.remarks} bind:input={inputs.remarks} />
+
+      <FormInput {...text.nameContact} bind:input={inputs.nameContact} />
+
+      <FormInput {...text.phoneContact} bind:input={inputs.phoneContact} type="phone" />
+
+      <FormInput {...text.emailContact} bind:input={inputs.emailContact} type="email" />
+
+      <FormInput {...text.orgContact} bind:input={inputs.orgContact} />
+
+      <FormInput {...text.need} bind:input={inputs.need} type="toggle" />
     {/if}
 
     <FormInput
       {...text.dataProtection}
-      bind:node={inputs.dataProtection}
-      type="toggle"
-      required />
+      bind:input={inputs.dataProtection}
+      type="toggle" />
 
     <h3>
       {@html text.submit.title}

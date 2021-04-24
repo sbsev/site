@@ -1,20 +1,28 @@
 <script>
-  export let value = ``
   export let options
+  export let selected = undefined
+  export let required = false
+  export let style = ``
+  export let name = ``
 </script>
 
-<div>
-  {#each options as option}
+<div {style}>
+  {#each options as value, idx}
     <label>
-      <input type="radio" bind:group={value} value={option} />
-      <span>{option}</span></label>
+      <input
+        type="radio"
+        id={name ? `${name}-${idx}` : undefined}
+        {name}
+        bind:group={selected}
+        {value}
+        {required} />
+      <span>{value}</span></label>
   {/each}
 </div>
 
 <style>
   div {
     display: flex;
-    margin: auto;
     border-radius: 1ex;
     width: max-content;
     overflow: hidden;

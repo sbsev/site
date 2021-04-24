@@ -1,3 +1,5 @@
+// run tests in this file with `yarn ava` while the dev server is running (yarn dev)
+
 import test from 'ava'
 import puppeteer from 'puppeteer'
 
@@ -5,14 +7,17 @@ import puppeteer from 'puppeteer'
 // makes Puppeteer page available inside test functions
 async function withPage(t, run) {
   const browser = await puppeteer.launch({
-    headless: true, // set to false to see the test in action
+    headless: false, // set to false to see the test in action
     defaultViewport: null,
+    // slowMo: 20, // slow down by 250ms to help see what's going on (good in combination with headless: false)
   })
 
   const page = await browser.newPage()
 
   try {
     await run(t, page)
+  } catch (err) {
+    console.error(err)
   } finally {
     await page.close()
     await browser.close()
@@ -22,6 +27,14 @@ async function withPage(t, run) {
 async function fillInput(page, id, value) {
   await page.focus(id)
   await page.keyboard.type(value)
+}
+
+async function fillPlaceSelect(page, id, value) {
+  await page.focus(id)
+  await page.keyboard.type(value)
+  await page.waitForSelector(`.pac-item`)
+  await page.keyboard.press(`ArrowDown`)
+  await page.keyboard.press(`Enter`)
 }
 
 async function fillSingleSelect(page, id, value) {
@@ -50,7 +63,8 @@ test(`signup form accepts minimal student data`, withPage, async (t, page) => {
 
   await fillMultiSelect(page, `#subjects`, [`Mathe`, `Physik`])
 
-  await fillInput(page, `#place`, `Bibliothek`)
+  await fillPlaceSelect(page, `#places`, `test1`)
+  await fillPlaceSelect(page, `#places`, `test2`)
 
   await fillSingleSelect(page, `#discovery`, `Freunde`)
 
@@ -86,7 +100,8 @@ test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
 
   await fillInput(page, `#level`, `7`)
 
-  await fillInput(page, `#place`, `Stadtbücherei`)
+  await fillPlaceSelect(page, `#places`, `test1`)
+  await fillPlaceSelect(page, `#places`, `test2`)
 
   await page.$eval(`#online`, (el) => el.click())
 
