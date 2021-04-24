@@ -12,7 +12,7 @@
 
   let places = []
   let markers = []
-  let map
+  let map, autoCompleteNode
 
   function selectHandler(place) {
     if (!place.geometry?.location) {
@@ -33,7 +33,7 @@
       label: { text: place.name.slice(0, 2), color: `white` },
       title: place.name,
     })
-    markers.append(marker)
+    markers.push(marker)
 
     const bounds = new window.google.maps.LatLngBounds()
     for (const marker of markers) {
@@ -55,9 +55,15 @@
 </script>
 
 <!-- for holding the component's value in a way accessible to the DOM -->
-<input bind:this={input} {required} {name} id={name} class="hidden" />
+<input
+  bind:this={input}
+  {required}
+  {name}
+  id={name}
+  class="hidden"
+  on:focus={() => autoCompleteNode.focus()} />
 
-<AutoCompletePlace {placeholder} {required} {selectHandler} />
+<AutoCompletePlace {placeholder} {selectHandler} bind:inputNode={autoCompleteNode} />
 <ol>
   {#each places as place, idx}
     <li>

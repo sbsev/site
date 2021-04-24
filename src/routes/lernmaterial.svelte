@@ -32,7 +32,6 @@
     Alle: SelectAll,
     Mathe: Functions,
     Wissenschaft: Science,
-    // Physik: Grav,
     'Lernen mit Karteikarten': CardText,
     'Viele Fächer': GroupWork,
     'Deutsche Sprache': Language,

@@ -2,9 +2,10 @@
   import Toggle from './Toggle.svelte'
   import MultiSelect from './MultiSelect.svelte'
   import PlaceSelect from './PlaceSelect.svelte'
+  import RadioButtons from './RadioButtons.svelte'
 
   // display props
-  export let title = ``
+  export let title
   export let note = ``
 
   // input props
@@ -12,6 +13,7 @@
   export let name = ``
   export let placeholder = title
   export let select = []
+  export let options = []
   export let multiselect = []
   export let type = `text` // text, email, number, date, phone
   export let required = false
@@ -38,6 +40,8 @@
   <Toggle {name} {required} bind:input />
 {:else if type === `placeSelect`}
   <PlaceSelect {name} {required} bind:input {placeholder} />
+{:else if type === `radio`}
+  <RadioButtons {name} {required} bind:input {options} />
 {:else}
   <input
     {type}

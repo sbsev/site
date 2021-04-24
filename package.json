@@ -12,7 +12,7 @@
     "export": "sapper export",
     "start": "sapper dev",
     "serve": "sapper export && sirv __sapper__/export",
-    "test": "ava --timeout=2m",
+    "test": "ava --timeout=1m",
     "ci": "start-server-and-test http://localhost:3000"
   },
   "dependencies": {

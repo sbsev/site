@@ -1,5 +1,6 @@
 <script>
   import { stores } from '@sapper/app'
+  import { onMount } from 'svelte'
 
   export let map = undefined
   export let onLoad = () => {}
@@ -22,14 +23,22 @@
   // This includes the places library to avoid needing to reimport Google Maps in
   // AutoCompletePlace.svelte which would warn "You have included the Google Maps
   // JavaScript API multiple times on this page. This may cause unexpected errors."
-  const src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}&libraries=places`
 
   $: if (map && typeof onLoad === `function`) onLoad(map)
-</script>
 
-<svelte:head>
-  <script id="gm-js-api" async {src} on:load={mountMap}></script>
-</svelte:head>
+  onMount(() => {
+    let script = document.getElementById(`gm-js-api`)
+
+    if (!script) {
+      script = document.createElement(`script`) // dynamically created scripts are async by default
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}&libraries=places`
+      script.id = `gm-js-api`
+      document.head.append(script)
+    }
+    if (!window.google?.maps) script.addEventListener(`load`, mountMap)
+    else mountMap()
+  })
+</script>
 
 <div bind:this={mapDiv} style={mapDivCss} />
 

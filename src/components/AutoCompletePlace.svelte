@@ -37,6 +37,7 @@
     if (!script) {
       script = document.createElement(`script`) // dynamically created scripts are async by default
       script.src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}&libraries=places`
+      script.id = `gm-js-api`
       document.head.append(script)
     }
     if (!window.google?.maps) script.addEventListener(`load`, mountInput)
@@ -62,7 +63,7 @@
     background: var(--accentBg);
     border-radius: 3pt;
   }
-  :global(.pac-item:hover) {
+  :global(.pac-item:where(:hover, .pac-item-selected)) {
     background: var(--bodyBg);
   }
   :global(.pac-item span) {
