@@ -61,7 +61,9 @@
   {name}
   id={name}
   class="hidden"
-  on:focus={() => autoCompleteNode.focus()} />
+  on:focus={() => autoCompleteNode.focus()}
+  tabindex="-1" />
+<!-- tabindex="-1" means skip element during tabbing, else we couldn't shift-tab out of filterInput as filterInput.focus() would jump right back -->
 
 <AutoCompletePlace {placeholder} {selectHandler} bind:inputNode={autoCompleteNode} />
 <ol>

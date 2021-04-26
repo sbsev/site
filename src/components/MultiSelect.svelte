@@ -59,18 +59,16 @@
   }
 
   function handleKeydown(event) {
-    if (event.code === `Escape`) {
+    if (event.key === `Escape`) {
       setOptionsVisible(false)
       filterValue = ``
-    }
-    if (event.code === `Enter`) {
+    } else if (event.key === `Enter`) {
       if (activeOption) {
         selected.includes(activeOption) ? remove(activeOption) : add(activeOption)
         filterValue = ``
       } // no active option means the options are closed in which case enter means open
       else setOptionsVisible(true)
-    }
-    if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
+    } else if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
       const increment = event.key === `ArrowUp` ? -1 : 1
       const calcIndex = filtered.indexOf(activeOption) + increment
       if (calcIndex < 0) {
@@ -118,7 +116,9 @@
       {required}
       {name}
       id={name}
-      on:focus={() => filterInput.focus()} />
+      on:focus={() => filterInput.focus()}
+      tabindex="-1" />
+    <!-- tabindex="-1" means skip element during tabbing, else we couldn't shift-tab out of filterInput as filterInput.focus() would jump right back -->
     <input
       on:click|self={() => setOptionsVisible(true)}
       on:blur={() => dispatch(`blur`)}

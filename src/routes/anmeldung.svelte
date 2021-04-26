@@ -118,7 +118,9 @@
     {@html text.success}
   </section>
 {:else}
-  <form on:submit|preventDefault={submit}>
+  <form onsubmit="return false;" on:submit|preventDefault={submit}>
+    <!-- Prevent implicit submission of the form -->
+    <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
       <Plant height="1em" style="vertical-align: -3pt;" />
       {@html text.page.title}

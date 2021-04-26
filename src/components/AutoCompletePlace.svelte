@@ -70,7 +70,7 @@
     color: var(--textColor);
   }
   /* hide google logo from autocomplete suggestions */
-  :global(.pac-logo:after) {
+  :global(.pac-logo::after) {
     display: none;
   }
 </style>

@@ -236,7 +236,7 @@ p > :is(picture + em, a + em) {
 .anchor-heading a svg {
   width: 1.5ex;
 }
-.anchor-heading:before {
+.anchor-heading::before {
   content: '';
   display: block;
   position: relative;
