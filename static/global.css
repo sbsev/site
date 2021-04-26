@@ -219,3 +219,28 @@ p > :is(picture + em, a + em) {
   text-align: center;
   display: block;
 }
+
+/* class inserted by custom heading renderer in src/utils/marked.js */
+.anchor-heading a {
+  float: left;
+  padding-right: 7pt;
+  margin-left: -2.5ex;
+  margin-top: 2pt;
+  color: var(--textColor) !important;
+  opacity: 0;
+  transition: 0.3s;
+}
+.anchor-heading:hover > a {
+  opacity: 1;
+}
+.anchor-heading a svg {
+  width: 1.5ex;
+}
+.anchor-heading:before {
+  content: '';
+  display: block;
+  position: relative;
+  width: 0;
+  height: 5em;
+  margin-top: -5em;
+}
