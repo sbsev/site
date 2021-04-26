@@ -2,11 +2,11 @@
   export let name
   export let checked = false
   export let required = false
-  export let node = undefined
+  export let input = undefined
 </script>
 
 <label for={name}>
-  <input type="checkbox" id={name} {name} bind:checked {required} bind:this={node} />
+  <input type="checkbox" id={name} {name} bind:checked {required} bind:this={input} />
   <span />
 </label>
 
