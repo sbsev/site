@@ -27,7 +27,6 @@
 
   import Header from '../components/Header.svelte'
   import Footer from '../components/Footer.svelte'
-  import GoogleAnalytics from '../components/GoogleAnalytics.svelte'
 
   export let nav, footer, social
 
@@ -49,7 +48,6 @@
     data-domain="studenten-bilden-schueler.de"
     src="https://plausible.io/js/plausible.js"></script>
 </svelte:head>
-<GoogleAnalytics />
 
 <Header {nav} />
 <main>
