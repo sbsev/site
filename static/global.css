@@ -9,14 +9,14 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, 'Helvetica Neue',
     sans-serif;
   line-height: 1.5;
-  font-size: calc(0.8em + 0.3vw);
+  font-size: calc(2ex + 0.3vw);
   transition: 0.3s;
   background: var(--bodyBg);
   color: var(--textColor);
 }
 @media (min-width: 1600px) {
   body {
-    font-size: 1.4em;
+    font-size: 1.2em;
   }
 }
 main {
@@ -26,7 +26,6 @@ main {
 main h1 {
   text-align: center;
   color: var(--headingColor);
-  font-size: 3ex;
 }
 main img {
   width: 100%;
@@ -221,12 +220,15 @@ p > :is(picture + em, a + em) {
 }
 
 /* class inserted by custom heading renderer in src/utils/marked.js */
+.anchor-heading {
+  scroll-margin-top: 100px;
+}
 .anchor-heading a {
   float: left;
-  padding-right: 7pt;
-  margin-left: -2.5ex;
-  margin-top: 2pt;
-  color: var(--textColor) !important;
+  padding: 2pt 7pt 2pt 2pt;
+  margin-left: -2ex;
+  margin-top: -4pt;
+  color: var(--textColor);
   opacity: 0;
   transition: 0.3s;
 }
@@ -234,13 +236,6 @@ p > :is(picture + em, a + em) {
   opacity: 1;
 }
 .anchor-heading a svg {
-  width: 1.5ex;
-}
-.anchor-heading::before {
-  content: '';
-  display: block;
-  position: relative;
-  width: 0;
-  height: 5em;
-  margin-top: -5em;
+  vertical-align: middle;
+  width: 1.3ex;
 }

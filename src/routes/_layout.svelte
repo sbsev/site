@@ -47,6 +47,14 @@
     defer
     data-domain="studenten-bilden-schueler.de"
     src="https://plausible.io/js/plausible.js"></script>
+  <!-- required for triggering custom events in signup form -->
+  <script>
+    window.plausible =
+      window.plausible ||
+      function () {
+        ;(window.plausible.q = window.plausible.q || []).push(arguments)
+      }
+  </script>
 </svelte:head>
 
 <Header {nav} />

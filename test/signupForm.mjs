@@ -13,7 +13,7 @@ async function withPage(t, run) {
     // slowMo: 20, // slow down by 250ms to help see what's going on (good in combination with headless: false)
   })
 
-  const page = await browser.newPage()
+  const page = (await browser.pages())[0]
 
   try {
     await run(t, page)
@@ -73,7 +73,7 @@ test(`signup form accepts minimal student data`, withPage, async (t, page) => {
 
   await page.$eval(`#dataProtection`, (el) => el.click())
 
-  await page.$eval(`button[type=submit]`, (el) => el.click())
+  await page.$eval(`button[type=submit].main`, (el) => el.click())
 
   const span = await page.waitForSelector(`main > section > span:first-child`)
 
@@ -118,7 +118,7 @@ test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
 
   await page.$eval(`#dataProtection`, (el) => el.click())
 
-  await page.$eval(`button[type=submit]`, (el) => el.click())
+  await page.$eval(`button[type=submit].main`, (el) => el.click())
 
   const span = await page.waitForSelector(`main > section > span:first-child`)
 

@@ -45,7 +45,7 @@
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import Modal from '../components/Modal.svelte'
   import RadioButtons from '../components/RadioButtons.svelte'
-  import { airtableSubmit } from '../utils/airtable'
+  import { airtableSubmit, tryParse } from '../utils/airtable'
   import { studentSignupStore, pupilSignupStore } from '../stores'
 
   export let chapters, options, studentText, pupilText
@@ -90,24 +90,40 @@
 
   async function submit() {
     isSubmitting = true
-    let formValues = { type, ...getFormVals() }
 
-    const baseId = chapters?.find(({ title }) => formValues?.chapter?.includes(title))
-      ?.baseId
+    const data = { type, ...getFormVals() }
+
+    for (const key in data) data[key] = tryParse(data[key])
+
+    const { chapter } = data
+
+    const chapterAndType = { chapter, type, 'chapter+type': `${type} aus ${chapter}` }
+
+    const baseId = chapters?.find(({ title }) => data?.chapter?.includes(title))?.baseId
     if (!baseId) {
       isSubmitting = false
-      throw Error(`baseId could not be determined`)
+      response.error = `baseId could not be determined`
     }
 
     try {
-      response = await airtableSubmit(baseId, formValues, $session.AIRTABLE_API_KEY, test)
+      response = await airtableSubmit(baseId, data, $session.AIRTABLE_API_KEY, test)
     } catch (error) {
-      console.error(error)
-      modalOpen = true
       response.error = error
     }
-    if (!response.error) window.scrollTo({ top: 0, behavior: `smooth` })
-    else modalOpen = true
+
+    if (response.records) {
+      window.plausible(`Signup`, { props: chapterAndType })
+      window.scrollTo({ top: 0, behavior: `smooth` })
+    } else if (response.error) {
+      const { error } = response
+      window.plausible(`Signup Error`, { props: { error, ...chapterAndType } })
+      console.error(error)
+      modalOpen = true
+    } else {
+      console.error(
+        `unexpected state: form submission did not succeed but did not raise an error either`
+      )
+    }
     isSubmitting = false
   }
 </script>
@@ -119,7 +135,7 @@
   </section>
 {:else}
   <form onsubmit="return false;" on:submit|preventDefault={submit}>
-    <!-- Prevent implicit submission of the form -->
+    <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
     <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
       <Plant height="1em" style="vertical-align: -3pt;" />
@@ -229,7 +245,8 @@
       {@html text.submit.title}
     </h3>
     {@html text.submit.note}
-    <button type="submit" disabled={isSubmitting}>
+    <!-- class main used by CSS selector in test/signupForm.mjs -->
+    <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
         <CircleSpinner color="white" />
       {:else}
