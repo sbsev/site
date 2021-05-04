@@ -19,8 +19,8 @@
   export let required = false
 </script>
 
-<!-- prefix `for` with `name` when type is toggle to prevent toggling the checkbox on clicking its label -->
-<label for={type === `toggle` ? `${name}-${type}` : name} class:required>
+<!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
+<label for={name} class:required on:click|preventDefault>
   {@html title}
 </label>
 

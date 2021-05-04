@@ -54,6 +54,7 @@
   let { type = `Student`, chapter = ``, test } = $page.query
   const inputs = {}
   let response = {}
+  let error = undefined
   let isSubmitting, modalOpen
 
   function getFormVals() {
@@ -102,22 +103,21 @@
     const baseId = chapters?.find(({ title }) => data?.chapter?.includes(title))?.baseId
     if (!baseId) {
       isSubmitting = false
-      response.error = `baseId could not be determined`
+      error = { message: `baseId could not be determined` }
     }
 
     try {
       response = await airtableSubmit(baseId, data, $session.AIRTABLE_API_KEY, test)
-    } catch (error) {
-      response.error = error
+    } catch (err) {
+      error = err
     }
 
     if (response.records) {
       window.plausible(`Signup`, { props: chapterAndType })
       window.scrollTo({ top: 0, behavior: `smooth` })
-    } else if (response.error) {
-      const { error } = response
-      window.plausible(`Signup Error`, { props: { error, ...chapterAndType } })
+    } else if (error) {
       console.error(error)
+      window.plausible(`Signup Error`, { props: { error, ...chapterAndType } })
       modalOpen = true
     } else {
       console.error(
@@ -188,8 +188,6 @@
         placeholder="Ort der Nachhilfe"
         type="placeSelect" />
 
-      <!-- <FormInput {...text.mobility} bind:input={inputs.mobility} type="number" /> -->
-
       <FormInput {...text.remarks} bind:input={inputs.remarks} />
 
       <FormInput
@@ -255,15 +253,12 @@
     </button>
   </form>
   {#if modalOpen}
-    <Modal
-      on:close={() => (modalOpen = false)}
-      style="background: var(--darkBlue); color: white;">
+    <Modal on:close={() => (modalOpen = false)} style="background: var(--bodyBg);">
       <div>
         <span>😢</span>
         {@html text.error}
-        <pre><code>
-        {JSON.stringify(response?.error, null, 2)}
-      </code></pre>
+
+        <pre><code>{error}</code></pre>
       </div>
     </Modal>
   {/if}
@@ -288,6 +283,10 @@
     color: white;
     background: var(--darkGreen);
     font-size: 1.2em;
+    border: 1pt solid transparent;
+  }
+  button[type='submit']:focus {
+    border: 1pt solid var(--lightBlue);
   }
   button[type='submit']:disabled {
     cursor: default;

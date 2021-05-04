@@ -3,10 +3,24 @@
   export let checked = false
   export let required = false
   export let input = undefined
+
+  function handleKeydown(event) {
+    if (event.key === `Enter`) {
+      checked = !checked
+      event.preventDefault()
+    }
+  }
 </script>
 
 <label for={name}>
-  <input type="checkbox" id={name} {name} bind:checked {required} bind:this={input} />
+  <input
+    type="checkbox"
+    id={name}
+    {name}
+    bind:checked
+    {required}
+    bind:this={input}
+    on:keydown={handleKeydown} />
   <span />
 </label>
 
@@ -45,5 +59,8 @@
   input:checked + span::after {
     background: var(--green);
     transform: translate(100%);
+  }
+  input:focus + span {
+    border: 1px solid var(--lightBlue);
   }
 </style>

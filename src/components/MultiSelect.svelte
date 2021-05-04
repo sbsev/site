@@ -210,6 +210,9 @@
     /* needed to hide red shadow around required inputs in some browsers */
     box-shadow: none;
   }
+  .multiselect:focus-within {
+    border: 1pt solid var(--lightBlue);
+  }
 
   ul {
     list-style: none;
