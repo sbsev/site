@@ -95,7 +95,7 @@ export async function base64Thumbnail(url, options = {}) {
 function renderBody(itm) {
   if (!itm?.body) return itm
 
-  itm.body = marked(itm.body).replaceAll(`href="SLUG#`, `href="${itm.slug}#`) // generate HTML
+  itm.body = marked(itm.body) // generate HTML
   itm.plainBody = itm.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
 
   return itm

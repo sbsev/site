@@ -32,26 +32,33 @@
 </script>
 
 <!-- used to briefly flash an list item as active when it's hash is found in the URL -->
-<svelte:window on:hashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
+<svelte:window
+  on:hashchange={() => {
+    // eslint-disable-next-line no-unused-vars
+    hash = window.location.hash.replace(`#`, ``)
+  }} />
 
-<BasePage {page} />
-
-{#each Object.entries(itemsByYear).reverse() as [key, val] (key)}
-  <h2>{key}</h2>
-  <ul class="items">
-    {#each val as { title, id, img, url, date, chapter, source } (title)}
-      <li>
-        <a href={url}><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
-        <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
-        <div>
-          <span><Newspaper {style} />{source}</span>
-          <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
-          <span><Place {style} />Standort {chapter}</span>
-        </div>
-      </li>
+<BasePage {page}>
+  <svelte:fragment slot="afterArticle">
+    {#each Object.entries(itemsByYear).reverse() as [key, val] (key)}
+      <h2>{key}</h2>
+      <ul class="items">
+        {#each val as { title, id, img, url, date, chapter, source } (title)}
+          <li>
+            <a href={url}
+              ><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
+            <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
+            <div>
+              <span><Newspaper {style} />{source}</span>
+              <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
+              <span><Place {style} />Standort {chapter}</span>
+            </div>
+          </li>
+        {/each}
+      </ul>
     {/each}
-  </ul>
-{/each}
+  </svelte:fragment>
+</BasePage>
 
 <style>
   h2 {

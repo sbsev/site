@@ -110,15 +110,18 @@
   {#if readonly}
     <ReadOnlyIcon {style} />
   {:else}
-    <!-- for holding the component's value in a way accessible to the DOM -->
+    <!-- first input node is for holding the component's value in a way accessible to the DOM -->
+    <!-- ensures forms cannot be submitted unless value was provided if field is required -->
+    <!-- also causes browser to scroll element into view with prompt to complete this field when clicking submit button while required input is empty -->
+    <!-- on:focus|preventDefault and tabindex="-1" make it non-focusable -->
+    <!-- tabindex="-1" means skip element during tabbing -->
     <input
       bind:this={input}
-      {required}
       {name}
       id={name}
-      on:focus={() => filterInput.focus()}
+      {required}
+      on:focus|preventDefault
       tabindex="-1" />
-    <!-- tabindex="-1" means skip element during tabbing, else we couldn't shift-tab out of filterInput as filterInput.focus() would jump right back -->
     <input
       on:click|self={() => setOptionsVisible(true)}
       on:blur={() => dispatch(`blur`)}
@@ -220,7 +223,7 @@
     padding: 0;
     top: 100%;
     width: 100%;
-    z-index: 1;
+    z-index: 4;
     background: var(--accentBg);
     box-shadow: 0 0 1em var(--shadow);
     cursor: pointer;

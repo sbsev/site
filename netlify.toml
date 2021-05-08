@@ -3,7 +3,7 @@
   publish = "__sapper__/export"
 
 [build.environment]
-  NODE_VERSION = "15.5.1"
+  NODE_VERSION = "16.1.0"
   YARN_VERSION = "1.22.10"
 
 [[redirects]]
