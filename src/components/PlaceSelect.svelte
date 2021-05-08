@@ -12,7 +12,7 @@
 
   let places = []
   let markers = []
-  let map, autoCompleteNode
+  let map
 
   function selectHandler(place) {
     if (!place.geometry?.location) {
@@ -61,11 +61,11 @@
   {name}
   id={name}
   class="hidden"
-  on:focus={() => autoCompleteNode.focus()}
-  tabindex="-1" />
+  tabindex="-1"
+  on:focus|preventDefault />
 <!-- tabindex="-1" means skip element during tabbing, else we couldn't shift-tab out of filterInput as filterInput.focus() would jump right back -->
 
-<AutoCompletePlace {placeholder} {selectHandler} bind:inputNode={autoCompleteNode} />
+<AutoCompletePlace {placeholder} {selectHandler} />
 <ol>
   {#each places as place, idx}
     <li>
@@ -109,8 +109,7 @@
     outline: none;
     background: none;
     padding: 0;
-    width: 1pt;
-    padding: 1pt;
+    width: 1px;
     /* needed to hide red shadow around required inputs in some browsers */
     box-shadow: none;
   }

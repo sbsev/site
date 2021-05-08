@@ -108,23 +108,16 @@
 
     try {
       response = await airtableSubmit(baseId, data, $session.AIRTABLE_API_KEY, test)
-    } catch (err) {
-      error = err
-    }
-
-    if (response.records) {
       window.plausible(`Signup`, { props: chapterAndType })
       window.scrollTo({ top: 0, behavior: `smooth` })
-    } else if (error) {
+    } catch (err) {
+      error = err
       console.error(error)
       window.plausible(`Signup Error`, { props: { error, ...chapterAndType } })
       modalOpen = true
-    } else {
-      console.error(
-        `unexpected state: form submission did not succeed but did not raise an error either`
-      )
+    } finally {
+      isSubmitting = false
     }
-    isSubmitting = false
   }
 </script>
 
@@ -164,7 +157,7 @@
 
       <FormInput {...text.studySubject} bind:input={inputs.studySubject} />
 
-      <FormInput {...text.semester} bind:input={inputs.semester} type="number" />
+      <FormInput {...text.semester} bind:input={inputs.semester} type="number" min={1} />
 
       <FormInput {...text.birthPlace} bind:input={inputs.birthPlace} />
 
@@ -180,7 +173,13 @@
         bind:input={inputs.schoolTypes}
         multiselect={options.schoolTypes} />
 
-      <FormInput {...text.levels} bind:input={inputs.levels} />
+      <FormInput
+        {...text.levels}
+        bind:input={inputs.levels}
+        type="doubleRange"
+        min={1}
+        max={13}
+        initial="1 - 13" />
 
       <FormInput
         {...text.places}
@@ -209,7 +208,13 @@
         {...text.schoolType}
         bind:input={inputs.schoolType} />
 
-      <FormInput {...text.level} bind:input={inputs.level} type="number" />
+      <FormInput
+        {...text.level}
+        bind:input={inputs.level}
+        type="singleRange"
+        min={1}
+        max={13}
+        initial="" />
 
       <FormInput
         {...text.places}

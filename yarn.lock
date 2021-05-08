@@ -4534,6 +4534,11 @@ svelte-algolia@^0.1.5:
     algoliasearch "^4.5.1"
     esm "^3.2.25"
 
+svelte-range-slider-pips@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/svelte-range-slider-pips/-/svelte-range-slider-pips-1.7.0.tgz#35f2e211d6e82dcbb84ba812f8773d97cb630b87"
+  integrity sha512-9DXq55eD4yacKEh4LUL6T8Ij8Mxp9z68cO7EyzIIn+rbDPz0uWA2jebbeYyl58YdpsRKQTFZJKfyNHURzXBtYQ==
+
 svelte@^3.35.0:
   version "3.35.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.35.0.tgz#e0d0ba60c4852181c2b4fd851194be6fda493e65"

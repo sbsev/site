@@ -3,6 +3,7 @@
   import MultiSelect from './MultiSelect.svelte'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
+  import RangeSlider from './RangeSlider.svelte'
 
   // display props
   export let title
@@ -17,6 +18,9 @@
   export let multiselect = []
   export let type = `text` // text, email, number, date, phone
   export let required = false
+  export let min = undefined
+  export let max = undefined
+  export let initial = undefined
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
@@ -40,6 +44,8 @@
   <Toggle {name} {required} bind:input />
 {:else if type === `placeSelect`}
   <PlaceSelect {name} {required} bind:input {placeholder} />
+{:else if [`singleRange`, `doubleRange`].includes(type)}
+  <RangeSlider {name} {required} bind:input {min} {max} {type} {initial} />
 {:else if type === `radio`}
   <RadioButtons {name} {required} bind:input {options} />
 {:else}
@@ -50,7 +56,9 @@
     {name}
     {placeholder}
     {required}
-    on:mousewheel={() => type === `number` && input.blur()} />
+    on:mousewheel={() => type === `number` && input.blur()}
+    {min}
+    {max} />
   <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
 {/if}
 

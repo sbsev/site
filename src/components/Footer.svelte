@@ -20,7 +20,7 @@
 </script>
 
 <footer>
-  <img src="favicon.svg" alt="SbS Logo" height="60" />
+  <img src="/favicon.svg" alt="SbS Logo" height="60" />
   <span>© {new Date().getFullYear()} Studenten bilden Schüler e.V.</span>
   <div>
     {#each links as { title, url }}

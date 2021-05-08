@@ -63,6 +63,7 @@
     "sirv-cli": "^1.0.11",
     "start-server-and-test": "^1.12.0",
     "svelte": "^3.35.0",
-    "svelte-algolia": "^0.1.5"
+    "svelte-algolia": "^0.1.5",
+    "svelte-range-slider-pips": "^1.7.0"
   }
 }

@@ -1,5 +1,5 @@
 export function tryParse(str) {
-  // try to parse as JSON, just return unchanged if that fails
+  // try to parse str as JSON, return unchanged if that fails
   try {
     return JSON.parse(str)
   } catch (_) {
@@ -51,8 +51,8 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     'Geografische Präferenz': toStr(data.place),
     Adressen, // formatted address provided by Google Maps Places API
     Koordinaten,
-    Klassenstufen: toStr(data.levels), // for students
-    Klassenstufe: toStr(data.level), // for pupils
+    Klassenstufen: toStr(data.levels) || `1-13`, // for students
+    Klassenstufe: toStr(data.level), // for pupils (no fallback value here since it's a required field for pupils)
     Fächer: data.subjects,
     Schulform: data.schoolType || data.schoolTypes, // for pupils or students
     Werbemaßnahme: data.discovery,
@@ -94,7 +94,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }
 
   const globalBaseId = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
-  const testBaseId = `appe3hVONuwBkuQv1` // test base called 'Verification' in Airtable
+  const testBaseId = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) return await airtablePost(testBaseId, table, chapterFields, apiKey)
   // use Promise.all to fail fast if one record creation fails
@@ -102,5 +102,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     airtablePost(globalBaseId, table, globalFields, apiKey),
     airtablePost(chapterBaseId, table, chapterFields, apiKey),
   ])
-  return responses.find((res) => `error` in res) || responses[0]
+  const err = responses.find((res) => `error` in res)
+  if (err) throw err
+  else return responses[0]
 }
