@@ -120,7 +120,7 @@
       {name}
       id={name}
       {required}
-      on:focus|preventDefault
+      on:focus={() => filterInput.focus()}
       tabindex="-1" />
     <input
       on:click|self={() => setOptionsVisible(true)}

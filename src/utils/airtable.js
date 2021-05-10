@@ -35,45 +35,61 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     data.birthDate = date
   }
 
-  const Adressen = Object.values(data.places)
-    .map((place) => place.address)
-    .join(`\n`)
-  const Koordinaten = Object.values(data.places)
-    .map((place) => place.coords.join(`,`))
-    .join(`;`)
-
-  const fields = {
-    'Vor- und Nachname': data.fullname, // for students
-    Vorname: data.firstname, // for pupils
-    Telefon: toStr(data.phone), // for students
-    'E-Mail': toStr(data.email),
-    Bemerkung: toStr(data.remarks),
-    'Geografische Präferenz': toStr(data.place),
-    Adressen, // formatted address provided by Google Maps Places API
-    Koordinaten,
-    Klassenstufen: toStr(data.levels) || `1-13`, // for students
-    Klassenstufe: toStr(data.level), // for pupils (no fallback value here since it's a required field for pupils)
-    Fächer: data.subjects,
-    Schulform: data.schoolType || data.schoolTypes, // for pupils or students
-    Werbemaßnahme: data.discovery,
-    Geschlecht: data.gender,
-    'Semester Anmeldung': Number(data.semester) || undefined, // for students
-    // pass undefined in case Number(data.semester) is NaN
-    Studienfach: data.studySubject, // for students
-    Geburtsort: toStr(data.birthPlace), // for students
+  // common fields for both students and pupils
+  // we populate student/pupil-specific fields below
+  let fields = {
+    // formatted address provided by Google Maps Places API
+    Adressen: Object.values(data.places)
+      .map((place) => place.address)
+      .join(`\n`),
+    Koordinaten: Object.values(data.places)
+      .map((place) => place.coords.join(`,`))
+      .join(`;`),
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
     Geburtsdatum:
       typeof data.birthDate === `string`
         ? data.birthDate.split(`.`).reverse().join(`-`)
         : data.birthDate,
+    Fächer: data.subjects,
+    Werbemaßnahme: data.discovery,
+    Geschlecht: data.gender,
+    Bemerkung: toStr(data.remarks),
     Datenschutz: data.dataProtection,
-    Kontaktperson: data.nameContact, // for pupils
-    'E-Mail Kontaktperson': toStr(data.emailContact), // for pupils
-    'Telefon Kontaktperson': toStr(data.phoneContact), // for pupils
-    'Organisation Kontaktperson': toStr(data.orgContact), // for pupils
-    Online: data.online, // for pupils
     Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
+  }
+
+  if (data.type === `Student`) {
+    const studentFields = {
+      'Vor- und Nachname': data.fullname,
+      Telefon: toStr(data.phone),
+      'E-Mail': toStr(data.email),
+      'Geografische Präferenz': toStr(data.place),
+      Klassenstufen: toStr(data.levels) || `1-13`,
+      Schulform: data.schoolTypes,
+      // pass undefined in case Number(data.semester) is NaN (which Airtable can't handle)
+      'Semester Anmeldung': Number(data.semester) || undefined,
+      Studienfach: data.studySubject,
+      Geburtsort: toStr(data.birthPlace),
+      // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
+      // in Safari. Should do nothing in other browsers.
+    }
+    fields = { ...fields, ...studentFields }
+  } else {
+    // type === 'Pupil'
+    const pupilFields = {
+      Vorname: data.firstname,
+      'E-Mail': toStr(data.email),
+      'Geografische Präferenz': toStr(data.place),
+      Klassenstufe: toStr(data.level), // no fallback value here since it's a required field for pupils
+      Schulform: data.schoolType,
+      Kontaktperson: data.nameContact,
+      'E-Mail Kontaktperson': toStr(data.emailContact),
+      'Telefon Kontaktperson': toStr(data.phoneContact),
+      'Organisation Kontaktperson': toStr(data.orgContact),
+      Online: data.online,
+    }
+    fields = { ...fields, ...pupilFields }
   }
 
   // fields not present in local chapter tables
@@ -81,14 +97,6 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     ...fields,
     Standort: data.chapter,
     Spur: window.locations.join(`,\n`),
-  }
-
-  // some chapters organize contact persons little differently than others
-  if (data.chapter === `Halle` && table === `Schüler`) {
-    fields.Kontaktperson = `${data.nameContact}; ${data.orgContact}; ${data.emailContact}; ${data.phoneContact}`
-    fields[`E-Mail Kontaktperson`] = undefined
-    fields[`Telefon Kontaktperson`] = undefined
-    fields[`Organisation Kontaktperson`] = undefined
   }
 
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }

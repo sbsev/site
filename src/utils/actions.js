@@ -12,18 +12,3 @@ export function onClickOutside(node, cb) {
     destroy: () => document.removeEventListener(`click`, detectClickOutside),
   }
 }
-
-export function preventOverScroll(node) {
-  const preventScroll = (e) => {
-    const scrollable =
-      node.scrollWidth > node.clientWidth ||
-      node.scrollHeight > node.clientHeight
-
-    if (!scrollable) e.preventDefault()
-  }
-
-  node.addEventListener(`mousewheel`, preventScroll, { passive: false })
-  return {
-    onDestroy: () => node.removeEventListener(`mousewheel`, preventScroll),
-  }
-}

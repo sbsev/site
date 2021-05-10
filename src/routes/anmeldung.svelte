@@ -113,7 +113,9 @@
     } catch (err) {
       error = err
       console.error(error)
-      window.plausible(`Signup Error`, { props: { error, ...chapterAndType } })
+      window.plausible(`Signup Error`, {
+        props: { error: error.stack, ...chapterAndType },
+      })
       modalOpen = true
     } finally {
       isSubmitting = false
@@ -263,7 +265,7 @@
         <span>😢</span>
         {@html text.error}
 
-        <pre><code>{JSON.stringify(error, null, 2)}</code></pre>
+        <pre><code>{error.stack}</code></pre>
       </div>
     </Modal>
   {/if}
@@ -310,6 +312,6 @@
     padding: 1em;
   }
   pre {
-    overflow: auto;
+    overflow-x: auto;
   }
 </style>

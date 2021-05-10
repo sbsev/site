@@ -1,77 +1,34 @@
-// run tests in this file with `yarn ava` while the dev server is running (yarn dev)
+// run tests in this file with `yarn test` while the dev server
+// is running (yarn dev) on localhost:3000
 
 import test from 'ava'
-import puppeteer from 'puppeteer'
+
+import { fillStudentForm } from './helpers/fillStudentForm.mjs'
+import { fillPupilForm } from './helpers/fillPupilForm.mjs'
+import { launchPuppeteer } from './helpers/index.mjs'
 
 // taken from https://github.com/avajs/ava/blob/master/docs/recipes/puppeteer.md
 // makes Puppeteer page available inside test functions
 async function withPage(t, run) {
-  const browser = await puppeteer.launch({
-    headless: true, // set to false to see the test in action, don't push to GitHub with true
-    // as action runner has no UI, will fail the test
-    defaultViewport: null,
-    // slowMo: 20, // slow down by 250ms to help see what's going on (good in combination with headless: false)
+  const { browser, page } = await launchPuppeteer({
+    headless: true,
+    // slowMo: 20,
   })
-
-  const page = (await browser.pages())[0]
 
   try {
     await run(t, page)
-  } catch (err) {
-    console.error(err)
   } finally {
     await page.close()
     await browser.close()
   }
 }
 
-async function fillInput(page, id, value) {
-  await page.focus(id)
-  await page.keyboard.type(value)
-}
-
-async function fillPlaceSelect(page, id, value) {
-  await page.focus(id)
-  await page.keyboard.type(value)
-  await page.waitForSelector(`.pac-item`)
-  await page.keyboard.press(`ArrowDown`)
-  await page.keyboard.press(`Enter`)
-}
-
-async function fillSingleSelect(page, id, value) {
-  await fillInput(page, id, value)
-  await page.keyboard.press(`Enter`)
-}
-
-async function fillMultiSelect(page, id, values) {
-  for (const value of values) {
-    await page.focus(id)
-    await page.keyboard.type(value)
-    await page.keyboard.press(`Enter`)
-  }
-}
-
 test(`signup form accepts minimal student data`, withPage, async (t, page) => {
+  // needs the dev server running on localhost:3000 to work, fails with
+  // Error: net::ERR_CONNECTION_REFUSED otherwise
   await page.goto(`http://localhost:3000/anmeldung?test=true`)
 
-  await fillSingleSelect(page, `#chapter`, `Aachen`)
-
-  await fillSingleSelect(page, `#gender`, `Weiblich`)
-
-  await fillInput(page, `#fullname`, `Foo Bar`)
-
-  await fillInput(page, `#email`, `foo@bar.com`)
-
-  await fillMultiSelect(page, `#subjects`, [`Mathe`, `Physik`])
-
-  await fillPlaceSelect(page, `#places`, `test1`)
-  await fillPlaceSelect(page, `#places`, `test2`)
-
-  await fillSingleSelect(page, `#discovery`, `Freunde`)
-
-  await page.$eval(`#agreement`, (el) => el.click())
-
-  await page.$eval(`#dataProtection`, (el) => el.click())
+  await fillStudentForm(page)
 
   await page.$eval(`button[type=submit].main`, (el) => el.click())
 
@@ -83,40 +40,11 @@ test(`signup form accepts minimal student data`, withPage, async (t, page) => {
 })
 
 test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
+  // needs the dev server running on localhost:3000 to work, fails with
+  // Error: net::ERR_CONNECTION_REFUSED otherwise
   await page.goto(`http://localhost:3000/anmeldung?test=true`)
 
-  await page.$eval(`input[type='radio'][value='Schüler']`, (el) => el.click())
-
-  await page.waitForSelector(`#firstname`) // wait for DOM changes to be applied before proceeding after clicking the pupil button
-
-  await fillSingleSelect(page, `#chapter`, `Heidelberg`)
-
-  await fillSingleSelect(page, `#gender`, `Männlich`)
-
-  await fillInput(page, `#firstname`, `Foo Bar`)
-
-  await fillMultiSelect(page, `#subjects`, [`Mathe`, `Englisch`])
-
-  await fillSingleSelect(page, `#schoolType`, `Realschule`)
-
-  await fillInput(page, `#level`, `7`)
-
-  await fillPlaceSelect(page, `#places`, `test1`)
-  await fillPlaceSelect(page, `#places`, `test2`)
-
-  await page.$eval(`#online`, (el) => el.click())
-
-  await fillInput(page, `#nameContact`, `Baz Bar`)
-
-  await fillInput(page, `#phoneContact`, `012 345 678`)
-
-  await fillInput(page, `#emailContact`, `baz@bar.com`)
-
-  await fillInput(page, `#orgContact`, `Privat`)
-
-  await page.$eval(`#need`, (el) => el.click())
-
-  await page.$eval(`#dataProtection`, (el) => el.click())
+  await fillPupilForm(page)
 
   await page.$eval(`button[type=submit].main`, (el) => el.click())
 

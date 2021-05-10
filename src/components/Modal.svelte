@@ -1,15 +1,18 @@
 <script>
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
-  import { preventOverScroll } from '../utils/actions'
-
   export let style
   export let showCloseBtn = false
 
   const dispatch = createEventDispatcher()
-  const close = () => dispatch(`close`)
+  function close() {
+    if (!drag) dispatch(`close`)
+  }
 
   let modal, origScrollPos
+  // used to detect if a mouseup on model-background also started with a mousedown on same element
+  // we don't close modal if user clicked inside model, dragged mouse outside and then released
+  let drag = true
   // record original scroll position to return to when modal closes (see onDestroy)
   onMount(() => {
     origScrollPos = [window.scrollX, window.scrollY]
@@ -40,16 +43,13 @@
   }
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window
+  on:keydown={handleKeydown}
+  on:mousedown={() => (drag = false)}
+  on:mousemove={() => (drag = true)} />
 
 <div class="modal-background" on:click|self={close}>
-  <div
-    use:preventOverScroll
-    class="modal"
-    role="dialog"
-    aria-modal="true"
-    bind:this={modal}
-    {style}>
+  <div class="modal" role="dialog" aria-modal="true" bind:this={modal} {style}>
     {#if showCloseBtn}<button on:click={close}><span>&times;</span></button>{/if}
     <slot />
   </div>
