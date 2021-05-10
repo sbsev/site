@@ -263,7 +263,7 @@
         <span>😢</span>
         {@html text.error}
 
-        <pre><code>{error}</code></pre>
+        <pre><code>{JSON.stringify(error, null, 2)}</code></pre>
       </div>
     </Modal>
   {/if}
