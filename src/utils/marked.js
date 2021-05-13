@@ -1,6 +1,7 @@
 import marked from 'marked'
 
-const linkSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6.879 9.934a.81.81 0 01-.575-.238 3.818 3.818 0 010-5.392l3-3C10.024.584 10.982.187 12 .187s1.976.397 2.696 1.117a3.818 3.818 0 010 5.392l-1.371 1.371a.813.813 0 01-1.149-1.149l1.371-1.371A2.19 2.19 0 0012 1.812c-.584 0-1.134.228-1.547.641l-3 3a2.19 2.19 0 000 3.094.813.813 0 01-.575 1.387z"/><path d="M4 15.813a3.789 3.789 0 01-2.696-1.117 3.818 3.818 0 010-5.392l1.371-1.371a.813.813 0 011.149 1.149l-1.371 1.371A2.19 2.19 0 004 14.188c.585 0 1.134-.228 1.547-.641l3-3a2.19 2.19 0 000-3.094.813.813 0 011.149-1.149 3.818 3.818 0 010 5.392l-3 3A3.789 3.789 0 014 15.813z"/></svg>`
+// https://primer.style/octicons/link-16
+const linkIcon = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M7.775 3.275a.75.75 0 0 0 1.06 1.06l1.25-1.25a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 0 1 0-2.83l2.5-2.5a2 2 0 0 1 2.83 0 .75.75 0 0 0 1.06-1.06 3.5 3.5 0 0 0-4.95 0l-2.5 2.5a3.5 3.5 0 0 0 4.95 4.95l1.25-1.25a.75.75 0 0 0-1.06-1.06l-1.25 1.25a2 2 0 0 1-2.83 0z"/></svg>`
 
 const renderer = {
   // responsive markdown images
@@ -29,7 +30,7 @@ const renderer = {
     const id = slugger.slug(raw)
 
     // class 'a.anchor' is styled in static/global.css
-    return `<h${level}><a id="${id}" href="#${id}" class="anchor" aria-hidden="true">${linkSvg}</a>${text}</h${level}>`
+    return `<h${level}><a id="${id}" href="#${id}" class="anchor" aria-hidden="true">${linkIcon}</a>${text}</h${level}>`
   },
 
   // add Sapper prefetching for local markdown links

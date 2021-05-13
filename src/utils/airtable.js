@@ -43,7 +43,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
       .map((place) => place.address)
       .join(`\n`),
     Koordinaten: Object.values(data.places)
-      .map((place) => place.coords.join(`,`))
+      .map((place) => place.coords)
       .join(`;`),
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
@@ -104,7 +104,10 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
   const globalBaseId = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
   const testBaseId = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
-  if (test) return await airtablePost(testBaseId, table, chapterFields, apiKey)
+  if (test) {
+    console.log(`chapterFields:`, chapterFields) // eslint-disable-line no-console
+    return await airtablePost(testBaseId, table, chapterFields, apiKey)
+  }
   // use Promise.all to fail fast if one record creation fails
   const responses = await Promise.all([
     airtablePost(globalBaseId, table, globalFields, apiKey),

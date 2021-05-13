@@ -22,9 +22,8 @@
       return
     }
 
-    const lat = place.geometry?.location.lat()
-    const lng = place.geometry?.location.lng()
-    places = [...places, { address: place.formatted_address, coords: [lat, lng] }]
+    const { lat, lng } = place.geometry?.location.toJSON()
+    places = [...places, { address: place.formatted_address, coords: `${lat},${lng}` }]
     input.value = JSON.stringify(places)
 
     const marker = new window.google.maps.Marker({

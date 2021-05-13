@@ -26,7 +26,7 @@
   $: srcSet = (params) =>
     sizes.map((size) => `${src}?${toQueryStr(size)}&${params} ${size.w}w`).join(`, `)
 
-  $: style = `background-image: url('${base64}');${imgStyle}`
+  $: style = base64 ? `background-image: url('${base64}');${imgStyle}` : imgStyle
 </script>
 
 {#if src.endsWith(`.svg`)}

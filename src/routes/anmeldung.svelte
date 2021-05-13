@@ -1,11 +1,14 @@
 <script context="module">
   import marked from 'marked'
 
+  const renderer = new marked.Renderer()
+  // open links in new tabs so form is not closed (https://git.io/J3p5G)
+  renderer.link = (href, _, text) => `<a target="_blank" href="${href}">${text}</a>`
+  marked.use({ renderer })
+
   import { fetchYaml, fetchChapters } from '../utils/queries'
 
   const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
-
-  const openLinkinNewTab = (str) => str.replaceAll(`<a href=`, `<a target="_blank" href=`) // open links in new tabs so form is not closed
 
   export async function preload() {
     let chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
@@ -15,14 +18,12 @@
       let obj = await fetchYaml(title)
       // iterate over name, phone, email, ...
       Object.entries(obj).forEach(([key, itm]) => {
-        if (typeof itm === `string`)
-          obj[key] = openLinkinNewTab(stripOuterPTag(marked(itm)))
+        if (typeof itm === `string`) obj[key] = stripOuterPTag(marked(itm))
         // iterate over title, note, ...
         else if (typeof itm === `object` && itm !== null) {
           obj[key].name = key // name is used by FormInput as id to link labels to their corresp. inputs
           Object.entries(itm).forEach(([innerKey, val]) => {
-            if (typeof val === `string`)
-              obj[key][innerKey] = openLinkinNewTab(stripOuterPTag(marked(val)))
+            if (typeof val === `string`) obj[key][innerKey] = stripOuterPTag(marked(val))
           })
         }
       })
@@ -114,7 +115,7 @@
       error = err
       console.error(error)
       window.plausible(`Signup Error`, {
-        props: { error: error.stack, ...chapterAndType },
+        props: { error: err.stack || err.toString(), ...chapterAndType },
       })
       modalOpen = true
     } finally {
@@ -239,6 +240,8 @@
       <FormInput {...text.orgContact} bind:input={inputs.orgContact} />
 
       <FormInput {...text.need} bind:input={inputs.need} type="toggle" />
+
+      <FormInput {...text.discovery} bind:input={inputs.discovery} />
     {/if}
 
     <FormInput
