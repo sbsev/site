@@ -5,7 +5,7 @@ import {
   fillSingleSelect,
   fillMultiSelect,
   completeSlider,
-} from './index.mjs'
+} from './index.js'
 
 export async function fillStudentForm(page) {
   await fillSingleSelect(page, `#chapter`, `Aachen`)
@@ -37,12 +37,13 @@ export async function fillStudentForm(page) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   // Module was not imported but called directly via
-  // node test/helpers/fillStudentForm.mjs
+  // `node test/helpers/fillStudentForm.js`
+  // Useful when manually testing form submissions. Needs dev server running on localhost:3000
+  // (fails with Error: net::ERR_CONNECTION_REFUSED otherwise). Will automatically fill out
+  // every required field in the student form allowing for immediate manual form submission afterwards.
 
   const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
 
-  // needs the dev server running on localhost:3000 to work, fails with
-  // Error: net::ERR_CONNECTION_REFUSED otherwise
   await page.goto(`http://localhost:3000/anmeldung?test=true`)
 
   fillStudentForm(page)

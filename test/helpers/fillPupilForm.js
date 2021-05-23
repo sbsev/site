@@ -5,7 +5,7 @@ import {
   fillSingleSelect,
   fillMultiSelect,
   completeSlider,
-} from './index.mjs'
+} from './index.js'
 
 export async function fillPupilForm(page) {
   await page.$eval(`input[type='radio'][value='Schüler']`, (el) => el.click())
@@ -49,12 +49,13 @@ export async function fillPupilForm(page) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   // Module was not imported but called directly via
-  // node test/helpers/fillPupilForm.mjs
+  // `node test/helpers/fillPupilForm.js`
+  // Useful when manually testing form submissions. Needs dev server running on localhost:3000
+  // (fails with Error: net::ERR_CONNECTION_REFUSED otherwise). Will automatically fill out
+  // every required field in the pupil form allowing for immediate manual form submission afterwards.
 
   const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
 
-  // needs the dev server running on localhost:3000 to work, fails with
-  // Error: net::ERR_CONNECTION_REFUSED otherwise
   await page.goto(`http://localhost:3000/anmeldung?test=true`)
 
   fillPupilForm(page)

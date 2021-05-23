@@ -1,4 +1,4 @@
-// call with `node src/utils/deeplTranslate.mjs`
+// call with `node src/utils/deeplTranslate.js`
 // requires DEEPL_API_KEY, CONTENTFUL_MANAGEMENT_TOKEN and CONTENTFUL_SPACE_ID
 // to be provided in .env file
 
@@ -7,7 +7,7 @@ import 'dotenv/config.js'
 import prettier from 'prettier'
 import translate from 'deepl'
 
-import { getSpace } from './contentful.mjs'
+import { getSpace } from './contentful.js'
 
 async function translateContentfulEntries() {
   try {

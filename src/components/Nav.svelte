@@ -53,8 +53,14 @@
   <Menu height="3ex" />
 </button>
 
-<a on:click={close} class="logo" href="/" sapper:prefetch aria-current={isCurrent(`/`)}
-  ><img src="/favicon.svg" alt="SbS Logo" height="50" width="50" /></a>
+<a
+  on:click={close}
+  class="logo"
+  href="/"
+  sveltekit:prefetch
+  aria-current={isCurrent(`/`)}>
+  <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
+</a>
 
 <nav class:isOpen use:onClickOutside={close}>
   <ul>

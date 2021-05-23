@@ -1,5 +1,5 @@
 <script>
-  import { stores } from '@sapper/app'
+  import { session } from '$app/stores'
   import { onMount } from 'svelte'
 
   export let map = undefined
@@ -7,8 +7,6 @@
   export let mapDiv = undefined
   export let mapProps = {}
   export let mapDivCss = `height: 700px; max-height: 75vh; min-height: 530px;`
-
-  const { session } = stores()
 
   // default map props
   mapProps = {

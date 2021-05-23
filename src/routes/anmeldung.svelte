@@ -1,16 +1,15 @@
 <script context="module">
   import marked from 'marked'
+  import { fetchYaml, fetchChapters } from '../utils/queries.js'
 
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
   renderer.link = (href, _, text) => `<a target="_blank" href="${href}">${text}</a>`
   marked.use({ renderer })
 
-  import { fetchYaml, fetchChapters } from '../utils/queries'
-
   const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-  export async function preload() {
+  export async function load() {
     let chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
     const options = await fetchYaml(`Signup Form Options`)
 
@@ -46,7 +45,7 @@
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import Modal from '../components/Modal.svelte'
   import RadioButtons from '../components/RadioButtons.svelte'
-  import { airtableSubmit, tryParse } from '../utils/airtable'
+  import { airtableSubmit, tryParse } from '../utils/airtable.js'
   import { studentSignupStore, pupilSignupStore } from '../stores'
 
   export let chapters, options, studentText, pupilText
@@ -252,7 +251,7 @@
       {@html text.submit.title}
     </h3>
     {@html text.submit.note}
-    <!-- class main used by CSS selector in test/signupForm.mjs -->
+    <!-- class main used by CSS selector in test/signupForm.js -->
     <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
         <CircleSpinner color="white" />

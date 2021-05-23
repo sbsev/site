@@ -19,3 +19,4 @@ rules:
   no-console: [error, allow: [warn, error]]
   no-var: error
   spaced-comment: [error, always]
+ignorePatterns: ['test/*']

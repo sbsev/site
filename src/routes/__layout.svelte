@@ -1,5 +1,5 @@
 <script context="module">
-  import { fetchYaml, fetchChapters } from '../utils/queries'
+  import { fetchYaml, fetchChapters } from '../utils/queries.js'
 
   export async function load() {
     const nav = await fetchYaml(`Nav`)

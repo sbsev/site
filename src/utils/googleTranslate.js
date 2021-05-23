@@ -2,12 +2,11 @@
 // requires the credentials for a Google Cloud Translate service account
 // to be in a file named googleTranslateApiKey.json at the project root
 
-require(`dotenv`).config()
+import 'dotenv/config'
 
-// not ESM compatible (hence this is not a .mjs file)
-const { Translate } = require(`@google-cloud/translate`).v2
-const contentful = require(`contentful-management`)
-const prettier = require(`prettier`)
+import { v2 } from '@google-cloud/translate'
+import contentful from 'contentful-management'
+import prettier from 'prettier'
 
 async function getSpace() {
   const client = contentful.createClient({
@@ -36,7 +35,7 @@ async function translateContentfulEntries() {
     let { items } = await env.getEntries({ content_type: contentType })
 
     // Create Google Cloud Translation client
-    const translate = new Translate()
+    const translate = new v2.Translate()
 
     for (const itm of items) {
       const text = itm.fields[field][sourceLocale]
