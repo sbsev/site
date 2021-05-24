@@ -27,16 +27,9 @@
     {max}
     on:stop={onStop}
     pips
-    all="label" />{value}
+    all="label" />
 {:else if type === `singleRange`}
-  <RangeSlider
-    float
-    values={undefined}
-    {min}
-    {max}
-    on:stop={onStop}
-    pips
-    all="label" />{value}
+  <RangeSlider float values={undefined} {min} {max} on:stop={onStop} pips all="label" />
 {/if}
 
 <input

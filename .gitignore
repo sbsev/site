@@ -4,6 +4,7 @@ node_modules
 # build
 .svelte-kit
 build
+functions
 
 # deploy config
 .netlify

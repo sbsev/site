@@ -30,7 +30,6 @@
 
   let windowWidth
 
-  const style = `vertical-align: middle;`
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
 
@@ -40,20 +39,23 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<h2>Wir fangen gerade erst an!</h2>
+<h2>
+  Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte
+  Kinder
+</h2>
 
 <section>
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" {style} />Standorte
+    <Place height="2.5ex" style="vertical-align: middle;" />Standorte
   </div>
   <div style="background: var(--green);">
     <span>2172</span>
-    <UserGraduate height="2.5ex" {style} />Studierende
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
   </div>
   <div style="background: var(--orange);">
     <span>2386</span>
-    <Child height="2.5ex" {style} />Schüler
+    <Child height="2.5ex" style="vertical-align: middle;" />Schüler
   </div>
 </section>
 

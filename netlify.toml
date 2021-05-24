@@ -1,12 +1,8 @@
 [build]
 command = "yarn build"
+functions = "functions"
 publish = "build"
 
 [build.environment]
 NODE_VERSION = "16.1.0"
 YARN_VERSION = "1.22.10"
-
-[[redirects]]
-force = true
-from = "https://sbsev.netlify.com/*"
-to = "https://studenten-bilden-schueler.de/:splat"

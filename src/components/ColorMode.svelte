@@ -101,7 +101,7 @@
   /* eslint-disable no-useless-escape */
   const script = `
     <script>
-      const colorMode = localStorage.${colorModeKey} ?? 'auto'
+      const colorMode = localStorage.${colorModeKey} || 'auto'
       const modeColors = ${JSON.stringify(modeColors)}
       const colors = ${JSON.stringify(colors)}
       window.addEventListener('DOMContentLoaded', ${boundFn})
@@ -118,11 +118,15 @@
   }
 </script>
 
+<svelte:head>
+  {@html script}
+</svelte:head>
+
+<svelte:window on:keydown={handleKeydown} />
+
 <button class="opener" on:click={() => (open = true)} aria-label="Farbmodus öffnen">
   <Moon width="30px" style="vertical-align: text-bottom;" />
 </button>
-
-<svelte:window on:keydown={handleKeydown} />
 
 {#if open}
   <Modal on:close={() => (open = false)} style="width: max-content; max-width: 90vw;">
@@ -139,10 +143,6 @@
     </div>
   </Modal>
 {/if}
-
-<svelte:head>
-  {@html script}
-</svelte:head>
 
 <style>
   div {
