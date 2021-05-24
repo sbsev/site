@@ -19,9 +19,24 @@
 
 <!-- float means current values are shown above knobs when hovering and dragging -->
 {#if type === `doubleRange`}
-  <RangeSlider range float values={[min, max]} {min} {max} on:stop={onStop} pips />{value}
+  <RangeSlider
+    range
+    float
+    values={[min, max]}
+    {min}
+    {max}
+    on:stop={onStop}
+    pips
+    all="label" />{value}
 {:else if type === `singleRange`}
-  <RangeSlider float values={undefined} {min} {max} on:stop={onStop} pips />{value}
+  <RangeSlider
+    float
+    values={undefined}
+    {min}
+    {max}
+    on:stop={onStop}
+    pips
+    all="label" />{value}
 {/if}
 
 <input
