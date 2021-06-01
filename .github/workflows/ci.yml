@@ -12,22 +12,25 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: 16.x
 
       - name: Install dependencies
-        run: npm install && npm install -g @lhci/cli@0.6.x
+        run: yarn && yarn add @lhci/cli
 
       - name: Build site
-        run: npm run export
+        run: yarn export
         env:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
-          AIRTABLE_CHAPTER_BASE_APP_ID: ${{ secrets.AIRTABLE_CHAPTER_BASE_APP_ID }}
+          # to prevent penalty 'Browser errors were logged to the console' from
+          # 'Invalid appId: undefined' in Lighthouse CI
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_SEARCH_KEY: ${{ secrets.ALGOLIA_SEARCH_KEY }}
 
       - name: Run Lighthouse
-        run: lhci autorun
-        # https://github.com/apps/lighthouse-ci
-        # for displaying lighthouse results below PRs
+        run: yarn lhci autorun
+        # configure https://github.com/apps/lighthouse-ci for this repo
+        # to display Lighthouse results below PRs
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
