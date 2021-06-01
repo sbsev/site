@@ -27,12 +27,11 @@
     <figcaption>{@html yaml.caption}</figcaption>
   {/if}
 </figure>
+{#if toc}
+  <Toc />
+{/if}
 <slot />
 <article>
-  {#if toc}
-    <Toc />
-  {/if}
-
   {@html body}
   <slot name="afterBody" />
 </article>
