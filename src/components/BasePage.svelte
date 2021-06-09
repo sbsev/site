@@ -16,39 +16,36 @@
   <meta name="date" content={date} />
 </svelte:head>
 
-{#if page}
-  <figure>
-    <Img {...cover} imgStyle="height: 100%" />
-    {#if $$slots.title}
-      <slot name="title" />
-    {:else if title}
-      <h1>{title}</h1>
-    {/if}
-    {#if yaml?.caption}
-      <figcaption>{@html yaml.caption}</figcaption>
-    {/if}
-  </figure>
-  <slot />
-  <article>
-    {#if toc}
-      <Toc />
-    {/if}
-
-    {@html body}
-    <slot name="afterBody" />
-  </article>
-
-  <slot name="afterArticle" />
-
-  {#if sys?.publishedAt && !slug.includes(`blog`)}
-    <time>
-      <Update {style} />Zuletzt bearbeitet:
-      {date}</time>
-    <address>
-      <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
-        >Feedback zu dieser Seite?</a>
-    </address>
+<figure>
+  <Img {...cover} imgStyle="height: 100%" />
+  {#if $$slots.title}
+    <slot name="title" />
+  {:else if title}
+    <h1>{title}</h1>
   {/if}
+  {#if yaml?.caption}
+    <figcaption>{@html yaml.caption}</figcaption>
+  {/if}
+</figure>
+{#if toc}
+  <Toc />
+{/if}
+<slot />
+<article>
+  {@html body}
+  <slot name="afterBody" />
+</article>
+
+<slot name="afterArticle" />
+
+{#if sys?.publishedAt && !slug.includes(`blog`)}
+  <time>
+    <Update {style} />Zuletzt bearbeitet:
+    {date}</time>
+  <address>
+    <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
+      >Feedback zu dieser Seite?</a>
+  </address>
 {/if}
 
 <style>

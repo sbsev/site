@@ -2,6 +2,8 @@
 ci:
   collect:
     staticDistDir: build
+    settings:
+      preset: desktop # see issue https://git.io/JsjcI and docs for --preset CLI flag https://git.io/Jsjcv, https://git.io/Jsj37
   assert:
     presets: lighthouse:no-pwa
     assertions:

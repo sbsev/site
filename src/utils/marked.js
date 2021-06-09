@@ -1,8 +1,5 @@
 import marked from 'marked'
 
-// https://primer.style/octicons/link-16
-const linkIcon = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M7.775 3.275a.75.75 0 0 0 1.06 1.06l1.25-1.25a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 0 1 0-2.83l2.5-2.5a2 2 0 0 1 2.83 0 .75.75 0 0 0 1.06-1.06 3.5 3.5 0 0 0-4.95 0l-2.5 2.5a3.5 3.5 0 0 0 4.95 4.95l1.25-1.25a.75.75 0 0 0-1.06-1.06l-1.25 1.25a2 2 0 0 1-2.83 0z"/></svg>`
-
 const renderer = {
   // responsive markdown images
   image(href, title, text) {
@@ -29,8 +26,16 @@ const renderer = {
   heading(text, level, raw, slugger) {
     const id = slugger.slug(raw)
 
-    // class 'a.anchor' is styled in static/global.css
-    return `<h${level}><a id="${id}" href="#${id}" class="anchor" aria-hidden="true">${linkIcon}</a>${text}</h${level}>`
+    // heading links are styled in static/global.css
+    return `
+      <h${level} id="${id}">
+        ${text}
+        <a href="#${id}" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16">
+            <use xlink:href="#octicon-link"></use>
+          </svg>
+        </a>
+      </h${level}>`
   },
 
   // add SvelteKit prefetching for local markdown links

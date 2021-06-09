@@ -30,13 +30,14 @@
 
   export let nav, footer, social
 
-  if (typeof window !== `undefined`)
+  if (typeof window !== `undefined`) {
     page.subscribe(() => {
       // Track user navigation across the site. This data is transferred to Airtable
       // by the signup form or destroyed when they leave the site.
       if (!window.locations) window.locations = [document.referrer]
       window.locations.push(location.pathname + location.search)
     })
+  }
 </script>
 
 <svelte:head>
