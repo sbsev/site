@@ -1,10 +1,11 @@
 <script context="module">
   import { fetchYamlList, fetchPage } from '../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const page = await fetchPage(`lernmaterial`)
     const studyPlatforms = await fetchYamlList(`Lernmaterial`, `lernmaterial#`)
-    return { page, studyPlatforms }
+
+    return { props: { page, studyPlatforms } }
   }
 </script>
 
@@ -12,16 +13,16 @@
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
-  import SelectAll from '@svg-icons/material-sharp/select-all.svg'
-  import Tags from '@svg-icons/fa-solid/tags.svg'
-  import Functions from '@svg-icons/material-sharp/functions.svg'
-  import Science from '@svg-icons/material-sharp/science.svg'
-  import CardText from '@svg-icons/bootstrap/card-text.svg'
-  import GroupWork from '@svg-icons/material-sharp/group-work.svg'
-  import Language from '@svg-icons/material-sharp/language.svg'
-  import Erlang from '@svg-icons/fa-brands/erlang.svg'
-  import Disqus from '@svg-icons/simple-icons/disqus.svg'
-  import Atom from '@svg-icons/simple-icons/atom.svg'
+  import SelectAll from '@svicons/material-sharp/select-all.svelte'
+  import Tags from '@svicons/fa-solid/tags.svelte'
+  import Functions from '@svicons/material-sharp/functions.svelte'
+  import Science from '@svicons/material-sharp/science.svelte'
+  import CardText from '@svicons/bootstrap/card-text.svelte'
+  import GroupWork from '@svicons/material-sharp/group-work.svelte'
+  import Language from '@svicons/material-sharp/language.svelte'
+  import Erlang from '@svicons/fa-brands/erlang.svelte'
+  import Disqus from '@svicons/simple-icons/disqus.svelte'
+  import Atom from '@svicons/simple-icons/atom.svelte'
 
   import Img from '../components/Img.svelte'
   import BasePage from '../components/BasePage.svelte'

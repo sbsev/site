@@ -1,14 +1,14 @@
 <script>
-  import { stores } from '@sapper/app'
+  import { page } from '$app/stores'
   import { slide } from 'svelte/transition'
-  import QuestionAnswer from '@svg-icons/material-sharp/question-answer.svg'
-  import PeopleCircle from '@svg-icons/ionicons-solid/people-circle.svg'
-  import Rss from '@svg-icons/fa-solid/rss-square.svg'
-  import Place from '@svg-icons/material-sharp/place.svg'
-  import Plant from '@svg-icons/remix-fill/plant.svg'
-  import Menu from '@svg-icons/heroicons-solid/menu.svg'
-  import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
-  import AlternateEmail from '@svg-icons/material-sharp/alternate-email.svg'
+  import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
+  import PeopleCircle from '@svicons/ionicons-solid/people-circle.svelte'
+  import Rss from '@svicons/fa-solid/rss-square.svelte'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import Plant from '@svicons/remix-fill/plant.svelte'
+  import Menu from '@svicons/heroicons-solid/menu.svelte'
+  import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
+  import AlternateEmail from '@svicons/material-sharp/alternate-email.svelte'
 
   import { onClickOutside } from '../utils/actions'
 
@@ -36,7 +36,6 @@
     else activeSubNav = null
   }
 
-  const { page } = stores()
   // isCurrent needs to be reactive to respond to changes in $page.path
   $: isCurrent = (url) => {
     if (url === $page.path) return `page`
@@ -54,8 +53,14 @@
   <Menu height="3ex" />
 </button>
 
-<a on:click={close} class="logo" href="/" sapper:prefetch aria-current={isCurrent(`/`)}
-  ><img src="/favicon.svg" alt="SbS Logo" height="50" width="50" /></a>
+<a
+  on:click={close}
+  class="logo"
+  href="/"
+  sveltekit:prefetch
+  aria-current={isCurrent(`/`)}>
+  <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
+</a>
 
 <nav class:isOpen use:onClickOutside={close}>
   <ul>
@@ -65,7 +70,7 @@
         on:mouseleave={() => (hovered = null)}
         class:hover={hovered === idx}>
         <span>
-          <a on:click={close} sapper:prefetch aria-current={isCurrent(url)} href={url}>
+          <a on:click={close} sveltekit:prefetch aria-current={isCurrent(url)} href={url}>
             <svelte:component
               this={icons[title]}
               style="padding-right: 4pt; height: 1em;" />
@@ -84,7 +89,7 @@
               <li class:spanCols class:lightFont>
                 <a
                   on:click={close}
-                  sapper:prefetch
+                  sveltekit:prefetch
                   aria-current={isCurrent(url)}
                   href={url}>{title}</a>
               </li>

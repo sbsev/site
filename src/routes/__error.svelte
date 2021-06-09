@@ -1,6 +1,6 @@
 <script>
+  import { dev } from '$app/env'
   export let status, error
-  const dev = process.env.NODE_ENV === `development`
 </script>
 
 <svelte:head>
@@ -9,7 +9,7 @@
 
 <h1>{status}</h1>
 
-{#if dev && error.stack}
+{#if dev && error?.stack}
   <pre>{error.stack}</pre>
 {/if}
 

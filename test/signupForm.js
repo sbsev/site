@@ -3,9 +3,9 @@
 
 import test from 'ava'
 
-import { fillStudentForm } from './helpers/fillStudentForm.mjs'
-import { fillPupilForm } from './helpers/fillPupilForm.mjs'
-import { launchPuppeteer } from './helpers/index.mjs'
+import { fillStudentForm } from './helpers/fillStudentForm.js'
+import { fillPupilForm } from './helpers/fillPupilForm.js'
+import { launchPuppeteer } from './helpers/index.js'
 
 // taken from https://github.com/avajs/ava/blob/master/docs/recipes/puppeteer.md
 // makes Puppeteer page available inside test functions
@@ -17,6 +17,8 @@ async function withPage(t, run) {
 
   try {
     await run(t, page)
+  } catch (err) {
+    console.error(err)
   } finally {
     await page.close()
     await browser.close()

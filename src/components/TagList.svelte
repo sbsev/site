@@ -1,23 +1,23 @@
 <script>
   import { slide, fade } from 'svelte/transition'
 
-  import Tags from '@svg-icons/fa-solid/tags.svg'
-  import ChevronExpand from '@svg-icons/bootstrap/chevron-expand.svg'
-  import CircleWithCross from '@svg-icons/entypo/circle-with-cross.svg'
-  import Euro from '@svg-icons/material-sharp/euro.svg'
-  import SelectAll from '@svg-icons/material-sharp/select-all.svg'
-  import Public from '@svg-icons/material-sharp/public.svg'
-  import RateReview from '@svg-icons/material-sharp/rate-review.svg'
-  import QuestionAnswer from '@svg-icons/material-sharp/question-answer.svg'
-  import EventAvailable from '@svg-icons/material-sharp/event-available.svg'
-  import BeachAccess from '@svg-icons/material-sharp/beach-access.svg'
+  import Tags from '@svicons/fa-solid/tags.svelte'
+  import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
+  import CircleWithCross from '@svicons/entypo/circle-with-cross.svelte'
+  import Euro from '@svicons/material-sharp/euro.svelte'
+  import SelectAll from '@svicons/material-sharp/select-all.svelte'
+  import Public from '@svicons/material-sharp/public.svelte'
+  import RateReview from '@svicons/material-sharp/rate-review.svelte'
+  import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
+  import EventAvailable from '@svicons/material-sharp/event-available.svelte'
+  import BeachAccess from '@svicons/material-sharp/beach-access.svelte'
 
-  import GraduationCap from '@svg-icons/fa-solid/graduation-cap.svg'
-  import ChalkboardTeacher from '@svg-icons/fa-solid/chalkboard-teacher.svg'
-  import HandsHelping from '@svg-icons/fa-solid/hands-helping.svg'
+  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
+  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
+  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
 
-  import GitBranch from '@svg-icons/boxicons-regular/git-branch.svg'
-  import StatsChart from '@svg-icons/ionicons-solid/stats-chart.svg'
+  import GitBranch from '@svicons/boxicons-regular/git-branch.svelte'
+  import StatsChart from '@svicons/ionicons-solid/stats-chart.svelte'
 
   export let tags
   export let activeTag = `Alle`

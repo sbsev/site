@@ -1,22 +1,9 @@
 <script context="module">
-  import {
-    fetchChapters,
-    fetchPage,
-    fetchPages,
-    fetchPosts,
-    fetchYaml,
-    base64Thumbnail,
-  } from '../utils/queries'
+  import { fetchChapters, fetchPage } from '../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const page = await fetchPage(`/`)
-    const pages = await fetchPages()
-    const posts = await fetchPosts()
     const chapters = await fetchChapters()
-    const yaml = await fetchYaml(`Landing Page`)
-    for (const img of yaml?.images) {
-      img.base64 = await base64Thumbnail(img.src)
-    }
 
     // const { students, pupils } = await airtableFetch(
     //   `{
@@ -29,77 +16,52 @@
     //   }`,
     //   { cache: `force-cache` }
     // )
-    return { page, chapters, yaml, pages, posts }
+    return { props: { page, chapters } }
   }
 </script>
 
 <script>
   import ChapterMap from '../components/ChapterMap.svelte'
-  import Place from '@svg-icons/material-sharp/place.svg'
-  import UserGraduate from '@svg-icons/fa-solid/user-graduate.svg'
-  import Child from '@svg-icons/fa-solid/child.svg'
-  import Img from '../components/Img.svelte'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
+  import Child from '@svicons/fa-solid/child.svelte'
 
-  export let chapters, page, yaml, pages, posts
+  export let chapters, page
 
   let windowWidth
 
-  const style = `vertical-align: middle;`
-  const textBgColors = [`green`, `orange`, `lightBlue`, `darkGreen`, `blue`]
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
-
-<!-- placed here so sapper crawls all pages and posts (won't be needed with svelte-kit) -->
-<!-- https://stackoverflow.com/a/63388587 -->
-<ul style="visibility: hidden; position: absolute; max-width: 50vw; overflow: hidden;">
-  {#each pages as { title, slug }}
-    <a href={slug}>{title}</a>
-  {/each}
-  {#each posts as { title, slug }}
-    <a href={slug}>{title}</a>
-  {/each}
-</ul>
 
 <h1>
   <img src="name.svg" alt="Studenten bilden Schüler" />
 </h1>
-<div class="grid">
-  {#each yaml.images.slice(0, nImages) as img, idx}
-    <Img
-      {...img}
-      width="400"
-      height="300"
-      sizes={[{ w: 400 }, { w: 800 }]}
-      pictureStyle="grid-area: img{idx + 1};" />
-  {/each}
-  {#each Object.values(yaml.text) as text, idx}
-    <div style="grid-area: txt{idx + 1}; background: var(--{textBgColors[idx]})">
-      <span>{text}</span>
-    </div>
-  {/each}
-</div>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<h2>Wir fangen gerade erst an!</h2>
+<h2>
+  Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte
+  Kinder
+</h2>
 
 <section>
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" {style} />Standorte
+    <Place height="2.5ex" style="vertical-align: middle;" />Standorte
   </div>
   <div style="background: var(--green);">
     <span>2172</span>
-    <UserGraduate height="2.5ex" {style} />Studierende
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
   </div>
   <div style="background: var(--orange);">
     <span>2386</span>
-    <Child height="2.5ex" {style} />Schüler
+    <Child height="2.5ex" style="vertical-align: middle;" />Schüler
   </div>
 </section>
 
 <h2>
-  Wähle deinen <a sapper:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!
+  Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der
+  Karte!
 </h2>
 
 <ChapterMap {chapters} />
@@ -114,50 +76,6 @@
     display: block;
     max-width: 650pt;
     width: calc(100vw - 4em);
-  }
-  .grid {
-    margin: 1em 2vw 2em;
-    display: grid;
-    grid-gap: 1ex;
-    font-weight: bolder;
-    grid-template-columns: repeat(11, 1fr);
-    grid-auto-rows: 13em;
-    grid-template-areas:
-      '. img1 img1 img1 img1 txt2 txt2 img3 img3 img3 .'
-      'img6 img6 img6 txt1 txt1 txt1 img2 img2 img2 img4 img4'
-      '. . img7 img7 img7 txt3 txt3 img5 img5 img5 .';
-  }
-  @media (max-width: 1100px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-      grid-auto-rows: calc(10em + 6vw);
-      grid-template-areas:
-        'img1 txt1 img2'
-        'txt2 img3 img4'
-        'img5 img6 txt3';
-    }
-  }
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-areas:
-        'img1 txt1'
-        'txt2 img2'
-        'img3 txt3';
-    }
-  }
-  .grid div {
-    border-radius: 5pt;
-    font-size: 2ex;
-    display: flex;
-    place-items: center;
-    padding: 5pt 1em;
-    color: white;
-    font-size: calc(1em + 0.5vw);
-  }
-  .grid :global(img) {
-    border-radius: 5pt;
-    height: 100%;
   }
   h2 {
     margin-top: 2em;

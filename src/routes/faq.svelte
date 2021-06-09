@@ -1,9 +1,9 @@
 <script context="module">
   import { fetchYamlList } from '../utils/queries'
 
-  export async function preload() {
+  export async function load() {
     const faqs = await fetchYamlList(`FAQ`, `faq#`)
-    return { faqs }
+    return { props: { faqs } }
   }
 </script>
 
@@ -11,14 +11,14 @@
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
-  import ChalkboardTeacher from '@svg-icons/fa-solid/chalkboard-teacher.svg'
-  import HandsHelping from '@svg-icons/fa-solid/hands-helping.svg'
-  import SupportAgent from '@svg-icons/material-sharp/support-agent.svg'
-  import SelectAll from '@svg-icons/material-sharp/select-all.svg'
-  import FilterFrames from '@svg-icons/material-sharp/filter-frames.svg'
-  import ExitToApp from '@svg-icons/material-sharp/exit-to-app.svg'
-  import MiscellaneousServices from '@svg-icons/material-sharp/miscellaneous-services.svg'
-  import Tags from '@svg-icons/fa-solid/tags.svg'
+  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
+  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
+  import SupportAgent from '@svicons/material-sharp/support-agent.svelte'
+  import SelectAll from '@svicons/material-sharp/select-all.svelte'
+  import FilterFrames from '@svicons/material-sharp/filter-frames.svelte'
+  import ExitToApp from '@svicons/material-sharp/exit-to-app.svelte'
+  import MiscellaneousServices from '@svicons/material-sharp/miscellaneous-services.svelte'
+  import Tags from '@svicons/fa-solid/tags.svelte'
 
   import Collapsible from '../components/Collapsible.svelte'
 

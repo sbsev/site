@@ -1,10 +1,5 @@
 body {
-  /* when scrolling elements into view, don't scroll them to the very top edge where they're hidden by the nav bar (https://stackoverflow.com/a/61913557) */
-  scroll-padding-top: 15em;
   overflow-x: hidden;
-  display: grid;
-  min-height: 100vh;
-  grid-template-rows: auto 1fr auto;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif;
   line-height: 1.5;
@@ -13,13 +8,18 @@ body {
   background: var(--bodyBg);
   color: var(--textColor);
 }
+div#svelte {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
 @media (min-width: 1600px) {
   body {
     font-size: 1.1em;
   }
 }
 * {
-  /* when scrolling elements into view, add margin above so they don't end up hidden by header */
+  /* when scrolling elements into view, add margin above so they don't end up hidden by the fixed header */
   scroll-margin-top: 200px;
 }
 main {

@@ -9,12 +9,12 @@
 
 <div>
   {#if cover.src}
-    <a sapper:prefetch href={slug} on:click={clickHandler}>
+    <a sveltekit:prefetch href={slug} on:click={clickHandler}>
       <Img {...cover} sizes={[{ w: 150 }]} />
     </a>
   {/if}
   <h3>
-    <a sapper:prefetch href={slug} on:click={clickHandler}>{@html title}</a>
+    <a sveltekit:prefetch href={slug} on:click={clickHandler}>{@html title}</a>
   </h3>
   {#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
   {#if author}<span>{author.name}</span>{/if}

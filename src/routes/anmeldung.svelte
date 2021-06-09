@@ -1,16 +1,15 @@
 <script context="module">
   import marked from 'marked'
+  import { fetchYaml, fetchChapters } from '../utils/queries.js'
 
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
   renderer.link = (href, _, text) => `<a target="_blank" href="${href}">${text}</a>`
   marked.use({ renderer })
 
-  import { fetchYaml, fetchChapters } from '../utils/queries'
-
   const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-  export async function preload() {
+  export async function load() {
     let chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
     const options = await fetchYaml(`Signup Form Options`)
 
@@ -33,25 +32,24 @@
     const studentText = await parseMicrocopy(`Student Form`)
     const pupilText = await parseMicrocopy(`Pupil Form`)
 
-    return { chapters, options, studentText, pupilText }
+    return { props: { chapters, options, studentText, pupilText } }
   }
 </script>
 
 <script>
-  import { stores } from '@sapper/app'
-  import Plant from '@svg-icons/remix-fill/plant.svg'
+  import { session, page } from '$app/stores'
+  import Plant from '@svicons/remix-fill/plant.svelte'
   import { onDestroy, onMount } from 'svelte'
 
   import FormInput from '../components/FormInput.svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import Modal from '../components/Modal.svelte'
   import RadioButtons from '../components/RadioButtons.svelte'
-  import { airtableSubmit, tryParse } from '../utils/airtable'
+  import { airtableSubmit, tryParse } from '../utils/airtable.js'
   import { studentSignupStore, pupilSignupStore } from '../stores'
 
   export let chapters, options, studentText, pupilText
 
-  const { session, page } = stores()
   let { type = `Student`, chapter = ``, test } = $page.query
   const inputs = {}
   let response = {}
@@ -253,7 +251,7 @@
       {@html text.submit.title}
     </h3>
     {@html text.submit.note}
-    <!-- class main used by CSS selector in test/signupForm.mjs -->
+    <!-- class main used by CSS selector in test/signupForm.js -->
     <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
         <CircleSpinner color="white" />

@@ -164,7 +164,7 @@ export async function prettierFormatMd(args) {
 }
 
 // To call functions in this file from the command line, run:
-// node src/utils/contentful.mjs searchStringInContentType arg1=foo arg2=bar
+// node src/utils/contentful.js searchStringInContentType arg1=foo arg2=bar
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   // Module was not imported but called directly

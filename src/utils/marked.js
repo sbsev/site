@@ -33,11 +33,11 @@ const renderer = {
     return `<h${level}><a id="${id}" href="#${id}" class="anchor" aria-hidden="true">${linkIcon}</a>${text}</h${level}>`
   },
 
-  // add Sapper prefetching for local markdown links
+  // add SvelteKit prefetching for local markdown links
   link(href, title, text) {
     if (href.startsWith(`/`)) {
       title = title ? `title="${title}"` : ``
-      return `<a sapper:prefetch href="${href}" ${title}>${text}</a>`
+      return `<a sveltekit:prefetch href="${href}" ${title}>${text}</a>`
     }
     return false // delegate to default marked link renderer
   },

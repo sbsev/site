@@ -4,9 +4,9 @@
   import { createEventDispatcher } from 'svelte'
   import { fly } from 'svelte/transition'
 
-  import CrossIcon from '@svg-icons/entypo/circle-with-cross.svg'
-  import ExpandIcon from '@svg-icons/bootstrap/chevron-expand.svg'
-  import ReadOnlyIcon from '@svg-icons/material-sharp/person-add-disabled.svg'
+  import CrossIcon from '@svicons/entypo/circle-with-cross.svelte'
+  import ExpandIcon from '@svicons/bootstrap/chevron-expand.svelte'
+  import ReadOnlyIcon from '@svicons/material-sharp/person-add-disabled.svelte'
 
   export let selected = []
   export let readonly = false

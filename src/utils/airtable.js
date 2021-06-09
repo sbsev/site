@@ -25,6 +25,10 @@ async function airtablePost(baseId, table, data, apiKey) {
 const toStr = (str) => (str ? String(str) : undefined)
 
 export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
+  data = Object.fromEntries(
+    Object.entries(data).map(([key, val]) => [key, tryParse(val)])
+  )
+
   if (!apiKey) throw `missing Airtable API key, got ${apiKey}`
   const table = data.type === `Student` ? `Studenten` : `Schüler`
 

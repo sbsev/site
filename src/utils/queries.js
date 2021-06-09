@@ -1,6 +1,5 @@
 /* eslint-disable indent */
-import 'cross-fetch/polyfill'
-import marked from './marked'
+import marked from './marked.js'
 import yaml from 'js-yaml'
 
 const prefixSlug = (prefix) => (obj) => {
@@ -29,7 +28,7 @@ export async function airtableFetch(query, options = {}) {
   return data
 }
 
-export async function ctfFetch(query) {
+export async function contentfulFetch(query) {
   const token = process.env.CONTENTFUL_ACCESS_TOKEN
   const id = process.env.CONTENTFUL_SPACE_ID
 
@@ -67,7 +66,7 @@ const chaptersQuery = `{
 }`
 
 export async function fetchChapters() {
-  const { chapters } = await ctfFetch(chaptersQuery)
+  const { chapters } = await contentfulFetch(chaptersQuery)
   return chapters?.items?.map(prefixSlug(`/standorte/`))
 }
 
@@ -139,7 +138,7 @@ const pagesQuery = `{
 
 export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
-  const data = await ctfFetch(pageQuery(slug))
+  const data = await contentfulFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
   if (!page) return null
   if (page?.yaml) {
@@ -153,7 +152,7 @@ export async function fetchPage(slug) {
 }
 
 export async function fetchPages() {
-  const data = await ctfFetch(pagesQuery)
+  const data = await contentfulFetch(pagesQuery)
   return data?.pages?.items?.map(renderBody)
 }
 
@@ -205,14 +204,14 @@ async function processPost(post) {
 
 export async function fetchPost(slug) {
   if (!slug) throw `fetchPost requires a slug, got '${slug}'`
-  const data = await ctfFetch(postQuery(slug))
+  const data = await contentfulFetch(postQuery(slug))
   const post = data?.posts?.items[0]
   await processPost(post)
   return post
 }
 
 export async function fetchPosts() {
-  const data = await ctfFetch(postsQuery)
+  const data = await contentfulFetch(postsQuery)
   const posts = data?.posts?.items
   return await Promise.all(posts.map(processPost))
 }
@@ -227,7 +226,7 @@ const yamlQuery = (title) => `{
 
 export async function fetchYaml(title) {
   if (!title) throw `fetchYaml requires a title, got '${title}'`
-  const { yml } = await ctfFetch(yamlQuery(title))
+  const { yml } = await contentfulFetch(yamlQuery(title))
   return yaml.load(yml?.items[0]?.data)
 }
 

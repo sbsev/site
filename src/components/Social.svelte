@@ -1,12 +1,12 @@
 <script>
-  import Facebook from '@svg-icons/fa-brands/facebook.svg'
-  import Github from '@svg-icons/fa-brands/github.svg'
-  import Instagram from '@svg-icons/fa-brands/instagram.svg'
-  import Linkedin from '@svg-icons/fa-brands/linkedin.svg'
-  import Twitter from '@svg-icons/fa-brands/twitter.svg'
-  import Xing from '@svg-icons/fa-brands/xing-square.svg'
-  import Youtube from '@svg-icons/fa-brands/youtube.svg'
-  import Email from '@svg-icons/material-sharp/email.svg'
+  import Facebook from '@svicons/fa-brands/facebook.svelte'
+  import Github from '@svicons/fa-brands/github.svelte'
+  import Instagram from '@svicons/fa-brands/instagram.svelte'
+  import Linkedin from '@svicons/fa-brands/linkedin.svelte'
+  import Twitter from '@svicons/fa-brands/twitter.svelte'
+  import Xing from '@svicons/fa-brands/xing-square.svelte'
+  import Youtube from '@svicons/fa-brands/youtube.svelte'
+  import Email from '@svicons/material-sharp/email.svelte'
 
   export let social
   export let style = ``

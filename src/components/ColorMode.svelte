@@ -1,10 +1,72 @@
 <script>
   import Modal from './Modal.svelte'
   import { colorMode, colorModeKey } from '../stores'
-  import { modeColors, colors } from '../colors'
-  import Sun from '@svg-icons/fa-solid/sun.svg'
-  import Moon from '@svg-icons/entypo/moon.svg'
-  import BrightnessAuto from '@svg-icons/material-sharp/brightness-auto.svg'
+  import Sun from '@svicons/fa-solid/sun.svelte'
+  import Moon from '@svicons/entypo/moon.svelte'
+  import BrightnessAuto from '@svicons/material-sharp/brightness-auto.svelte'
+
+  const colors = {
+    blue: `#0b4abf`,
+    darkBlue: `#003056`,
+    darkerBlue: `#061725`,
+    lightBlue: `#00a1ff`,
+    lighterBlue: `#06c5ff`,
+
+    green: `#89ba17`,
+    darkGreen: `#4d8711`,
+    darkerGreen: `#3c660f`,
+    lightGreen: `#95d50f`,
+    lighterGreen: `#caef76`,
+
+    yellow: `#f9ff00`,
+    darkYellow: `#ffca35`,
+    lightYellow: `#fbff6c`,
+
+    orange: `#e8ab00`,
+    darkOrange: `#d88100`,
+    lightOrange: `#ffca29`,
+
+    gray: `#464849`,
+    lightGray: `#d8d8d8`,
+    lighterGray: `#efefef`,
+    lightestGray: `#f6f6f6`,
+    darkGray: `#2a2c30`,
+  }
+
+  const modeColors = {
+    light: {
+      textColor: `black`,
+      linkColor: colors.blue,
+      hoverColor: colors.lightBlue,
+      bodyBg: colors.lightestGray,
+      accentBg: `white`,
+      lightBg: colors.lighterGray,
+      shadow: colors.gray,
+      borderColor: colors.lightBlue,
+      headingColor: colors.lightBlue,
+      headerBg: colors.darkBlue,
+      headerColor: `white`,
+      footerBg: colors.darkBlue,
+      invert: 0,
+      transparent: `rgba(255, 255, 255, 0.8)`,
+    },
+    dark: {
+      textColor: `white`,
+      linkColor: colors.lightBlue,
+      hoverColor: colors.green,
+      bodyBg: colors.darkerBlue,
+      accentBg: `black`,
+      lightBg: colors.darkGray,
+      shadow: `black`,
+      borderColor: colors.darkGreen,
+      headingColor: colors.lightGreen,
+      headerBg: colors.darkerBlue,
+      headerColor: colors.lightBlue,
+      footerBg: `black`,
+      invert: 1,
+      transparent: `rgba(0, 0, 0, 0.5)`,
+    },
+  }
 
   const setModeFactory = (mode) => () => {
     open = false
@@ -12,12 +74,7 @@
     applyColors()
   }
 
-  const makeLight = setModeFactory(`light`)
-  const makeDark = setModeFactory(`dark`)
-  const makeAuto = setModeFactory(`auto`)
-
   function applyColors() {
-    // 🎨
     // If colorMode is `auto` we pick dark or light depending on prefersDark media query.
     const prefersDark = window.matchMedia(`(prefers-color-scheme: dark)`).matches
     let activeMode
@@ -36,50 +93,56 @@
     }
   }
 
-  // boundFn and the svelte:head script below provide SSR support
+  // boundFn and <svelte:head> below provide SSR support
   // we modify a stringified version of applyColors so it can run before hydration
-  const ssrModeVar = `const colorMode = localStorage.${colorModeKey} ?? 'auto'\n\t\t`
-  const ssrModedColors = `const modeColors = ${JSON.stringify(modeColors)}\n\t\t`
-  const ssrColors = `const colors = ${JSON.stringify(colors)}`
-  const boundFn = String(applyColors)
-    .replace(`// 🎨`, ssrModeVar + ssrModedColors + ssrColors)
-    .replaceAll(`$colorMode`, `colorMode`)
+  // and prevent color falshes on page load
+  const boundFn = String(applyColors).replace(/\$colorMode/g, `colorMode`)
 
-  // eslint-disable-next-line no-useless-escape
-  const script = `<script>window.addEventListener('DOMContentLoaded', ${boundFn})<\/script>`
+  /* eslint-disable no-useless-escape */
+  const script = `
+    <script>
+      const colorMode = localStorage.${colorModeKey} || 'auto'
+      const modeColors = ${JSON.stringify(modeColors)}
+      const colors = ${JSON.stringify(colors)}
+      window.addEventListener('DOMContentLoaded', ${boundFn})
+    <\/script>`
+  /* eslint-enable no-useless-escape */
 
   let open = false
 
   const handleKeydown = (event) => {
     if (!event.ctrlKey) return
-    if (event.key === `1`) makeLight()
-    if (event.key === `2`) makeDark()
-    if (event.key === `3`) makeAuto()
+    if (event.key === `1`) setModeFactory(`light`)()
+    if (event.key === `2`) setModeFactory(`dark`)()
+    if (event.key === `3`) setModeFactory(`auto`)()
   }
 </script>
-
-<button class="opener" on:click={() => (open = true)} aria-label="Farbmodus öffnen">
-  <Moon alt="Color Mode" height="2.5ex" style="vertical-align: text-bottom;" />
-</button>
-
-<svelte:window on:keydown={handleKeydown} />
-
-{#if open}
-  <Modal on:close={() => (open = false)} style="width: max-content; max-width: 90vw;">
-    <div>
-      <button on:click={makeLight} class="choice light" title="ctrl+1">
-        <Sun />Hell</button>
-      <button on:click={makeDark} class="choice dark" title="ctrl+2">
-        <Moon color="yellow" />Dunkel</button>
-      <button on:click={makeAuto} class="choice auto" title="ctrl+3">
-        <BrightnessAuto color="var(--bodyBg)" />Auto</button>
-    </div>
-  </Modal>
-{/if}
 
 <svelte:head>
   {@html script}
 </svelte:head>
+
+<svelte:window on:keydown={handleKeydown} />
+
+<button class="opener" on:click={() => (open = true)} aria-label="Farbmodus öffnen">
+  <Moon width="30px" style="vertical-align: text-bottom;" />
+</button>
+
+{#if open}
+  <Modal on:close={() => (open = false)} style="width: max-content; max-width: 90vw;">
+    <div>
+      <button on:click={setModeFactory(`light`)} class="choice light">
+        <Sun />
+        Hell</button>
+      <button on:click={setModeFactory(`dark`)} class="choice dark">
+        <Moon color="yellow" />
+        Dunkel</button>
+      <button on:click={setModeFactory(`auto`)} class="choice auto">
+        <BrightnessAuto color="var(--bodyBg)" />
+        Auto</button>
+    </div>
+  </Modal>
+{/if}
 
 <style>
   div {
