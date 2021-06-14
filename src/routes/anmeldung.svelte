@@ -56,25 +56,25 @@
   let error = undefined
   let isSubmitting, modalOpen
 
-  function getFormVals() {
+  function getFormValues() {
     return Object.fromEntries(
       Object.entries(inputs).map(([key, input]) => [key, input?.value])
     )
   }
-  function setFormVals(values) {
+  function setFormValues(values) {
     Object.keys(inputs).forEach((key) => {
-      if (values[key]) inputs[key].value = values[key]
+      inputs[key].value = values[key] || ``
     })
   }
 
   const leaveListener = () => {
-    if (type === `Student`) $studentSignupStore = getFormVals()
-    else $pupilSignupStore = getFormVals()
+    if (type === `Student`) $studentSignupStore = getFormValues()
+    else $pupilSignupStore = getFormValues()
   }
 
   onMount(() => {
-    if (type === `Student`) setFormVals($studentSignupStore)
-    else setFormVals($pupilSignupStore)
+    if (type === `Student`) setFormValues($studentSignupStore)
+    else setFormValues($pupilSignupStore)
 
     inputs.chapter.value = chapter
     // For domain changes and page reloads (site-external navigation)
@@ -91,7 +91,7 @@
   async function submit() {
     isSubmitting = true
 
-    const data = { type, ...getFormVals() }
+    const data = { type, ...getFormValues() }
 
     for (const key in data) data[key] = tryParse(data[key])
 
@@ -109,11 +109,18 @@
       response = await airtableSubmit(baseId, data, $session.AIRTABLE_API_KEY, test)
       window.plausible(`Signup`, { props: chapterAndType })
       window.scrollTo({ top: 0, behavior: `smooth` })
+
+      $studentSignupStore = {}
+      $pupilSignupStore = {}
+      setFormValues({})
     } catch (err) {
       error = err
       console.error(error)
       window.plausible(`Signup Error`, {
-        props: { error: err.stack || err.toString(), ...chapterAndType },
+        props: {
+          error: JSON.stringify(err, Object.getOwnPropertyNames(err)),
+          ...chapterAndType,
+        },
       })
       modalOpen = true
     } finally {
@@ -266,7 +273,9 @@
         <span>😢</span>
         {@html text.error}
 
-        <pre><code>{error.stack}</code></pre>
+        <pre><code>
+          {JSON.stringify(error, Object.getOwnPropertyNames(error))}
+        </code></pre>
       </div>
     </Modal>
   {/if}

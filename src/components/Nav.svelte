@@ -9,6 +9,7 @@
   import Menu from '@svicons/heroicons-solid/menu.svelte'
   import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
   import AlternateEmail from '@svicons/material-sharp/alternate-email.svelte'
+  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
 
   import { onClickOutside } from '../utils/actions'
 
@@ -21,6 +22,7 @@
     Mitmachen: PeopleCircle,
     Blog: Rss,
     Kontakt: AlternateEmail,
+    Internes: HandsHelping,
   }
 
   let isOpen = false
@@ -42,6 +44,7 @@
     if (url !== `/` && $page.path.includes(url)) return `page`
     return undefined
   }
+  page.subscribe(close)
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -84,7 +87,10 @@
         {#if subNav && (activeSubNav === idx || viewWidth > 1000)}
           <ul
             transition:slide
-            style="grid-template-columns: repeat({Math.ceil(subNav.length / 13)}, 1fr);">
+            style="grid-template-columns: repeat({Math.min(
+              Math.ceil(subNav.length / 10),
+              4
+            )}, 1fr);">
             {#each subNav as { title, url, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
                 <a

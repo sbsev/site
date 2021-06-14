@@ -31,9 +31,9 @@
         <a
           sveltekit:prefetch
           href="/anmeldung?type=Student&chapter={page.title}"
-          class="btn blue"><GraduationCap {style} />Als Student anmelden</a>
+          class="btn blue"><GraduationCap {style} />Als Student:in anmelden</a>
         <a sveltekit:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
-          ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studenten</a>
+          ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studierende</a>
       </span>
       <span>
         Suchst du Nachhilfe?
@@ -42,9 +42,9 @@
           href="/anmeldung?type=Schüler&chapter={page.title}"
           class="btn green"
           ><Child {style} />
-          Als Schüler anmelden</a>
+          Als Schüler:in anmelden</a>
         <a sveltekit:prefetch href="mitmachen/schueler" class="btn green stroke">
-          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler</a>
+          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler:innen</a>
       </span>
       <span>
         Interesse an Standortleitung?
@@ -54,7 +54,7 @@
           ><Email {style} />
           Schreib uns</a>
         <a sveltekit:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
-          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleiter</a>
+          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleitende</a>
       </span>
     </section>
   {/if}

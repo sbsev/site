@@ -34,7 +34,7 @@
 </script>
 
 <h1>
-  <img src="name.svg" alt="Studenten bilden Schüler" />
+  <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
 </h1>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -66,6 +66,12 @@
 
 <ChapterMap {chapters} />
 
+<h2>
+  Oder melde dich direkt <a sveltekit:prefetch href="/anmeldung">
+    <strong>bei uns an.</strong>
+  </a>
+</h2>
+
 <article>
   {@html page.body}
 </article>
@@ -74,8 +80,9 @@
   h1 img {
     margin: 3ex auto;
     display: block;
+    width: 92vw;
     max-width: 650pt;
-    width: calc(100vw - 4em);
+    height: auto;
   }
   h2 {
     margin-top: 2em;
