@@ -41,11 +41,8 @@
 </script>
 
 <svelte:head>
-  <script
-    async
-    defer
-    data-domain="studenten-bilden-schueler.de"
-    src="https://plausible.io/js/plausible.js"></script>
+  <!-- see _redirects file for where this script originates -->
+  <script defer data-domain="studenten-bilden-schueler.de" src="/js/script.js"></script>
   <!-- required for triggering custom events in signup form -->
   <script>
     window.plausible =

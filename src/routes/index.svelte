@@ -50,11 +50,11 @@
     <Place height="2.5ex" style="vertical-align: middle;" />Standorte
   </div>
   <div style="background: var(--green);">
-    <span>2172</span>
+    <span>2872</span>
     <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
   </div>
   <div style="background: var(--orange);">
-    <span>2386</span>
+    <span>3186</span>
     <Child height="2.5ex" style="vertical-align: middle;" />Schüler
   </div>
 </section>
