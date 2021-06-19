@@ -1,6 +1,6 @@
 https://sbsev.netlify.com/* https://studenten-bilden-schueler.de/:splat
 
-# proxy plausible script to avoid being blocklisted
+# proxy plausible script to avoid being falsely blocked
 # https://plausible.io/docs/proxy/introduction
 # https://plausible.io/docs/proxy/guides/netlify
 /js/script.js https://plausible.io/js/plausible.js 200

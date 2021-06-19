@@ -29,8 +29,8 @@
         {title}</a>
     {/each}
   </div>
-  <span
-    >Diese Seite ist
+  <span>
+    Diese Seite ist
     <a href="https://github.com/sbsev/svelte-site">
       <OpenSource
         height="2.5ex"
@@ -39,8 +39,8 @@
     <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
       keine
       <Cookie height="2.2ex" style="vertical-align: middle;" />
-      Cookies.</a
-    ></span>
+      Cookies.</a>
+  </span>
   <Social {social} style="margin-top: 1ex;" />
 </footer>
 

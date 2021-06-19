@@ -23,6 +23,7 @@
 </script>
 
 <BasePage {page}>
+  <!-- needed to hide info buttons on /standorte/gruenden page -->
   {#if page?.yaml?.showSignupButtons !== false}
     <h2 style="text-align: center; margin-top: 2em;">Anmeldungen</h2>
     <section>
@@ -32,28 +33,29 @@
           sveltekit:prefetch
           href="/anmeldung?type=Student&chapter={page.title}"
           class="btn blue"><GraduationCap {style} />Als Student:in anmelden</a>
-        <a sveltekit:prefetch href="mitmachen/nachhilfelehrer" class="btn blue stroke"
-          ><InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studierende</a>
+        <a sveltekit:prefetch href="/mitmachen/nachhilfelehrer" class="btn blue stroke">
+          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studierende
+        </a>
       </span>
       <span>
         Suchst du Nachhilfe?
         <a
           sveltekit:prefetch
           href="/anmeldung?type=Schüler&chapter={page.title}"
-          class="btn green"
-          ><Child {style} />
+          class="btn green">
+          <Child {style} />
           Als Schüler:in anmelden</a>
-        <a sveltekit:prefetch href="mitmachen/schueler" class="btn green stroke">
+        <a sveltekit:prefetch href="/mitmachen/schueler" class="btn green stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler:innen</a>
       </span>
       <span>
         Interesse an Standortleitung?
         <a
           href="mailto:info.{slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
-          class="btn orange"
-          ><Email {style} />
+          class="btn orange">
+          <Email {style} />
           Schreib uns</a>
-        <a sveltekit:prefetch href="mitmachen/standortleiter" class="btn orange stroke">
+        <a sveltekit:prefetch href="/mitmachen/standortleiter" class="btn orange stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleitende</a>
       </span>
     </section>
@@ -68,27 +70,30 @@
           <a
             href="mailto:studenten.{slug}@studenten-bilden-schueler.de"
             title="studenten.{slug}@studenten-bilden-schueler.de"
-            class="btn blue"
-            ><Email
-              style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />studenten.{slug}@studenten-bilden-schueler.de</a>
+            class="btn blue">
+            <Email style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />
+            studenten.{slug}@studenten-bilden-schueler.de
+          </a>
           für Studierende
         </li>
         <li>
           <a
             href="mailto:schueler.{slug}@studenten-bilden-schueler.de"
             title="schueler.{slug}@studenten-bilden-schueler.de"
-            class="btn green"
-            ><Email
-              style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />schueler.{slug}@studenten-bilden-schueler.de</a>
+            class="btn green">
+            <Email style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />
+            schueler.{slug}@studenten-bilden-schueler.de
+          </a>
           für Soziale Einrichtungen und Nachhilfeanfragen
         </li>
         <li>
           <a
             href="mailto:info.{slug}@studenten-bilden-schueler.de"
             title="info.{slug}@studenten-bilden-schueler.de"
-            class="btn orange"
-            ><Email
-              style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />info.{slug}@studenten-bilden-schueler.de</a>
+            class="btn orange">
+            <Email style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />
+            info.{slug}@studenten-bilden-schueler.de
+          </a>
           für Allgemeine Anfragen
         </li>
       </ul>
@@ -113,6 +118,7 @@
     width: 100%;
     box-sizing: border-box;
     margin: 0;
+    padding: 3pt 5pt;
   }
   ul.contact {
     list-style: none;

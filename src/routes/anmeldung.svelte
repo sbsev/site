@@ -63,7 +63,7 @@
   }
   function setFormValues(values) {
     Object.keys(inputs).forEach((key) => {
-      inputs[key].value = values[key] || ``
+      if (inputs[key]) inputs[key].value = values[key] || ``
     })
   }
 

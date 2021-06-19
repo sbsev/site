@@ -39,8 +39,8 @@
 
 <div>
   <Map onLoad={addMarkers} />
-  <legend
-    ><span style="background: var(--darkGreen)" /> aktiver Standort&ensp;
+  <legend>
+    <span style="background: var(--darkGreen)" /> aktiver Standort&ensp;
     <span style="background: var(--blue)" /> in Gründung</legend>
 </div>
 

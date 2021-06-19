@@ -1,8 +1,8 @@
 <script>
+  import Toc from 'svelte-toc'
   import Update from '@svicons/material-sharp/update.svelte'
 
   import Img from '../components/Img.svelte'
-  import Toc from '../components/Toc.svelte'
 
   export let page
 
@@ -27,13 +27,19 @@
     <figcaption>{@html yaml.caption}</figcaption>
   {/if}
 </figure>
-{#if toc}
-  <Toc />
-{/if}
 <slot />
 <article>
-  {@html body}
-  <slot name="afterBody" />
+  {#if toc}
+    <Toc
+      title=""
+      openButtonLabel="Inhaltsverzeichnis öffnen"
+      headingSelector={[...Array(5).keys()].map((i) => `article h${i + 2}`)}
+      --toc-mobile-bg-color="var(--bodyBg)" />
+  {/if}
+  <div>
+    {@html body}
+    <slot name="afterBody" />
+  </div>
 </article>
 
 <slot name="afterArticle" />
@@ -43,16 +49,31 @@
     <Update {style} />Zuletzt bearbeitet:
     {date}</time>
   <address>
-    <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}"
-      >Feedback zu dieser Seite?</a>
+    <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}">
+      Feedback zu dieser Seite?
+    </a>
   </address>
 {/if}
 
 <style>
   article {
-    max-width: 45em;
+    max-width: 55em;
     padding: 1em;
     margin: auto;
+    display: flex;
+    gap: 1em;
+  }
+  article > div {
+    width: 100%;
+  }
+  article > :global(aside) {
+    flex: 30%;
+  }
+  article :global(:where(h2, h3, h4, h5, h6)) {
+    transition: 0.3s;
+  }
+  article :global(.toc-clicked) {
+    color: var(--lightBlue);
   }
   figure {
     position: relative;

@@ -45,8 +45,9 @@
       <ul class="items">
         {#each val as { title, id, img, url, date, chapter, source } (title)}
           <li>
-            <a href={url}
-              ><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
+            <a href={url}>
+              <Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} />
+            </a>
             <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
             <div>
               <span><Newspaper {style} />{source}</span>

@@ -48,6 +48,7 @@
     "start-server-and-test": "^1.12.5",
     "svelte": "^3.35.0",
     "svelte-algolia": "^0.2.5",
-    "svelte-range-slider-pips": "^1.7.0"
+    "svelte-range-slider-pips": "^1.7.0",
+    "svelte-toc": "^0.1.3"
   }
 }

@@ -71,8 +71,8 @@
       <Collapsible {id} active={id === hash}>
         <span slot="title">
           {title}
-          <Tags width="1.4ex" style="margin: 0 3pt 0 1ex" /><small
-            >{tags.join(`, `)}</small>
+          <Tags width="1.4ex" style="margin: 0 3pt 0 1ex" />
+          <small>{tags.join(`, `)}</small>
         </span>
         {@html body}
       </Collapsible>

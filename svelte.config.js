@@ -37,5 +37,8 @@ export default {
     vite: {
       plugins: [replace(replacements)],
     },
+
+    // https://kit.svelte.dev/docs#configuration-trailingslash
+    trailingSlash: `ignore`, // GitHub issue discussing Netlify: https://git.io/JngRL
   },
 }
