@@ -41,6 +41,7 @@
     "eslint": "^7.28.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "js-yaml": "^4.1.0",
+    "mapbox-gl": "^2.3.1",
     "marked": "^2.0.7",
     "prettier": "^2.3.1",
     "prettier-plugin-svelte": "^2.2.0",

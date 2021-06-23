@@ -4,6 +4,7 @@ export function getSession() {
     `ALGOLIA_APP_ID`,
     `ALGOLIA_SEARCH_KEY`,
     `GOOGLE_MAPS_API_KEY`,
+    `MAPBOX_PUBLIC_KEY`,
     `AIRTABLE_API_KEY`,
   ]
 

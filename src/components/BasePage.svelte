@@ -6,7 +6,7 @@
 
   export let page
 
-  $: ({ title, slug, cover, body, toc, yaml, sys } = page || {})
+  $: ({ title, slug, cover = {}, body, toc, yaml, sys } = page || {})
   $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
   const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
@@ -119,7 +119,7 @@
   }
   address {
     text-align: center;
-    font-size: 1.3ex;
+    font-size: 1.5ex;
     font-style: normal;
     margin: 2em;
   }

@@ -7,30 +7,31 @@
   renderer.link = (href, _, text) => `<a target="_blank" href="${href}">${text}</a>`
   marked.use({ renderer })
 
-  const stripOuterPTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
+  // remove outer-most paragraph tags (if any)
+  const stripOuterParTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
   export async function load() {
-    let chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
+    const chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
     const options = await fetchYaml(`Signup Form Options`)
 
-    async function parseMicrocopy(title) {
-      let obj = await fetchYaml(title)
+    async function parseMicrocopy(obj) {
       // iterate over name, phone, email, ...
       Object.entries(obj).forEach(([key, itm]) => {
-        if (typeof itm === `string`) obj[key] = stripOuterPTag(marked(itm))
+        if (typeof itm === `string`) obj[key] = stripOuterParTag(marked(itm))
         // iterate over title, note, ...
         else if (typeof itm === `object` && itm !== null) {
           obj[key].name = key // name is used by FormInput as id to link labels to their corresp. inputs
           Object.entries(itm).forEach(([innerKey, val]) => {
-            if (typeof val === `string`) obj[key][innerKey] = stripOuterPTag(marked(val))
+            if (typeof val === `string`)
+              obj[key][innerKey] = stripOuterParTag(marked(val))
           })
         }
       })
       return obj
     }
 
-    const studentText = await parseMicrocopy(`Student Form`)
-    const pupilText = await parseMicrocopy(`Pupil Form`)
+    const studentText = parseMicrocopy(await fetchYaml(`Student Form`))
+    const pupilText = parseMicrocopy(await fetchYaml(`Pupil Form`))
 
     return { props: { chapters, options, studentText, pupilText } }
   }

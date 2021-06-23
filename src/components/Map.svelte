@@ -1,44 +1,40 @@
 <script>
-  import { session } from '$app/stores'
   import { onMount } from 'svelte'
+  import { session } from '$app/stores'
 
-  export let map = undefined
-  export let onLoad = () => {}
-  export let mapDiv = undefined
-  export let mapProps = {}
-  export let mapDivCss = `height: 700px; max-height: 75vh; min-height: 530px;`
+  import mapboxgl from 'mapbox-gl'
+  import 'mapbox-gl/dist/mapbox-gl.css'
 
-  // default map props
-  mapProps = {
-    center: { lat: 51.5, lng: 10 },
-    zoom: 6,
-    disableDefaultUI: true,
-    ...mapProps,
-  }
+  mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
 
-  const mountMap = () => (map = new window.google.maps.Map(mapDiv, mapProps))
+  export let lng = 10
+  export let lat = 51.5
+  export let zoom = 5.2
+  export let markers = []
 
-  // This includes the places library to avoid needing to reimport Google Maps in
-  // AutoCompletePlace.svelte which would warn "You have included the Google Maps
-  // JavaScript API multiple times on this page. This may cause unexpected errors."
-
-  $: if (map && typeof onLoad === `function`) onLoad(map)
+  let mapDiv, map
 
   onMount(() => {
-    let script = document.getElementById(`gm-js-api`)
+    map = new mapboxgl.Map({
+      container: mapDiv,
+      style: `mapbox://styles/mapbox/streets-v11`,
+      center: [lng, lat],
+      zoom,
+    })
 
-    if (!script) {
-      script = document.createElement(`script`) // dynamically created scripts are async by default
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${$session.GOOGLE_MAPS_API_KEY}&libraries=places`
-      script.id = `gm-js-api`
-      document.head.append(script)
+    for (const { lng, lat, title, url, color } of markers) {
+      const anchor = document.createElement(`a`)
+      anchor.innerHTML = title.slice(0, 4)
+      anchor.href = url
+      anchor.style.background = color
+      new mapboxgl.Marker(anchor, { anchor: `bottom`, offset: [0, -11] })
+        .setLngLat([lng, lat])
+        .addTo(map)
     }
-    if (!window.google?.maps) script.addEventListener(`load`, mountMap)
-    else mountMap()
   })
 </script>
 
-<div bind:this={mapDiv} style={mapDivCss} />
+<div bind:this={mapDiv} />
 
 <style>
   div {
@@ -46,8 +42,27 @@
     max-height: 75vh;
     min-height: 530px;
   }
-  /* hide footer https://stackoverflow.com/a/22581969 */
-  :global(.gm-style-cc) {
+  :global(.mapboxgl-ctrl-attrib-inner) {
     display: none;
+  }
+  :global(a.mapboxgl-marker) {
+    color: white;
+    opacity: 0.9;
+    border-radius: 4pt;
+    padding: 0 3pt;
+    line-height: 11pt;
+  }
+  :global(a.mapboxgl-marker::after) {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%);
+    border: solid;
+    border-width: 10pt 4pt;
+    box-sizing: border-box;
+  }
+  :global(a.mapboxgl-marker::after) {
+    border-color: rgba(255, 255, 255, 0.8) transparent transparent transparent;
   }
 </style>
