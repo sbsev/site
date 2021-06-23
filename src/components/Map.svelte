@@ -11,15 +11,19 @@
   export let lat = 51.5
   export let zoom = 5.2
   export let markers = []
+  export let minZoom = 4
+  export let maxZoom = 9
 
   let mapDiv, map
 
   onMount(() => {
     map = new mapboxgl.Map({
       container: mapDiv,
-      style: `mapbox://styles/mapbox/streets-v11`,
+      style: `mapbox://styles/mapbox/outdoors-v11?optimize=true`,
       center: [lng, lat],
       zoom,
+      minZoom,
+      maxZoom,
     })
 
     for (const { lng, lat, title, url, color } of markers) {
@@ -50,7 +54,7 @@
     opacity: 0.9;
     border-radius: 4pt;
     padding: 0 3pt;
-    line-height: 11pt;
+    line-height: 12pt;
   }
   :global(a.mapboxgl-marker::after) {
     content: '';

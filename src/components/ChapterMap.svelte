@@ -41,7 +41,6 @@
     background: rgba(0, 0, 0, 0.7);
     padding: 2pt 4pt;
     border-radius: 3pt;
-    font-size: 9pt;
   }
   span {
     width: 2ex;
