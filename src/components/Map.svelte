@@ -26,14 +26,14 @@
       maxZoom,
     })
 
-    for (const { lng, lat, title, url, color } of markers) {
+    for (const { lng, lat, title, url, classes } of markers) {
       const anchor = document.createElement(`a`)
       anchor.innerHTML = title.slice(0, 4)
       anchor.href = url
-      anchor.style.background = color
-      new mapboxgl.Marker(anchor, { anchor: `bottom`, offset: [0, -11] })
-        .setLngLat([lng, lat])
-        .addTo(map)
+      anchor.classList.add(...classes)
+
+      const marker = new mapboxgl.Marker(anchor, { anchor: `bottom`, offset: [0, -11] })
+      marker.setLngLat([lng, lat]).addTo(map)
     }
   })
 </script>
@@ -48,25 +48,5 @@
   }
   :global(.mapboxgl-ctrl-attrib-inner) {
     display: none;
-  }
-  :global(a.mapboxgl-marker) {
-    color: white;
-    opacity: 0.9;
-    border-radius: 4pt;
-    padding: 0 3pt;
-    line-height: 12pt;
-  }
-  :global(a.mapboxgl-marker::after) {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 100%;
-    transform: translate(-50%);
-    border: solid;
-    border-width: 10pt 4pt;
-    box-sizing: border-box;
-  }
-  :global(a.mapboxgl-marker::after) {
-    border-color: rgba(255, 255, 255, 0.8) transparent transparent transparent;
   }
 </style>
