@@ -19,7 +19,7 @@
     markers={chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
       classes: [`chapter`, chap.acceptsSignups ? `active` : `starting`],
-      title: chap.title,
+      title: chap.token,
       url: chap.slug,
     }))} />
 

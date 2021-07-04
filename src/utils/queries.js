@@ -61,6 +61,7 @@ const chaptersQuery = `{
       }
       baseId
       acceptsSignups
+      token
     }
   }
 }`

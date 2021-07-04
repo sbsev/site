@@ -2,7 +2,7 @@ import 'dotenv/config'
 import replace from '@rollup/plugin-replace'
 import adapter from '@sveltejs/adapter-netlify'
 
-import { indexAlgolia } from 'svelte-algolia'
+import { indexAlgolia } from 'svelte-algolia/main.js'
 import { algoliaConfig } from './src/utils/algolia.js'
 
 const dev = process.env.NODE_ENV === `development`

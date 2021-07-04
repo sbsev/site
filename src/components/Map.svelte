@@ -12,9 +12,12 @@
   export let zoom = 5.2
   export let markers = []
   export let minZoom = 4
-  export let maxZoom = 9
+  export let maxZoom = 10
+  export let map = undefined
+  export let css = ``
+  export let scrollZoom = false
 
-  let mapDiv, map
+  let mapDiv
 
   onMount(() => {
     map = new mapboxgl.Map({
@@ -24,6 +27,7 @@
       zoom,
       minZoom,
       maxZoom,
+      scrollZoom,
     })
 
     for (const { lng, lat, title, url, classes } of markers) {
@@ -38,7 +42,7 @@
   })
 </script>
 
-<div bind:this={mapDiv} />
+<div bind:this={mapDiv} style={css} />
 
 <style>
   div {

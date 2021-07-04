@@ -14,7 +14,7 @@
     const chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
     const options = await fetchYaml(`Signup Form Options`)
 
-    async function parseMicrocopy(obj) {
+    function parseMicrocopy(obj) {
       // iterate over name, phone, email, ...
       Object.entries(obj).forEach(([key, itm]) => {
         if (typeof itm === `string`) obj[key] = stripOuterParTag(marked(itm))
@@ -59,7 +59,7 @@
 
   function getFormValues() {
     return Object.fromEntries(
-      Object.entries(inputs).map(([key, input]) => [key, input?.value])
+      Object.entries(inputs).map(([key, input]) => [key, input?.value || input?.checked])
     )
   }
   function setFormValues(values) {

@@ -1,5 +1,5 @@
 <script>
-  import Toc from 'svelte-toc'
+  // import Toc from 'svelte-toc'
   import Update from '@svicons/material-sharp/update.svelte'
 
   import Img from '../components/Img.svelte'
@@ -29,13 +29,13 @@
 </figure>
 <slot />
 <article>
-  {#if toc}
+  <!-- {#if toc}
     <Toc
       title=""
       openButtonLabel="Inhaltsverzeichnis öffnen"
       headingSelector={[...Array(5).keys()].map((i) => `article h${i + 2}`)}
       --toc-mobile-bg-color="var(--bodyBg)" />
-  {/if}
+  {/if} -->
   <div>
     {@html body}
     <slot name="afterBody" />

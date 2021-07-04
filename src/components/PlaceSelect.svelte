@@ -4,6 +4,7 @@
   import Map from './Map.svelte'
   import AutoCompletePlace from './AutoCompletePlace.svelte'
   import Delete from '@svicons/material-sharp/delete.svelte'
+  import mapboxgl from 'mapbox-gl'
 
   export let placeholder = ``
   export let required = false
@@ -12,66 +13,61 @@
 
   let places = []
   let markers = []
-  let map, inputNode
+  let map
 
   function selectHandler(place) {
-    if (!place.geometry?.location) {
-      // User entered the name of a Place that was not suggested and
+    if (!place.center) {
+      // User entered the name of a place that was not suggested and
       // pressed the Enter key, or the place details request failed.
-      window.alert(`Für '${place.name}' konnte keine Adresse gefunden werden!`)
+      window.alert(
+        `Für '${place.text}' konnte keine Adresse gefunden werden! Bitte versuche einen anderen Ort anzugeben.`
+      )
       return
     }
 
-    const { lat, lng } = place.geometry?.location.toJSON()
-    places = [...places, { address: place.formatted_address, coords: `${lat},${lng}` }]
+    const [lng, lat] = place.center
+
+    places = [...places, { address: place.place_name, coords: `${lat},${lng}` }]
     input.value = JSON.stringify(places)
 
-    const marker = new window.google.maps.Marker({
-      map,
-      position: { lat, lng },
-      label: { text: place.name.slice(0, 2), color: `white` },
-      title: place.name,
-    })
-    markers.push(marker)
+    const marker = new mapboxgl.Marker({ title: place.text })
+    marker.setLngLat([lng, lat]).addTo(map)
 
-    const bounds = new window.google.maps.LatLngBounds()
+    markers = [...markers, marker]
+
+    const bounds = new mapboxgl.LngLatBounds(place.center, place.center)
     for (const marker of markers) {
-      bounds.extend(marker.getPosition())
+      bounds.extend(marker._lngLat)
     }
 
-    map.fitBounds(bounds)
+    map.fitBounds(bounds, { padding: 100 })
   }
   const deletePlace = (idx) => () => {
     // remove place from list
     places.splice(idx, 1)
-    places = places
+    places = places // reassign to trigger rerender
     // remove marker from map
-    markers[idx].setMap(null)
+    markers[idx].remove()
+
     markers.splice(idx, 1)
     // reset input value without removed place
-    input.value = JSON.stringify(places)
+    // set to null if places is empty since [] is truthy and would not prevent form submission if input is required
+    input.value = JSON.stringify(places.length ? places : ``)
   }
 </script>
 
 <!-- for holding the component's value in a way accessible to the DOM -->
-<input
-  bind:this={input}
-  {required}
-  {name}
-  id={name}
-  class="hidden"
-  tabindex="-1"
-  on:focus={() => inputNode.focus()} />
 <!-- tabindex="-1" means skip element during tabbing, else we couldn't shift-tab out of filterInput as filterInput.focus() would jump right back -->
+<input bind:this={input} {required} {name} id={name} class="hidden" tabindex="-1" />
 
-<AutoCompletePlace bind:inputNode {placeholder} {selectHandler} />
+<AutoCompletePlace {placeholder} {selectHandler} />
 <ol>
   {#each places as place, idx}
     <li>
       <span>{idx + 1}</span><input
         data-place={idx + 1}
         type="text"
-        value={place.address}
+        value={place.address.split(`, `).slice(0, 2).join(`, `)}
         disabled />
       <button on:click={deletePlace(idx)} type="button">
         <Delete style="width: 3ex; vertical-align: middle;" /></button>
@@ -79,7 +75,7 @@
   {/each}
 </ol>
 
-<Map bind:map mapDivCss="height: 300px;" mapProps={{ maxZoom: 12 }} />
+<Map bind:map {markers} css="height: 300px;" maxZoom={16} />
 
 <style>
   ol {
