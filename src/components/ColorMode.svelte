@@ -27,6 +27,7 @@
     lightOrange: `#ffca29`,
 
     gray: `#464849`,
+    altGray: `#313441`,
     lightGray: `#d8d8d8`,
     lighterGray: `#efefef`,
     lightestGray: `#f6f6f6`,
@@ -55,7 +56,7 @@
       linkColor: colors.lightBlue,
       hoverColor: colors.green,
       bodyBg: colors.darkerBlue,
-      accentBg: `black`,
+      accentBg: colors.altGray,
       lightBg: colors.darkGray,
       shadow: `black`,
       borderColor: colors.darkGreen,
