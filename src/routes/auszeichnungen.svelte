@@ -1,23 +1,27 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchYamlList, fetchPage } from '../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const page = await fetchPage(`auszeichnungen`)
-    const items = await fetchYamlList(`Auszeichnungen`, `auszeichnungen#`)
-    return { props: { page, items } }
+    const awards = await fetchYamlList(`Auszeichnungen`, `auszeichnungen#`)
+    return { props: { page, awards } }
   }
 </script>
 
-<script>
+<script lang="ts">
   import Calendar from '@svicons/octicons/calendar.svelte'
   import PriceRibbon from '@svicons/fa-solid/award.svelte'
 
+  import type { LoadOutput } from '@sveltejs/kit'
+
   import Img from '../components/Img.svelte'
   import BasePage from '../components/BasePage.svelte'
+  import type { Award, Page } from '../types'
 
-  export let items, page
+  export let awards: Award[]
+  export let page: Page
 
-  let hash
+  let hash = ``
 
   const imgStyle = `width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-top; margin: 0 5pt 0 0;`
@@ -28,7 +32,7 @@
 
 <BasePage {page}>
   <ul class="items" slot="afterArticle">
-    {#each items as { title, id, img, url, date, prize } (title)}
+    {#each awards as { title, id, img, url, date, prize } (title)}
       <li>
         <a href={url}><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
         <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>

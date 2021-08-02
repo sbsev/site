@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let maxWidth = `14em`
   export let minWidth = `8em`
 </script>

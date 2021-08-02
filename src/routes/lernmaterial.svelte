@@ -1,7 +1,7 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchYamlList, fetchPage } from '../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const page = await fetchPage(`lernmaterial`)
     const studyPlatforms = await fetchYamlList(`Lernmaterial`, `lernmaterial#`)
 
@@ -9,9 +9,11 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
+
+  import type { LoadOutput } from '@sveltejs/kit'
 
   import SelectAll from '@svicons/material-sharp/select-all.svelte'
   import Tags from '@svicons/fa-solid/tags.svelte'
@@ -27,7 +29,10 @@
   import Img from '../components/Img.svelte'
   import BasePage from '../components/BasePage.svelte'
 
-  export let studyPlatforms, page
+  import type { Page, StudyPlatform } from '../types'
+
+  export let studyPlatforms: StudyPlatform[]
+  export let page: Page
 
   const icons = {
     Alle: SelectAll,
@@ -43,7 +48,7 @@
 
   let activeTag = `Alle`
   const email = `it@studenten-bilden-schueler.de`
-  let hash
+  let hash: string
 
   $: filtered = studyPlatforms.filter(
     (itm) => activeTag === `Alle` || itm.tags.includes(activeTag)
@@ -82,8 +87,12 @@
     <ul class="items">
       {#each filtered as { title, id, img, body, tags, url } (title)}
         <li animate:flip={{ duration: 200 }} transition:scale>
-          <a href={url}><Img src={img} alt={title} sizes={[{ w: 150 }]} {imgStyle} /></a>
-          <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
+          <a href={url}>
+            <Img src={img} alt={title} sizes={[{ w: 150 }]} {imgStyle} />
+          </a>
+          <h3 {id} active={id === hash}>
+            <a href={url}>{title}</a>
+          </h3>
           <span><Tags {style} /> {tags.join(`, `)}</span>
           {@html body}
         </li>

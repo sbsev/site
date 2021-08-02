@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Img from './Img.svelte'
 
   export let hit

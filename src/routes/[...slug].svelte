@@ -1,7 +1,9 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchPage } from '../utils/queries'
 
-  export async function load({ page: { params } }) {
+  export async function load({
+    page: { params },
+  }: LoadInput): Promise<LoadOutput | undefined> {
     const page = await fetchPage(params.slug)
 
     // If no page data could be fetched for params.slug, the page doesn't exist,
@@ -12,10 +14,14 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import BasePage from '../components/BasePage.svelte'
 
-  export let page
+  import type { LoadInput, LoadOutput } from '@sveltejs/kit'
+
+  import type { Page } from '../types'
+
+  export let page: Page
 </script>
 
 <BasePage {page} />

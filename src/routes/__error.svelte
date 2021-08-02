@@ -1,15 +1,17 @@
-<script context="module">
-  export function load({ error, status }) {
+<script lang="ts" context="module">
+  export function load({ error, status }: ErrorLoadInput): LoadOutput {
     return {
       props: { error, status },
     }
   }
 </script>
 
-<script>
+<script lang="ts">
   import { dev } from '$app/env'
+  import type { ErrorLoadInput, LoadOutput } from '@sveltejs/kit'
 
-  export let status, error
+  export let status: number
+  export let error: Error
 </script>
 
 <svelte:head>

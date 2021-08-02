@@ -1,7 +1,7 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchYaml, fetchPosts } from '../../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const posts = await fetchPosts()
     const social = await fetchYaml(`Social`)
 
@@ -9,17 +9,22 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
+  import type { LoadOutput } from '@sveltejs/kit'
+
   import PostPreview from '../../components/PostPreview.svelte'
   import Social from '../../components/Social.svelte'
   import TagList from '../../components/TagList.svelte'
   import IntersectionObserver from '../../components/IntersectionObserver.svelte'
+  import type { Post, BlogTag } from '../../types'
+  import { BlogTags } from '../../types'
 
-  export let posts, social
+  export let posts: Post[]
+  export let social
 
-  let activeTag
+  let activeTag: BlogTag
   let nVisible = 12
   const onIntersect = () => (nVisible += 6)
 
@@ -28,19 +33,26 @@
   )
   $: visiblePosts = filteredPosts.slice(0, nVisible)
 
+  const tagCounter = Object.fromEntries(BlogTags.map((tag) => [tag, 0])) as Record<
+    BlogTag,
+    number
+  >
+
+  tagCounter.Alle = posts.length
+
   // count tag occurences
-  const tags = posts.reduce(
-    (obj, post) => {
-      post.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
-      return obj
-    },
-    { Alle: posts.length }
-  )
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      tagCounter[tag] += 1
+    }
+  }
+
+  const tagOccurences = Object.entries(tagCounter) as [BlogTag, number][]
 </script>
 
 <Social {social} fixed vertical />
 
-<TagList {tags} bind:activeTag />
+<TagList {tagOccurences} bind:activeTag />
 
 <ul>
   {#each visiblePosts as post (post.slug)}

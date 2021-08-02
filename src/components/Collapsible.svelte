@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
   import { slide } from 'svelte/transition'
   import { tweened } from 'svelte/motion'
 
-  export let id, active
+  export let id: string | number
+  export let active: boolean
 
   const duration = 200
   const angle = tweened(180, { duration })

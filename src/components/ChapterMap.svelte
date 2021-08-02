@@ -1,17 +1,21 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchChapters } from '../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const chapters = await fetchChapters()
 
     return { props: { chapters } }
   }
 </script>
 
-<script>
+<script lang="ts">
   import Map from '../components/Map.svelte'
 
-  export let chapters
+  import type { LoadOutput } from '@sveltejs/kit'
+
+  import type { Chapter } from '../types'
+
+  export let chapters: Chapter[]
 </script>
 
 <div>

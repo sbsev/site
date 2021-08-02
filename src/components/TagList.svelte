@@ -1,5 +1,6 @@
-<script>
+<script lang="ts">
   import { slide, fade } from 'svelte/transition'
+  import type { SvelteComponent } from 'svelte'
 
   import Tags from '@svicons/fa-solid/tags.svelte'
   import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
@@ -19,10 +20,12 @@
   import GitBranch from '@svicons/boxicons-regular/git-branch.svelte'
   import StatsChart from '@svicons/ionicons-solid/stats-chart.svelte'
 
-  export let tags
+  import type { BlogTag } from '../types'
+
+  export let tagOccurences: [BlogTag, number][]
   export let activeTag = `Alle`
 
-  const icons = {
+  const icons: Record<BlogTag, typeof SvelteComponent> = {
     Alle: SelectAll,
     Spenden: Euro,
     Werbung: Public,
@@ -38,7 +41,7 @@
   }
 
   let open = false
-  let viewWidth
+  let viewWidth: number
   const style = `height: 18pt; vertical-align: middle; margin-right: 5pt;`
 </script>
 
@@ -58,7 +61,7 @@
 </h2>
 {#if viewWidth > 750 || open}
   <ul transition:slide>
-    {#each Object.entries(tags) as [tag, count]}
+    {#each tagOccurences as [tag, count]}
       <li>
         <button
           transition:fade

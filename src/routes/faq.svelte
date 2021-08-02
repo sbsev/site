@@ -1,13 +1,13 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchYamlList } from '../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const faqs = await fetchYamlList(`FAQ`, `faq#`)
     return { props: { faqs } }
   }
 </script>
 
-<script>
+<script lang="ts">
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
@@ -20,9 +20,13 @@
   import MiscellaneousServices from '@svicons/material-sharp/miscellaneous-services.svelte'
   import Tags from '@svicons/fa-solid/tags.svelte'
 
+  import type { LoadOutput } from '@sveltejs/kit'
+
   import Collapsible from '../components/Collapsible.svelte'
 
-  export let faqs
+  import type { FAQ } from '../types'
+
+  export let faqs: FAQ[]
 
   const icons = {
     'Rund ums Engagement': HandsHelping,

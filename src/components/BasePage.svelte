@@ -1,12 +1,14 @@
-<script>
-  // import Toc from 'svelte-toc'
+<script lang="ts">
+  import Toc from 'svelte-toc/Toc.svelte'
   import Update from '@svicons/material-sharp/update.svelte'
 
   import Img from '../components/Img.svelte'
 
-  export let page
+  import type { Page } from '../types'
 
-  $: ({ title, slug, cover = {}, body, toc, yaml, sys } = page || {})
+  export let page: Page
+
+  $: ({ title, slug, cover, body, toc, yaml, sys } = page)
   $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
   const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
@@ -29,13 +31,13 @@
 </figure>
 <slot />
 <article>
-  <!-- {#if toc}
+  {#if toc}
     <Toc
       title=""
       openButtonLabel="Inhaltsverzeichnis öffnen"
       headingSelector={[...Array(5).keys()].map((i) => `article h${i + 2}`)}
       --toc-mobile-bg-color="var(--bodyBg)" />
-  {/if} -->
+  {/if}
   <div>
     {@html body}
     <slot name="afterBody" />

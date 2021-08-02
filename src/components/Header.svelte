@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import Nav from './Nav.svelte'
   import ColorMode from './ColorMode.svelte'
   import Search from './Search.svelte'
+  import type { NavLink } from '../types'
 
-  export let nav
+  export let nav: NavLink[]
 </script>
 
 <header>

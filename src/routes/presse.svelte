@@ -1,31 +1,37 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchYamlList, fetchPage } from '../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const page = await fetchPage(`presse`)
-    const items = await fetchYamlList(`Presse`, `presse#`)
-    return { props: { page, items } }
+
+    const pressItems = await fetchYamlList(`Presse`, `presse#`)
+
+    return { props: { page, pressItems } }
   }
 </script>
 
-<script>
+<script lang="ts">
   import Calendar from '@svicons/octicons/calendar.svelte'
   import Place from '@svicons/material-sharp/place.svelte'
   import Newspaper from '@svicons/ionicons-solid/newspaper.svelte'
 
+  import type { LoadOutput } from '@sveltejs/kit'
+
   import Img from '../components/Img.svelte'
   import BasePage from '../components/BasePage.svelte'
+  import type { Page } from '../types'
 
-  export let items, page
+  export let pressItems
+  export let page: Page
 
-  const itemsByYear = items.reduce((acc, itm) => {
+  const itemsByYear = pressItems.reduce((acc, itm) => {
     const year = itm.date.getFullYear()
     if (!acc[year]) acc[year] = []
     acc[year].push(itm)
     return acc
   }, {})
 
-  let hash
+  let hash: string
 
   const imgStyle = `width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-bottom; margin: 0 5pt 0 0;`
@@ -40,15 +46,17 @@
 
 <BasePage {page}>
   <svelte:fragment slot="afterArticle">
-    {#each Object.entries(itemsByYear).reverse() as [key, val] (key)}
-      <h2>{key}</h2>
+    {#each Object.entries(itemsByYear).reverse() as [year, pressArr] (year)}
+      <h2>{year}</h2>
       <ul class="items">
-        {#each val as { title, id, img, url, date, chapter, source } (title)}
+        {#each pressArr as { title, id, img, url, date, chapter, source } (id)}
           <li>
             <a href={url}>
               <Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} />
             </a>
-            <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
+            <h3 {id} active={id === hash}>
+              <a href={url}>{title}</a>
+            </h3>
             <div>
               <span><Newspaper {style} />{source}</span>
               <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>

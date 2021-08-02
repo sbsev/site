@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores'
   import { slide } from 'svelte/transition'
   import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
@@ -12,8 +12,9 @@
   import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
 
   import { onClickOutside } from '../utils/actions'
+  import type { NavLink } from '../types'
 
-  export let nav
+  export let nav: NavLink[]
 
   const icons = {
     'Über Uns': Plant,
@@ -26,20 +27,21 @@
   }
 
   let isOpen = false
-  let activeSubNav = null
-  let viewWidth, hovered
+  let activeSubNav = -1
+  let viewWidth: number
+  let hovered = -1
   const close = () => {
     isOpen = false
-    hovered = null
+    hovered = -1
   }
 
-  const setActiveSubNav = (idx) => () => {
+  const setActiveSubNav = (idx: number) => () => {
     if (activeSubNav !== idx) activeSubNav = idx
-    else activeSubNav = null
+    else activeSubNav = -1
   }
 
   // isCurrent needs to be reactive to respond to changes in $page.path
-  $: isCurrent = (url) => {
+  $: isCurrent = (url: string) => {
     if (url === $page.path) return `page`
     if (url !== `/` && $page.path.includes(url)) return `page`
     return undefined
@@ -70,7 +72,7 @@
     {#each nav as { title, url, subNav }, idx}
       <li
         on:mouseenter={() => (hovered = idx)}
-        on:mouseleave={() => (hovered = null)}
+        on:mouseleave={() => (hovered = -1)}
         class:hover={hovered === idx}>
         <span>
           <a on:click={close} sveltekit:prefetch aria-current={isCurrent(url)} href={url}>

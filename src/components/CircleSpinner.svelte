@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   export let color = `var(--textColor)`
   export let duration = `1.5s`
 </script>

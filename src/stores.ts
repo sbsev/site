@@ -5,24 +5,27 @@ const hasLocalStore = typeof localStorage !== `undefined`
 
 export const colorModeKey = `colorMode`
 
-export const colorMode = writable(
-  (hasLocalStore && localStorage[colorModeKey]) ?? `auto`
+export const colorMode = writable<`light` | `dark` | `auto`>(
+  (hasLocalStore && localStorage[colorModeKey]) || `auto`
 )
 
 colorMode.subscribe(
-  (val) => hasLocalStore && (localStorage[colorModeKey] = val)
+  (val: `light` | `dark` | `auto`) =>
+    hasLocalStore && (localStorage[colorModeKey] = val)
 )
 
-function createSessionStore(name, defaultValue) {
-  const store = writable(
+function createSessionStore(name: string, defaultValue: unknown) {
+  const store = writable<unknown>(
     hasSessionStore && sessionStorage[name]
       ? JSON.parse(sessionStorage[name])
       : defaultValue
   )
 
-  store.subscribe(
-    (val) => hasSessionStore && (sessionStorage[name] = JSON.stringify(val))
-  )
+  if (hasSessionStore) {
+    store.subscribe(
+      (val: unknown) => (sessionStorage[name] = JSON.stringify(val))
+    )
+  }
 
   return store
 }

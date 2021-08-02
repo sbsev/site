@@ -1,5 +1,5 @@
 // https://kit.svelte.dev/docs#hooks-getsession
-export function getSession() {
+export function getSession(): Record<string, string | undefined> {
   const keys = [
     `ALGOLIA_APP_ID`,
     `ALGOLIA_SEARCH_KEY`,

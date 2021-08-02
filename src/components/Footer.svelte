@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import OpenSource from '@svicons/remix-fill/open-source.svelte'
   import Cookie from '@svicons/boxicons-solid/cookie.svelte'
   import Law from '@svicons/octicons/law.svelte'
@@ -7,6 +7,7 @@
   import DocumentText from '@svicons/ionicons-solid/document-text.svelte'
 
   import Social from './Social.svelte'
+  import type { Link } from '../types'
 
   const icons = {
     Impressum: Law,
@@ -15,7 +16,9 @@
     Satzung: DocumentText,
   }
 
-  export let social, links
+  export let links: Link[]
+  export let social: Record<keyof typeof icons, string>
+
   const style = `height: 1em; vertical-align: -3pt; padding-right: 2pt;`
 </script>
 
@@ -26,7 +29,8 @@
     {#each links as { title, url }}
       <a sveltekit:prefetch href={url}>
         <svelte:component this={icons[title]} {style} />
-        {title}</a>
+        {title}
+      </a>
     {/each}
   </div>
   <span>

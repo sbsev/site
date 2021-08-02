@@ -1,15 +1,17 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchPost } from '../../utils/queries'
 
-  export async function load({ page }) {
+  export async function load({ page }: LoadInput): Promise<LoadOutput> {
     const post = await fetchPost(page.params.slug)
 
     return { props: { post } }
   }
 </script>
 
-<script>
+<script lang="ts">
   import ToolTip from '../../components/ToolTip.svelte'
+
+  import type { LoadInput, LoadOutput } from '@sveltejs/kit'
 
   import Calendar from '@svicons/octicons/calendar.svelte'
   import PersonCircle from '@svicons/bootstrap/person-circle.svelte'
@@ -17,7 +19,9 @@
   import HistoryEdu from '@svicons/material-sharp/history-edu.svelte'
   import Img from '../../components/Img.svelte'
 
-  export let post
+  import type { Post } from '../../types'
+
+  export let post: Post
 
   $: ({ title, body, cover } = post)
   $: ({ bio, fieldOfStudy, name, photo } = post.author)

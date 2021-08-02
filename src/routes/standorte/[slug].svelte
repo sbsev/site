@@ -1,7 +1,7 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchPage } from '../../utils/queries'
 
-  export async function load({ page: { path, params } }) {
+  export async function load({ page: { path, params } }: LoadInput): Promise<LoadOutput> {
     const { slug } = params
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
 
@@ -9,15 +9,18 @@
   }
 </script>
 
-<script>
+<script lang="ts">
   import BasePage from '../../components/BasePage.svelte'
 
   import Email from '@svicons/material-sharp/email.svelte'
   import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
   import Child from '@svicons/fa-solid/child.svelte'
   import InfoCircle from '@svicons/entypo/info-with-circle.svelte'
+  import type { Page } from '../../types'
+  import type { LoadInput, LoadOutput } from '@sveltejs/kit'
 
-  export let page, slug
+  export let page: Page
+  export let slug: string
 
   const style = `vertical-align: -3pt; height: 18pt; margin-right: 3pt;`
 </script>

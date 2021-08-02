@@ -1,23 +1,25 @@
-<script>
+<script lang="ts">
+  import mapboxgl from 'mapbox-gl'
+  import 'mapbox-gl/dist/mapbox-gl.css'
+
   import { onMount } from 'svelte'
   import { session } from '$app/stores'
 
-  import mapboxgl from 'mapbox-gl'
-  import 'mapbox-gl/dist/mapbox-gl.css'
+  import type { MapMarker } from '../types'
 
   mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
 
   export let lng = 10
   export let lat = 51.5
   export let zoom = 5.2
-  export let markers = []
+  export let markers: MapMarker[] = []
   export let minZoom = 4
   export let maxZoom = 10
   export let map = undefined
   export let css = ``
   export let scrollZoom = false
 
-  let mapDiv
+  let mapDiv: HTMLDivElement
 
   onMount(() => {
     map = new mapboxgl.Map({

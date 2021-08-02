@@ -1,7 +1,7 @@
-<script context="module">
+<script lang="ts" context="module">
   import { fetchChapters, fetchPage } from '../utils/queries'
 
-  export async function load() {
+  export async function load(): Promise<LoadOutput> {
     const page = await fetchPage(`/`)
     const chapters = await fetchChapters()
 
@@ -20,15 +20,20 @@
   }
 </script>
 
-<script>
-  import ChapterMap from '../components/ChapterMap.svelte'
+<script lang="ts">
   import Place from '@svicons/material-sharp/place.svelte'
   import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
   import Child from '@svicons/fa-solid/child.svelte'
 
-  export let chapters, page
+  import type { LoadOutput } from '@sveltejs/kit'
 
-  let windowWidth
+  import ChapterMap from '../components/ChapterMap.svelte'
+  import type { Chapter, Page } from '../types'
+
+  export let chapters: Chapter[]
+  export let page: Page
+
+  let windowWidth: number
 
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Facebook from '@svicons/fa-brands/facebook.svelte'
   import Github from '@svicons/fa-brands/github.svelte'
   import Instagram from '@svicons/fa-brands/instagram.svelte'
@@ -8,11 +8,17 @@
   import Youtube from '@svicons/fa-brands/youtube.svelte'
   import Email from '@svicons/material-sharp/email.svelte'
 
-  export let social
+  export let social: Record<keyof typeof icons, string>
   export let style = ``
   export let vertical = false
   export let fixed = false
-  export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
+  export let include: (keyof typeof icons)[] = [
+    `Facebook`,
+    `Twitter`,
+    `Instagram`,
+    `Youtube`,
+    `Linkedin`,
+  ]
 
   const icons = { Facebook, Github, Instagram, Linkedin, Twitter, Xing, Youtube, Email }
 </script>
