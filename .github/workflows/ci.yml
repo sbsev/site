@@ -18,7 +18,7 @@ jobs:
         run: yarn && yarn add @lhci/cli
 
       - name: Build site
-        run: yarn export
+        run: yarn build
         env:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_ACCESS_TOKEN: ${{ secrets.CONTENTFUL_ACCESS_TOKEN }}
@@ -47,10 +47,10 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run tests
-        run: npm run ci
+        run: yarn run ci
         env:
           # needed to fetch website content
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}

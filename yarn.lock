@@ -3572,6 +3572,11 @@ svelte-check@^2.2.3:
     svelte-preprocess "^4.0.0"
     typescript "*"
 
+svelte-color-mode@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/svelte-color-mode/-/svelte-color-mode-0.1.2.tgz#224c07b1b5db67410c438cd7818065b71a9831a4"
+  integrity sha512-SoeuvpnVAVrPaM+bXKogpN/ZLSgd5tB/aaMqUkOeJrZbSSsl1vDii1JpMnejSayaQ7FprqSBFRXDwehGN84tEw==
+
 svelte-hmr@^0.14.7:
   version "0.14.7"
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.14.7.tgz#7fa8261c7b225d9409f0a86f3b9ea5c3ca6f6607"

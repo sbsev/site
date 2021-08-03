@@ -1,7 +1,13 @@
 <script lang="ts">
   import Nav from './Nav.svelte'
-  import ColorMode from './ColorMode.svelte'
+
+  import ModalColorPicker from 'svelte-color-mode/ModalColorPicker.svelte'
+  import ColorMode from 'svelte-color-mode/ColorMode.svelte'
+
   import Search from './Search.svelte'
+
+  import { colors, colorsByMode } from '../utils/colors'
+
   import type { NavLink } from '../types'
 
   export let nav: NavLink[]
@@ -9,7 +15,10 @@
 
 <header>
   <Nav {nav} />
-  <ColorMode />
+
+  <ColorMode {colorsByMode} otherColors={colors} />
+  <ModalColorPicker />
+
   <Search indices={[`Seiten`, `Posts`, `FAQs`, `Lernmaterial`]} />
 </header>
 
