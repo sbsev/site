@@ -12,7 +12,7 @@
 [![CI](https://github.com/sbsev/svelte-site/workflows/CI/badge.svg)](https://github.com/sbsev/svelte-site/actions)
 [![License](https://img.shields.io/github/license/sbsev/svelte-site?label=License)](/license)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sbsev/svelte-site?label=Repo+Size)
-[![GitHub last commit](https://img.shields.io/github/last-commit/sbsev/svelte-site?label=Last+Commit)](https://github.com/sbsev/svelte-site/commits/master)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sbsev/svelte-site/main.svg)](https://results.pre-commit.ci/latest/github/sbsev/svelte-site/main)
 
 </h3>
 
@@ -30,11 +30,10 @@ Running this site locally requires [`git`](https://git-scm.com) and [`yarn`](htt
    git clone https://github.com/sbsev/svelte-site && cd svelte-site
    ```
 
-2. (optional) Setup [`git` hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) by setting `core.hooksPath` and granting execute permission.
+2. (optional) Setup [`pre-commit` hooks](https://pre-commit.com).
 
    ```sh
-   git config core.hooksPath src/utils/gitHooks
-   && chmod -R u+x src/utils/gitHooks
+   pre-commit install
    ```
 
 3. Install dependencies.

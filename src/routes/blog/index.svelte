@@ -40,19 +40,19 @@
 
   tagCounter.Alle = posts.length
 
-  // count tag occurences
+  // count tag occurrences
   for (const post of posts) {
     for (const tag of post.tags) {
       tagCounter[tag] += 1
     }
   }
 
-  const tagOccurences = Object.entries(tagCounter) as [BlogTag, number][]
+  const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][]
 </script>
 
 <Social {social} fixed vertical />
 
-<TagList {tagOccurences} bind:activeTag />
+<TagList {tagOccurrences} bind:activeTag />
 
 <ul>
   {#each visiblePosts as post (post.slug)}

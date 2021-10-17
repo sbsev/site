@@ -53,7 +53,7 @@
   $: filtered = studyPlatforms.filter(
     (itm) => activeTag === `Alle` || itm.tags.includes(activeTag)
   )
-  // count tag occurences
+  // count tag occurrences
   const tags = studyPlatforms.reduce(
     (acc, itm) => {
       itm.tags.forEach((tag) => (acc[tag] = acc[tag] ? acc[tag] + 1 : 1))

@@ -45,7 +45,7 @@
   $: filteredFaqs = faqs.filter(
     (faq) => activeTag === `Alle` || faq.tags.includes(activeTag)
   )
-  // count tag occurences
+  // count tag occurrences
   const tags = faqs.reduce(
     (obj, faq) => {
       faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
