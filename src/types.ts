@@ -53,6 +53,7 @@ export const BlogTags = [
   `Soziale Partner`,
   `Spenden`,
   `Standortleiter`,
+  `Stipendium`,
   `Werbung`,
 ] as const // use const assertion to turn BlogTags into readonly tuple
 

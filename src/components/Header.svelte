@@ -1,9 +1,8 @@
 <script lang="ts">
-  import Nav from './Nav.svelte'
-
   import ModalColorPicker from 'svelte-color-mode/ModalColorPicker.svelte'
   import ColorMode from 'svelte-color-mode/ColorMode.svelte'
 
+  import Nav from './Nav.svelte'
   import Search from './Search.svelte'
 
   import { colors, colorsByMode } from '../utils/colors'
@@ -17,7 +16,10 @@
   <Nav {nav} />
 
   <ColorMode {colorsByMode} otherColors={colors} />
-  <ModalColorPicker />
+  <ModalColorPicker
+    ariaLabelBtnOpener="Farbmodus öffnen"
+    darkName="Dunkel"
+    lightName="Hell" />
 
   <Search indices={[`Seiten`, `Posts`, `FAQs`, `Lernmaterial`]} />
 </header>

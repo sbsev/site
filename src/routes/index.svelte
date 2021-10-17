@@ -60,7 +60,7 @@
   </div>
   <div style="background: var(--orange);">
     <span>3186</span>
-    <Child height="2.5ex" style="vertical-align: middle;" />Schüler
+    <Child height="2.5ex" style="vertical-align: middle;" />Schüler:innen
   </div>
 </section>
 

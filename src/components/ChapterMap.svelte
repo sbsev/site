@@ -28,8 +28,13 @@
     }))} />
 
   <legend>
-    <span style="background: var(--lightBlue)" /> aktiver Standort&ensp;
-    <span style="background: var(--darkGreen)" /> in Gründung
+    <div>
+      <span style="background: var(--lightBlue)" /> aktiver Standort
+    </div>
+    <div>
+      <span style="background: var(--darkGreen)" /> in Gründung
+    </div>
+    <small>Zoomen mit <kbd>shift</kbd></small>
   </legend>
 </div>
 

@@ -14,8 +14,8 @@ colorMode.subscribe(
     hasLocalStore && (localStorage[colorModeKey] = val)
 )
 
-function createSessionStore(name: string, defaultValue: unknown) {
-  const store = writable<unknown>(
+function createSessionStore<T = unknown>(name: string, defaultValue: T) {
+  const store = writable<T>(
     hasSessionStore && sessionStorage[name]
       ? JSON.parse(sessionStorage[name])
       : defaultValue

@@ -1,10 +1,10 @@
 <script lang="ts">
-  export let name
+  export let name: string
   export let checked = false
   export let required = false
-  export let input = undefined
+  export let input: HTMLInputElement | undefined = undefined
 
-  function handleKeydown(event) {
+  function handleKeydown(event: KeyboardEvent) {
     if (event.key === `Enter`) {
       checked = !checked
       event.preventDefault()

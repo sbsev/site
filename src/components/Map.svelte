@@ -10,8 +10,8 @@
   mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
 
   export let lng = 10
-  export let lat = 51.5
-  export let zoom = 5.2
+  export let lat = 51.3
+  export let zoom = 5.1
   export let markers: MapMarker[] = []
   export let minZoom = 4
   export let maxZoom = 10
@@ -20,6 +20,9 @@
   export let scrollZoom = false
 
   let mapDiv: HTMLDivElement
+
+  // sort markers from north to south so southern makers have higher z-index
+  $: markers = markers.sort((m1, m2) => m2.lat - m1.lat)
 
   onMount(() => {
     map = new mapboxgl.Map({
@@ -30,6 +33,18 @@
       minZoom,
       maxZoom,
       scrollZoom,
+    })
+
+    map.on(`wheel`, (event) => {
+      const { originalEvent: origEvent } = event
+
+      if (origEvent.ctrlKey || origEvent.metaKey || origEvent.shiftKey) {
+        // Check if CTRL key is pressed
+        event.originalEvent.preventDefault() // Prevent browser default behavior
+        if (!map.scrollZoom._enabled) map.scrollZoom.enable() // Enable zoom only if it's disabled
+      } else {
+        if (map.scrollZoom._enabled) map.scrollZoom.disable() // Disable zoom only if it's enabled
+      }
     })
 
     for (const { lng, lat, title, url, classes } of markers) {
