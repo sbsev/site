@@ -1,31 +1,26 @@
 <script lang="ts" context="module">
+  import type { Load } from '@sveltejs/kit'
+  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
+  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
+  import Tags from '@svicons/fa-solid/tags.svelte'
+  import ExitToApp from '@svicons/material-sharp/exit-to-app.svelte'
+  import FilterFrames from '@svicons/material-sharp/filter-frames.svelte'
+  import MiscellaneousServices from '@svicons/material-sharp/miscellaneous-services.svelte'
+  import SelectAll from '@svicons/material-sharp/select-all.svelte'
+  import SupportAgent from '@svicons/material-sharp/support-agent.svelte'
+  import { flip } from 'svelte/animate'
+  import { scale } from 'svelte/transition'
+  import Collapsible from '../components/Collapsible.svelte'
+  import type { FAQ } from '../types'
   import { fetchYamlList } from '../utils/queries'
 
-  export async function load(): Promise<LoadOutput> {
+  export const load: Load = async () => {
     const faqs = await fetchYamlList(`FAQ`, `faq#`)
     return { props: { faqs } }
   }
 </script>
 
 <script lang="ts">
-  import { flip } from 'svelte/animate'
-  import { scale } from 'svelte/transition'
-
-  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
-  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
-  import SupportAgent from '@svicons/material-sharp/support-agent.svelte'
-  import SelectAll from '@svicons/material-sharp/select-all.svelte'
-  import FilterFrames from '@svicons/material-sharp/filter-frames.svelte'
-  import ExitToApp from '@svicons/material-sharp/exit-to-app.svelte'
-  import MiscellaneousServices from '@svicons/material-sharp/miscellaneous-services.svelte'
-  import Tags from '@svicons/fa-solid/tags.svelte'
-
-  import type { LoadOutput } from '@sveltejs/kit'
-
-  import Collapsible from '../components/Collapsible.svelte'
-
-  import type { FAQ } from '../types'
-
   export let faqs: FAQ[]
 
   const icons = {
@@ -65,7 +60,8 @@
       <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
         <svelte:component this={icons[tag]} style="height: 2ex; vertical-align: -3pt;" />
         {tag}
-        ({count})</button>
+        ({count})</button
+      >
     </li>
   {/each}
 </ul>

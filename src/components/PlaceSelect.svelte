@@ -1,10 +1,10 @@
 <script>
   // This component uses the Google Maps Places API to turn user text input into a
   // formatted address and lat/lng coordinates.
-  import Map from './Map.svelte'
-  import AutoCompletePlace from './AutoCompletePlace.svelte'
   import Delete from '@svicons/material-sharp/delete.svelte'
   import mapboxgl from 'mapbox-gl'
+  import AutoCompletePlace from './AutoCompletePlace.svelte'
+  import Map from './Map.svelte'
 
   export let placeholder = ``
   export let required = false
@@ -68,9 +68,11 @@
         data-place={idx + 1}
         type="text"
         value={place.address.split(`, `).slice(0, 2).join(`, `)}
-        disabled />
+        disabled
+      />
       <button on:click={deletePlace(idx)} type="button">
-        <Delete style="width: 3ex; vertical-align: middle;" /></button>
+        <Delete style="width: 3ex; vertical-align: middle;" />
+      </button>
     </li>
   {/each}
 </ol>

@@ -1,7 +1,10 @@
 <script lang="ts" context="module">
+  import type { Load } from '@sveltejs/kit'
+  import Map from '../components/Map.svelte'
+  import type { Chapter } from '../types'
   import { fetchChapters } from '../utils/queries'
 
-  export async function load(): Promise<LoadOutput> {
+  export const load: Load = async () => {
     const chapters = await fetchChapters()
 
     return { props: { chapters } }
@@ -9,12 +12,6 @@
 </script>
 
 <script lang="ts">
-  import Map from '../components/Map.svelte'
-
-  import type { LoadOutput } from '@sveltejs/kit'
-
-  import type { Chapter } from '../types'
-
   export let chapters: Chapter[]
 </script>
 
@@ -25,7 +22,8 @@
       classes: [`chapter`, chap.acceptsSignups ? `active` : `starting`],
       title: chap.token,
       url: chap.slug,
-    }))} />
+    }))}
+  />
 
   <legend>
     <div>

@@ -15,8 +15,10 @@
         {name}
         bind:group={selected}
         {value}
-        {required} />
-      <span>{value}</span></label>
+        {required}
+      />
+      <span>{value}</span>
+    </label>
   {/each}
 </div>
 
@@ -26,6 +28,7 @@
     border-radius: 1ex;
     width: max-content;
     overflow: hidden;
+    height: fit-content;
   }
   input {
     display: none;

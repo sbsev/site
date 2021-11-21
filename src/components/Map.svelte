@@ -1,17 +1,15 @@
 <script lang="ts">
+  import { session } from '$app/stores'
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
-
   import { onMount } from 'svelte'
-  import { session } from '$app/stores'
-
   import type { MapMarker } from '../types'
 
   mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
 
   export let lng = 10
   export let lat = 51.3
-  export let zoom = 5.1
+  export let zoom = 5.05
   export let markers: MapMarker[] = []
   export let minZoom = 4
   export let maxZoom = 10
@@ -26,6 +24,7 @@
 
   onMount(() => {
     map = new mapboxgl.Map({
+      cooperativeGestures: true,
       container: mapDiv,
       style: `mapbox://styles/mapbox/outdoors-v11?optimize=true`,
       center: [lng, lat],
@@ -33,18 +32,6 @@
       minZoom,
       maxZoom,
       scrollZoom,
-    })
-
-    map.on(`wheel`, (event) => {
-      const { originalEvent: origEvent } = event
-
-      if (origEvent.ctrlKey || origEvent.metaKey || origEvent.shiftKey) {
-        // Check if CTRL key is pressed
-        event.originalEvent.preventDefault() // Prevent browser default behavior
-        if (!map.scrollZoom._enabled) map.scrollZoom.enable() // Enable zoom only if it's disabled
-      } else {
-        if (map.scrollZoom._enabled) map.scrollZoom.disable() // Disable zoom only if it's enabled
-      }
     })
 
     for (const { lng, lat, title, url, classes } of markers) {

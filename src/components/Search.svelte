@@ -47,13 +47,15 @@
     on:keyup={() => (promise = search())}
     placeholder="Suchen"
     aria-label="Suche"
-    class:hasFocus />
+    class:hasFocus
+  />
   <button
     on:click={() => {
       hasFocus = true
       input.focus()
     }}
-    title="Suche">
+    title="Suche"
+  >
     <Search alt="Lupe" height="{hasFocus ? 1.9 : 2.3}ex" {style} />
   </button>
   {#if hasFocus && query}

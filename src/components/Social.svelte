@@ -26,7 +26,8 @@
 <div {style} class:vertical class:fixed>
   {#each include as key}
     <a href={social[key]} aria-label={key}>
-      <svelte:component this={icons[key]} height="2.5ex" /></a>
+      <svelte:component this={icons[key]} height="2.5ex" />
+    </a>
   {/each}
 </div>
 

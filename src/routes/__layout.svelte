@@ -1,7 +1,12 @@
 <script lang="ts" context="module">
-  import { fetchYaml, fetchChapters } from '../utils/queries.js'
+  import { page } from '$app/stores'
+  import type { Load } from '@sveltejs/kit'
+  import Footer from '../components/Footer.svelte'
+  import Header from '../components/Header.svelte'
+  import type { Chapter, NavLink } from '../types.js'
+  import { fetchChapters, fetchYaml } from '../utils/queries.js'
 
-  export async function load(): Promise<LoadOutput> {
+  export const load: Load = async () => {
     const nav = await fetchYaml(`Nav`)
     const footer = await fetchYaml(`Footer`)
     const social = await fetchYaml(`Social`)
@@ -24,13 +29,6 @@
 </script>
 
 <script lang="ts">
-  import { page } from '$app/stores'
-
-  import Header from '../components/Header.svelte'
-  import Footer from '../components/Footer.svelte'
-  import type { Chapter, NavLink } from '../types.js'
-  import type { LoadOutput } from '@sveltejs/kit'
-
   export let nav: NavLink[]
   export let footer: { links: string[] }
   export let social: Record<string, string>
@@ -44,19 +42,6 @@
     })
   }
 </script>
-
-<svelte:head>
-  <!-- see _redirects file for where this script originates -->
-  <script defer data-domain="studenten-bilden-schueler.de" src="/js/script.js"></script>
-  <!-- required for triggering custom events in signup form -->
-  <script lang="ts">
-    window.plausible =
-      window.plausible ||
-      function () {
-        ;(window.plausible.q = window.plausible.q || []).push(arguments)
-      }
-  </script>
-</svelte:head>
 
 <Header {nav} />
 <main>

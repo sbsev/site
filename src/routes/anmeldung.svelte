@@ -1,6 +1,15 @@
 <script context="module">
-  import marked from 'marked'
-  import { fetchYaml, fetchChapters } from '../utils/queries.js'
+  import { page, session } from '$app/stores'
+  import Plant from '@svicons/remix-fill/plant.svelte'
+  import { marked } from 'marked'
+  import { onDestroy, onMount } from 'svelte'
+  import CircleSpinner from '../components/CircleSpinner.svelte'
+  import FormInput from '../components/FormInput.svelte'
+  import Modal from '../components/Modal.svelte'
+  import RadioButtons from '../components/RadioButtons.svelte'
+  import { pupilSignupStore, studentSignupStore } from '../stores'
+  import { airtableSubmit, tryParse } from '../utils/airtable.js'
+  import { fetchChapters, fetchYaml } from '../utils/queries.js'
 
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
@@ -38,17 +47,6 @@
 </script>
 
 <script>
-  import { session, page } from '$app/stores'
-  import Plant from '@svicons/remix-fill/plant.svelte'
-  import { onDestroy, onMount } from 'svelte'
-
-  import FormInput from '../components/FormInput.svelte'
-  import CircleSpinner from '../components/CircleSpinner.svelte'
-  import Modal from '../components/Modal.svelte'
-  import RadioButtons from '../components/RadioButtons.svelte'
-  import { airtableSubmit, tryParse } from '../utils/airtable.js'
-  import { studentSignupStore, pupilSignupStore } from '../stores'
-
   export let chapters, options, studentText, pupilText
 
   let { type = `Student`, chapter = ``, test } = $page.query
@@ -147,13 +145,15 @@
     <RadioButtons
       options={options.types}
       bind:selected={type}
-      style="margin: 1em auto;" />
+      style="margin: 1em auto;"
+    />
 
     {@html text.page.note}
     <FormInput
       select={chapters.map((c) => c.title)}
       {...text.chapter}
-      bind:input={inputs.chapter} />
+      bind:input={inputs.chapter}
+    />
 
     <FormInput select={options.genders} {...text.gender} bind:input={inputs.gender} />
 
@@ -175,12 +175,14 @@
       <FormInput
         {...text.subjects}
         bind:input={inputs.subjects}
-        multiselect={options.subjects} />
+        multiselect={options.subjects}
+      />
 
       <FormInput
         {...text.schoolTypes}
         bind:input={inputs.schoolTypes}
-        multiselect={options.schoolTypes} />
+        multiselect={options.schoolTypes}
+      />
 
       <FormInput
         {...text.levels}
@@ -188,20 +190,23 @@
         type="doubleRange"
         min={1}
         max={13}
-        initial="1 - 13" />
+        initial="1 - 13"
+      />
 
       <FormInput
         {...text.places}
         bind:input={inputs.places}
         placeholder="Ort der Nachhilfe"
-        type="placeSelect" />
+        type="placeSelect"
+      />
 
       <FormInput {...text.remarks} bind:input={inputs.remarks} />
 
       <FormInput
         select={options.discoveries}
         {...text.discovery}
-        bind:input={inputs.discovery} />
+        bind:input={inputs.discovery}
+      />
 
       <FormInput {...text.agreement} bind:input={inputs.agreement} type="toggle" />
     {:else if type === `Schüler`}
@@ -210,12 +215,14 @@
       <FormInput
         {...text.subjects}
         bind:input={inputs.subjects}
-        multiselect={options.subjects} />
+        multiselect={options.subjects}
+      />
 
       <FormInput
         select={options.schoolTypes}
         {...text.schoolType}
-        bind:input={inputs.schoolType} />
+        bind:input={inputs.schoolType}
+      />
 
       <FormInput
         {...text.level}
@@ -223,13 +230,15 @@
         type="singleRange"
         min={1}
         max={13}
-        initial="" />
+        initial=""
+      />
 
       <FormInput
         {...text.places}
         bind:input={inputs.places}
         placeholder="Ort der Nachhilfe"
-        type="placeSelect" />
+        type="placeSelect"
+      />
 
       <FormInput {...text.age} bind:input={inputs.age} type="number" />
 
@@ -253,7 +262,8 @@
     <FormInput
       {...text.dataProtection}
       bind:input={inputs.dataProtection}
-      type="toggle" />
+      type="toggle"
+    />
 
     <h3>
       {@html text.submit.title}

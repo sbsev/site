@@ -1,7 +1,15 @@
 <script lang="ts" context="module">
+  import type { Load } from '@sveltejs/kit'
+  import PersonCircle from '@svicons/bootstrap/person-circle.svelte'
+  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
+  import HistoryEdu from '@svicons/material-sharp/history-edu.svelte'
+  import Calendar from '@svicons/octicons/calendar.svelte'
+  import Img from '../../components/Img.svelte'
+  import ToolTip from '../../components/ToolTip.svelte'
+  import type { Post } from '../../types'
   import { fetchPost } from '../../utils/queries'
 
-  export async function load({ page }: LoadInput): Promise<LoadOutput> {
+  export const load: Load = async ({ page }) => {
     const post = await fetchPost(page.params.slug)
 
     return { props: { post } }
@@ -9,18 +17,6 @@
 </script>
 
 <script lang="ts">
-  import ToolTip from '../../components/ToolTip.svelte'
-
-  import type { LoadInput, LoadOutput } from '@sveltejs/kit'
-
-  import Calendar from '@svicons/octicons/calendar.svelte'
-  import PersonCircle from '@svicons/bootstrap/person-circle.svelte'
-  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
-  import HistoryEdu from '@svicons/material-sharp/history-edu.svelte'
-  import Img from '../../components/Img.svelte'
-
-  import type { Post } from '../../types'
-
   export let post: Post
 
   $: ({ title, body, cover } = post)
@@ -32,7 +28,9 @@
   <Img
     sizes={[{ w: 1000 }, { w: 700 }, { w: 500 }, { w: 300 }]}
     {...cover}
-    pictureStyle="margin: -2em 0 3em 0" />
+    imgStyle="height: auto;"
+    pictureStyle="margin: -2em 0 3em 0"
+  />
   <h1>{title}</h1>
   <section>
     <Img sizes={[{ w: 150 }]} {...photo} alt={name} />

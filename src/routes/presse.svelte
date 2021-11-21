@@ -1,7 +1,14 @@
 <script lang="ts" context="module">
-  import { fetchYamlList, fetchPage } from '../utils/queries'
+  import type { Load } from '@sveltejs/kit'
+  import Newspaper from '@svicons/ionicons-solid/newspaper.svelte'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import Calendar from '@svicons/octicons/calendar.svelte'
+  import BasePage from '../components/BasePage.svelte'
+  import Img from '../components/Img.svelte'
+  import type { Page } from '../types'
+  import { fetchPage, fetchYamlList } from '../utils/queries'
 
-  export async function load(): Promise<LoadOutput> {
+  export const load: Load = async () => {
     const page = await fetchPage(`presse`)
 
     const pressItems = await fetchYamlList(`Presse`, `presse#`)
@@ -11,16 +18,6 @@
 </script>
 
 <script lang="ts">
-  import Calendar from '@svicons/octicons/calendar.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
-  import Newspaper from '@svicons/ionicons-solid/newspaper.svelte'
-
-  import type { LoadOutput } from '@sveltejs/kit'
-
-  import Img from '../components/Img.svelte'
-  import BasePage from '../components/BasePage.svelte'
-  import type { Page } from '../types'
-
   export let pressItems
   export let page: Page
 
@@ -42,7 +39,8 @@
   on:hashchange={() => {
     // eslint-disable-next-line no-unused-vars
     hash = window.location.hash.replace(`#`, ``)
-  }} />
+  }}
+/>
 
 <BasePage {page}>
   <svelte:fragment slot="afterArticle">

@@ -1,25 +1,21 @@
 <script lang="ts">
-  import { slide, fade } from 'svelte/transition'
-  import type { SvelteComponent } from 'svelte'
-
-  import Tags from '@svicons/fa-solid/tags.svelte'
   import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
-  import CircleWithCross from '@svicons/entypo/circle-with-cross.svelte'
-  import Euro from '@svicons/material-sharp/euro.svelte'
-  import SelectAll from '@svicons/material-sharp/select-all.svelte'
-  import Public from '@svicons/material-sharp/public.svelte'
-  import RateReview from '@svicons/material-sharp/rate-review.svelte'
-  import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
-  import EventAvailable from '@svicons/material-sharp/event-available.svelte'
-  import BeachAccess from '@svicons/material-sharp/beach-access.svelte'
-
-  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
-  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
-  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
-
   import GitBranch from '@svicons/boxicons-regular/git-branch.svelte'
+  import CircleWithCross from '@svicons/entypo/circle-with-cross.svelte'
+  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
+  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
+  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
+  import Tags from '@svicons/fa-solid/tags.svelte'
   import StatsChart from '@svicons/ionicons-solid/stats-chart.svelte'
-
+  import BeachAccess from '@svicons/material-sharp/beach-access.svelte'
+  import Euro from '@svicons/material-sharp/euro.svelte'
+  import EventAvailable from '@svicons/material-sharp/event-available.svelte'
+  import Public from '@svicons/material-sharp/public.svelte'
+  import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
+  import RateReview from '@svicons/material-sharp/rate-review.svelte'
+  import SelectAll from '@svicons/material-sharp/select-all.svelte'
+  import type { SvelteComponent } from 'svelte'
+  import { fade, slide } from 'svelte/transition'
   import type { BlogTag } from '../types'
 
   export let tagOccurrences: [BlogTag, number][]
@@ -67,12 +63,14 @@
           transition:fade
           aria-label="Nach Tag {tag} filtern"
           class:active={activeTag === tag}
-          on:click={() => (activeTag = tag)}>
+          on:click={() => (activeTag = tag)}
+        >
           <svelte:component
             this={icons[tag]}
-            style="height: 2.2ex; vertical-align: -3pt; margin-right: 6pt" />
-          {tag}
-          ({count})</button>
+            style="height: 2.2ex; vertical-align: -3pt; margin-right: 6pt"
+          />
+          {tag} ({count})
+        </button>
       </li>
     {/each}
   </ul>

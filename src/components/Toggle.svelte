@@ -20,7 +20,8 @@
     bind:checked
     {required}
     bind:this={input}
-    on:keydown={handleKeydown} />
+    on:keydown={handleKeydown}
+  />
   <span />
 </label>
 

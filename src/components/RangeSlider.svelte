@@ -27,7 +27,8 @@
     {max}
     on:stop={onStop}
     pips
-    all="label" />
+    all="label"
+  />
 {:else if type === `singleRange`}
   <RangeSlider float values={undefined} {min} {max} on:stop={onStop} pips all="label" />
 {/if}
@@ -39,7 +40,8 @@
   id={name}
   class="hidden"
   tabindex="-1"
-  on:focus|preventDefault />
+  on:focus|preventDefault
+/>
 
 <style>
   input.hidden {

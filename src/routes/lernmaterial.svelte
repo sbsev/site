@@ -1,7 +1,23 @@
 <script lang="ts" context="module">
-  import { fetchYamlList, fetchPage } from '../utils/queries'
+  import type { Load } from '@sveltejs/kit'
+  import CardText from '@svicons/bootstrap/card-text.svelte'
+  import Erlang from '@svicons/fa-brands/erlang.svelte'
+  import Tags from '@svicons/fa-solid/tags.svelte'
+  import Functions from '@svicons/material-sharp/functions.svelte'
+  import GroupWork from '@svicons/material-sharp/group-work.svelte'
+  import Language from '@svicons/material-sharp/language.svelte'
+  import Science from '@svicons/material-sharp/science.svelte'
+  import SelectAll from '@svicons/material-sharp/select-all.svelte'
+  import Atom from '@svicons/simple-icons/atom.svelte'
+  import Disqus from '@svicons/simple-icons/disqus.svelte'
+  import { flip } from 'svelte/animate'
+  import { scale } from 'svelte/transition'
+  import BasePage from '../components/BasePage.svelte'
+  import Img from '../components/Img.svelte'
+  import type { Page, StudyPlatform } from '../types'
+  import { fetchPage, fetchYamlList } from '../utils/queries'
 
-  export async function load(): Promise<LoadOutput> {
+  export const load: Load = async () => {
     const page = await fetchPage(`lernmaterial`)
     const studyPlatforms = await fetchYamlList(`Lernmaterial`, `lernmaterial#`)
 
@@ -10,27 +26,6 @@
 </script>
 
 <script lang="ts">
-  import { flip } from 'svelte/animate'
-  import { scale } from 'svelte/transition'
-
-  import type { LoadOutput } from '@sveltejs/kit'
-
-  import SelectAll from '@svicons/material-sharp/select-all.svelte'
-  import Tags from '@svicons/fa-solid/tags.svelte'
-  import Functions from '@svicons/material-sharp/functions.svelte'
-  import Science from '@svicons/material-sharp/science.svelte'
-  import CardText from '@svicons/bootstrap/card-text.svelte'
-  import GroupWork from '@svicons/material-sharp/group-work.svelte'
-  import Language from '@svicons/material-sharp/language.svelte'
-  import Erlang from '@svicons/fa-brands/erlang.svelte'
-  import Disqus from '@svicons/simple-icons/disqus.svelte'
-  import Atom from '@svicons/simple-icons/atom.svelte'
-
-  import Img from '../components/Img.svelte'
-  import BasePage from '../components/BasePage.svelte'
-
-  import type { Page, StudyPlatform } from '../types'
-
   export let studyPlatforms: StudyPlatform[]
   export let page: Page
 
@@ -80,7 +75,8 @@
           <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
             <svelte:component this={icons[tag]} {style} />
             {tag}
-            ({count})</button>
+            ({count})</button
+          >
         </li>
       {/each}
     </ul>

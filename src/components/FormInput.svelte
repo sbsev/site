@@ -39,7 +39,8 @@
     {placeholder}
     options={select.length ? select : multiselect}
     single={select.length ? true : false}
-    {required} />
+    {required}
+  />
 {:else if type === `toggle`}
   <Toggle {name} {required} bind:input />
 {:else if type === `placeSelect`}
@@ -58,7 +59,8 @@
     {required}
     on:mousewheel={() => type === `number` && input.blur()}
     {min}
-    {max} />
+    {max}
+  />
   <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
 {/if}
 

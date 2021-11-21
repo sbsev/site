@@ -1,13 +1,12 @@
 <script lang="ts">
-  import Tags from '@svicons/fa-solid/tags.svelte'
-  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
-  import Email from '@svicons/material-sharp/email.svelte'
   import Link from '@svicons/boxicons-regular/link.svelte'
+  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
+  import Tags from '@svicons/fa-solid/tags.svelte'
+  import Email from '@svicons/material-sharp/email.svelte'
   import Calendar from '@svicons/octicons/calendar.svelte'
-
-  import ToolTip from './ToolTip.svelte'
-  import Img from './Img.svelte'
   import type { Post } from '../types'
+  import Img from './Img.svelte'
+  import ToolTip from './ToolTip.svelte'
 
   export let post: Post
 
@@ -20,7 +19,8 @@
 
 <section>
   <a sveltekit:prefetch href={slug}>
-    <Img sizes={[{ w: 400, h: 300 }]} {...cover} {imgStyle} /></a>
+    <Img sizes={[{ w: 400, h: 300 }]} {...cover} {imgStyle} /></a
+  >
   <h3><a sveltekit:prefetch href={slug}>{title}</a></h3>
   <div>
     <ToolTip>
@@ -28,7 +28,9 @@
         {...author.photo}
         alt={author.name}
         sizes={[{ w: 100, h: 100 }]}
-        imgStyle={authorImgStyle} />{author.name}
+        imgStyle={authorImgStyle}
+      />
+      {author.name}
       <address slot="tip">
         {#if author.url}
           <a href={author.url}><Link {style} />{author.url}</a>

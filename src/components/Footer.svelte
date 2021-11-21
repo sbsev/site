@@ -1,13 +1,12 @@
 <script lang="ts">
-  import OpenSource from '@svicons/remix-fill/open-source.svelte'
   import Cookie from '@svicons/boxicons-solid/cookie.svelte'
-  import Law from '@svicons/octicons/law.svelte'
-  import PrivacyTip from '@svicons/material-sharp/privacy-tip.svelte'
-  import Euro from '@svicons/material-sharp/euro.svelte'
   import DocumentText from '@svicons/ionicons-solid/document-text.svelte'
-
-  import Social from './Social.svelte'
+  import Euro from '@svicons/material-sharp/euro.svelte'
+  import PrivacyTip from '@svicons/material-sharp/privacy-tip.svelte'
+  import Law from '@svicons/octicons/law.svelte'
+  import OpenSource from '@svicons/remix-fill/open-source.svelte'
   import type { Link } from '../types'
+  import Social from './Social.svelte'
 
   const icons = {
     Impressum: Law,
@@ -38,12 +37,15 @@
     <a href="https://github.com/sbsev/svelte-site">
       <OpenSource
         height="2.5ex"
-        style="vertical-align: bottom; padding-right: 3pt;" />open source</a>
+        style="vertical-align: bottom; padding-right: 3pt;"
+      />open source
+    </a>
     und verwendet
     <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
       keine
       <Cookie height="2.2ex" style="vertical-align: middle;" />
-      Cookies.</a>
+      Cookies.
+    </a>
   </span>
   <Social {social} style="margin-top: 1ex;" />
 </footer>

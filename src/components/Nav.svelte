@@ -1,18 +1,17 @@
 <script lang="ts">
   import { page } from '$app/stores'
-  import { slide } from 'svelte/transition'
-  import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
-  import PeopleCircle from '@svicons/ionicons-solid/people-circle.svelte'
-  import Rss from '@svicons/fa-solid/rss-square.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
-  import Plant from '@svicons/remix-fill/plant.svelte'
-  import Menu from '@svicons/heroicons-solid/menu.svelte'
   import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
-  import AlternateEmail from '@svicons/material-sharp/alternate-email.svelte'
   import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
-
-  import { onClickOutside } from '../utils/actions'
+  import Rss from '@svicons/fa-solid/rss-square.svelte'
+  import Menu from '@svicons/heroicons-solid/menu.svelte'
+  import PeopleCircle from '@svicons/ionicons-solid/people-circle.svelte'
+  import AlternateEmail from '@svicons/material-sharp/alternate-email.svelte'
+  import Place from '@svicons/material-sharp/place.svelte'
+  import QuestionAnswer from '@svicons/material-sharp/question-answer.svelte'
+  import Plant from '@svicons/remix-fill/plant.svelte'
+  import { slide } from 'svelte/transition'
   import type { NavLink } from '../types'
+  import { onClickOutside } from '../utils/actions'
 
   export let nav: NavLink[]
 
@@ -54,7 +53,8 @@
 <button
   on:click|preventDefault={() => (isOpen = true)}
   aria-label="Navigationsmenü öffnen"
-  style="grid-area: nav;">
+  style="grid-area: nav;"
+>
   <Menu height="3ex" />
 </button>
 
@@ -63,7 +63,8 @@
   class="logo"
   href="/"
   sveltekit:prefetch
-  aria-current={isCurrent(`/`)}>
+  aria-current={isCurrent(`/`)}
+>
   <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
 </a>
 
@@ -73,13 +74,16 @@
       <li
         on:mouseenter={() => (hovered = idx)}
         on:mouseleave={() => (hovered = -1)}
-        class:hover={hovered === idx}>
+        class:hover={hovered === idx}
+      >
         <span>
           <a on:click={close} sveltekit:prefetch aria-current={isCurrent(url)} href={url}>
             <svelte:component
               this={icons[title]}
-              style="padding-right: 4pt; height: 1em;" />
-            {title}</a>
+              style="padding-right: 4pt; height: 1em;"
+            />
+            {title}
+          </a>
           {#if subNav}
             <button on:click={setActiveSubNav(idx)} aria-label="Untermenü {title} öffnen">
               <ChevronExpand height="20" />
@@ -92,14 +96,17 @@
             style="grid-template-columns: repeat({Math.min(
               Math.ceil(subNav.length / 10),
               4
-            )}, 1fr);">
+            )}, 1fr);"
+          >
             {#each subNav as { title, url, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
                 <a
                   on:click={close}
                   sveltekit:prefetch
                   aria-current={isCurrent(url)}
-                  href={url}>{title}</a>
+                  href={url}
+                  >{title}
+                </a>
               </li>
             {/each}
           </ul>

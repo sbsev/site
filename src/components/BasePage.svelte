@@ -1,9 +1,7 @@
 <script lang="ts">
-  import Toc from 'svelte-toc/Toc.svelte'
   import Update from '@svicons/material-sharp/update.svelte'
-
+  import Toc from 'svelte-toc/Toc.svelte'
   import Img from '../components/Img.svelte'
-
   import type { Page } from '../types'
 
   export let page: Page
@@ -36,7 +34,8 @@
       title=""
       openButtonLabel="Inhaltsverzeichnis öffnen"
       headingSelector={[...Array(5).keys()].map((i) => `article h${i + 2}`)}
-      --toc-mobile-bg-color="var(--bodyBg)" />
+      --toc-mobile-bg-color="var(--bodyBg)"
+    />
   {/if}
   <div>
     {@html body}
@@ -49,7 +48,8 @@
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
     <Update {style} />Zuletzt bearbeitet:
-    {date}</time>
+    {date}
+  </time>
   <address>
     <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}">
       Feedback zu dieser Seite?

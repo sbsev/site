@@ -1,7 +1,13 @@
 <script lang="ts" context="module">
-  import { fetchYamlList, fetchPage } from '../utils/queries'
+  import type { Load } from '@sveltejs/kit'
+  import PriceRibbon from '@svicons/fa-solid/award.svelte'
+  import Calendar from '@svicons/octicons/calendar.svelte'
+  import BasePage from '../components/BasePage.svelte'
+  import Img from '../components/Img.svelte'
+  import type { Award, Page } from '../types'
+  import { fetchPage, fetchYamlList } from '../utils/queries'
 
-  export async function load(): Promise<LoadOutput> {
+  export const load: Load = async () => {
     const page = await fetchPage(`auszeichnungen`)
     const awards = await fetchYamlList(`Auszeichnungen`, `auszeichnungen#`)
     return { props: { page, awards } }
@@ -9,15 +15,6 @@
 </script>
 
 <script lang="ts">
-  import Calendar from '@svicons/octicons/calendar.svelte'
-  import PriceRibbon from '@svicons/fa-solid/award.svelte'
-
-  import type { LoadOutput } from '@sveltejs/kit'
-
-  import Img from '../components/Img.svelte'
-  import BasePage from '../components/BasePage.svelte'
-  import type { Award, Page } from '../types'
-
   export let awards: Award[]
   export let page: Page
 

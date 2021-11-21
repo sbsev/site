@@ -16,8 +16,9 @@ export type Link = {
 }
 
 export type NavLink = Link & {
-  span?: number
   subNav?: NavLink[]
+  spanCols?: boolean
+  lightFont?: boolean
 }
 
 export type Page = {

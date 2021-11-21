@@ -14,6 +14,21 @@
     <link rel="icon" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
 
+    <!-- see netlify.toml file for where this script originates -->
+    <script
+      defer
+      data-domain="studenten-bilden-schueler.de"
+      src="/js/script.js"
+    ></script>
+    <!-- required for triggering custom events in signup form -->
+    <script>
+      window.plausible =
+        window.plausible ||
+        function () {
+          ;(window.plausible.q = window.plausible.q || []).push(arguments)
+        }
+    </script>
+
     %svelte.head%
   </head>
 

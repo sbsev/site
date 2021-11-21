@@ -19,7 +19,8 @@
   <ModalColorPicker
     ariaLabelBtnOpener="Farbmodus öffnen"
     darkName="Dunkel"
-    lightName="Hell" />
+    lightName="Hell"
+  />
 
   <Search indices={[`Seiten`, `Posts`, `FAQs`, `Lernmaterial`]} />
 </header>

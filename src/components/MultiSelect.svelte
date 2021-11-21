@@ -100,7 +100,8 @@
           <button
             on:click|stopPropagation={() => remove(itm)}
             type="button"
-            title="Remove {itm}">
+            title="Remove {itm}"
+          >
             <CrossIcon {style} />
           </button>
         {/if}
@@ -121,7 +122,8 @@
       id={name}
       {required}
       on:focus={() => filterInput.focus()}
-      tabindex="-1" />
+      tabindex="-1"
+    />
     <input
       on:click|self={() => setOptionsVisible(true)}
       on:blur={() => dispatch(`blur`)}
@@ -132,14 +134,16 @@
       on:focus={() => setOptionsVisible(true)}
       on:blur={() => setOptionsVisible(false)}
       style="flex: 1;"
-      placeholder={selected.length ? `` : placeholder} />
+      placeholder={selected.length ? `` : placeholder}
+    />
     {#if !single}
       <button
         type="button"
         class="remove-all"
         title="Remove All"
         on:click={removeAll}
-        style={selected.length === 0 && `display: none;`}>
+        style={selected.length === 0 && `display: none;`}
+      >
         <CrossIcon {style} />
       </button>
     {/if}
@@ -152,7 +156,8 @@
           on:mousedown|preventDefault={() =>
             selected.includes(option) ? remove(option) : add(option)}
           class:selected={selected.includes(option)}
-          class:active={activeOption === option}>
+          class:active={activeOption === option}
+        >
           {option}
         </li>
       {/each}

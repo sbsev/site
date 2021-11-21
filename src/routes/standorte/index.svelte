@@ -1,7 +1,12 @@
 <script lang="ts" context="module">
+  import type { Load } from '@sveltejs/kit'
+  import BasePage from '../../components/BasePage.svelte'
+  import ChapterList from '../../components/ChapterList.svelte'
+  import ChapterMap from '../../components/ChapterMap.svelte'
+  import type { Chapter, Page } from '../../types'
   import { fetchChapters, fetchPage } from '../../utils/queries'
 
-  export async function load({ page: { path } }: LoadInput): Promise<LoadOutput> {
+  export const load: Load = async ({ page: { path } }) => {
     const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
     const chapters = await fetchChapters()
 
@@ -12,14 +17,6 @@
 </script>
 
 <script lang="ts">
-  import type { LoadInput, LoadOutput } from '@sveltejs/kit'
-
-  import type { Chapter, Page } from '../../types'
-
-  import ChapterMap from '../../components/ChapterMap.svelte'
-  import ChapterList from '../../components/ChapterList.svelte'
-  import BasePage from '../../components/BasePage.svelte'
-
   export let chapters: Chapter[], page: Page
 </script>
 
