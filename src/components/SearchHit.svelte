@@ -1,10 +1,11 @@
 <script lang="ts">
+  import type { Post } from '../types'
   import Img from './Img.svelte'
 
-  export let hit
+  export let hit: Post
   export let clickHandler = () => {}
 
-  $: ({ title, slug, body, cover = {}, date, author } = hit)
+  $: ({ title, slug, body, cover, date, author } = hit)
 </script>
 
 <div>

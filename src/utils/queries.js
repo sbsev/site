@@ -1,6 +1,6 @@
 /* eslint-disable indent */
-import marked from './marked.js'
 import yaml from 'js-yaml'
+import marked from './marked.js'
 
 const prefixSlug = (prefix) => (obj) => {
   obj.slug = prefix + obj.slug

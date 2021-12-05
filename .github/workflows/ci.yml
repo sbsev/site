@@ -41,10 +41,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Setup node v16
+      - name: Setup node v17
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '17'
 
       - name: Install dependencies
         run: yarn install

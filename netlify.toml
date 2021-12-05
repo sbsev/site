@@ -3,8 +3,8 @@ command = "yarn build"
 publish = "build"
 
 [build.environment]
-NODE_VERSION = "16.1.0"
-YARN_VERSION = "1.22.10"
+NODE_VERSION = "17.0.1"
+YARN_VERSION = "1.22.11"
 
 [[redirects]]
 force = true

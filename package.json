@@ -14,7 +14,7 @@
     "preview": "svelte-kit preview",
     "serve": "yarn build && yarn preview",
     "test": "ava --timeout=1m",
-    "ci": "start-server-and-test http://localhost:3000",
+    "ci": "start-server-and-test dev http://localhost:3000 test",
     "check": "svelte-check"
   },
   "devDependencies": {

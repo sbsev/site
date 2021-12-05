@@ -1,10 +1,9 @@
 <script>
-  import { onMount } from 'svelte'
   import { session } from '$app/stores'
   import Search from '@svicons/fa-solid/search.svelte'
-
-  import SearchHit from './SearchHit.svelte'
+  import { onMount } from 'svelte'
   import { onClickOutside } from '../utils/actions'
+  import SearchHit from './SearchHit.svelte'
 
   const { ALGOLIA_APP_ID: appId, ALGOLIA_SEARCH_KEY: searchKey } = $session
 
