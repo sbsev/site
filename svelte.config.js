@@ -1,9 +1,8 @@
-import 'dotenv/config'
 import replace from '@rollup/plugin-replace'
 import adapter from '@sveltejs/adapter-static'
-import preprocess from 'svelte-preprocess'
-
+import 'dotenv/config'
 import { indexAlgolia } from 'svelte-algolia/main.js'
+import preprocess from 'svelte-preprocess'
 import { algoliaConfig } from './src/utils/algolia.js'
 
 const { NODE_ENV } = process.env

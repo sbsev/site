@@ -5,6 +5,8 @@
   import { fetchPage } from '../utils/queries'
 
   export const load: Load = async ({ page: { params } }) => {
+    if (params.slug === `robots.txt`) return
+
     const page = await fetchPage(params.slug)
 
     // If no page data could be fetched for params.slug, the page doesn't exist,
