@@ -5,6 +5,7 @@
   import { fetchPage } from '../utils/queries'
 
   export const load: Load = async ({ page: { params } }) => {
+    // delegate route to static/robots.txt
     if (params.slug === `robots.txt`) return
 
     const page = await fetchPage(params.slug)

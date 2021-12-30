@@ -1,6 +1,8 @@
 ci:
   autoupdate_schedule: quarterly
 
+default_stages: [commit]
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
@@ -22,3 +24,9 @@ repos:
           - prettier
           - prettier-plugin-svelte
           - svelte
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.1.0
+    hooks:
+      - id: codespell
+        stages: [commit-msg]
