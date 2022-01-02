@@ -6,8 +6,8 @@
   import type { Chapter, Page } from '../../types'
   import { fetchChapters, fetchPage } from '../../utils/queries'
 
-  export const load: Load = async ({ page: { path } }) => {
-    const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
+  export const load: Load = async ({ url }) => {
+    const page = await fetchPage(url.pathname.split(`/`).filter(Boolean).join(`/`))
     const chapters = await fetchChapters()
 
     return {

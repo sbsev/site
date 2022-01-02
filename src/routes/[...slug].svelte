@@ -4,7 +4,7 @@
   import type { Page } from '../types'
   import { fetchPage } from '../utils/queries'
 
-  export const load: Load = async ({ page: { params } }) => {
+  export const load: Load = async ({ params }) => {
     // delegate route to static/robots.txt
     if (params.slug === `robots.txt`) return
 

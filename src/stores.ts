@@ -30,5 +30,4 @@ function createSessionStore<T = unknown>(name: string, defaultValue: T) {
   return store
 }
 
-export const studentSignupStore = createSessionStore(`studentSignup`, {})
-export const pupilSignupStore = createSessionStore(`pupilSignup`, {})
+export const signupStore = createSessionStore(`signupData`, {})

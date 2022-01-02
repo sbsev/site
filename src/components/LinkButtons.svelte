@@ -1,25 +1,12 @@
 <script>
-  export let options
-  export let value = undefined
-  export let required = false
+  export let links = []
   export let style = ``
-  export let name = ``
+  export let current
 </script>
 
 <div {style}>
-  {#each options as value, idx}
-    <label>
-      <input
-        type="radio"
-        id={name ? `${name}-${idx}` : undefined}
-        {name}
-        bind:group={value}
-        {value}
-        {required}
-        on:change
-      />
-      <span>{value}</span>
-    </label>
+  {#each links as { title, slug }}
+    <a href={slug} aria-current={slug === current}>{title}</a>
   {/each}
 </div>
 
@@ -31,10 +18,7 @@
     overflow: hidden;
     height: fit-content;
   }
-  input {
-    display: none;
-  }
-  span {
+  a {
     cursor: pointer;
     display: inline-block;
     color: white;
@@ -42,11 +26,11 @@
     background: var(--green);
     transition: 0.3s;
   }
-  input:not(:checked) + span:hover {
+  a:hover {
     background: var(--lightGreen);
     transform: scale(1.03);
   }
-  input:checked + span {
+  a[aria-current] {
     box-shadow: inset 0 0 1em -3pt black;
     background: var(--darkGreen);
   }

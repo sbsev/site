@@ -8,9 +8,9 @@
   import type { Page } from '../../types'
   import { fetchPage } from '../../utils/queries'
 
-  export const load: Load = async ({ page: { path, params } }) => {
+  export const load: Load = async ({ url, params }) => {
     const { slug } = params
-    const page = await fetchPage(path.split(`/`).filter(Boolean).join(`/`))
+    const page = await fetchPage(url.pathname.split(`/`).filter(Boolean).join(`/`))
 
     return { props: { page, slug } }
   }
@@ -32,7 +32,7 @@
         Willst du bei uns mitmachen?
         <a
           sveltekit:prefetch
-          href="/anmeldung?type=Student&chapter={page.title}"
+          href="/anmeldung-student?chapter={page.title}"
           class="btn blue"><GraduationCap {style} />Als Student:in anmelden</a
         >
         <a sveltekit:prefetch href="/mitmachen/nachhilfelehrer" class="btn blue stroke">
@@ -43,7 +43,7 @@
         Suchst du Nachhilfe?
         <a
           sveltekit:prefetch
-          href="/anmeldung?type=Schüler&chapter={page.title}"
+          href="/anmeldung-schueler?chapter={page.title}"
           class="btn green"
         >
           <Child {style} />

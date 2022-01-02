@@ -1,8 +1,15 @@
-<script>
+<script lang="ts">
   // This component uses the Mapbox JS API to turn user text input into a
   // formatted address and lat/lng coordinates.
   import { session } from '$app/stores'
+  import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+  import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+  import mapboxgl from 'mapbox-gl'
+  import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
+
+  // required yarn add -D events @types/events
+  // https://github.com/mapbox/mapbox-gl-geocoder/issues/441
 
   export let selectHandler
   export let placeholder = ``
@@ -10,9 +17,9 @@
   export let name = ``
 
   onMount(() => {
-    window.mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
+    mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
 
-    let geocoder = new window.MapboxGeocoder({
+    let geocoder = new MapboxGeocoder({
       accessToken: $session.MAPBOX_PUBLIC_KEY,
       countries: `de`,
       language: `de-DE`,
@@ -28,21 +35,7 @@
   })
 </script>
 
-<svelte:head>
-  <link
-    href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
-    rel="stylesheet"
-  />
-  <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
-  <script
-    src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css"
-    type="text/css"
-  />
-</svelte:head>
-
+<!-- has to be <div/>, <input/> won't work -->
 <div id="geocoder" {name} type="text" {placeholder} {required} />
 
 <style>

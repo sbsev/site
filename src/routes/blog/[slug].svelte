@@ -9,8 +9,8 @@
   import type { Post } from '../../types'
   import { fetchPost } from '../../utils/queries'
 
-  export const load: Load = async ({ page }) => {
-    const post = await fetchPost(page.params.slug)
+  export const load: Load = async ({ params }) => {
+    const post = await fetchPost(params.slug)
 
     return { props: { post } }
   }

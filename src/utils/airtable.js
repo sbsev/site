@@ -1,12 +1,3 @@
-export function tryParse(str) {
-  // try to parse str as JSON, return unchanged if that fails
-  try {
-    return JSON.parse(str)
-  } catch (_) {
-    return str
-  }
-}
-
 async function airtablePost(baseId, table, data, apiKey) {
   const response = await fetch(
     `https://api.airtable.com/v0/${baseId}/${table}`,
@@ -25,10 +16,6 @@ async function airtablePost(baseId, table, data, apiKey) {
 const toStr = (str) => (str ? String(str) : undefined)
 
 export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
-  data = Object.fromEntries(
-    Object.entries(data).map(([key, val]) => [key, tryParse(val)])
-  )
-
   if (!apiKey) throw `missing Airtable API key, got ${apiKey}`
   const table = data.type === `Student` ? `Studenten` : `Schüler`
 
@@ -51,13 +38,14 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
       .join(`;`),
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
+    'E-Mail': toStr(data.email),
     Geburtsdatum:
       typeof data.birthDate === `string`
         ? data.birthDate.split(`.`).reverse().join(`-`)
         : data.birthDate,
     Fächer: data.subjects,
-    Werbemaßnahme: data.discovery,
-    Geschlecht: data.gender,
+    Werbemaßnahme: data.discovery.join(`;`),
+    Geschlecht: data.gender[0],
     Bemerkung: toStr(data.remarks),
     Datenschutz: data.dataProtection,
     Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
@@ -67,7 +55,6 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     const studentFields = {
       'Vor- und Nachname': data.fullname,
       Telefon: toStr(data.phone),
-      'E-Mail': toStr(data.email),
       'Geografische Präferenz': toStr(data.place),
       Klassenstufen: toStr(data.levels) || `1-13`,
       Schulform: data.schoolTypes,
@@ -79,11 +66,10 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
       // in Safari. Should do nothing in other browsers.
     }
     fields = { ...fields, ...studentFields }
-  } else {
+  } else if (data.type === `Pupil`) {
     // type === 'Pupil'
     const pupilFields = {
       Vorname: data.firstname,
-      'E-Mail': toStr(data.email),
       'Geografische Präferenz': toStr(data.place),
       Klassenstufe: toStr(data.level), // no fallback value here since it's a required field for pupils
       Schulform: data.schoolType,
@@ -94,12 +80,14 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
       Online: data.online,
     }
     fields = { ...fields, ...pupilFields }
+  } else {
+    console.error(`unknown signup type: ${data.type}`)
   }
 
   // fields not present in local chapter tables
   const globalFields = {
     ...fields,
-    Standort: data.chapter,
+    Standort: data.chapter[0],
     Spur: window.locations.join(`,\n`),
   }
 
@@ -112,7 +100,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     console.log(`chapterFields:`, chapterFields) // eslint-disable-line no-console
     return await airtablePost(testBaseId, table, chapterFields, apiKey)
   }
-  // use Promise.all to fail fast if one record creation fails
+  // use Promise.all() to fail fast if one record creation fails
   const responses = await Promise.all([
     airtablePost(globalBaseId, table, globalFields, apiKey),
     airtablePost(chapterBaseId, table, chapterFields, apiKey),

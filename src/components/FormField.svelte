@@ -1,17 +1,17 @@
 <script>
-  import Toggle from './Toggle.svelte'
-  import MultiSelect from './MultiSelect.svelte'
+  // https://github.com/simeydotme/svelte-range-slider-pips
+  import MultiSelect from 'svelte-multiselect'
+  import RangeSlider from 'svelte-range-slider-pips'
+  import { signupStore } from '../stores'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
-  import RangeSlider from './RangeSlider.svelte'
-
-  // display props
-  export let title
-  export let note = ``
+  import Toggle from './Toggle.svelte'
 
   // input props
+  export let title
+  export let note = ``
   export let input = undefined
-  export let name = ``
+  export let name
   export let placeholder = title
   export let select = []
   export let options = []
@@ -21,6 +21,10 @@
   export let min = undefined
   export let max = undefined
   export let initial = undefined
+  export let maxSelect = null
+  export let value = null
+
+  $: $signupStore[name] = value
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
@@ -34,25 +38,36 @@
 
 {#if select.length || multiselect.length}
   <MultiSelect
-    bind:input
     {name}
     {placeholder}
     options={select.length ? select : multiselect}
-    single={select.length ? true : false}
-    {required}
+    {maxSelect}
+    bind:selectedLabels={value}
+    --sms-options-bg="var(--bodyBg)"
   />
 {:else if type === `toggle`}
-  <Toggle {name} {required} bind:input />
+  <Toggle {name} {required} bind:value />
 {:else if type === `placeSelect`}
-  <PlaceSelect {name} {required} bind:input {placeholder} />
-{:else if [`singleRange`, `doubleRange`].includes(type)}
-  <RangeSlider {name} {required} bind:input {min} {max} {type} {initial} />
+  <PlaceSelect {name} {required} bind:value {placeholder} />
+{:else if type === `singleRange`}
+  <RangeSlider float bind:values={value} {min} {max} pips all="label" />
+{:else if type === `doubleRange`}
+  <RangeSlider
+    range
+    float
+    values={[min, max]}
+    on:stop={(e) => (value = e.detail.values)}
+    {min}
+    {max}
+    pips
+    all="label"
+  />
 {:else if type === `radio`}
-  <RadioButtons {name} {required} bind:input {options} />
+  <RadioButtons {name} {required} bind:value {options} />
 {:else}
   <input
     {type}
-    bind:this={input}
+    on:change={(e) => (value = e.target.value)}
     id={name}
     {name}
     {placeholder}

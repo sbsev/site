@@ -1,12 +1,12 @@
 <script lang="ts">
   export let name: string
-  export let checked = false
+  export let value = false // whether the toggle is on or off
   export let required = false
   export let input: HTMLInputElement | undefined = undefined
 
   function handleKeydown(event: KeyboardEvent) {
     if (event.key === `Enter`) {
-      checked = !checked
+      value = !value
       event.preventDefault()
     }
   }
@@ -17,7 +17,7 @@
     type="checkbox"
     id={name}
     {name}
-    bind:checked
+    bind:checked={value}
     {required}
     bind:this={input}
     on:keydown={handleKeydown}

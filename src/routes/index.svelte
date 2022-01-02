@@ -39,6 +39,10 @@
   <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
 </h1>
 
+<svelte:head>
+  <title>Studenten bilden Schüler e.V. - Startseite</title>
+</svelte:head>
+
 <svelte:window bind:innerWidth={windowWidth} />
 
 <h2>
@@ -58,6 +62,10 @@
   <div style="background: var(--orange);">
     <span>3186</span>
     <Child height="2.5ex" style="vertical-align: middle;" />Schüler:innen
+  </div>
+  <div style="background: var(--lightBlue);">
+    <span>3</span>
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Stipendien
   </div>
 </section>
 

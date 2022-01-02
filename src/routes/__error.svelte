@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-  <title>{status}</title>
+  <title>Fehler {status} - Studenten bilden Schüler e.V.</title>
 </svelte:head>
 
 <div>

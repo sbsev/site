@@ -139,16 +139,20 @@ const pagesQuery = `{
 
 export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
+
   const data = await contentfulFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
   if (!page) return null
+
   if (page?.yaml) {
     page.yaml = yaml.load(page.yaml)
     Object.entries(page.yaml).forEach(([key, val]) => {
       if (typeof val === `string`) page.yaml[key] = marked.parseInline(val)
     })
   }
+
   page.cover.base64 = await base64Thumbnail(page.cover.src)
+
   return renderBody(page)
 }
 

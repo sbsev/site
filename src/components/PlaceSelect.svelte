@@ -1,17 +1,14 @@
 <script>
-  // This component uses the Google Maps Places API to turn user text input into a
+  // This component uses the Google Maps value API to turn user text input into a
   // formatted address and lat/lng coordinates.
   import Delete from '@svicons/material-sharp/delete.svelte'
   import mapboxgl from 'mapbox-gl'
   import AutoCompletePlace from './AutoCompletePlace.svelte'
   import Map from './Map.svelte'
 
+  export let value = [] // currently selected places
   export let placeholder = ``
-  export let required = false
-  export let name = ``
-  export let input = undefined // hidden input field used to store value until it is read when submitting the form
 
-  let places = []
   let markers = []
   let map
 
@@ -27,8 +24,7 @@
 
     const [lng, lat] = place.center
 
-    places = [...places, { address: place.place_name, coords: `${lat},${lng}` }]
-    input.value = JSON.stringify(places)
+    value = [...(value ?? []), { address: place.place_name, coords: `${lat},${lng}` }]
 
     const marker = new mapboxgl.Marker({ title: place.text })
     marker.setLngLat([lng, lat]).addTo(map)
@@ -44,25 +40,18 @@
   }
   const deletePlace = (idx) => () => {
     // remove place from list
-    places.splice(idx, 1)
-    places = places // reassign to trigger rerender
+    value.splice(idx, 1)
+    value = value // reassign to trigger rerender
     // remove marker from map
     markers[idx].remove()
 
     markers.splice(idx, 1)
-    // reset input value without removed place
-    // set to null if places is empty since [] is truthy and would not prevent form submission if input is required
-    input.value = JSON.stringify(places.length ? places : ``)
   }
 </script>
 
-<!-- for holding the component's value in a way accessible to the DOM -->
-<!-- tabindex="-1" means skip element during tabbing, else we couldn't shift-tab out of filterInput as filterInput.focus() would jump right back -->
-<input bind:this={input} {required} {name} id={name} class="hidden" tabindex="-1" />
-
 <AutoCompletePlace {placeholder} {selectHandler} />
 <ol>
-  {#each places as place, idx}
+  {#each value ?? [] as place, idx}
     <li>
       <span>{idx + 1}</span><input
         data-place={idx + 1}
@@ -104,14 +93,5 @@
     width: 100%;
     text-overflow: ellipsis;
     height: 2em;
-  }
-  input.hidden {
-    border: none;
-    outline: none;
-    background: none;
-    padding: 0;
-    width: 1px;
-    /* needed to hide red shadow around required inputs in some browsers */
-    box-shadow: none;
   }
 </style>

@@ -1,7 +1,6 @@
 import replace from '@rollup/plugin-replace'
 import adapter from '@sveltejs/adapter-static'
 import 'dotenv/config'
-import { indexAlgolia } from 'svelte-algolia/main.js'
 import preprocess from 'svelte-preprocess'
 import { algoliaConfig } from './src/utils/algolia.js'
 
@@ -17,6 +16,7 @@ if (NODE_ENV === `development`) {
   console.log(`Contentful GraphiQL:`, graphiql)
 } else if (NODE_ENV === `production`) {
   // update Algolia search indices on production builds
+  const { indexAlgolia } = await import(`svelte-algolia/main.js`)
   indexAlgolia(algoliaConfig)
 }
 
