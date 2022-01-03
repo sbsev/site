@@ -1,10 +1,10 @@
 import {
-  launchPuppeteer,
+  completeSlider,
   fillInput,
+  fillMultiSelect,
   fillPlaceSelect,
   fillSingleSelect,
-  fillMultiSelect,
-  completeSlider,
+  launchPuppeteer,
 } from './index.js'
 
 export async function fillStudentForm(page) {
@@ -12,7 +12,7 @@ export async function fillStudentForm(page) {
 
   await fillSingleSelect(page, `#gender`, `Weiblich`)
 
-  await fillInput(page, `#fullname`, `Foo Bar`)
+  await fillInput(page, `#fullName`, `Foo Bar`)
 
   await fillInput(page, `#email`, `foo@bar.com`)
 
@@ -44,7 +44,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
 
-  await page.goto(`http://localhost:3000/anmeldung?test=true`)
+  await page.goto(`http://localhost:3000/anmeldung-student?test=true`)
 
   fillStudentForm(page)
 }

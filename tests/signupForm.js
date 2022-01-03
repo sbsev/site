@@ -2,9 +2,8 @@
 // is running (yarn dev) on localhost:3000
 
 import test from 'ava'
-
-import { fillStudentForm } from './helpers/fillStudentForm.js'
 import { fillPupilForm } from './helpers/fillPupilForm.js'
+import { fillStudentForm } from './helpers/fillStudentForm.js'
 import { launchPuppeteer } from './helpers/index.js'
 
 // taken from https://github.com/avajs/ava/blob/master/docs/recipes/puppeteer.md
@@ -28,7 +27,7 @@ async function withPage(t, run) {
 test(`signup form accepts minimal student data`, withPage, async (t, page) => {
   // needs the dev server running on localhost:3000 to work, fails with
   // Error: net::ERR_CONNECTION_REFUSED otherwise
-  await page.goto(`http://localhost:3000/anmeldung?test=true`)
+  await page.goto(`http://localhost:3000/anmeldung-student?test=true`)
 
   await fillStudentForm(page)
 
@@ -44,7 +43,7 @@ test(`signup form accepts minimal student data`, withPage, async (t, page) => {
 test(`signup form accepts minimal pupil data`, withPage, async (t, page) => {
   // needs the dev server running on localhost:3000 to work, fails with
   // Error: net::ERR_CONNECTION_REFUSED otherwise
-  await page.goto(`http://localhost:3000/anmeldung?test=true`)
+  await page.goto(`http://localhost:3000/anmeldung-schueler?test=true`)
 
   await fillPupilForm(page)
 

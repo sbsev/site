@@ -1,22 +1,22 @@
 import {
-  launchPuppeteer,
+  completeSlider,
   fillInput,
+  fillMultiSelect,
   fillPlaceSelect,
   fillSingleSelect,
-  fillMultiSelect,
-  completeSlider,
+  launchPuppeteer,
 } from './index.js'
 
 export async function fillPupilForm(page) {
   await page.$eval(`input[type='radio'][value='Schüler']`, (el) => el.click())
 
-  await page.waitForSelector(`#firstname`) // wait for DOM changes to be applied before proceeding after clicking the pupil button
+  await page.waitForSelector(`#firstName`) // wait for DOM changes to be applied before proceeding after clicking the pupil button
 
   await fillSingleSelect(page, `#chapter`, `Heidelberg`)
 
   await fillSingleSelect(page, `#gender`, `Männlich`)
 
-  await fillInput(page, `#firstname`, `Foo Bar`)
+  await fillInput(page, `#firstName`, `Foo Bar`)
 
   await fillMultiSelect(page, `#subjects`, [`Mathe`, `Englisch`])
 
@@ -56,7 +56,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
 
-  await page.goto(`http://localhost:3000/anmeldung?test=true`)
+  await page.goto(`http://localhost:3000/anmeldung-schueler?test=true`)
 
   fillPupilForm(page)
 }

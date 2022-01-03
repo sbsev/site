@@ -90,14 +90,7 @@ export type PressItem = {
   source: string
 }
 
-export type MapMarker = {
-  lng: number
-  lat: number
-  title: string
-  url: string
-  classes: string[]
-}
-
+// used by /lernmaterial.svelte
 export type StudyPlatform = {
   title: string
   id: string
@@ -107,6 +100,7 @@ export type StudyPlatform = {
   tags: string[]
 }
 
+// used by /faq.svelte
 export type FAQ = {
   title: string
   id: string
@@ -114,6 +108,7 @@ export type FAQ = {
   tags: string[]
 }
 
+// used by /auszeichnungen.svelte
 export type Award = {
   title: string
   id: string
@@ -123,14 +118,24 @@ export type Award = {
   prize: string
 }
 
+export type MapMarker = {
+  lng: number
+  lat: number
+  title: string
+  url: string
+  classes: string[]
+}
+
 export type Place = {
   address: string
   lat: number
   lng: number
 }
 
+// fields allowed in signupStore from src/stores.ts
 export type SignupData = {
   age: number
+  agreement: boolean
   birthDate: string
   birthPlace: string
   chapter: string[]
@@ -138,12 +143,13 @@ export type SignupData = {
   discovery: string[]
   email: string
   emailContact: string
-  firstname: string
-  fullname: string
+  firstName: string
+  fullName: string
   gender: string // 'Männlich' | 'Weiblich' | 'Divers'
   level: number
   levels: number[]
   nameContact: string
+  need: string
   online: boolean
   orgContact: string
   phone: string
@@ -157,4 +163,12 @@ export type SignupData = {
   studySubject: string
   subjects: string
   type: 'Student' | 'Pupil'
+}
+
+// used by both signup forms src/routes/anmeldung-{student,schueler}.svelte
+export type FieldData = {
+  title: string
+  note?: string
+  required?: boolean
+  placeholder?: string
 }

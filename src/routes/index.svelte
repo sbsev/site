@@ -77,7 +77,7 @@
 <ChapterMap {chapters} />
 
 <h2>
-  Oder melde dich direkt <a sveltekit:prefetch href="/anmeldung">
+  Oder melde dich direkt <a sveltekit:prefetch href="/anmeldung-student">
     <strong>bei uns an.</strong>
   </a>
 </h2>

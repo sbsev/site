@@ -29,7 +29,7 @@
     geocoder.addTo(`#geocoder`)
 
     geocoder.on(`result`, (event) => {
-      geocoder.clear(event)
+      geocoder.clear()
       selectHandler(event.result)
     })
   })

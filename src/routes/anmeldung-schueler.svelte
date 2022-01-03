@@ -20,7 +20,7 @@
     )
     const options = await fetchYaml(`Signup Form Options`)
 
-    let microcopy = parseMicrocopy(await fetchYaml(`Student Form v2`))
+    let microcopy = parseMicrocopy(await fetchYaml(`Pupil Form v2`))
     microcopy = { ...microcopy, ...parseMicrocopy(await fetchYaml(`Signup Form Meta`)) }
 
     return { props: { chapters, options, microcopy } }
@@ -39,7 +39,7 @@
   let modalOpen: boolean
 
   onMount(() => {
-    $signupStore.type = `Student`
+    $signupStore.type = `Pupil`
   })
 
   async function submit() {
@@ -103,7 +103,7 @@
         slug: `anmeldung-${type}`,
       }))}
       style="margin: 1em auto;"
-      current="Student"
+      current="Schüler"
     />
 
     {@html microcopy.page.note}
@@ -121,44 +121,43 @@
       maxSelect={1}
     />
 
-    <FormField name="fullName" {...microcopy.fullName} />
-
-    <FormField name="phone" {...microcopy.phone} type="phone" />
-
-    <FormField name="email" {...microcopy.email} type="email" />
-
-    <FormField name="studySubject" {...microcopy.studySubject} />
-
-    <FormField
-      name="semester"
-      {...microcopy.semester}
-      type="number"
-      min={1}
-      maxSelect={1}
-    />
-
-    <FormField name="birthPlace" {...microcopy.birthPlace} />
-
-    <FormField name="birthDate" {...microcopy.birthDate} type="date" />
+    <FormField name="firstName" {...microcopy.firstName} />
 
     <FormField name="subjects" {...microcopy.subjects} options={options.subjects} />
 
-    <FormField name="school" {...microcopy.schoolTypes} options={options.schoolTypes} />
+    <FormField
+      name="schoolTypes"
+      options={options.schoolTypes}
+      {...microcopy.schoolType}
+      maxSelect={1}
+    />
 
-    <FormField name="levels" {...microcopy.levels} type="doubleRange" min={1} max={13} />
+    <FormField name="level" {...microcopy.level} type="singleRange" min={1} max={13} />
 
-    <FormField name="places" {...microcopy.places} type="placeSelect" />
+    <FormField
+      name="places"
+      {...microcopy.places}
+      placeholder="Ort der Nachhilfe"
+      type="placeSelect"
+    />
+
+    <FormField name="age" {...microcopy.age} type="number" />
+
+    <FormField name="online" {...microcopy.online} type="toggle" />
 
     <FormField name="remarks" {...microcopy.remarks} />
 
-    <FormField
-      name="discovery"
-      {...microcopy.discovery}
-      options={options.discoveries}
-      maxSelect={3}
-    />
+    <FormField name="nameContact" {...microcopy.nameContact} />
 
-    <FormField name="agreement" {...microcopy.agreement} type="toggle" />
+    <FormField name="phoneContact" {...microcopy.phoneContact} type="phone" />
+
+    <FormField name="emailContact" {...microcopy.emailContact} type="email" />
+
+    <FormField name="orgContact" {...microcopy.orgContact} />
+
+    <FormField name="need" {...microcopy.need} type="toggle" />
+
+    <FormField name="discovery" {...microcopy.discovery} />
 
     <FormField name="dataProtection" {...microcopy.dataProtection} type="toggle" />
 

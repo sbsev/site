@@ -33,9 +33,9 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     Adressen: Object.values(data.places)
       .map((place) => place.address)
       .join(`\n`),
-    Koordinaten: Object.values(data.places).map(
-      ({ lat, lng }) => `lat=${lat},lng=${lng}`
-    ),
+    Koordinaten: Object.values(data.places)
+      .map(({ lat, lng }) => `lat=${lat},lng=${lng}`)
+      .join(`;`),
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
     'E-Mail': toStr(data.email),
@@ -44,7 +44,6 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
         ? data.birthDate.split(`.`).reverse().join(`-`)
         : data.birthDate,
     Fächer: data.subjects,
-    Werbemaßnahme: data.discovery.join(`;`),
     Geschlecht: data.gender[0],
     Bemerkung: toStr(data.remarks),
     Datenschutz: data.dataProtection,
@@ -53,7 +52,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
 
   if (data.type === `Student`) {
     const studentFields = {
-      'Vor- und Nachname': data.fullname,
+      'Vor- und Nachname': data.fullName,
       Telefon: toStr(data.phone),
       'Geografische Präferenz': toStr(data.place),
       Klassenstufen: toStr(data.levels) || `1-13`,
@@ -62,6 +61,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
       'Semester Anmeldung': Number(data.semester) || undefined,
       Studienfach: data.studySubject,
       Geburtsort: toStr(data.birthPlace),
+      Werbemaßnahme: data.discovery.join(`;`),
       // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
       // in Safari. Should do nothing in other browsers.
     }
@@ -69,14 +69,15 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
   } else if (data.type === `Pupil`) {
     // type === 'Pupil'
     const pupilFields = {
-      Vorname: data.firstname,
+      Vorname: data.firstName,
       'Geografische Präferenz': toStr(data.place),
       Klassenstufe: toStr(data.level), // no fallback value here since it's a required field for pupils
-      Schulform: data.schoolType,
+      Schulform: data.schoolType[0],
       Kontaktperson: data.nameContact,
       'E-Mail Kontaktperson': toStr(data.emailContact),
       'Telefon Kontaktperson': toStr(data.phoneContact),
       'Organisation Kontaktperson': toStr(data.orgContact),
+      Werbemaßnahme: data.discovery,
       Online: data.online,
     }
     fields = { ...fields, ...pupilFields }
