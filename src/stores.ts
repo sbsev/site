@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store'
+import type { SignupData } from './types'
 
 const hasSessionStore = typeof sessionStorage !== `undefined`
 const hasLocalStore = typeof localStorage !== `undefined`
@@ -30,4 +31,7 @@ function createSessionStore<T = unknown>(name: string, defaultValue: T) {
   return store
 }
 
-export const signupStore = createSessionStore(`signupData`, {})
+export const signupStore = createSessionStore<SignupData>(
+  `signupData`,
+  {} as SignupData
+)

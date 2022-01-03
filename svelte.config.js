@@ -16,7 +16,7 @@ if (NODE_ENV === `development`) {
   console.log(`Contentful GraphiQL:`, graphiql)
 } else if (NODE_ENV === `production`) {
   // update Algolia search indices on production builds
-  const { indexAlgolia } = await import(`svelte-algolia/main.js`)
+  const { indexAlgolia } = await import(`svelte-algolia/main`)
   indexAlgolia(algoliaConfig)
 }
 

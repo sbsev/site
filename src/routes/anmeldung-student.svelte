@@ -1,5 +1,6 @@
-<script context="module">
+<script lang="ts" context="module">
   import { session } from '$app/stores'
+  import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
   import { marked } from 'marked'
   import { onMount } from 'svelte'
@@ -8,6 +9,7 @@
   import LinkButtons from '../components/LinkButtons.svelte'
   import Modal from '../components/Modal.svelte'
   import { signupStore } from '../stores'
+  import type { Chapter, SignupData } from '../types'
   import { airtableSubmit } from '../utils/airtable.js'
   import { fetchChapters, fetchYaml } from '../utils/queries.js'
 
@@ -15,29 +17,34 @@
 
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
-  renderer.link = (href, _, text) => `<a target="_blank" href="${href}">${text}</a>`
+  renderer.link = (href: string, _: string, text: string) =>
+    `<a target="_blank" href="${href}">${text}</a>`
   marked.use({ renderer })
 
   // remove outer-most paragraph tags (if any)
-  const stripOuterParTag = (str) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
+  const stripOuterParTag = (str: string) =>
+    str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-  export async function load() {
-    const chapters = (await fetchChapters()).filter((chap) => chap.acceptsSignups)
+  export const load: Load = async () => {
+    const chapters = (await fetchChapters()).filter(
+      (chap: Chapter) => chap.acceptsSignups
+    )
     const options = await fetchYaml(`Signup Form Options`)
 
-    function parseMicrocopy(obj) {
+    function parseMicrocopy(obj: Record<string, string | Record<string, string>>) {
       // iterate over name, phone, email, ...
-      Object.entries(obj).forEach(([key, itm]) => {
+      for (const [key, itm] of Object.entries(obj)) {
         if (typeof itm === `string`) obj[key] = stripOuterParTag(marked(itm))
         // iterate over title, note, ...
         else if (typeof itm === `object` && itm !== null) {
           obj[key].name = key // name is used by FormField as id to link labels to their corresp. inputs
-          Object.entries(itm).forEach(([innerKey, val]) => {
-            if (typeof val === `string`)
+          for (const [innerKey, val] of Object.entries(itm)) {
+            if (typeof val === `string`) {
               obj[key][innerKey] = stripOuterParTag(marked(val))
-          })
+            }
+          }
         }
-      })
+      }
       return obj
     }
 
@@ -47,13 +54,16 @@
   }
 </script>
 
-<script>
-  export let chapters, options, microcopy
+<script lang="ts">
+  export let chapters: Chapter[]
+  export let options: Record<string, unknown>
+  export let microcopy: Record<string, Record<string, string>>
 
   // let { chapter = ``, test } = $page.url.searchParams
   let response = {}
-  let error = undefined
-  let isSubmitting, modalOpen
+  let error: Error | undefined = undefined
+  let isSubmitting: boolean
+  let modalOpen: boolean
 
   onMount(() => {
     $signupStore.type = `Student`
@@ -63,28 +73,29 @@
     isSubmitting = true
 
     let { chapter, type } = $signupStore
-    chapter = chapter[0]
-    const chapterAndType = { chapter, type, 'chapter+type': `${type} aus ${chapter}` }
+    const chapterAndType = {
+      chapter: chapter[0],
+      type,
+      'chapter+type': `${type} aus ${chapter[0]}`,
+    }
 
     const baseId = chapters?.find(({ title }) =>
       $signupStore?.chapter?.includes(title)
     )?.baseId
     if (!baseId) {
       isSubmitting = false
-      error = { message: `baseId could not be determined` }
+      error = { name: `BaseIDError`, message: `baseId could not be determined` }
     }
 
     try {
       response = await airtableSubmit(baseId, $signupStore, $session.AIRTABLE_API_KEY)
 
-      console.log(`Airtable response:`, response)
-
       window.plausible(`Signup`, { props: chapterAndType })
       window.scrollTo({ top: 0, behavior: `smooth` })
 
-      $signupStore = {}
+      $signupStore = {} as SignupData // reset store for potential next signup
     } catch (err) {
-      error = err
+      error = err as Error
       console.error(error)
       window.plausible(`Signup Error`, {
         props: {
@@ -124,14 +135,14 @@
 
     {@html microcopy.page.note}
     <FormField
-      select={chapters.map((c) => c.title)}
+      options={chapters.map((c) => c.title)}
       name="chapter"
       {...microcopy.chapter}
       maxSelect={1}
     />
 
     <FormField
-      select={options.genders}
+      options={options.genders}
       name="gender"
       {...microcopy.gender}
       maxSelect={1}
@@ -157,13 +168,9 @@
 
     <FormField name="birthDate" {...microcopy.birthDate} type="date" />
 
-    <FormField name="subjects" {...microcopy.subjects} multiselect={options.subjects} />
+    <FormField name="subjects" {...microcopy.subjects} options={options.subjects} />
 
-    <FormField
-      name="school"
-      {...microcopy.schoolTypes}
-      multiselect={options.schoolTypes}
-    />
+    <FormField name="school" {...microcopy.schoolTypes} options={options.schoolTypes} />
 
     <FormField name="levels" {...microcopy.levels} type="doubleRange" min={1} max={13} />
 
@@ -177,7 +184,7 @@
     <FormField name="remarks" {...microcopy.remarks} />
 
     <FormField
-      select={options.discoveries}
+      options={options.discoveries}
       name="discovery"
       {...microcopy.discovery}
       maxSelect={3}

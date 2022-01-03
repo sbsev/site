@@ -33,9 +33,9 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     Adressen: Object.values(data.places)
       .map((place) => place.address)
       .join(`\n`),
-    Koordinaten: Object.values(data.places)
-      .map((place) => place.coords)
-      .join(`;`),
+    Koordinaten: Object.values(data.places).map(
+      ({ lat, lng }) => `lat=${lat},lng=${lng}`
+    ),
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
     'E-Mail': toStr(data.email),
@@ -48,7 +48,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
     Geschlecht: data.gender[0],
     Bemerkung: toStr(data.remarks),
     Datenschutz: data.dataProtection,
-    Quelle: `landing: ${location.origin}${window.locations[1]}, prev: ${window.locations[0]}`, // analytics
+    Quelle: `landing: ${location.origin}${window.visitedPages[1]}, prev: ${window.visitedPages[0]}`, // analytics
   }
 
   if (data.type === `Student`) {
@@ -88,7 +88,7 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
   const globalFields = {
     ...fields,
     Standort: data.chapter[0],
-    Spur: window.locations.join(`,\n`),
+    Spur: window.visitedPages.join(`,\n`),
   }
 
   const chapterFields = { ...fields, Kontaktpersonen: data.nameContact }

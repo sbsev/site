@@ -98,11 +98,6 @@ export type MapMarker = {
   classes: string[]
 }
 
-export type Place = {
-  address: string
-  coords: string // '{lat},{lng}'
-}
-
 export type StudyPlatform = {
   title: string
   id: string
@@ -126,4 +121,40 @@ export type Award = {
   url: string
   date: string
   prize: string
+}
+
+export type Place = {
+  address: string
+  lat: number
+  lng: number
+}
+
+export type SignupData = {
+  age: number
+  birthDate: string
+  birthPlace: string
+  chapter: string[]
+  dataProtection: boolean
+  discovery: string[]
+  email: string
+  emailContact: string
+  firstname: string
+  fullname: string
+  gender: string // 'Männlich' | 'Weiblich' | 'Divers'
+  level: number
+  levels: number[]
+  nameContact: string
+  online: boolean
+  orgContact: string
+  phone: string
+  phoneContact: string
+  place: Place
+  places: Place[]
+  remarks: string
+  schoolType: string
+  schoolTypes: string[]
+  semester: number
+  studySubject: string
+  subjects: string
+  type: 'Student' | 'Pupil'
 }

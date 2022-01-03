@@ -1,28 +1,24 @@
-<script>
+<script lang="ts">
   // https://github.com/simeydotme/svelte-range-slider-pips
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
   import { signupStore } from '../stores'
+  import type { SignupData } from '../types'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
   import Toggle from './Toggle.svelte'
 
-  // input props
-  export let title
+  export let title: string
   export let note = ``
-  export let input = undefined
-  export let name
+  export let name: keyof SignupData
   export let placeholder = title
-  export let select = []
-  export let options = []
-  export let multiselect = []
+  export let options: string[] = []
   export let type = `text` // text, email, number, date, phone
   export let required = false
-  export let min = undefined
-  export let max = undefined
-  export let initial = undefined
-  export let maxSelect = null
-  export let value = null
+  export let min: number | undefined = undefined
+  export let max: number | undefined = undefined
+  export let maxSelect: number | null = null
+  export let value: string | number | string[] | number[] | undefined = undefined
 
   $: $signupStore[name] = value
 </script>
@@ -36,11 +32,11 @@
   {@html note}
 {/if}
 
-{#if select.length || multiselect.length}
+{#if type !== `radio` && options.length > 0}
   <MultiSelect
     {name}
     {placeholder}
-    options={select.length ? select : multiselect}
+    {options}
     {maxSelect}
     bind:selectedLabels={value}
     --sms-options-bg="var(--bodyBg)"
@@ -67,12 +63,12 @@
 {:else}
   <input
     {type}
-    on:change={(e) => (value = e.target.value)}
+    on:change={(e) => (value = e?.target?.value)}
     id={name}
     {name}
     {placeholder}
     {required}
-    on:mousewheel={() => type === `number` && input.blur()}
+    on:wheel={(e) => type === `number` && e?.target?.blur()}
     {min}
     {max}
   />

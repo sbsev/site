@@ -6,7 +6,23 @@
   import type { NavLink } from '../types'
   import { colors, colorsByMode } from '../utils/colors'
   import Nav from './Nav.svelte'
+  import SearchHit from './SearchHit.svelte'
+
   export let nav: NavLink[]
+
+  const searchProps = {
+    indices: Object.fromEntries(
+      [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
+    ),
+    appId: $session.ALGOLIA_APP_ID,
+    searchKey: $session.ALGOLIA_SEARCH_KEY,
+    loadingStr: `Suche läuft...`,
+    noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
+    resultReporter: (hits: unknown[]) =>
+      hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
+    placeholder: `Suche`,
+    ariaLabel: `Suche`,
+  }
 </script>
 
 <header>
@@ -19,11 +35,7 @@
     lightName="Hell"
   />
 
-  <Search
-    indices={[`Seiten`, `Posts`, `FAQs`, `Lernmaterial`]}
-    appId={$session.ALGOLIA_APP_ID}
-    searchKey={$session.ALGOLIA_SEARCH_KEY}
-  />
+  <Search {...searchProps} --hitsBgColor="var(--bodyBg)" />
 </header>
 
 <style>

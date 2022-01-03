@@ -24,7 +24,7 @@
 
     const [lng, lat] = place.center
 
-    value = [...(value ?? []), { address: place.place_name, coords: `${lat},${lng}` }]
+    value = [...(value ?? []), { address: place.place_name, lng, lat }]
 
     const marker = new mapboxgl.Marker({ title: place.text })
     marker.setLngLat([lng, lat]).addTo(map)

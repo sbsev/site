@@ -3,7 +3,7 @@
   import type { Load } from '@sveltejs/kit'
   import Footer from '../components/Footer.svelte'
   import Header from '../components/Header.svelte'
-  import type { Chapter, NavLink } from '../types.js'
+  import type { Chapter, Link, NavLink } from '../types'
   import { fetchChapters, fetchYaml } from '../utils/queries.js'
 
   export const load: Load = async () => {
@@ -30,15 +30,15 @@
 
 <script lang="ts">
   export let nav: NavLink[]
-  export let footer: { links: string[] }
+  export let footer: { links: Link[] }
   export let social: Record<string, string>
 
   if (typeof window !== `undefined`) {
     page.subscribe(() => {
       // Track user navigation across the site. This data is transferred to Airtable
       // by the signup form or destroyed when they leave the site.
-      if (!window.locations) window.locations = [document.referrer]
-      window.locations.push(location.pathname + location.search)
+      if (!window.visitedPages) window.visitedPages = [document.referrer]
+      window.visitedPages.push(location.pathname + location.search)
     })
   }
 </script>

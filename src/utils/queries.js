@@ -78,7 +78,7 @@ export async function base64Thumbnail(url, options = {}) {
 
   try {
     // server side (node) https://stackoverflow.com/a/52467372
-    const buffer = await response.buffer()
+    const buffer = await response.arrayBuffer()
     return `data:image/${type};base64,` + buffer.toString(`base64`)
   } catch (err) {
     // client side (browser) https://stackoverflow.com/a/20285053
