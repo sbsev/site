@@ -3,6 +3,7 @@
   import GitBranch from '@svicons/boxicons-regular/git-branch.svelte'
   import CircleWithCross from '@svicons/entypo/circle-with-cross.svelte'
   import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
+  import Donate from '@svicons/fa-solid/donate.svelte'
   import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
   import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
   import Tags from '@svicons/fa-solid/tags.svelte'
@@ -34,6 +35,7 @@
     Freizeit: BeachAccess,
     IT: GitBranch,
     Bundesvorstand: StatsChart,
+    Stipendium: Donate,
   }
 
   let open = false

@@ -62,7 +62,7 @@ export type BlogTag = typeof BlogTags[number]
 
 export type Post = Page & {
   author: Author
-  date: string
+  date: Date
   tags: BlogTag[]
   plainBody: string
 }
@@ -85,7 +85,7 @@ export type PressItem = {
   id: string
   img: string
   url: string
-  date: string
+  date: Date
   chapter: string
   source: string
 }
@@ -119,7 +119,7 @@ export type Award = {
   id: string
   img: string
   url: string
-  date: string
+  date: Date
   prize: string
 }
 

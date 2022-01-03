@@ -5,7 +5,7 @@
   import Calendar from '@svicons/octicons/calendar.svelte'
   import BasePage from '../components/BasePage.svelte'
   import Img from '../components/Img.svelte'
-  import type { Page } from '../types'
+  import type { Page, PressItem } from '../types'
   import { fetchPage, fetchYamlList } from '../utils/queries'
 
   export const load: Load = async () => {
@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-  export let pressItems
+  export let pressItems: PressItem[]
   export let page: Page
 
   const itemsByYear = pressItems.reduce((acc, itm) => {
@@ -26,21 +26,11 @@
     if (!acc[year]) acc[year] = []
     acc[year].push(itm)
     return acc
-  }, {})
-
-  let hash: string
+  }, {}) as Record<number, PressItem[]>
 
   const imgStyle = `width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-bottom; margin: 0 5pt 0 0;`
 </script>
-
-<!-- used to briefly flash an list item as active when it's hash is found in the URL -->
-<svelte:window
-  on:hashchange={() => {
-    // eslint-disable-next-line no-unused-vars
-    hash = window.location.hash.replace(`#`, ``)
-  }}
-/>
 
 <BasePage {page}>
   <svelte:fragment slot="afterArticle">
@@ -52,7 +42,7 @@
             <a href={url}>
               <Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} />
             </a>
-            <h3 {id} active={id === hash}>
+            <h3 {id}>
               <a href={url}>{title}</a>
             </h3>
             <div>

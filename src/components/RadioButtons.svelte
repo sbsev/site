@@ -7,18 +7,18 @@
 </script>
 
 <div {style}>
-  {#each options as value, idx}
+  {#each options as option, idx}
     <label>
       <input
         type="radio"
         id={name ? `${name}-${idx}` : undefined}
         {name}
         bind:group={value}
-        {value}
+        value={option}
         {required}
         on:change
       />
-      <span>{value}</span>
+      <span>{option}</span>
     </label>
   {/each}
 </div>

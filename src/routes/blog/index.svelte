@@ -20,7 +20,7 @@
 
 <script lang="ts">
   export let posts: Post[]
-  export let social
+  export let social: Record<string, string>
 
   let activeTag: BlogTag
   let nVisible = 12

@@ -11,7 +11,7 @@
   // required yarn add -D events @types/events
   // https://github.com/mapbox/mapbox-gl-geocoder/issues/441
 
-  export let selectHandler
+  export let selectHandler: (event: mapboxgl.EventData) => void
   export let placeholder = ``
   export let required = false
   export let name = ``
@@ -29,7 +29,7 @@
     geocoder.addTo(`#geocoder`)
 
     geocoder.on(`result`, (event) => {
-      geocoder.clear()
+      geocoder.clear(event)
       selectHandler(event.result)
     })
   })
