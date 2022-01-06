@@ -195,7 +195,7 @@
   /* ensures minimum font-size > 16px so iOS doesn't zoom in when focusing inputs
   https://stackoverflow.com/a/6394497 */
   :global(input) {
-    font-size: clamp(1rem, 0.5vw + 1rem, 1.6rem);
+    font-size: calc(16px + 0.1vw);
   }
   form {
     max-width: 40em;

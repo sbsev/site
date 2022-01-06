@@ -32,7 +32,7 @@
     <div>
       <span style="background: var(--darkGreen)" /> in Gründung
     </div>
-    <small>Zoomen mit <kbd>shift</kbd></small>
+    <small>Zoomen mit <kbd>ctrl/cmd</kbd></small>
   </legend>
 </div>
 

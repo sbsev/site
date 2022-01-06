@@ -15,7 +15,6 @@
   export let maxZoom = 10
   export let map = undefined
   export let css = ``
-  export let scrollZoom = false
 
   let mapDiv: HTMLDivElement
 
@@ -31,7 +30,6 @@
       zoom,
       minZoom,
       maxZoom,
-      scrollZoom,
     })
 
     for (const { lng, lat, title, url, classes } of markers) {
