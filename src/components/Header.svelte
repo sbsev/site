@@ -35,7 +35,11 @@
     lightName="Hell"
   />
 
-  <Search {...searchProps} --hitsBgColor="var(--bodyBg)" />
+  <Search
+    {...searchProps}
+    --hitsBgColor="var(--bodyBg)"
+    --iconColor="var(--headerColor)"
+  />
 </header>
 
 <style>

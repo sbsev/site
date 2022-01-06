@@ -23,3 +23,8 @@ status = 200
 from = "/api/event"
 to = "https://plausible.io/api/event"
 status = 202
+
+[[redirects]]
+force = true
+from = "https://studenten-bilden-schueler/anmeldung"
+to = "https://studenten-bilden-schueler/anmeldung-student"

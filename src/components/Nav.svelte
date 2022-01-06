@@ -122,7 +122,6 @@
   }
   a,
   button {
-    transition: 0.4s;
     color: var(--headerColor);
     border-radius: 50%;
   }
@@ -218,7 +217,6 @@
       top: 3ex;
       visibility: hidden;
       opacity: 0;
-      transition: 0.3s;
       display: grid;
       gap: 5pt 1em;
       width: max-content;

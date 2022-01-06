@@ -76,11 +76,11 @@ export async function base64Thumbnail(url, options = {}) {
 
   const response = await fetch(`${url}?w=${w}&h=${h}&q=80`)
 
-  try {
+  if (import.meta.env.SSR) {
     // server side (node) https://stackoverflow.com/a/52467372
-    const buffer = await response.arrayBuffer()
+    const buffer = Buffer.from(await response.arrayBuffer())
     return `data:image/${type};base64,` + buffer.toString(`base64`)
-  } catch (err) {
+  } else {
     // client side (browser) https://stackoverflow.com/a/20285053
     const blob = await response.blob()
     return await new Promise((resolve, reject) => {
@@ -140,6 +140,8 @@ const pagesQuery = `{
 export async function fetchPage(slug) {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
 
+  if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
+
   const data = await contentfulFetch(pageQuery(slug))
   const page = data?.pages?.items[0]
   if (!page) return null
@@ -198,7 +200,7 @@ const postsQuery = `{
 
 async function processPost(post) {
   renderBody(post)
-  prefixSlug(`blog/`)(post)
+  prefixSlug(`/blog/`)(post)
   post.author.photo.base64 = await base64Thumbnail(post.author.photo.src, {
     w: 3,
     h: 3,

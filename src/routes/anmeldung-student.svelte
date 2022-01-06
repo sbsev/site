@@ -123,7 +123,7 @@
 
     <FormField name="fullName" {...microcopy.fullName} />
 
-    <FormField name="phone" {...microcopy.phone} type="phone" />
+    <FormField name="phone" {...microcopy.phone} type="tel" />
 
     <FormField name="email" {...microcopy.email} type="email" />
 

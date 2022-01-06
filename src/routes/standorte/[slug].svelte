@@ -8,9 +8,10 @@
   import type { Page } from '../../types'
   import { fetchPage } from '../../utils/queries'
 
-  export const load: Load = async ({ url, params }) => {
+  export const load: Load = async ({ params }) => {
     const { slug } = params
-    const page = await fetchPage(url.pathname.split(`/`).filter(Boolean).join(`/`))
+
+    const page = await fetchPage(`standorte/${slug}`)
 
     return { props: { page, slug } }
   }

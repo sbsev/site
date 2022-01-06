@@ -105,7 +105,6 @@
     max-width: 45em;
     margin: 1em auto 2em;
     padding: 0 1ex;
-    font-size: calc(0.85em + 0.1vw);
   }
   button {
     background: var(--darkGreen);

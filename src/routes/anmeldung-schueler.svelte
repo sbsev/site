@@ -149,7 +149,7 @@
 
     <FormField name="nameContact" {...microcopy.nameContact} />
 
-    <FormField name="phoneContact" {...microcopy.phoneContact} type="phone" />
+    <FormField name="phoneContact" {...microcopy.phoneContact} type="tel" />
 
     <FormField name="emailContact" {...microcopy.emailContact} type="email" />
 
@@ -195,7 +195,7 @@
   /* ensures minimum font-size > 16px so iOS doesn't zoom in when focusing inputs
   https://stackoverflow.com/a/6394497 */
   :global(input) {
-    font-size: calc(16px + 0.1vw);
+    font-size: clamp(1rem, 0.5vw + 1rem, 1.6rem);
   }
   form {
     max-width: 40em;
