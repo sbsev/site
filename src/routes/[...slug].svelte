@@ -12,7 +12,7 @@
 
     // If no page data could be fetched for params.slug, the page doesn't exist,
     // so we fall through to src/routes/__error.svelte.
-    if (!page) return
+    if (!page) return { fallthrough: true }
 
     return { props: { page } }
   }

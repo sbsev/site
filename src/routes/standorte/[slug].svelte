@@ -13,6 +13,8 @@
 
     const page = await fetchPage(`standorte/${slug}`)
 
+    if (!page) return { fallthrough: true }
+
     return { props: { page, slug } }
   }
 </script>

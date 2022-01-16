@@ -76,7 +76,7 @@ export async function base64Thumbnail(url, options = {}) {
 
   const response = await fetch(`${url}?w=${w}&h=${h}&q=80`)
 
-  if (import.meta.env.SSR) {
+  if (typeof window === `undefined`) {
     // server side (node) https://stackoverflow.com/a/52467372
     const buffer = Buffer.from(await response.arrayBuffer())
     return `data:image/${type};base64,` + buffer.toString(`base64`)

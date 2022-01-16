@@ -10,6 +10,7 @@
   export const load: Load = async () => {
     const page = await fetchPage(`auszeichnungen`)
     const awards = await fetchYamlList(`Auszeichnungen`, `auszeichnungen#`)
+
     return { props: { page, awards } }
   }
 </script>
@@ -18,21 +19,16 @@
   export let awards: Award[]
   export let page: Page
 
-  let hash = ``
-
   const imgStyle = `width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-top; margin: 0 5pt 0 0;`
 </script>
-
-<!-- used to briefly flash an list item as active when it's hash is found in the URL -->
-<svelte:window on:hashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
 
 <BasePage {page}>
   <ul class="items" slot="afterArticle">
     {#each awards as { title, id, img, url, date, prize } (title)}
       <li>
         <a href={url}><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
-        <h3 {id} active={id === hash}><a href={url}>{title}</a></h3>
+        <h3 {id}><a href={url}>{title}</a></h3>
         <div>
           <span><Calendar {style} />{date}</span>
           <span><PriceRibbon {style} />{prize}</span>

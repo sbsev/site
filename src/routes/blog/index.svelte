@@ -31,11 +31,7 @@
   )
   $: visiblePosts = filteredPosts.slice(0, nVisible)
 
-  const tagCounter = Object.fromEntries(BlogTags.map((tag) => [tag, 0])) as Record<
-    BlogTag,
-    number
-  >
-
+  const tagCounter = Object.fromEntries(BlogTags.map((tag) => [tag, 0]))
   tagCounter.Alle = posts.length
 
   // count tag occurrences

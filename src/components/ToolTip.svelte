@@ -6,7 +6,7 @@
 {#if $$slots.tip}
   <span>
     <slot />
-    <div style="min-width: {minWidth}; max-width: {maxWidth};">
+    <div style:min-width={minWidth} style:max-width={maxWidth}>
       <slot name="tip" />
     </div>
   </span>
@@ -47,5 +47,13 @@
   span:hover > div {
     visibility: visible;
     opacity: 1;
+  }
+  /* needed to increase the div hover area beyond its top edge across its entire width */
+  span > div::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    bottom: 100%;
+    height: 1ex;
   }
 </style>

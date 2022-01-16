@@ -1,8 +1,7 @@
 <script lang="ts">
   import { session } from '$app/stores'
-  import Search from 'svelte-algolia/Search.svelte'
-  import ColorMode from 'svelte-color-mode/ColorMode.svelte'
-  import ModalColorPicker from 'svelte-color-mode/ModalColorPicker.svelte'
+  import Search from 'svelte-algolia'
+  import { ColorMode, ModalColorPicker } from 'svelte-color-mode'
   import type { NavLink } from '../types'
   import { colors, colorsByMode } from '../utils/colors'
   import Nav from './Nav.svelte'

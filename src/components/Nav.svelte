@@ -30,7 +30,10 @@
   let activeSubNav = -1
   let viewWidth: number
   $: onMobile = viewWidth < breakpoint
-  const close = () => (isOpen = false)
+  const close = () => {
+    isOpen = false
+    activeSubNav = -1
+  }
 
   const setActiveSubNav = (idx: number, disabled: boolean) => () => {
     if (disabled) return
@@ -90,12 +93,16 @@
             {title}
           </a>
           {#if subNav}
-            <button on:click={setActiveSubNav(idx)} aria-label="Untermenü {title} öffnen">
+            <button
+              on:click={setActiveSubNav(idx, false)}
+              aria-label="Untermenü {title} öffnen"
+            >
               <ChevronExpand height="20" />
             </button>
           {/if}
         </span>
         {#if subNav && activeSubNav === idx}
+          <!-- TODO: toggle slide based on prefers reduced motion media query  -->
           <ul
             transition:slide
             style="grid-template-columns: repeat({Math.min(

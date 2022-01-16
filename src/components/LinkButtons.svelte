@@ -6,7 +6,7 @@
 
 <div {style}>
   {#each links as { title, slug }}
-    <a href={slug} aria-current={slug === current}>{title}</a>
+    <a href={slug} aria-current={slug === current} sveltekit:prefetch>{title}</a>
   {/each}
 </div>
 

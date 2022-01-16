@@ -1,18 +1,19 @@
 <script lang="ts" context="module">
   import { session } from '$app/stores'
-  import type { Load } from '@sveltejs/kit'
+  import type { Load, Handle } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
   import { onMount } from 'svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import FormField from '../components/FormField.svelte'
-  import LinkButtons from '../components/LinkButtons.svelte'
   import Modal from '../components/Modal.svelte'
   import { signupStore } from '../stores'
   import type { Chapter, FieldData, SignupData } from '../types'
   import { airtableSubmit } from '../utils/airtable.js'
   import { fetchChapters, fetchYaml, parseMicrocopy } from '../utils/queries.js'
 
-  export const ssr = false
+  export const handle: Handle = ({ request, resolve }) => {
+    return resolve(request, { ssr: false })
+  }
 
   export const load: Load = async () => {
     const chapters = (await fetchChapters()).filter(
@@ -96,15 +97,6 @@
       <Plant height="1em" style="vertical-align: -3pt;" />
       {@html microcopy.page.title}
     </h1>
-
-    <LinkButtons
-      links={options.types.map((type) => ({
-        title: type,
-        slug: `anmeldung-${type}`,
-      }))}
-      style="margin: 1em auto;"
-      current="Student"
-    />
 
     {@html microcopy.page.note}
     <FormField

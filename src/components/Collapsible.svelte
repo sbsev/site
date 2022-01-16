@@ -2,7 +2,7 @@
   import { tweened } from 'svelte/motion'
   import { slide } from 'svelte/transition'
 
-  export let id: string | number
+  export let id: string
   export let active: boolean
 
   const duration = 200
