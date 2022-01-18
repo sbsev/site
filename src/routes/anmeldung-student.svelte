@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   import { session } from '$app/stores'
-  import type { Load, Handle } from '@sveltejs/kit'
+  import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
   import { onMount } from 'svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
@@ -10,10 +10,6 @@
   import type { Chapter, FieldData, SignupData } from '../types'
   import { airtableSubmit } from '../utils/airtable.js'
   import { fetchChapters, fetchYaml, parseMicrocopy } from '../utils/queries.js'
-
-  export const handle: Handle = ({ request, resolve }) => {
-    return resolve(request, { ssr: false })
-  }
 
   export const load: Load = async () => {
     const chapters = (await fetchChapters()).filter(

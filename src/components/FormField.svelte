@@ -1,5 +1,4 @@
 <script lang="ts">
-  // https://github.com/simeydotme/svelte-range-slider-pips
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
   import { signupStore } from '../stores'
@@ -8,17 +7,24 @@
   import RadioButtons from './RadioButtons.svelte'
   import Toggle from './Toggle.svelte'
 
+  type StandardTypes = 'text' | 'email' | 'number' | 'date' | 'tel' | 'checkbox'
+  type CustomTypes = 'toggle' | 'singleRange' | 'doubleRange' | 'placeSelect' | 'radio'
+
   export let title: string
   export let note = ``
   export let name: keyof SignupData
   export let placeholder = title
   export let options: string[] = []
-  export let type = `text` // text, email, number, date, phone
+  export let type: StandardTypes | CustomTypes = `text`
   export let required = false
   export let min: number | undefined = undefined
   export let max: number | undefined = undefined
   export let maxSelect: number | null = null
-  export let value: string | number | string[] | number[] | undefined = undefined
+
+  let input: HTMLInputElement
+  let slider: HTMLDivElement
+
+  let value: string | number | string[] | boolean | undefined | null
 
   $: $signupStore[name] = value
 </script>
@@ -38,18 +44,25 @@
     {placeholder}
     {options}
     {maxSelect}
+    {required}
+    bind:input
     bind:selectedLabels={value}
     --sms-options-bg="var(--bodyBg)"
+    on:change={(e) => {
+      if (e.detail.type === `add`) required = false
+      if (e.detail.type.includes(`remove`)) required = true
+    }}
   />
 {:else if type === `toggle`}
   <Toggle {name} {required} bind:value />
 {:else if type === `placeSelect`}
-  <PlaceSelect {name} {required} bind:value {placeholder} />
+  <PlaceSelect {name} bind:value {placeholder} />
 {:else if type === `singleRange`}
-  <RangeSlider float bind:values={value} {min} {max} pips all="label" />
+  <RangeSlider bind:slider float bind:values={value} {min} {max} pips all="label" />
 {:else if type === `doubleRange`}
   <RangeSlider
     range
+    bind:slider
     float
     values={[min, max]}
     on:stop={(e) => (value = e.detail.values)}
@@ -60,10 +73,18 @@
   />
 {:else if type === `radio`}
   <RadioButtons {name} {required} bind:value {options} />
-{:else}
+{:else if type === `email`}
+  <input type="email" bind:value id={name} {name} {placeholder} {required} />
+{:else if type === `date`}
+  <input type="date" bind:value id={name} {name} {placeholder} {required} />
+{:else if type === `tel`}
+  <input type="tel" bind:value id={name} {name} {placeholder} {required} />
+{:else if type === `text`}
+  <input type="text" bind:value id={name} {name} {placeholder} {required} />
+{:else if type === `number`}
   <input
-    {type}
-    on:change={(e) => (value = e?.target?.value)}
+    type="number"
+    bind:value
     id={name}
     {name}
     {placeholder}

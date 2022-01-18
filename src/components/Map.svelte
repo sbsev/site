@@ -7,13 +7,13 @@
 
   mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
 
+  export let map: mapboxgl.Map | null = null
+  export let markers: MapMarker[] = []
   export let lng = 10
   export let lat = 51.3
   export let zoom = 5.05
-  export let markers: MapMarker[] = []
   export let minZoom = 4
   export let maxZoom = 10
-  export let map = undefined
   export let css = ``
 
   let mapDiv: HTMLDivElement

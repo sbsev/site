@@ -1,5 +1,6 @@
-// https://kit.svelte.dev/docs#hooks-getsession
-export function getSession(): Record<string, string | undefined> {
+import type { GetSession, Handle } from '@sveltejs/kit'
+
+export const getSession: GetSession = () => {
   const keys = [
     `ALGOLIA_APP_ID`,
     `ALGOLIA_SEARCH_KEY`,
@@ -15,4 +16,10 @@ export function getSession(): Record<string, string | undefined> {
   session.gqlUri = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
 
   return session
+}
+
+export const handle: Handle = async ({ request, resolve }) => {
+  return await resolve(request, {
+    ssr: !request.url.pathname.startsWith(`/anmeldung`),
+  })
 }

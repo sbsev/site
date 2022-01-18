@@ -1,18 +1,21 @@
-<script>
+<script lang="ts">
   // This component uses the Google Maps value API to turn user text input into a
   // formatted address and lat/lng coordinates.
+  import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import Delete from '@svicons/material-sharp/delete.svelte'
-  import mapboxgl from 'mapbox-gl'
+  import { LngLatBounds, Map, Marker } from 'mapbox-gl'
+  import type { Place } from '../types'
   import AutoCompletePlace from './AutoCompletePlace.svelte'
-  import Map from './Map.svelte'
+  import MapComp from './Map.svelte'
 
-  export let value = [] // currently selected places
+  export let value: Place[] = [] // currently selected places
   export let placeholder = ``
+  export let div: HTMLDivElement
 
-  let markers = []
-  let map
+  let markers: Marker[] = []
+  let map: Map
 
-  function selectHandler(place) {
+  function selectHandler(place: Result) {
     if (!place.center) {
       // User entered the name of a place that was not suggested and
       // pressed the Enter key, or the place details request failed.
@@ -26,19 +29,20 @@
 
     value = [...(value ?? []), { address: place.place_name, lng, lat }]
 
-    const marker = new mapboxgl.Marker({ title: place.text })
+    const marker = new Marker()
     marker.setLngLat([lng, lat]).addTo(map)
 
     markers = [...markers, marker]
 
-    const bounds = new mapboxgl.LngLatBounds(place.center, place.center)
+    const bounds = new LngLatBounds([lng, lat], [lng, lat])
     for (const marker of markers) {
-      bounds.extend(marker._lngLat)
+      bounds.extend(marker.getLngLat())
     }
 
-    map.fitBounds(bounds, { padding: 100 })
+    map.fitBounds(bounds, { padding: 100, duration: 400 })
   }
-  const deletePlace = (idx) => () => {
+
+  const deletePlace = (idx: number) => () => {
     // remove place from list
     value.splice(idx, 1)
     value = value // reassign to trigger rerender
@@ -49,7 +53,7 @@
   }
 </script>
 
-<AutoCompletePlace {placeholder} {selectHandler} />
+<AutoCompletePlace {placeholder} {selectHandler} bind:div />
 <ol>
   {#each value ?? [] as place, idx}
     <li>
@@ -66,7 +70,7 @@
   {/each}
 </ol>
 
-<Map bind:map {markers} css="height: 300px;" maxZoom={16} />
+<MapComp bind:map css="height: 300px;" maxZoom={16} />
 
 <style>
   ol {

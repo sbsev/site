@@ -15,6 +15,7 @@
   export let placeholder = ``
   export let required = false
   export let name = ``
+  export let div: HTMLDivElement
 
   onMount(() => {
     mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
@@ -28,7 +29,7 @@
 
     geocoder.addTo(`#geocoder`)
 
-    geocoder.on(`result`, (event) => {
+    geocoder.on(`result`, (event: { result: MapboxGeocoder.Result }) => {
       geocoder.clear()
       selectHandler(event.result)
     })
@@ -36,7 +37,7 @@
 </script>
 
 <!-- has to be <div/>, <input/> won't work -->
-<div id="geocoder" {name} type="text" {placeholder} {required} />
+<div id="geocoder" {name} type="text" {placeholder} {required} bind:this={div} />
 
 <style>
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {
