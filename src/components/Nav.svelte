@@ -14,7 +14,7 @@
   import { onClickOutside } from '../utils/actions'
 
   export let nav: NavLink[]
-  export let breakpoint = 1000
+  export let mobile: boolean
 
   const icons = {
     'Über Uns': Plant,
@@ -28,8 +28,6 @@
 
   let isOpen = false
   let activeSubNav = -1
-  let viewWidth: number
-  $: onMobile = viewWidth < breakpoint
   const close = () => {
     isOpen = false
     activeSubNav = -1
@@ -51,15 +49,15 @@
   page.subscribe(close)
 </script>
 
-<svelte:window bind:innerWidth={viewWidth} />
-
-<button
-  on:click|preventDefault={() => (isOpen = true)}
-  aria-label="Navigationsmenü öffnen"
-  style="grid-area: nav;"
->
-  <Menu height="3ex" />
-</button>
+{#if mobile}
+  <button
+    on:click|preventDefault={() => (isOpen = true)}
+    aria-label="Navigationsmenü öffnen"
+    style="grid-area: nav;"
+  >
+    <Menu height="3ex" />
+  </button>
+{/if}
 
 <a
   on:click={close}
@@ -71,12 +69,12 @@
   <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
 </a>
 
-<nav class:isOpen use:onClickOutside={close} class={onMobile ? `mobile` : `desktop`}>
+<nav class:isOpen use:onClickOutside={close} class={mobile ? `mobile` : `desktop`}>
   <ul>
     {#each nav as { title, url, subNav }, idx}
       <li
-        on:mouseenter={setActiveSubNav(idx, onMobile)}
-        on:mouseleave={setActiveSubNav(-1, onMobile)}
+        on:mouseenter={setActiveSubNav(idx, mobile)}
+        on:mouseleave={setActiveSubNav(-1, mobile)}
       >
         <span>
           <a
@@ -204,10 +202,6 @@
     margin-top: 1ex;
     list-style: disc;
     padding-left: 2ex;
-  }
-  a.logo {
-    /* needed for centering logo since menu button takes less space than colormode + search */
-    margin-left: 4vw;
   }
   /* desktop styles */
   nav.desktop,

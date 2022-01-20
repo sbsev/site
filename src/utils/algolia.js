@@ -22,6 +22,7 @@ function processResults(fetchFunction, ...args) {
     return items
   }
 }
+
 export const algoliaConfig = {
   appId: process.env.ALGOLIA_APP_ID,
   apiKey: process.env.ALGOLIA_ADMIN_KEY,

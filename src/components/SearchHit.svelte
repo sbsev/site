@@ -9,9 +9,9 @@
 </script>
 
 <div>
-  {#if cover.src}
+  {#if cover?.src}
     <a sveltekit:prefetch href={slug} on:click={clickHandler}>
-      <Img {...cover} sizes={[{ w: 150 }]} />
+      <Img {...cover} sizes={[{ w: 150 }]} imgStyle="height: auto;" />
     </a>
   {/if}
   <h3>
@@ -39,8 +39,8 @@
   div > p {
     margin-bottom: 0;
   }
-  h3 :global(em) {
-    color: white;
+  :global(em) {
+    color: var(--green);
   }
   div :global(picture) {
     float: right;

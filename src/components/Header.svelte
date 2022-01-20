@@ -8,6 +8,10 @@
   import SearchHit from './SearchHit.svelte'
 
   export let nav: NavLink[]
+  export let breakpoint = 1100
+
+  let viewWidth: number
+  $: mobile = viewWidth < breakpoint
 
   const searchProps = {
     indices: Object.fromEntries(
@@ -24,8 +28,10 @@
   }
 </script>
 
-<header>
-  <Nav {nav} />
+<svelte:window bind:innerWidth={viewWidth} />
+
+<header class={mobile ? `mobile` : `desktop`}>
+  <Nav {nav} {mobile} />
 
   <ColorMode {colorsByMode} otherColors={colors} />
   <ModalColorPicker
@@ -38,6 +44,7 @@
     {...searchProps}
     --hitsBgColor="var(--bodyBg)"
     --iconColor="var(--headerColor)"
+    --inputColor="white"
   />
 </header>
 
@@ -56,18 +63,14 @@
     z-index: 4; /* needed to display above range slider pips on signup page */
     padding: 3pt 1ex;
   }
-  @media (max-width: 1000px) {
-    header {
-      font-size: 1.4em;
-      gap: 5vw;
-      grid-template-columns: auto 1fr auto auto;
-      grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
-    }
+  header.mobile {
+    font-size: 1.4em;
+    gap: 5vw;
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
   }
-  @media (min-width: 1001px) {
-    header {
-      font-size: 1.2em;
-      display: flex;
-    }
+  header.desktop {
+    font-size: 1.1em;
+    display: flex;
   }
 </style>
