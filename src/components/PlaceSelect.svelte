@@ -1,11 +1,9 @@
 <script lang="ts">
-  // This component uses the Google Maps value API to turn user text input into a
-  // formatted address and lat/lng coordinates.
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import Delete from '@svicons/material-sharp/delete.svelte'
   import { LngLatBounds, Map, Marker } from 'mapbox-gl'
   import type { Place } from '../types'
-  import AutoCompletePlace from './AutoCompletePlace.svelte'
+  import Geocoder from './Geocoder.svelte'
   import MapComp from './Map.svelte'
 
   export let value: Place[] = [] // currently selected places
@@ -53,7 +51,7 @@
   }
 </script>
 
-<AutoCompletePlace {placeholder} {selectHandler} bind:div />
+<Geocoder {placeholder} {selectHandler} bind:div />
 <ol>
   {#each value ?? [] as place, idx}
     <li>

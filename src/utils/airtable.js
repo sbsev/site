@@ -29,7 +29,6 @@ export async function airtableSubmit(chapterBaseId, data, apiKey, test) {
   // common fields for both students and pupils
   // we populate student/pupil-specific fields below
   let fields = {
-    // formatted address provided by Google Maps Places API
     Adressen: Object.values(data.places)
       .map((place) => place.address)
       .join(`\n`),

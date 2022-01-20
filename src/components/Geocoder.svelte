@@ -2,7 +2,7 @@
   // This component uses the Mapbox JS API to turn user text input into a
   // formatted address and lat/lng coordinates.
   import { session } from '$app/stores'
-  import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+  import MapboxGeocoder, { Result } from '@mapbox/mapbox-gl-geocoder'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
@@ -11,7 +11,7 @@
   // required yarn add -D events @types/events
   // https://github.com/mapbox/mapbox-gl-geocoder/issues/441
 
-  export let selectHandler: (event: mapboxgl.EventData) => void
+  export let selectHandler: (result: Result) => void
   export let placeholder = ``
   export let required = false
   export let name = ``
@@ -29,7 +29,7 @@
 
     geocoder.addTo(`#geocoder`)
 
-    geocoder.on(`result`, (event: { result: MapboxGeocoder.Result }) => {
+    geocoder.on(`result`, (event: { result: Result }) => {
       geocoder.clear()
       selectHandler(event.result)
     })
