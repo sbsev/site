@@ -2,7 +2,7 @@
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
   import { signupStore } from '../stores'
-  import type { SignupData } from '../types'
+  import type { SignupStore } from '../types'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
   import Toggle from './Toggle.svelte'
@@ -12,7 +12,7 @@
 
   export let title: string
   export let note = ``
-  export let name: keyof SignupData
+  export let name: keyof SignupStore
   export let placeholder = title
   export let options: string[] = []
   export let type: StandardTypes | CustomTypes = `text`
@@ -24,13 +24,18 @@
   let input: HTMLInputElement
   let slider: HTMLDivElement
 
-  let value: string | number | string[] | boolean | undefined | null
+  let value: string | number | string[] | boolean | undefined
 
-  $: $signupStore[name] = value
+  $: $signupStore[name] = { required, node: label }
+  $: $signupStore[name].value = value
+  $: $signupStore[name].node = label
+  $: if (value) $signupStore[name].error = ``
+
+  let label: HTMLLabelElement
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
-<label for={name} class:required on:click|preventDefault>
+<label for={name} class:required on:click|preventDefault bind:this={label}>
   {@html title}
 </label>
 
@@ -44,19 +49,14 @@
     {placeholder}
     {options}
     {maxSelect}
-    {required}
     bind:input
     bind:selectedLabels={value}
     --sms-options-bg="var(--bodyBg)"
-    on:change={(e) => {
-      if (e.detail.type === `add`) required = false
-      if (e.detail.type.includes(`remove`)) required = true
-    }}
   />
 {:else if type === `toggle`}
-  <Toggle {name} {required} bind:value />
+  <Toggle {name} bind:value />
 {:else if type === `placeSelect`}
-  <PlaceSelect {name} bind:value {placeholder} />
+  <PlaceSelect {name} bind:value {placeholder} bnd:div />
 {:else if type === `singleRange`}
   <RangeSlider bind:slider float bind:values={value} {min} {max} pips all="label" />
 {:else if type === `doubleRange`}
@@ -72,15 +72,15 @@
     all="label"
   />
 {:else if type === `radio`}
-  <RadioButtons {name} {required} bind:value {options} />
+  <RadioButtons {name} bind:value {options} />
 {:else if type === `email`}
-  <input type="email" bind:value id={name} {name} {placeholder} {required} />
+  <input type="email" bind:value id={name} {name} {placeholder} />
 {:else if type === `date`}
-  <input type="date" bind:value id={name} {name} {placeholder} {required} />
+  <input type="date" bind:value id={name} {name} {placeholder} />
 {:else if type === `tel`}
-  <input type="tel" bind:value id={name} {name} {placeholder} {required} />
+  <input type="tel" bind:value id={name} {name} {placeholder} />
 {:else if type === `text`}
-  <input type="text" bind:value id={name} {name} {placeholder} {required} />
+  <input type="text" bind:value id={name} {name} {placeholder} />
 {:else if type === `number`}
   <input
     type="number"
@@ -88,12 +88,15 @@
     id={name}
     {name}
     {placeholder}
-    {required}
     on:wheel={(e) => type === `number` && e?.target?.blur()}
     {min}
     {max}
   />
   <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
+{/if}
+
+{#if $signupStore[name]?.error}
+  <small class="error">{$signupStore[name].error}</small>
 {/if}
 
 <style>
@@ -119,5 +122,8 @@
   }
   ::-webkit-calendar-picker-indicator {
     filter: invert(var(--invert));
+  }
+  small.error {
+    color: red;
   }
 </style>

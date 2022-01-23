@@ -39,7 +39,7 @@
   div > p {
     margin-bottom: 0;
   }
-  :global(em) {
+  div :global(em) {
     color: var(--green);
   }
   div :global(picture) {

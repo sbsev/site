@@ -133,36 +133,36 @@ export type Place = {
 }
 
 // fields allowed in signupStore from src/stores.ts
-export type SignupData = {
-  age: number
-  agreement: boolean
-  birthDate: string
-  birthPlace: string
-  chapter: string[]
-  dataProtection: boolean
-  discovery: string[]
-  email: string
-  emailContact: string
-  firstName: string
-  fullName: string
-  gender: string // 'Männlich' | 'Weiblich' | 'Divers'
-  level: number
-  levels: number[]
-  nameContact: string
-  need: string
-  online: boolean
-  orgContact: string
-  phone: string
-  phoneContact: string
-  place: Place
-  places: Place[]
-  remarks: string
-  schoolType: string
-  schoolTypes: string[]
-  semester: number
-  studySubject: string
-  subjects: string
-  type: 'Student' | 'Pupil'
+export type SignupStore = {
+  agreement: FormField<boolean>
+  birthDate: FormField<Date>
+  birthPlace: FormField<string>
+  birthYear: FormField<number>
+  chapter: FormField<string[]>
+  dataProtection: FormField<boolean>
+  discovery: FormField<string[]>
+  email: FormField<string>
+  emailContact: FormField<string>
+  firstName: FormField<string>
+  fullName: FormField<string>
+  gender: FormField<string> // 'Männlich' | 'Weiblich' | 'Divers'
+  level: FormField<number>
+  levels: FormField<number[]>
+  nameContact: FormField<string>
+  need: FormField<string>
+  online: FormField<boolean>
+  orgContact: FormField<string>
+  phone: FormField<string>
+  phoneContact: FormField<string>
+  place: FormField<Place>
+  places: FormField<Place[]>
+  remarks: FormField<string>
+  schoolType: FormField<string>
+  schoolTypes: FormField<string[]>
+  semester: FormField<number>
+  studySubject: FormField<string>
+  subjects: FormField<string>
+  type: FormField<'Student' | 'Pupil'>
 }
 
 // used by both signup forms src/routes/anmeldung-{student,schueler}.svelte
@@ -171,4 +171,11 @@ export type FieldData = {
   note?: string
   required?: boolean
   placeholder?: string
+}
+
+export type FormField<T> = {
+  value?: T
+  error?: string | null
+  node?: HTMLLabelElement
+  required?: boolean
 }

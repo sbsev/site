@@ -2,13 +2,12 @@
   import { session } from '$app/stores'
   import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
-  import { onMount } from 'svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import FormField from '../components/FormField.svelte'
   import Modal from '../components/Modal.svelte'
   import { signupStore } from '../stores'
-  import type { Chapter, FieldData, SignupData } from '../types'
-  import { airtableSubmit } from '../utils/airtable.js'
+  import type { Chapter, FieldData, SignupStore } from '../types'
+  import { submitHandler } from '../utils/airtable'
   import { fetchChapters, fetchYaml, parseMicrocopy } from '../utils/queries.js'
 
   export const load: Load = async () => {
@@ -26,61 +25,32 @@
 
 <script lang="ts">
   export let chapters: Chapter[]
-  export let options: Record<string, unknown>
-  export let microcopy: Record<string, FieldData>
+  export let options: Record<keyof SignupStore, string[]>
+  export let microcopy: Record<
+    keyof SignupStore | 'page' | 'submit' | 'submitSuccess' | 'submitError',
+    FieldData
+  >
 
   // let { chapter = ``, test } = $page.url.searchParams
-  let response = {}
+  let success = false
   let error: Error | undefined = undefined
   let isSubmitting: boolean
-  let modalOpen: boolean
-
-  onMount(() => {
-    $signupStore.type = `Student`
-  })
+  $: modalOpen = Boolean(error)
 
   async function submit() {
+    $signupStore.type = { value: `Student` }
     isSubmitting = true
-
-    let { chapter, type } = $signupStore
-    const chapterAndType = {
-      chapter: chapter[0],
-      type,
-      'chapter+type': `${type} aus ${chapter[0]}`,
-    }
-
-    const baseId = chapters?.find(({ title }) =>
-      $signupStore?.chapter?.includes(title)
-    )?.baseId
-    if (!baseId) {
-      isSubmitting = false
-      error = { name: `BaseIDError`, message: `baseId could not be determined` }
-    }
-
     try {
-      response = await airtableSubmit(baseId, $signupStore, $session.AIRTABLE_API_KEY)
-
-      window.plausible(`Signup`, { props: chapterAndType })
-      window.scrollTo({ top: 0, behavior: `smooth` })
-
-      $signupStore = {} as SignupData // reset store for potential next signup
-    } catch (err) {
-      error = err as Error
-      console.error(error)
-      window.plausible(`Signup Error`, {
-        props: {
-          error: JSON.stringify(err, Object.getOwnPropertyNames(err)),
-          ...chapterAndType,
-        },
-      })
-      modalOpen = true
+      const response = await submitHandler(chapters, $session.AIRTABLE_API_KEY)
+      success = `records` in response // check if airtable responded with a new record
+      error = response.error
     } finally {
       isSubmitting = false
     }
   }
 </script>
 
-{#if response?.records}
+{#if success}
   <section>
     <span>{microcopy.submitSuccess.title}</span>
     {@html microcopy.submitSuccess.note}
@@ -103,7 +73,7 @@
     />
 
     <FormField
-      options={options.genders}
+      options={options.gender}
       name="gender"
       {...microcopy.gender}
       maxSelect={1}
@@ -142,7 +112,7 @@
     <FormField
       name="discovery"
       {...microcopy.discovery}
-      options={options.discoveries}
+      options={options.discovery}
       maxSelect={3}
     />
 

@@ -16,7 +16,7 @@ div#svelte {
 }
 * {
   /* when scrolling elements into view, add margin above so they don't end up hidden by the fixed header */
-  scroll-margin-top: 200px;
+  scroll-margin-top: 100px;
 }
 main {
   hyphens: auto;
