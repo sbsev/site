@@ -35,9 +35,11 @@
         Willst du bei uns mitmachen?
         <a
           sveltekit:prefetch
-          href="/anmeldung-student?chapter={page.title}"
-          class="btn blue"><GraduationCap {style} />Als Student:in anmelden</a
+          href="/signup-student?chapter={page.title}"
+          class="btn blue"
         >
+          <GraduationCap {style} />Als Student:in anmelden
+        </a>
         <a sveltekit:prefetch href="/mitmachen/nachhilfelehrer" class="btn blue stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studierende
         </a>
@@ -49,9 +51,8 @@
           href="/anmeldung-schueler?chapter={page.title}"
           class="btn green"
         >
-          <Child {style} />
-          Als Schüler:in anmelden</a
-        >
+          <Child {style} />Als Schüler:in anmelden
+        </a>
         <a sveltekit:prefetch href="/mitmachen/schueler" class="btn green stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler:innen</a
         >
@@ -62,9 +63,8 @@
           href="mailto:info.{slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
           class="btn orange"
         >
-          <Email {style} />
-          Schreib uns</a
-        >
+          <Email {style} />Schreib uns
+        </a>
         <a sveltekit:prefetch href="/mitmachen/standortleiter" class="btn orange stroke">
           <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleitende</a
         >

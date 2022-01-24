@@ -1,0 +1,7 @@
+submitSuccess:
+  title: 🎉 ⭐ 🎉
+  note: Deine Anmeldung wurde erfolgreich an uns versandt. Du solltest innerhalb einer Minute eine Bestätigungsmail erhalten.
+
+submitError:
+  title: 😢
+  note: Ein Fehler ist aufgetreten. Deine Anmeldung konnte nicht erfolgreich übermittelt werden. Bitte klicke erneut auf Absenden oder wende dich mit folgendem Fehlercode an [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular).

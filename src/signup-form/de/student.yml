@@ -1,0 +1,110 @@
+page:
+  title: Anmeldung Studierende
+  note: |
+    ## Formular für Studierende
+
+    Deine Angaben werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
+    Bitte fülle alle mit rotem Stern markierten Felder aus und klicke anschließend auf "Anmeldung abschicken".
+
+fields:
+  - name: chapter
+    title: Standort
+    note: An welchem Standort möchtest du Nachhilfe geben?
+    required: true
+    maxSelect: 1
+
+  - name: gender
+    title: Geschlecht
+    required: true
+    maxSelect: 1
+
+  - name: fullName
+    title: Vor- und Nachname
+    note: Bitte so angeben, wie er im Personalausweis steht. Wird für die Ausstellung des kostenlosen Führungszeugnisses benötigt.
+    required: true
+
+  - name: phone
+    title: Telefon
+    note: Bevorzugt eine Handynummer, damit wir dich zur Vermittlung gut erreichen können.
+    type: tel
+
+  - name: email
+    title: E-Mail
+    note: Gmx und Web.de blockieren regelmäßig unsere Emails. Am Besten gibst du eine Emailadresse von einem anderen Anbieter an.
+    required: true
+    type: email
+
+  - name: studySubject
+    title: Studienfach
+    note: Was studierst du?
+
+  - name: semester
+    title: Semester
+    note: In welchem Semester studierst du?
+    type: number
+    min: 1
+    max: 50
+    maxSelect: 1
+
+  - name: birthPlace
+    title: Geburtsort
+    note: Dein Geburtsdatum und -ort brauchen wir so wie diese im Personalausweis stehen, um dir einen Antrag auf Befreiung von der Gebühr für das polizeiliche Führungszeugnis auszustellen. Da du dich bei uns ehrenamtlich engagierst, bekommst du das Zeugnis mit diesem Antrag kostenlos.
+
+  - name: birthDate
+    title: Geburtsdatum
+    note: z.B. 31.02.2001
+    type: date
+
+  - name: subjects
+    title: Fächer
+    note: In welchen Fächern möchtest du Nachhilfe geben? Nicht aufgeführte Fächer gerne unter Bemerkungen angeben.
+    required: true
+
+  - name: schoolTypes
+    title: Schulform
+    note: Kinder von welchen Schulen möchtest du bevorzugt unterrichten?
+
+  - name: levels
+    title: Klassenstufen
+    note: Beispiel 5 - 8
+    type: doubleRange
+    min: 1
+    max: 13
+
+  - name: places
+    title: Wo in der Stadt?
+    note: |
+      Wähle einen oder mehrere Plätze oder Stadtteile aus, in denen du in deinem Alltag vorbeikommst, in dessen Umgebung also die Nachhilfe stattfinden könnte. Du musst keine genauen Adressen angeben, uns geht es nur um eine grobe Gegend, damit wir dich mit Schüler:innen in deiner Nähe matchen können. Beispiele: Uniplatz 1, Altstadt, Marktplatz 15, Stadtbibliothek.
+    required: true
+    placeholder: Ort der Nachhilfe
+    type: placeSelect
+
+  - name: remarks
+    title: Bemerkungen
+    note: Gibt es noch etwas, was du uns mitteilen möchtest?
+
+  - name: discovery
+    title: Werbemaßnahme
+    note: Hilf uns, unsere Werbung effektiver zu gestalten, indem du uns verrätst, wie du uns gefunden hast. Wenn die passende Werbemaßnahme nicht aufgeführt ist, bitte das Zutreffendste auswählen.
+    required: true
+    maxSelect: 1
+
+  - name: agreement
+    title: Vereinbarungen
+    note: |
+      Hiermit erkläre ich mich gemäß [der Vereinbarungen auf unserer Webseite](/vereinbarungen) mit folgenden Erklärungen einverstanden:
+      - [Verpflichtung zur Verschwiegenheit und Nichtbeeinflussung](/vereinbarungen#verpflichtung-zu-verschwiegenheit-und-nichtbeeinflussung)
+      - [Erklärung über Vorstrafen](/vereinbarungen#erklärung-zu-vorstrafen)
+    required: true
+    type: toggle
+
+  - name: dataProtection
+    title: Verarbeitung personenbezogener Daten
+    note: |
+      Durch Anklicken des Reglers bestätige ich, die Informationen zur Verarbeitung personenbezogener Daten unter [Vereinbarungen](/vereinbarungen) zur Kenntnis genommen zu haben und in die Datenverarbeitung zum Zwecke des Matchings mit Nachhilfeschülern einzuwilligen. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
+    required: true
+    type: toggle
+
+submit:
+  title: Anmeldung abschicken
+  note: Du bekommst innerhalb einer Minute eine Bestätigungs-Email von uns. Wenn nicht, war vielleicht etwas mit deiner Mailadresse nicht in Ordnung. In dem Fall schicke uns bitte eine kurze Mail an <it@studenten-bilden-schueler.de> und wir korrigieren deine Anmeldung.

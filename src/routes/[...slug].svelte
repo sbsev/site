@@ -6,7 +6,8 @@
 
   export const load: Load = async ({ params }) => {
     // delegate route to static/robots.txt
-    if (params.slug === `robots.txt`) return
+    // is this check necesary, will prob fallthorugh anyway
+    if (params.slug === `robots.txt`) return { fallthrough: true }
 
     const page = await fetchPage(params.slug)
 

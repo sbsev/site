@@ -132,50 +132,83 @@ export type Place = {
   lng: number
 }
 
-// fields allowed in signupStore from src/stores.ts
+// fields allowed in student/pupil signup store (see src/stores.ts)
 export type SignupStore = {
-  agreement: FormField<boolean>
-  birthDate: FormField<Date>
-  birthPlace: FormField<string>
-  birthYear: FormField<number>
-  chapter: FormField<string[]>
-  dataProtection: FormField<boolean>
-  discovery: FormField<string[]>
-  email: FormField<string>
-  emailContact: FormField<string>
-  firstName: FormField<string>
-  fullName: FormField<string>
-  gender: FormField<string> // 'Männlich' | 'Weiblich' | 'Divers'
-  level: FormField<number>
-  levels: FormField<number[]>
-  nameContact: FormField<string>
-  need: FormField<string>
-  online: FormField<boolean>
-  orgContact: FormField<string>
-  phone: FormField<string>
-  phoneContact: FormField<string>
-  place: FormField<Place>
-  places: FormField<Place[]>
-  remarks: FormField<string>
-  schoolType: FormField<string>
-  schoolTypes: FormField<string[]>
-  semester: FormField<number>
-  studySubject: FormField<string>
-  subjects: FormField<string>
-  type: FormField<'Student' | 'Pupil'>
+  agreement: StoredFormField<boolean>
+  birthDate: StoredFormField<Date>
+  birthPlace: StoredFormField<string>
+  birthYear: StoredFormField<number>
+  chapter: StoredFormField<string[]>
+  dataProtection: StoredFormField<boolean>
+  discovery: StoredFormField<string[]>
+  email: StoredFormField<string>
+  emailContact: StoredFormField<string>
+  firstName: StoredFormField<string>
+  fullName: StoredFormField<string>
+  gender: StoredFormField<string> // 'Männlich' | 'Weiblich' | 'Divers'
+  level: StoredFormField<number>
+  levels: StoredFormField<number[]>
+  nameContact: StoredFormField<string>
+  need: StoredFormField<string>
+  online: StoredFormField<boolean>
+  orgContact: StoredFormField<string>
+  phone: StoredFormField<string>
+  phoneContact: StoredFormField<string>
+  place: StoredFormField<Place>
+  places: StoredFormField<Place[]>
+  remarks: StoredFormField<string>
+  schoolType: StoredFormField<string>
+  schoolTypes: StoredFormField<string[]>
+  semester: StoredFormField<number>
+  studySubject: StoredFormField<string>
+  subjects: StoredFormField<string>
+  type: StoredFormField<'student' | 'pupil'>
 }
 
+export type StandardTypes =
+  | 'text'
+  | 'email'
+  | 'number'
+  | 'date'
+  | 'tel'
+  | 'checkbox'
+export type CustomTypes =
+  | 'toggle'
+  | 'singleRange'
+  | 'doubleRange'
+  | 'placeSelect'
+  | 'radio'
+export type FormFieldType = StandardTypes | CustomTypes
+
 // used by both signup forms src/routes/anmeldung-{student,schueler}.svelte
-export type FieldData = {
+export type FormFieldProps = {
   title: string
+  name: keyof SignupStore
   note?: string
   required?: boolean
   placeholder?: string
+  min?: number
+  max?: number
+  maxSelect?: number
+  type?: FormFieldType
+  options?: string[]
 }
 
-export type FormField<T> = {
+export type StoredFormField<T> = {
   value?: T
   error?: string | null
   node?: HTMLLabelElement
   required?: boolean
+}
+
+export type FormSelectOptions = {
+  [key: string]: string[]
+}
+
+export type Form = {
+  fields: FormFieldProps[]
+  page: Record<'title' | 'note', string>
+  submit: Record<'title' | 'note', string>
+  submitSuccess: Record<'title' | 'note', string>
+  submitError: Record<'title' | 'note', string>
 }

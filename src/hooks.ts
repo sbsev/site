@@ -17,8 +17,7 @@ export const getSession: GetSession = () => {
   return session
 }
 
-export const handle: Handle = async ({ request, resolve }) => {
-  return await resolve(request, {
-    ssr: !request.url.pathname.startsWith(`/anmeldung`),
+export const handle: Handle = ({ event, resolve }) =>
+  resolve(event, {
+    ssr: !event.url.pathname.startsWith(`/signup`),
   })
-}

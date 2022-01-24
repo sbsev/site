@@ -2,20 +2,17 @@
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
   import { signupStore } from '../stores'
-  import type { SignupStore } from '../types'
+  import type { SignupStore, FormFieldType } from '../types'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
   import Toggle from './Toggle.svelte'
-
-  type StandardTypes = 'text' | 'email' | 'number' | 'date' | 'tel' | 'checkbox'
-  type CustomTypes = 'toggle' | 'singleRange' | 'doubleRange' | 'placeSelect' | 'radio'
 
   export let title: string
   export let note = ``
   export let name: keyof SignupStore
   export let placeholder = title
   export let options: string[] = []
-  export let type: StandardTypes | CustomTypes = `text`
+  export let type: FormFieldType = `text`
   export let required = false
   export let min: number | undefined = undefined
   export let max: number | undefined = undefined
@@ -32,6 +29,11 @@
   $: if (value) $signupStore[name].error = ``
 
   let label: HTMLLabelElement
+
+  // TODO: range slider pips have higher z-index than multiselect dropdown. could use
+  // :global(.rangeSlider .rangeHandle) {
+  //   z-index: 1 !important;
+  // }
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->

@@ -1,4 +1,5 @@
 import replace from '@rollup/plugin-replace'
+import rollupYaml from '@rollup/plugin-yaml'
 import adapter from '@sveltejs/adapter-static'
 import 'dotenv/config'
 import preprocess from 'svelte-preprocess'
@@ -39,7 +40,7 @@ export default {
     target: `#svelte`,
 
     vite: {
-      plugins: [replace(replacements)],
+      plugins: [replace(replacements), rollupYaml()],
     },
 
     // https://kit.svelte.dev/docs#configuration-trailingslash

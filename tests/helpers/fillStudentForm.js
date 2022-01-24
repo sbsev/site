@@ -44,7 +44,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
 
-  await page.goto(`http://localhost:3000/anmeldung-student?test=true`)
+  await page.goto(`http://localhost:3000/signup-student`)
 
   fillStudentForm(page)
 }

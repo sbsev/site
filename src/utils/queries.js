@@ -259,7 +259,7 @@ export async function fetchYamlList(title, slugPrefix) {
 const stripOuterParTag = (str) =>
   str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-export function parseMicrocopy(obj) {
+export function parseFormData(obj) {
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
   renderer.link = (href, _, text) =>
@@ -268,16 +268,10 @@ export function parseMicrocopy(obj) {
 
   // iterate over name, phone, email, ...
   for (const [key, itm] of Object.entries(obj)) {
-    if (typeof itm === `string`) obj[key] = stripOuterParTag(marked(itm))
+    if ((`title`, `note`).includes(key))
+      obj[key] = stripOuterParTag(marked(itm))
     // iterate over title, note, ...
-    else if (typeof itm === `object` && itm !== null) {
-      obj[key].name = key // name is used by FormField as id to link labels to their corresp. inputs
-      for (const [innerKey, val] of Object.entries(itm)) {
-        if (typeof val === `string`) {
-          obj[key][innerKey] = stripOuterParTag(marked(val))
-        }
-      }
-    }
+    else if (typeof itm === `object` && itm !== null) parseFormData(itm)
   }
   return obj
 }

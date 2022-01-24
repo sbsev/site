@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+  import { dev } from '$app/env'
   import { session } from '$app/stores'
   import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
@@ -6,43 +7,60 @@
   import FormField from '../components/FormField.svelte'
   import Modal from '../components/Modal.svelte'
   import { signupStore } from '../stores'
-  import type { Chapter, FieldData, SignupStore } from '../types'
+  import type { Chapter, Form } from '../types'
   import { submitHandler } from '../utils/airtable'
-  import { fetchChapters, fetchYaml, parseMicrocopy } from '../utils/queries.js'
+  import { fetchChapters, parseFormData } from '../utils/queries.js'
 
   export const load: Load = async () => {
+    const options = (await import(`../signup-form/de/options.yml`)).default
+    let form = (await import(`../signup-form/de/student.yml`)).default
+    const meta = await import(`../signup-form/de/meta.yml`)
+
     const chapters = (await fetchChapters()).filter(
       (chap: Chapter) => chap.acceptsSignups
     )
-    const options = await fetchYaml(`Signup Form Options`)
 
-    let microcopy = parseMicrocopy(await fetchYaml(`Student Form v2`))
-    microcopy = { ...microcopy, ...parseMicrocopy(await fetchYaml(`Signup Form Meta`)) }
+    form = parseFormData({ ...form, ...meta })
+    if (dev) {
+      chapters[0] = { title: `Test`, baseId: `appe3hVONuwBkuQv1` }
+    }
 
-    return { props: { chapters, options, microcopy } }
+    form = parseFormData({ ...form, ...meta })
+
+    for (const field of form.fields) {
+      if (field.name in options) {
+        field.options = options[field.name]
+      } else if (field.name === `chapter`) {
+        field.options = chapters.map((chap: Chapter) => chap.title)
+      }
+    }
+
+    return { props: { chapters, form } }
   }
 </script>
 
 <script lang="ts">
   export let chapters: Chapter[]
-  export let options: Record<keyof SignupStore, string[]>
-  export let microcopy: Record<
-    keyof SignupStore | 'page' | 'submit' | 'submitSuccess' | 'submitError',
-    FieldData
-  >
+  export let form: Form
 
-  // let { chapter = ``, test } = $page.url.searchParams
   let success = false
   let error: Error | undefined = undefined
   let isSubmitting: boolean
   $: modalOpen = Boolean(error)
 
   async function submit() {
-    $signupStore.type = { value: `Student` }
     isSubmitting = true
+
     try {
-      const response = await submitHandler(chapters, $session.AIRTABLE_API_KEY)
-      success = `records` in response // check if airtable responded with a new record
+      $signupStore.type = { value: `student` }
+      const fieldNames = form.fields.map((field) => field.name) // list of form fields to validate
+
+      const response = await submitHandler(
+        fieldNames,
+        chapters,
+        $session.AIRTABLE_API_KEY
+      )
+      if (response.success) success = true
       error = response.error
     } finally {
       isSubmitting = false
@@ -52,8 +70,8 @@
 
 {#if success}
   <section>
-    <span>{microcopy.submitSuccess.title}</span>
-    {@html microcopy.submitSuccess.note}
+    <span>{form.submitSuccess.title}</span>
+    {@html form.submitSuccess.note}
   </section>
 {:else}
   <form onsubmit="return false;" on:submit|preventDefault={submit}>
@@ -61,69 +79,18 @@
     <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
       <Plant height="1em" style="vertical-align: -3pt;" />
-      {@html microcopy.page.title}
+      {@html form.page.title}
     </h1>
 
-    {@html microcopy.page.note}
-    <FormField
-      options={chapters.map((c) => c.title)}
-      name="chapter"
-      {...microcopy.chapter}
-      maxSelect={1}
-    />
-
-    <FormField
-      options={options.gender}
-      name="gender"
-      {...microcopy.gender}
-      maxSelect={1}
-    />
-
-    <FormField name="fullName" {...microcopy.fullName} />
-
-    <FormField name="phone" {...microcopy.phone} type="tel" />
-
-    <FormField name="email" {...microcopy.email} type="email" />
-
-    <FormField name="studySubject" {...microcopy.studySubject} />
-
-    <FormField
-      name="semester"
-      {...microcopy.semester}
-      type="number"
-      min={1}
-      maxSelect={1}
-    />
-
-    <FormField name="birthPlace" {...microcopy.birthPlace} />
-
-    <FormField name="birthDate" {...microcopy.birthDate} type="date" />
-
-    <FormField name="subjects" {...microcopy.subjects} options={options.subjects} />
-
-    <FormField name="school" {...microcopy.schoolTypes} options={options.schoolTypes} />
-
-    <FormField name="levels" {...microcopy.levels} type="doubleRange" min={1} max={13} />
-
-    <FormField name="places" {...microcopy.places} type="placeSelect" />
-
-    <FormField name="remarks" {...microcopy.remarks} />
-
-    <FormField
-      name="discovery"
-      {...microcopy.discovery}
-      options={options.discovery}
-      maxSelect={3}
-    />
-
-    <FormField name="agreement" {...microcopy.agreement} type="toggle" />
-
-    <FormField name="dataProtection" {...microcopy.dataProtection} type="toggle" />
+    {@html form.page.note}
+    {#each form.fields as props}
+      <FormField {...props} />
+    {/each}
 
     <h3>
-      {@html microcopy.submit.title}
+      {@html form.submit.title}
     </h3>
-    {@html microcopy.submit.note}
+    {@html form.submit.note}
     <!-- class main used by CSS selector in test/signupForm.js -->
     <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
@@ -136,8 +103,8 @@
   {#if modalOpen}
     <Modal on:close={() => (modalOpen = false)} style="background: var(--bodyBg);">
       <div>
-        <span>{microcopy.submitError.title}</span>
-        {@html microcopy.submitError.note}
+        <span>{form.submitError.title}</span>
+        {@html form.submitError.note}
 
         <pre><code>
           {JSON.stringify(error, null, 2)}

@@ -27,4 +27,4 @@ status = 202
 [[redirects]]
 force = true
 from = "https://studenten-bilden-schueler/anmeldung"
-to = "https://studenten-bilden-schueler/anmeldung-student"
+to = "https://studenten-bilden-schueler/signup-student"
