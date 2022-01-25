@@ -111,6 +111,12 @@ tbody tr:nth-child(odd) {
   transition: 0.3s;
   width: max-content;
   margin: 1em auto;
+  cursor: pointer;
+}
+.btn.small {
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 0.5ex 1ex;
 }
 .btn:hover {
   transform: scale(1.03);

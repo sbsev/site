@@ -267,9 +267,12 @@ export function parseFormData(obj) {
   marked.use({ renderer })
 
   for (const [key, itm] of Object.entries(obj)) {
-    if ((`title`, `note`).includes(key))
-      obj[key] = stripOuterParTag(marked(itm))
-    else if (typeof itm === `object` && itm !== null) parseFormData(itm)
+    if ((`title`, `note`).includes(key)) {
+      // strip lines of leading white space to prevent indented code blocks
+      // https://github.com/markedjs/marked/issues/1696
+      const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+      obj[key] = stripOuterParTag(marked(markdown))
+    } else if (typeof itm === `object` && itm !== null) parseFormData(itm)
   }
   return obj
 }

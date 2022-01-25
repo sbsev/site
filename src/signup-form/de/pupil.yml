@@ -1,7 +1,11 @@
 header:
   title: Anmeldung Schüler:innen
   note: |
-    ## Formular für Schüler:innen, Eltern und soziale Einrichtungen
+    <p align="center">
+    Du möchtest Nachhilfe geben? <a class="btn small green" href=/signup-student">Anmeldung Studierende</a>
+    </p>
+
+    ## Formular für Eltern und soziale Einrichtungen
 
     Wir freuen uns über dein Interesse! So geht's zur Nachhilfe:
 

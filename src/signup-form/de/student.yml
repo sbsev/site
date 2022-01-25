@@ -1,6 +1,10 @@
 header:
   title: Anmeldung Studierende
-  note:
+  note: |
+    <p align="center">
+    Du möchtest Nachhilfe bekommen? <a class="btn small green" href=/signup-pupil">Anmeldung Schüler</a>
+    </p>
+
     ## Formular für Studierende
 
     Deine Angaben werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
