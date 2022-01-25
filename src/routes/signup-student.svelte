@@ -14,7 +14,7 @@
   export const load: Load = async () => {
     const options = (await import(`../signup-form/de/options.yml`)).default
     let form = (await import(`../signup-form/de/student.yml`)).default
-    const meta = await import(`../signup-form/de/meta.yml`)
+    const meta = await import(`../signup-form/de/messages.yml`)
 
     const chapters = (await fetchChapters()).filter(
       (chap: Chapter) => chap.acceptsSignups
@@ -79,10 +79,10 @@
     <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
       <Plant height="1em" style="vertical-align: -3pt;" />
-      {@html form.page.title}
+      {@html form.header.title}
     </h1>
 
-    {@html form.page.note}
+    {@html form.header.note}
     {#each form.fields as props}
       <FormField {...props} />
     {/each}

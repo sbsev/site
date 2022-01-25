@@ -53,7 +53,10 @@
     {maxSelect}
     bind:input
     bind:selectedLabels={value}
-    --sms-options-bg="var(--bodyBg)"
+    --sms-options-bg="var(--accentBg)"
+    --sms-input-bg="var(--accentBg)"
+    --sms-input-height="3ex"
+    --sms-border="0"
   />
 {:else if type === `toggle`}
   <Toggle {name} bind:value />

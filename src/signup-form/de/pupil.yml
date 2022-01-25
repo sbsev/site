@@ -1,4 +1,4 @@
-page:
+header:
   title: Anmeldung Schüler:innen
   note: |
     ## Formular für Schüler:innen, Eltern und soziale Einrichtungen
@@ -134,7 +134,3 @@ fields:
       Sofern mehrere Personen sorgeberechtigt sind, versichere ich, dass auch die anderen Sorgeberechtigten mit der Verarbeitung der Daten nach dieser Datenschutzerklärung einverstanden sind.
     required: true
     type: toggle
-
-submit:
-  title: Anmeldung abschicken
-  note: Du bekommst innerhalb von einer Minute eine Bestätigungs-Email von uns. Wenn nicht, war vielleicht etwas mit deiner E-Mail-Adresse nicht in Ordnung. In dem Fall schreib uns bitte an <it@studenten-bilden-schueler.de> und wir korrigieren deine Anmeldung.

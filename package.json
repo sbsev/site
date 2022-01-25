@@ -60,7 +60,7 @@
     "svelte-algolia": "^0.2.13",
     "svelte-check": "^2.3.0",
     "svelte-color-mode": "^0.1.4",
-    "svelte-multiselect": "^3.1.0",
+    "svelte-multiselect": "^3.1.1",
     "svelte-preprocess": "^4.10.2",
     "svelte-range-slider-pips": "^2.0.2",
     "svelte-toc": "^0.2.3",

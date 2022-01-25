@@ -266,11 +266,9 @@ export function parseFormData(obj) {
     `<a target="_blank" href="${href}">${text}</a>`
   marked.use({ renderer })
 
-  // iterate over name, phone, email, ...
   for (const [key, itm] of Object.entries(obj)) {
     if ((`title`, `note`).includes(key))
       obj[key] = stripOuterParTag(marked(itm))
-    // iterate over title, note, ...
     else if (typeof itm === `object` && itm !== null) parseFormData(itm)
   }
   return obj

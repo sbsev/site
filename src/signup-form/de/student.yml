@@ -1,6 +1,6 @@
-page:
+header:
   title: Anmeldung Studierende
-  note: |
+  note:
     ## Formular für Studierende
 
     Deine Angaben werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
@@ -104,7 +104,3 @@ fields:
       Durch Anklicken des Reglers bestätige ich, die Informationen zur Verarbeitung personenbezogener Daten unter [Vereinbarungen](/vereinbarungen) zur Kenntnis genommen zu haben und in die Datenverarbeitung zum Zwecke des Matchings mit Nachhilfeschülern einzuwilligen. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
     required: true
     type: toggle
-
-submit:
-  title: Anmeldung abschicken
-  note: Du bekommst innerhalb einer Minute eine Bestätigungs-Email von uns. Wenn nicht, war vielleicht etwas mit deiner Mailadresse nicht in Ordnung. In dem Fall schicke uns bitte eine kurze Mail an <it@studenten-bilden-schueler.de> und wir korrigieren deine Anmeldung.
