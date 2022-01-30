@@ -14,7 +14,7 @@
   export let selectHandler: (result: Result) => void
   export let placeholder = ``
   export let required = false
-  export let name = ``
+  export let name: string | null = null
   export let div: HTMLDivElement
 
   onMount(() => {
@@ -43,9 +43,10 @@
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {
     width: 100%;
     max-width: none;
-    /* background: var(--accentBg);
-    text-overflow: ellipsis;
-    height: 2em;
-    margin: 1ex 0; */
+    background: var(--accentBg);
+    margin: 1em 0;
+  }
+  :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl input) {
+    color: var(--textColor) !important;
   }
 </style>

@@ -37,7 +37,7 @@
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
-<label for={name} class:required on:click|preventDefault bind:this={label}>
+<label for={name} class:required bind:this={label}>
   {@html title}
 </label>
 
@@ -45,8 +45,9 @@
   {@html note}
 {/if}
 
-{#if type !== `radio` && options.length > 0}
+{#if type === `select`}
   <MultiSelect
+    id={name}
     {name}
     {placeholder}
     {options}

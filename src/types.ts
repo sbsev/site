@@ -173,6 +173,7 @@ export type StandardTypes =
   | 'tel'
   | 'checkbox'
 export type CustomTypes =
+  | 'select'
   | 'toggle'
   | 'singleRange'
   | 'doubleRange'

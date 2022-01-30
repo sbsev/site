@@ -2,7 +2,7 @@ header:
   title: Anmeldung Studierende
   note: |
     <p align="center">
-    Du möchtest Nachhilfe bekommen? <a class="btn small green" href=/signup-pupil">Anmeldung Schüler</a>
+    Du möchtest Nachhilfe bekommen? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Anmeldung Schüler</a>
     </p>
 
     ## Formular für Studierende
@@ -14,11 +14,13 @@ fields:
   - name: chapter
     title: Standort
     note: An welchem Standort möchtest du Nachhilfe geben?
+    type: select
     required: true
     maxSelect: 1
 
   - name: gender
     title: Geschlecht
+    type: select
     required: true
     maxSelect: 1
 
@@ -48,7 +50,6 @@ fields:
     type: number
     min: 1
     max: 50
-    maxSelect: 1
 
   - name: birthPlace
     title: Geburtsort
@@ -62,10 +63,12 @@ fields:
   - name: subjects
     title: Fächer
     note: In welchen Fächern möchtest du Nachhilfe geben? Nicht aufgeführte Fächer gerne unter Bemerkungen angeben.
+    type: select
     required: true
 
   - name: schoolTypes
     title: Schulform
+    type: select
     note: Kinder von welchen Schulen möchtest du bevorzugt unterrichten?
 
   - name: levels
@@ -90,6 +93,7 @@ fields:
   - name: discovery
     title: Werbemaßnahme
     note: Hilf uns, unsere Werbung effektiver zu gestalten, indem du uns verrätst, wie du uns gefunden hast. Wenn die passende Werbemaßnahme nicht aufgeführt ist, bitte das Zutreffendste auswählen.
+    type: select
     required: true
     maxSelect: 1
 

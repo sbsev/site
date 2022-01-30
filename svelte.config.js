@@ -4,6 +4,7 @@ import adapter from '@sveltejs/adapter-static'
 import 'dotenv/config'
 import preprocess from 'svelte-preprocess'
 import { algoliaConfig } from './src/utils/algolia.js'
+import { contentfulFetch } from './src/utils/queries.js'
 
 const { NODE_ENV } = process.env
 
@@ -30,6 +31,22 @@ const replacements = Object.fromEntries(
   keys.map((key) => [`process.env.${key}`, JSON.stringify(process.env[key])])
 )
 
+const { pages } = await contentfulFetch(`{
+  pages: pageCollection {
+    items {
+      slug
+    }
+  }
+}`)
+
+const { posts } = await contentfulFetch(`{
+  posts: postCollection {
+    items {
+      slug
+    }
+  }
+}`)
+
 export default {
   preprocess: preprocess(),
 
@@ -41,9 +58,22 @@ export default {
 
     vite: {
       plugins: [replace(replacements), rollupYaml()],
+      build: {
+        rollupOptions: {
+          output: { manualChunks: undefined },
+        },
+      },
     },
 
     // https://kit.svelte.dev/docs#configuration-trailingslash
     trailingSlash: `ignore`, // GitHub issue discussing Netlify: https://git.io/JngRL
+
+    prerender: {
+      // manually tell Kit which pages it needs to prerender
+      entries: [
+        ...pages.items.map((p) => `/${p.slug}`),
+        ...posts.items.map((p) => `/blog/${p.slug}`),
+      ],
+    },
   },
 }

@@ -137,16 +137,15 @@ export async function submitHandler(
     }
   }
 
-  const { chapter, type } = signupData
+  const chapter = signupData.chapter.value?.[0]
+  const type = signupData.type.value?.[0]
   const chapterAndType = {
-    chapter: chapter.value?.[0],
+    chapter: chapter,
     type,
-    'chapter+type': `${type} aus ${chapter.value?.[0]}`,
+    'chapter+type': `${type} aus ${chapter}`,
   }
 
-  const baseId = chapters?.find(({ title }) =>
-    chapter.value?.[0].includes(title)
-  )?.baseId
+  const baseId = chapters?.find(({ title }) => chapter?.includes(title))?.baseId
   if (!baseId) {
     const error = {
       name: `BaseIDError`,

@@ -46,11 +46,7 @@
       </span>
       <span>
         Suchst du Nachhilfe?
-        <a
-          sveltekit:prefetch
-          href="/anmeldung-schueler?chapter={page.title}"
-          class="btn green"
-        >
+        <a sveltekit:prefetch href="/signup-pupil?chapter={page.title}" class="btn green">
           <Child {style} />Als Schüler:in anmelden
         </a>
         <a sveltekit:prefetch href="/mitmachen/schueler" class="btn green stroke">

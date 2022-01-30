@@ -2,7 +2,7 @@ header:
   title: Anmeldung Schüler:innen
   note: |
     <p align="center">
-    Du möchtest Nachhilfe geben? <a class="btn small green" href=/signup-student">Anmeldung Studierende</a>
+    Du möchtest Nachhilfe geben? <a class="btn small green" href="/signup-student" sveltekit:prefetch>Anmeldung Studierende</a>
     </p>
 
     ## Formular für Eltern und soziale Einrichtungen
@@ -23,11 +23,13 @@ fields:
     title: Standort
     note: Wähle einen unserer Nachhilfestandorte.
     required: true
+    type: select
     maxSelect: 1
 
   - name: gender
     title: Geschlecht Schüler:in
     required: true
+    type: select
     maxSelect: 1
 
   - name: firstName
@@ -40,6 +42,7 @@ fields:
     title: Fächer
     note: |
       In welchem Fach möchtest du Nachhilfe erhalten? Für nicht aufgeführte Fächer oder sonstige Hinweise, bitte das Fach "Anderes" wählen und im Kommentarfeld unten beschreiben.
+    type: select
     required: true
 
   - name: schoolTypes
@@ -48,6 +51,7 @@ fields:
       Auf welche Schule gehst du?
 
       Für nicht aufgeführte Schultypen oder sonstige Hinweise, bitte "Anderes" wählen und im Kommentarfeld unten beschreiben.
+    type: select
     required: true
     maxSelect: 1
 
@@ -82,6 +86,7 @@ fields:
 
       Hat das Kind Zugang zu einem Laptop, Tablet o.ä. und ist technisch in der Lage, Online-Nachhilfe zu erhalten? Wenn nicht, [können wir auch da helfen](/blog/spende-laptops).
     type: toggle
+    maxSelect: 1
 
   - name: remarks
     title: Bemerkungen

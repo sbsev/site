@@ -58,7 +58,7 @@
         chapters,
         $session.AIRTABLE_API_KEY
       )
-      success = `records` in response // check if airtable responded with a new record
+      if (response.success) success = true
       error = response.error
     } finally {
       isSubmitting = false
