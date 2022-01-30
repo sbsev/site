@@ -1,35 +1,32 @@
+import test from 'ava'
 import {
   completeSlider,
   fillInput,
   fillMultiSelect,
   fillPlaceSelect,
-  fillSingleSelect,
   launchPuppeteer,
-} from './index.js'
+  withPage,
+} from './_helpers.js'
 
-export async function fillPupilForm(page) {
-  await page.$eval(`input[type='radio'][value='Schüler']`, (el) => el.click())
-
+async function fillPupilForm(page) {
   await page.waitForSelector(`#firstName`) // wait for DOM changes to be applied before proceeding after clicking the pupil button
 
-  await fillSingleSelect(page, `#chapter`, `Heidelberg`)
+  await fillMultiSelect(page, `#chapter`, `Test`)
 
-  await fillSingleSelect(page, `#gender`, `Männlich`)
+  await fillMultiSelect(page, `#gender`, `Männlich`)
 
   await fillInput(page, `#firstName`, `Foo Bar`)
 
-  await fillMultiSelect(page, `#subjects`, [`Mathe`, `Englisch`])
+  await fillMultiSelect(page, `[name='subjects']`, [`Mathe`, `Englisch`])
 
-  await fillSingleSelect(page, `#schoolType`, `Realschule`)
-
-  await fillInput(page, `#level`, `7`)
+  await fillMultiSelect(page, `#schoolTypes`, `Realschule`)
 
   await completeSlider(page, `.rangeNub`)
 
-  await fillPlaceSelect(page, `#places`, `test1`)
+  await fillPlaceSelect(page, `[name='places'] input`, `test1`)
   await page.waitForSelector(`input[data-place='1']`)
 
-  await fillPlaceSelect(page, `#places`, `test2`)
+  await fillPlaceSelect(page, `[name='places'] input`, `test2`)
   await page.waitForSelector(`input[data-place='2']`)
 
   await page.$eval(`#online`, (el) => el.click())
@@ -47,6 +44,29 @@ export async function fillPupilForm(page) {
   await page.$eval(`#dataProtection`, (el) => el.click())
 }
 
+test(
+  `pupil signup form can be submitted after filling all required fields`,
+  withPage,
+  async (t, page) => {
+    // needs the dev server running on localhost:3000 to work, fails with
+    // Error: net::ERR_CONNECTION_REFUSED otherwise
+    await page.goto(`http://localhost:3000/signup-pupil`, {
+      timeout: 4000,
+      waitUntil: `networkidle2`,
+    })
+
+    await fillPupilForm(page)
+
+    await page.$eval(`button[type=submit].main`, (el) => el.click())
+
+    const span = await page.waitForSelector(`main > section > span:first-child`)
+
+    const text = await (await span.getProperty(`textContent`)).jsonValue()
+
+    t.is(text, `🎉 ⭐ 🎉`)
+  }
+)
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   // Module was not imported but called directly via
   // `node test/helpers/fillPupilForm.js`
@@ -56,7 +76,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 
   const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
 
-  await page.goto(`http://localhost:3000/anmeldung-schueler`)
+  await page.goto(`http://localhost:3000/signup-pupil`)
 
   fillPupilForm(page)
 }

@@ -52,6 +52,7 @@
     {placeholder}
     {options}
     {maxSelect}
+    noOptionsMsg="Keine passenden Optionen"
     bind:input
     bind:selectedLabels={value}
     --sms-options-bg="var(--accentBg)"

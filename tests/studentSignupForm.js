@@ -1,32 +1,34 @@
+import test from 'ava'
 import {
   completeSlider,
   fillInput,
   fillMultiSelect,
   fillPlaceSelect,
-  fillSingleSelect,
   launchPuppeteer,
-} from './index.js'
+  withPage,
+} from './_helpers.js'
 
 export async function fillStudentForm(page) {
-  await fillSingleSelect(page, `#chapter`, `Aachen`)
+  await fillMultiSelect(page, `#chapter`, `Test`)
 
-  await fillSingleSelect(page, `#gender`, `Weiblich`)
+  await fillMultiSelect(page, `#gender`, `Weiblich`)
 
   await fillInput(page, `#fullName`, `Foo Bar`)
 
   await fillInput(page, `#email`, `foo@bar.com`)
 
-  await fillMultiSelect(page, `#subjects`, [`Mathe`, `Physik`])
+  await fillMultiSelect(page, `[name='subjects']`, [`Mathe`, `Physik`])
 
+  // rangeSlider
   await completeSlider(page, `.rangeNub`)
 
-  await fillPlaceSelect(page, `#places`, `test1`)
+  await fillPlaceSelect(page, `[name='places'] input`, `test1`)
   await page.waitForSelector(`input[data-place='1']`)
 
-  await fillPlaceSelect(page, `#places`, `test2`)
+  await fillPlaceSelect(page, `[name='places'] input`, `test2`)
   await page.waitForSelector(`input[data-place='2']`)
 
-  await fillSingleSelect(page, `#discovery`, `Freunde`)
+  await fillMultiSelect(page, `#discovery`, `Freunde`)
 
   await page.$eval(`#agreement`, (el) => el.click())
 
@@ -34,6 +36,29 @@ export async function fillStudentForm(page) {
 
   await page.$eval(`button[type=submit].main`, (el) => el.click())
 }
+
+test(
+  `student signup form can be submitted after filling all required fields`,
+  withPage,
+  async (t, page) => {
+    // needs the dev server running on localhost:3000 to work, fails with
+    // Error: net::ERR_CONNECTION_REFUSED otherwise
+    await page.goto(`http://localhost:3000/signup-student`, {
+      timeout: 4000,
+      waitUntil: `networkidle2`,
+    })
+
+    await fillStudentForm(page)
+
+    await page.$eval(`button[type=submit].main`, (el) => el.click())
+
+    const span = await page.waitForSelector(`main > section > span:first-child`)
+
+    const text = await (await span.getProperty(`textContent`)).jsonValue()
+
+    t.is(text, `🎉 ⭐ 🎉`)
+  }
+)
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   // Module was not imported but called directly via

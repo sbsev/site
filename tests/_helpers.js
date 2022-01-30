@@ -8,12 +8,6 @@ export async function fillInput(page, id, value) {
 export async function fillPlaceSelect(page, id, value) {
   await fillInput(page, id, value)
   await page.waitForSelector(`.pac-item`)
-  await page.keyboard.press(`ArrowDown`)
-  await page.keyboard.press(`Enter`)
-}
-
-export async function fillSingleSelect(page, id, value) {
-  await fillInput(page, id, value)
   await page.keyboard.press(`Enter`)
 }
 
@@ -26,15 +20,10 @@ export async function fillMultiSelect(page, id, values) {
 }
 
 // https://stackoverflow.com/a/51884637
-export async function completeSlider(page, selector, delteX = 10) {
-  const rangeNub = await page.$(selector)
+export async function completeSlider(page, selector) {
+  await page.focus(selector)
 
-  const { x, y, width, height } = await rangeNub.boundingBox()
-
-  await page.mouse.move(x + width / 2, y + height / 2)
-  await page.mouse.down()
-  await page.mouse.move(delteX, 0)
-  await page.mouse.up()
+  await page.keyboard.press(`ArrowRight`)
 }
 
 export async function launchPuppeteer({ headless = true, slowMo = 0 }) {
@@ -47,4 +36,22 @@ export async function launchPuppeteer({ headless = true, slowMo = 0 }) {
   const page = (await browser.pages())[0]
 
   return { browser, page }
+}
+
+// taken from https://github.com/avajs/ava/blob/master/docs/recipes/puppeteer.md
+// makes Puppeteer page available inside test functions
+export async function withPage(t, run) {
+  const { browser, page } = await launchPuppeteer({
+    headless: false,
+    // slowMo: 20,
+  })
+
+  try {
+    await run(t, page)
+  } catch (err) {
+    console.error(err)
+  } finally {
+    await page.close()
+    await browser.close()
+  }
 }
