@@ -1,9 +1,9 @@
-name: CI
+name: Tests
 
 on: [push, pull_request]
 
 jobs:
-  tests:
+  ava:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

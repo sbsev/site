@@ -9,7 +9,8 @@
 <h3 align="center">
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2bcf7f93-7c33-40f4-9843-bbbf22ea213b/deploy-status)](https://app.netlify.com/sites/sbsev/deploys)
-[![CI](https://github.com/sbsev/svelte-site/workflows/CI/badge.svg)](https://github.com/sbsev/svelte-site/actions)
+[![Tests](https://github.com/sbsev/svelte-site/actions/workflows/test.yml/badge.svg)](https://github.com/sbsev/svelte-site/actions/workflows/test.yml)
+[![Lighthouse](https://github.com/sbsev/svelte-site/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/sbsev/svelte-site/actions/workflows/lighthouse.yml)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sbsev/svelte-site?label=Repo+Size)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sbsev/svelte-site/main.svg)](https://results.pre-commit.ci/latest/github/sbsev/svelte-site/main)
 

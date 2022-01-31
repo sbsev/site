@@ -71,6 +71,7 @@ export default {
     prerender: {
       // manually tell Kit which pages it needs to prerender
       entries: [
+        ...[`/signup-student`, `/signup-pupil`],
         ...pages.items.map((p) => `/${p.slug}`),
         ...posts.items.map((p) => `/blog/${p.slug}`),
       ],
