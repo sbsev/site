@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { page } from '$app/stores'
+  import { afterNavigate } from '$app/navigation'
   import type { Load } from '@sveltejs/kit'
   import Footer from '../components/Footer.svelte'
   import Header from '../components/Header.svelte'
@@ -33,14 +33,12 @@
   export let footer: { links: Link[] }
   export let social: Record<string, string>
 
-  if (typeof window !== `undefined`) {
-    page.subscribe(() => {
-      // Track user navigation across the site. This data is transferred to Airtable
-      // by the signup form or destroyed when they leave the site.
-      if (!window.visitedPages) window.visitedPages = [document.referrer]
-      window.visitedPages.push(location.pathname + location.search)
-    })
-  }
+  afterNavigate(() => {
+    // Track user navigation across the site. This data is transferred to Airtable
+    // by the signup form or destroyed when they leave the site.
+    if (!window.visitedPages) window.visitedPages = [document.referrer]
+    window.visitedPages.push(location.pathname + location.search)
+  })
 </script>
 
 <Header {nav} />

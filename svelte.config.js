@@ -53,9 +53,6 @@ export default {
   kit: {
     adapter: adapter(),
 
-    // hydrate the div with id 'svelte' in src/app.html
-    target: `#svelte`,
-
     vite: {
       plugins: [replace(replacements), rollupYaml()],
       build: {
