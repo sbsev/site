@@ -1,4 +1,4 @@
-import type { GetSession, Handle } from '@sveltejs/kit'
+import type { GetSession } from '@sveltejs/kit'
 
 export const getSession: GetSession = () => {
   const keys = [
@@ -16,10 +16,3 @@ export const getSession: GetSession = () => {
 
   return session
 }
-
-// signup pages exhibit SSR errors, we somehow get duplicate DOM nodes
-// maybe because they're generated from objects with referential inequality
-export const handle: Handle = ({ event, resolve }) =>
-  resolve(event, {
-    ssr: !event.url.pathname.startsWith(`/signup`),
-  })

@@ -29,11 +29,6 @@
   $: if (value) $signupStore[name].error = ``
 
   let label: HTMLLabelElement
-
-  // TODO: range slider pips have higher z-index than multiselect dropdown. could use
-  // :global(.rangeSlider .rangeHandle) {
-  //   z-index: 1 !important;
-  // }
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->

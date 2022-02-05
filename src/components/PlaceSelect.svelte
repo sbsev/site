@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import Delete from '@svicons/material-sharp/delete.svelte'
-  import { LngLatBounds, Map, Marker } from 'mapbox-gl'
+  import mapbox from 'mapbox-gl'
+  import type { Map, Marker } from 'mapbox-gl'
   import type { Place } from '../types'
   import Geocoder from './Geocoder.svelte'
   import MapComp from './Map.svelte'
@@ -28,12 +29,12 @@
 
     value = [...(value ?? []), { address: place.place_name, lng, lat }]
 
-    const marker = new Marker()
+    const marker = new mapbox.Marker()
     marker.setLngLat([lng, lat]).addTo(map)
 
     markers = [...markers, marker]
 
-    const bounds = new LngLatBounds([lng, lat], [lng, lat])
+    const bounds = new mapbox.LngLatBounds([lng, lat], [lng, lat])
     for (const marker of markers) {
       bounds.extend(marker.getLngLat())
     }
