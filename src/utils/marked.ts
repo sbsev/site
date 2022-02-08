@@ -2,11 +2,11 @@ import { marked } from 'marked'
 
 const renderer = {
   // responsive markdown images
-  image(href, title, text) {
+  image(href: string, title: string, text: string) {
     if (href?.includes(`images.ctfassets.net`) && !href.endsWith(`.svg`)) {
       title = title ? `title="${title}"` : ``
 
-      const srcSet = (params) =>
+      const srcSet = (params: string) =>
         [900, 600, 400]
           .map((width) => `${href}?w=${width}&${params} ${width}w`)
           .join(`, `)
@@ -23,7 +23,7 @@ const renderer = {
   },
 
   // adapted from https://marked.js.org/using_pro
-  heading(text, level, raw, slugger) {
+  heading(text: string, level: string, raw: string, slugger: unknown) {
     const id = slugger.slug(raw)
 
     // heading links are styled in static/global.css
@@ -39,7 +39,7 @@ const renderer = {
   },
 
   // add SvelteKit prefetching for local markdown links
-  link(href, title, text) {
+  link(href: string, title: string, text: string) {
     if (href.startsWith(`/`)) {
       title = title ? `title="${title}"` : ``
       return `<a sveltekit:prefetch href="${href}" ${title}>${text}</a>`
@@ -48,12 +48,12 @@ const renderer = {
   },
 
   // responsive iframes for video embeds
-  codespan(code) {
+  codespan(code: string) {
     if (code.startsWith(`youtube:`) || code.startsWith(`vimeo:`)) {
       const [platform, id] = code.split(/:\s?/)
       const embed = {
-        youtube: (id) => `https://youtube.com/embed/${id}`,
-        vimeo: (id) => `https://player.vimeo.com/video/${id}`,
+        youtube: (id: string) => `https://youtube.com/embed/${id}`,
+        vimeo: (id: string) => `https://player.vimeo.com/video/${id}`,
       }
       // padding-top: 56.25%; corresponds to 16/9 = most common video aspect ratio
       return `

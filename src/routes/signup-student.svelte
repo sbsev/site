@@ -9,7 +9,7 @@
   import { signupStore } from '../stores'
   import type { Chapter, Form } from '../types'
   import { submitHandler } from '../utils/airtable'
-  import { fetchChapters, parseFormData } from '../utils/queries.js'
+  import { fetchChapters, parseFormData } from '../fetch'
 
   export const load: Load = async () => {
     const options = (await import(`../signup-form/de/options.yml`)).default

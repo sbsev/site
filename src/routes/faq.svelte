@@ -12,7 +12,7 @@
   import { scale } from 'svelte/transition'
   import Collapsible from '../components/Collapsible.svelte'
   import type { FAQ } from '../types'
-  import { fetchYamlList } from '../utils/queries'
+  import { fetchYamlList } from '../fetch'
 
   export const load: Load = async () => {
     const faqs = await fetchYamlList(`FAQ`, `faq#`)

@@ -3,7 +3,6 @@ import rollupYaml from '@rollup/plugin-yaml'
 import adapter from '@sveltejs/adapter-static'
 import 'dotenv/config'
 import preprocess from 'svelte-preprocess'
-import { algoliaConfig } from './src/utils/algolia.js'
 
 const { NODE_ENV } = process.env
 
@@ -18,6 +17,7 @@ if (NODE_ENV === `development`) {
 } else if (NODE_ENV === `production`) {
   // update Algolia search indices on production builds
   const { indexAlgolia } = await import(`svelte-algolia/server-side`)
+  const { algoliaConfig } = await import(`./package/utils/algolia.js`)
   indexAlgolia(algoliaConfig)
 }
 
@@ -35,6 +35,15 @@ export default {
 
   kit: {
     adapter: adapter(),
+
+    files: {
+      lib: `src`,
+    },
+
+    package: {
+      files: (path) =>
+        [`fetch.ts`, `utils/marked.ts`, `utils/algolia.ts`].includes(path),
+    },
 
     vite: {
       plugins: [replace(replacements), rollupYaml()],

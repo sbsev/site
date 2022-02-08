@@ -1,5 +1,5 @@
 import 'cross-fetch/dist/node-polyfill.js'
-import { fetchPages, fetchPosts, fetchYamlList } from './queries.js'
+import { fetchPages, fetchPosts, fetchYamlList } from '../fetch.js'
 
 function processResults(fetchFunction, ...args) {
   return async () => {
