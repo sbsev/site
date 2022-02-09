@@ -1,7 +1,10 @@
 import 'cross-fetch/dist/node-polyfill.js'
 import { fetchPages, fetchPosts, fetchYamlList } from '../fetch.js'
 
-function processResults(fetchFunction, ...args) {
+function processResults(
+  fetchFunction: typeof fetchPages | typeof fetchPosts,
+  ...args: unknown[]
+) {
   return async () => {
     const items = await fetchFunction(...args)
 
@@ -24,8 +27,8 @@ function processResults(fetchFunction, ...args) {
 }
 
 export const algoliaConfig = {
-  appId: process.env.ALGOLIA_APP_ID,
-  apiKey: process.env.ALGOLIA_ADMIN_KEY,
+  appId: import.meta.env.VITE_ALGOLIA_APP_ID,
+  apiKey: import.meta.env.VITE_ALGOLIA_ADMIN_KEY,
   // partialUpdates: true,
   indices: [
     { name: `Seiten`, getData: processResults(fetchPages) },

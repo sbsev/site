@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import yaml from 'js-yaml'
-import type { Chapter, Page, Post } from './types.js'
-import marked from './utils/marked.js'
+import type { Chapter, Page, Post } from './types'
+import marked from './utils/marked'
 
 const prefixSlug = (prefix: string) => (obj: Page | Post) => {
   obj.slug = prefix + obj.slug
@@ -12,7 +12,7 @@ export async function airtableFetch(
   query: string,
   options = {}
 ): Promise<Record<string, unknown>> {
-  const apiKey = process.env.AIRTABLE_CHAPTER_BASE_APP_ID
+  const apiKey = import.meta.env.VITE_AIRTABLE_CHAPTER_BASE_APP_ID
 
   if (!apiKey) throw `Missing Airtable API key. Please add to .env`
 
@@ -33,8 +33,8 @@ export async function airtableFetch(
 }
 
 export async function contentfulFetch(query: string) {
-  const token = process.env.CONTENTFUL_ACCESS_TOKEN
-  const id = process.env.CONTENTFUL_SPACE_ID
+  const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
+  const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
 
   if (!token || !id)
     throw `Missing Contentful access token and/or space ID. Please add to .env`

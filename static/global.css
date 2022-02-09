@@ -225,7 +225,7 @@ p > :is(picture + em, a + em) {
   display: block;
 }
 
-/* heading links inserted by custom heading renderer in src/utils/marked.js */
+/* heading links inserted by custom heading renderer in src/utils/marked.ts */
 :where(h2, h3, h4, h5, h6) a[aria-hidden='true'] {
   transition: 0.3s;
   margin-left: 4pt;

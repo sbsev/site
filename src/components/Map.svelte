@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { session } from '$app/stores'
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
   import type { MapMarker } from '../types'
 
-  mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
+  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 
   export let map: mapboxgl.Map | null = null
   export let markers: MapMarker[] = []

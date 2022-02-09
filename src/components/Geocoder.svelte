@@ -1,7 +1,6 @@
 <script lang="ts">
   // This component uses the Mapbox JS API to turn user text input into a
   // formatted address and lat/lng coordinates.
-  import { session } from '$app/stores'
   import MapboxGeocoder, { Result } from '@mapbox/mapbox-gl-geocoder'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   import mapboxgl from 'mapbox-gl'
@@ -17,11 +16,13 @@
   export let name: string | null = null
   export let div: HTMLDivElement
 
+  const mapboxKey = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
+
   onMount(() => {
-    mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
+    mapboxgl.accessToken = mapboxKey
 
     let geocoder = new MapboxGeocoder({
-      accessToken: $session.MAPBOX_PUBLIC_KEY,
+      accessToken: mapboxKey,
       countries: `de`,
       language: `de-DE`,
       types: `address,locality,neighborhood,poi`,

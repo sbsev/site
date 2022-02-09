@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
   import { dev } from '$app/env'
-  import { session } from '$app/stores'
   import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
@@ -58,7 +57,7 @@
       const response = await submitHandler(
         fieldNames,
         chapters,
-        $session.AIRTABLE_API_KEY
+        import.meta.env.VITE_AIRTABLE_API_KEY
       )
       if (response.success) success = true
       error = response.error
