@@ -17,5 +17,7 @@ if (
 // maybe because they're generated from objects with referential inequality
 export const handle: Handle = ({ event, resolve }) =>
   resolve(event, {
-    ssr: !event.url.pathname.startsWith(`/signup`),
+    ssr: ![`/anmeldung`, `/signup-pupil`, `/signup-student`].includes(
+      event.url.pathname
+    ),
   })
