@@ -65,7 +65,7 @@ fields:
   - name: places
     title: Wo in der Stadt?
     note: |
-      Bitte gib deine und andere Adressen an, in deren Nähe die Nachhilfe stattfinden kann.
+      Bitte gib eine oder mehrere Adressen an, in deren Nähe die Nachhilfe stattfinden kann.
 
       Beispiele: Meinestraße 4, Uniplatz 1, Stadtbibliothek.
     required: true
