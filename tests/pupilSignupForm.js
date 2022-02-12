@@ -17,7 +17,7 @@ async function fillPupilForm(page) {
 
   await fillInput(page, `#firstName`, `Foo Bar`)
 
-  await fillMultiSelect(page, `div[name='subjects']`, [`Mathe`, `Englisch`])
+  await fillMultiSelect(page, `input[name='subjects']`, [`Mathe`, `Englisch`])
 
   await fillMultiSelect(page, `#schoolTypes`, `Realschule`)
 
@@ -53,7 +53,7 @@ test(
     // needs the dev server running on localhost:3000 to work, fails with
     // Error: net::ERR_CONNECTION_REFUSED otherwise
     await page.goto(`http://localhost:3000/signup-pupil`, {
-      timeout: 4000,
+      timeout: 10000,
       waitUntil: `networkidle2`,
     })
 
@@ -76,7 +76,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   // (fails with Error: net::ERR_CONNECTION_REFUSED otherwise). Will automatically fill out
   // every required field in the pupil form allowing for immediate manual form submission afterwards.
 
-  const { page } = await launchPuppeteer({ headless: false, slowMo: 10 })
+  const { page } = await launchPuppeteer({ headless: false, slowMo: 30 })
 
   await page.goto(`http://localhost:3000/signup-pupil`)
 
