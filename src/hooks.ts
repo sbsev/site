@@ -3,7 +3,12 @@ import type { Handle } from '@sveltejs/kit'
 import { indexAlgolia } from 'svelte-algolia/server-side'
 import { algoliaConfig } from './utils/algolia'
 
-if (dev === false) {
+// only update Algolia indices if required env vars are defined
+if (
+  dev === false &&
+  import.meta.env.VITE_ALGOLIA_APP_ID &&
+  import.meta.env.VITE_ALGOLIA_ADMIN_KEY
+) {
   // update Algolia search indices on production builds
   indexAlgolia(algoliaConfig)
 }
