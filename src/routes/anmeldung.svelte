@@ -1,10 +1,11 @@
-Just a placeholder until the signup form split into separate pupil/student forms is
-complete.
-<br />
-<a sveltekit:prefetch href="/signup-student">
-  <strong>Student</strong>
-</a>
-<br />
-<a sveltekit:prefetch href="/signup-pupil">
-  <strong> Schueler</strong>
-</a>
+<script context="module" lang="ts">
+  import type { Load } from '@sveltejs/kit'
+
+  export const load: Load = ({ url }) => {
+    const type = url.searchParams.get(`type`) === `Schüler` ? `pupil` : `student`
+    return {
+      status: 307,
+      redirect: `/signup-${type}`,
+    }
+  }
+</script>
