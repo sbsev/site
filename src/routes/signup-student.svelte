@@ -54,11 +54,7 @@
       $signupStore.type = { value: `student` }
       const fieldNames = form.fields.map((field) => field.name) // list of form fields to validate
 
-      const response = await submitHandler(
-        fieldNames,
-        chapters,
-        import.meta.env.VITE_AIRTABLE_API_KEY
-      )
+      const response = await submitHandler(fieldNames, chapters, form.errMsg)
       if (response.success) success = true
       error = response.error
     } finally {

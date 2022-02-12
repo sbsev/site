@@ -40,6 +40,10 @@
   {@html note}
 {/if}
 
+{#if $signupStore[name]?.error}
+  <small class="error">{$signupStore[name].error}</small>
+{/if}
+
 {#if type === `select`}
   <MultiSelect
     id={name}
@@ -97,10 +101,6 @@
   <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
 {/if}
 
-{#if $signupStore[name]?.error}
-  <small class="error">{$signupStore[name].error}</small>
-{/if}
-
 <style>
   label {
     display: block;
@@ -126,6 +126,7 @@
     filter: invert(var(--invert));
   }
   small.error {
+    display: block;
     color: red;
   }
 </style>
