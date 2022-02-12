@@ -6,7 +6,6 @@
   import Social from '../../components/Social.svelte'
   import TagList from '../../components/TagList.svelte'
   import type { BlogTag, Post } from '../../types'
-  import { BlogTags } from '../../types'
 
   export let posts: Post[]
   export let social: Record<string, string>
@@ -20,13 +19,12 @@
   )
   $: visiblePosts = filteredPosts.slice(0, nVisible)
 
-  const tagCounter = Object.fromEntries(BlogTags.map((tag) => [tag, 0]))
-  tagCounter.Alle = posts.length
+  const tagCounter: Record<string, number> = { Alle: posts.length }
 
   // count tag occurrences
   for (const post of posts) {
     for (const tag of post.tags) {
-      tagCounter[tag] += 1
+      tagCounter[tag] = (tagCounter[tag] ?? 0) + 1
     }
   }
 

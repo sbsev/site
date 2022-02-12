@@ -206,10 +206,14 @@ export type FormSelectOptions = {
   [key: string]: string[]
 }
 
-export type Form = {
-  fields: FormFieldProps[]
-  page: Record<'title' | 'note', string>
+export type FormMessages = {
   submit: Record<'title' | 'note', string>
   submitSuccess: Record<'title' | 'note', string>
   submitError: Record<'title' | 'note', string>
+  errMsg: Record<'title' | 'note', string>
 }
+
+export type Form = {
+  fields: FormFieldProps[]
+  page: Record<'title' | 'note', string>
+} & FormMessages

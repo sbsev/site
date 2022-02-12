@@ -13,13 +13,13 @@
   export const load: Load = async () => {
     const options = await import(`../signup-form/de/options.yml`)
     let form = (await import(`../signup-form/de/pupil.yml`)).default
-    const meta = await import(`../signup-form/de/messages.yml`)
+    const messages = await import(`../signup-form/de/messages.yml`)
 
     const chapters = (await fetchChapters()).filter(
       (chap: Chapter) => chap.acceptsSignups
     )
 
-    form = parseFormData({ ...form, ...meta })
+    form = parseFormData({ ...form, ...messages })
 
     if (dev) {
       chapters[0] = { title: `Test`, baseId: `appe3hVONuwBkuQv1` }
@@ -52,11 +52,7 @@
       $signupStore.type = { value: `pupil` }
       const fieldNames = form.fields.map((field) => field.name) // list of form fields to validate
 
-      const response = await submitHandler(
-        fieldNames,
-        chapters,
-        import.meta.env.VITE_AIRTABLE_API_KEY
-      )
+      const response = await submitHandler(fieldNames, chapters, form.errMsg)
       if (response.success) success = true
       error = response.error
     } finally {
