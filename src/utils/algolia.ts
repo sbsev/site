@@ -2,7 +2,7 @@ import 'cross-fetch/dist/node-polyfill.js'
 import { fetchPages, fetchPosts, fetchYamlList } from '../fetch.js'
 
 function processResults(
-  fetchFunction: typeof fetchPages | typeof fetchPosts,
+  fetchFunction: typeof fetchPages | typeof fetchPosts | typeof fetchYamlList,
   ...args: unknown[]
 ) {
   return async () => {

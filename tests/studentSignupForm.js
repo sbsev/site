@@ -17,15 +17,15 @@ export async function fillStudentForm(page) {
 
   await fillInput(page, `#email`, `foo@bar.com`)
 
-  await fillMultiSelect(page, `[name='subjects']`, [`Mathe`, `Physik`])
+  await fillMultiSelect(page, `div[name='subjects']`, [`Mathe`, `Physik`])
 
   // rangeSlider
   await completeSlider(page, `.rangeNub`)
 
-  await fillPlaceSelect(page, `[name='places'] input`, `test1`)
+  await fillPlaceSelect(page, `div[name='places'] input`, `Hamburg`)
   await page.waitForSelector(`input[data-place='1']`)
 
-  await fillPlaceSelect(page, `[name='places'] input`, `test2`)
+  await fillPlaceSelect(page, `div[name='places'] input`, `Heidelberg`)
   await page.waitForSelector(`input[data-place='2']`)
 
   await fillMultiSelect(page, `#discovery`, `Freunde`)

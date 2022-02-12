@@ -18,6 +18,13 @@
 
   const mapboxKey = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 
+  function ignoreUpDownArrows(event: KeyboardEvent) {
+    // don't move text cursor when user presses up/down arrows to choose from auto-completions
+    if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
+      event.preventDefault()
+    }
+  }
+
   onMount(() => {
     mapboxgl.accessToken = mapboxKey
 
@@ -38,7 +45,14 @@
 </script>
 
 <!-- has to be <div/>, <input/> won't work -->
-<div id="geocoder" {name} type="text" {placeholder} {required} bind:this={div} />
+<div
+  id="geocoder"
+  {name}
+  {placeholder}
+  {required}
+  bind:this={div}
+  on:keydown={ignoreUpDownArrows}
+/>
 
 <style>
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {

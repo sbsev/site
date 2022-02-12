@@ -7,7 +7,8 @@ export async function fillInput(page, id, value) {
 
 export async function fillPlaceSelect(page, id, value) {
   await fillInput(page, id, value)
-  await page.waitForSelector(`.pac-item`)
+  await page.waitForSelector(`.mapboxgl-ctrl-geocoder--suggestion`)
+  await page.keyboard.press(`ArrowDown`)
   await page.keyboard.press(`Enter`)
 }
 
@@ -17,6 +18,8 @@ export async function fillMultiSelect(page, id, values) {
     await page.keyboard.type(value)
     await page.keyboard.press(`Enter`)
   }
+  // close the dropdown after all values are entered
+  await page.keyboard.press(`Escape`)
 }
 
 // https://stackoverflow.com/a/51884637

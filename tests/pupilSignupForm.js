@@ -17,17 +17,19 @@ async function fillPupilForm(page) {
 
   await fillInput(page, `#firstName`, `Foo Bar`)
 
-  await fillMultiSelect(page, `[name='subjects']`, [`Mathe`, `Englisch`])
+  await fillMultiSelect(page, `div[name='subjects']`, [`Mathe`, `Englisch`])
 
   await fillMultiSelect(page, `#schoolTypes`, `Realschule`)
 
   await completeSlider(page, `.rangeNub`)
 
-  await fillPlaceSelect(page, `[name='places'] input`, `test1`)
+  await fillPlaceSelect(page, `div[name='places'] input`, `Hamburg`)
   await page.waitForSelector(`input[data-place='1']`)
 
-  await fillPlaceSelect(page, `[name='places'] input`, `test2`)
+  await fillPlaceSelect(page, `div[name='places'] input`, `Heidelberg`)
   await page.waitForSelector(`input[data-place='2']`)
+
+  await fillInput(page, `#birthYear`, `2010`)
 
   await page.$eval(`#online`, (el) => el.click())
 

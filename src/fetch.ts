@@ -257,7 +257,10 @@ function titleToSlug(itm: Record<string, unknown> & { title: string }) {
   return itm
 }
 
-export async function fetchYamlList(title: string, slugPrefix: string) {
+export async function fetchYamlList(
+  title: string,
+  slugPrefix: string
+): Promise<Record<string, unknown>[]> {
   const list = await fetchYaml(title)
   return list.map(renderBody).map(titleToSlug).map(prefixSlug(slugPrefix))
 }
