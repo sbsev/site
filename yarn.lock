@@ -3101,10 +3101,10 @@ svelte-range-slider-pips@^2.0.2:
   resolved "https://registry.yarnpkg.com/svelte-range-slider-pips/-/svelte-range-slider-pips-2.0.2.tgz#cea6131e3a90f0b1cf16c275cac4ed5e99ec7c3d"
   integrity sha512-VTWHOdwDyWbndGZnI0PQJY9DO7hgQlNubtCcCL6Wlypv5dU4vEsc4A1sX9TWMuvebEe4332SgsQQHzOdZ+guhQ==
 
-svelte-toc@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/svelte-toc/-/svelte-toc-0.2.3.tgz#1a9cbbcbb0ca927dbfb696c10f9a8dbc8c6674bc"
-  integrity sha512-AkAVMnQKyOJXuIvAHFCUeQMHB0dTFB5vyg/5xBsfKvglqUbVwC80996o3QnIxiWiKTcS3cwN/Qe/RQ5i9K1/4g==
+svelte-toc@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/svelte-toc/-/svelte-toc-0.2.4.tgz#c2b0ea886e1971e3a717504b4429b71c28387690"
+  integrity sha512-pZIIQUYKWewrZ5TAlBJkV2rVJv9eHkcJApwSBGdX/DbwRRgJpHqV+I6wSE9vw7Tve/7L4Cj3kb7C5Kh5kMyZGg==
 
 svelte2tsx@^0.5.3:
   version "0.5.3"

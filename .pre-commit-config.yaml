@@ -31,7 +31,7 @@ repos:
       - id: codespell
         stages: [commit, commit-msg]
         exclude_types: [yaml]
-        # excluding Svelte files is temporary,should be reverted after i18n
+        # excluding Svelte files is temporary, should be reverted after i18n
         exclude: (yarn.lock|.+\.svelte)$
         args: [--ignore-words-list, adresse]
 

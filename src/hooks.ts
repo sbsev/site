@@ -15,9 +15,7 @@ if (
 
 // signup pages exhibit SSR errors, we somehow get duplicate DOM nodes
 // maybe because they're generated from objects with referential inequality
+const noSsrRoutes = [`/anmeldung`, `/signup-pupil`, `/signup-student`]
+
 export const handle: Handle = ({ event, resolve }) =>
-  resolve(event, {
-    ssr: ![`/anmeldung`, `/signup-pupil`, `/signup-student`].includes(
-      event.url.pathname
-    ),
-  })
+  resolve(event, { ssr: !noSsrRoutes.includes(event.url.pathname) })
