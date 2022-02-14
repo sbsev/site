@@ -159,14 +159,9 @@ tbody tr:nth-child(odd) {
 }
 
 section:is(.blue, .green) {
-  position: relative;
-  box-sizing: border-box;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin: 0 -50vw;
-  padding: 1.5em calc(50vw - 50%);
+  position: relative; /* for the child pseudo-elements */
   color: white;
+  padding: 1.5em 0;
 }
 section.blue a {
   color: var(--green);
@@ -174,14 +169,23 @@ section.blue a {
 section.green a {
   color: var(--darkBlue);
 }
-section.blue {
+section:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10000px;
+  left: -5000px;
+  z-index: -1;
+}
+section.blue:before {
   background: var(--darkBlue);
+}
+section.green:before {
+  background: var(--darkGreen);
 }
 section:is(.blue, .green) blockquote {
   background: rgba(0, 0, 0, 0.3);
-}
-section.green {
-  background: var(--darkGreen);
 }
 
 div.box-list ul {

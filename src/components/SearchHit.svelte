@@ -1,21 +1,24 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte'
+
   import type { Post } from '../types'
   import Img from './Img.svelte'
 
   export let hit: Post
-  export let clickHandler = () => {}
+  const dispatch = createEventDispatcher()
+  const close = () => dispatch('close')
 
   $: ({ title, slug, body, cover, date, author } = hit)
 </script>
 
 <div>
   {#if cover?.src}
-    <a sveltekit:prefetch href={slug} on:click={clickHandler}>
+    <a sveltekit:prefetch href={slug} on:click={close}>
       <Img {...cover} sizes={[{ w: 150 }]} imgStyle="height: auto;" />
     </a>
   {/if}
   <h3>
-    <a sveltekit:prefetch href={slug} on:click={clickHandler}>{@html title}</a>
+    <a sveltekit:prefetch href={slug} on:click={close}>{@html title}</a>
   </h3>
   {#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
   {#if author}<span>{author.name}</span>{/if}
