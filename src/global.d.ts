@@ -22,3 +22,8 @@ declare module '*options.yml' {
   const options: import('./types').FormSelectOptions
   export default options
 }
+
+declare module '*messages.yml' {
+  const messages: import('./types').FormMessages
+  export default messages
+}

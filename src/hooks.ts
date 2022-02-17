@@ -1,18 +1,21 @@
-import type { GetSession } from '@sveltejs/kit'
+import { dev } from '$app/env'
+import type { Handle } from '@sveltejs/kit'
+import { indexAlgolia } from 'svelte-algolia/server-side'
+import { algoliaConfig } from './utils/algolia'
 
-export const getSession: GetSession = () => {
-  const keys = [
-    `ALGOLIA_APP_ID`,
-    `ALGOLIA_SEARCH_KEY`,
-    `MAPBOX_PUBLIC_KEY`,
-    `AIRTABLE_API_KEY`,
-  ]
-
-  const session = Object.fromEntries(keys.map((key) => [key, process.env[key]]))
-
-  const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID } = process.env
-  const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces/`
-  session.gqlUri = `${ctfGqlUrl}${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
-
-  return session
+// only update Algolia indices if required env vars are defined
+if (
+  dev === false &&
+  import.meta.env.VITE_ALGOLIA_APP_ID &&
+  import.meta.env.VITE_ALGOLIA_ADMIN_KEY
+) {
+  // update Algolia search indices on production builds
+  indexAlgolia(algoliaConfig)
 }
+
+// signup pages exhibit SSR errors, we somehow get duplicate DOM nodes
+// maybe because they're generated from objects with referential inequality
+const noSsrRoutes = [`/anmeldung`, `/signup-pupil`, `/signup-student`]
+
+export const handle: Handle = ({ event, resolve }) =>
+  resolve(event, { ssr: !noSsrRoutes.includes(event.url.pathname) })

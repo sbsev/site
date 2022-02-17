@@ -9,3 +9,6 @@ submitError:
 submit:
   title: Anmeldung abschicken
   note: Du bekommst innerhalb einer Minute eine Bestätigungs-Email von uns. Wenn nicht, war vielleicht etwas mit deiner Mailadresse nicht in Ordnung. In dem Fall schicke uns bitte eine kurze Mail an <it@studenten-bilden-schueler.de> und wir korrigieren deine Anmeldung.
+
+errMsg:
+  required: Dieses Feld ist erforderlich

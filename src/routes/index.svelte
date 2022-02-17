@@ -5,7 +5,7 @@
   import Place from '@svicons/material-sharp/place.svelte'
   import ChapterMap from '../components/ChapterMap.svelte'
   import type { Chapter, Page } from '../types'
-  import { fetchChapters, fetchPage, fetchYaml } from '../utils/queries'
+  import { fetchChapters, fetchPage,fetchYaml } from '../fetch'
 
   export const load: Load = async () => {
     const page = await fetchPage(`/`)

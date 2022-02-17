@@ -31,7 +31,8 @@ repos:
       - id: codespell
         stages: [commit, commit-msg]
         exclude_types: [yaml]
-        exclude: yarn.lock
+        # excluding Svelte files is temporary, should be reverted after i18n
+        exclude: (yarn.lock|.+\.svelte)$
         args: [--ignore-words-list, adresse]
 
   - repo: https://github.com/pre-commit/mirrors-eslint

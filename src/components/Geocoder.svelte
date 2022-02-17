@@ -1,7 +1,6 @@
 <script lang="ts">
   // This component uses the Mapbox JS API to turn user text input into a
   // formatted address and lat/lng coordinates.
-  import { session } from '$app/stores'
   import MapboxGeocoder, { Result } from '@mapbox/mapbox-gl-geocoder'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   import mapboxgl from 'mapbox-gl'
@@ -17,11 +16,20 @@
   export let name: string | null = null
   export let div: HTMLDivElement
 
+  const mapboxKey = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
+
+  function ignoreUpDownArrows(event: KeyboardEvent) {
+    // don't move text cursor when user presses up/down arrows to choose from auto-completions
+    if ([`ArrowDown`, `ArrowUp`].includes(event.key)) {
+      event.preventDefault()
+    }
+  }
+
   onMount(() => {
-    mapboxgl.accessToken = $session.MAPBOX_PUBLIC_KEY
+    mapboxgl.accessToken = mapboxKey
 
     let geocoder = new MapboxGeocoder({
-      accessToken: $session.MAPBOX_PUBLIC_KEY,
+      accessToken: mapboxKey,
       countries: `de`,
       language: `de-DE`,
       types: `address,locality,neighborhood,poi`,
@@ -37,7 +45,14 @@
 </script>
 
 <!-- has to be <div/>, <input/> won't work -->
-<div id="geocoder" {name} type="text" {placeholder} {required} bind:this={div} />
+<div
+  id="geocoder"
+  {name}
+  {placeholder}
+  {required}
+  bind:this={div}
+  on:keydown={ignoreUpDownArrows}
+/>
 
 <style>
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {

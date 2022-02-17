@@ -1,22 +1,25 @@
 import puppeteer from 'puppeteer'
 
-export async function fillInput(page, id, value) {
-  await page.focus(id)
+export async function fillInput(page, selector, value) {
+  await page.focus(selector)
   await page.keyboard.type(value)
 }
 
-export async function fillPlaceSelect(page, id, value) {
-  await fillInput(page, id, value)
-  await page.waitForSelector(`.pac-item`)
+export async function fillPlaceSelect(page, selector, value) {
+  await fillInput(page, selector, value)
+  await page.waitForSelector(`.mapboxgl-ctrl-geocoder--suggestion`)
+  await page.keyboard.press(`ArrowDown`)
   await page.keyboard.press(`Enter`)
 }
 
-export async function fillMultiSelect(page, id, values) {
-  await page.focus(id)
+export async function fillMultiSelect(page, selector, values) {
+  await page.focus(selector)
   for (const value of values) {
     await page.keyboard.type(value)
     await page.keyboard.press(`Enter`)
   }
+  // close the dropdown after all values are entered
+  await page.keyboard.press(`Escape`)
 }
 
 // https://stackoverflow.com/a/51884637
@@ -42,8 +45,8 @@ export async function launchPuppeteer({ headless = true, slowMo = 0 }) {
 // makes Puppeteer page available inside test functions
 export async function withPage(t, run) {
   const { browser, page } = await launchPuppeteer({
-    headless: false,
-    // slowMo: 20,
+    headless: true,
+    slowMo: 20,
   })
 
   try {

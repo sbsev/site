@@ -28,9 +28,9 @@ const toStr = (str: unknown) => (str ? String(str) : undefined)
 export async function sendToAirtable(
   data: SignupStore,
   chapterBaseId: string,
-  apiKey: string,
   test = false
 ): Promise<Response[]> {
+  const apiKey = import.meta.env.VITE_AIRTABLE_API_KEY
   if (!apiKey) throw `missing Airtable API key, got ${apiKey}`
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
@@ -115,7 +115,7 @@ export async function sendToAirtable(
 export async function submitHandler(
   fieldsToValidate: (keyof SignupStore)[],
   chapters: Chapter[],
-  airtableApiKey: string
+  errMsg: Record<string, string>
 ): Promise<{ error?: Error; success?: boolean }> {
   // handles form validation and Plausible event reporting
   const signupData = get(signupStore)
@@ -126,7 +126,7 @@ export async function submitHandler(
     const isEmptyArr = Array.isArray(field.value) && !field.value.length
     if (field.required && (isEmptyArr || !field.value)) {
       try {
-        field.error = `Dieses Feld ist erforderlich`
+        field.error = errMsg.required
         signupStore.set(signupData)
         field.node?.focus()
         field.node?.scrollIntoView()
@@ -155,7 +155,7 @@ export async function submitHandler(
   }
 
   try {
-    const responses = await sendToAirtable(signupData, baseId, airtableApiKey)
+    const responses = await sendToAirtable(signupData, baseId)
 
     const err = responses.find((res) => `error` in res)
     if (err) throw err

@@ -2,7 +2,7 @@
   import type { Load } from '@sveltejs/kit'
   import Map from '../components/Map.svelte'
   import type { Chapter } from '../types'
-  import { fetchChapters } from '../utils/queries'
+  import { fetchChapters } from '../fetch'
 
   export const load: Load = async () => {
     const chapters = await fetchChapters()

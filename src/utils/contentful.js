@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import 'dotenv/config.js'
 import contentful from 'contentful-management'
+import 'dotenv/config'
 import prettier from 'prettier'
 
 // Before running any of the functions in this file, first generate a Content Management Token (CMT) at

@@ -1,25 +1,11 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import InfoCircle from '@svicons/entypo/info-with-circle.svelte'
   import Child from '@svicons/fa-solid/child.svelte'
   import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
   import Email from '@svicons/material-sharp/email.svelte'
   import BasePage from '../../components/BasePage.svelte'
   import type { Page } from '../../types'
-  import { fetchPage } from '../../utils/queries'
 
-  export const load: Load = async ({ params }) => {
-    const { slug } = params
-
-    const page = await fetchPage(`standorte/${slug}`)
-
-    if (!page) return { fallthrough: true }
-
-    return { props: { page, slug } }
-  }
-</script>
-
-<script lang="ts">
   export let page: Page
   export let slug: string
 

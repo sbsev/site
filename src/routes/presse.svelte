@@ -6,7 +6,7 @@
   import BasePage from '../components/BasePage.svelte'
   import Img from '../components/Img.svelte'
   import type { Page, PressItem } from '../types'
-  import { fetchPage, fetchYamlList } from '../utils/queries'
+  import { fetchPage, fetchYamlList } from '../fetch'
 
   export const load: Load = async () => {
     const page = await fetchPage(`presse`)

@@ -81,7 +81,9 @@ fields:
   - name: places
     title: Wo in der Stadt?
     note: |
-      Wähle einen oder mehrere Plätze oder Stadtteile aus, in denen du in deinem Alltag vorbeikommst, in dessen Umgebung also die Nachhilfe stattfinden könnte. Du musst keine genauen Adressen angeben, uns geht es nur um eine grobe Gegend, damit wir dich mit Schüler:innen in deiner Nähe matchen können. Beispiele: Uniplatz 1, Altstadt, Marktplatz 15, Stadtbibliothek.
+      Bitte gib einige Adressen an, in deren Nähe du bereit wärst, Nachhilfe zu geben.
+
+      Beispiele: Uniplatz 1, Marktplatz 15, Stadtbibliothek.
     required: true
     placeholder: Ort der Nachhilfe
     type: placeSelect

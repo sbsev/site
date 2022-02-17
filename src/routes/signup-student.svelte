@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
   import { dev } from '$app/env'
-  import { session } from '$app/stores'
   import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
@@ -9,7 +8,7 @@
   import { signupStore } from '../stores'
   import type { Chapter, Form } from '../types'
   import { submitHandler } from '../utils/airtable'
-  import { fetchChapters, parseFormData } from '../utils/queries.js'
+  import { fetchChapters, parseFormData } from '../fetch'
 
   export const load: Load = async () => {
     const options = (await import(`../signup-form/de/options.yml`)).default
@@ -55,11 +54,7 @@
       $signupStore.type = { value: `student` }
       const fieldNames = form.fields.map((field) => field.name) // list of form fields to validate
 
-      const response = await submitHandler(
-        fieldNames,
-        chapters,
-        $session.AIRTABLE_API_KEY
-      )
+      const response = await submitHandler(fieldNames, chapters, form.errMsg)
       if (response.success) success = true
       error = response.error
     } finally {

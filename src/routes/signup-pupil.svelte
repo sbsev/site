@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
   import { dev } from '$app/env'
-  import { session } from '$app/stores'
   import type { Load } from '@sveltejs/kit'
   import Plant from '@svicons/remix-fill/plant.svelte'
   import CircleSpinner from '../components/CircleSpinner.svelte'
@@ -9,18 +8,18 @@
   import { signupStore } from '../stores'
   import type { Chapter, Form } from '../types'
   import { submitHandler } from '../utils/airtable'
-  import { fetchChapters, parseFormData } from '../utils/queries.js'
+  import { fetchChapters, parseFormData } from '../fetch'
 
   export const load: Load = async () => {
     const options = await import(`../signup-form/de/options.yml`)
     let form = (await import(`../signup-form/de/pupil.yml`)).default
-    const meta = await import(`../signup-form/de/messages.yml`)
+    const messages = await import(`../signup-form/de/messages.yml`)
 
     const chapters = (await fetchChapters()).filter(
       (chap: Chapter) => chap.acceptsSignups
     )
 
-    form = parseFormData({ ...form, ...meta })
+    form = parseFormData({ ...form, ...messages })
 
     if (dev) {
       chapters[0] = { title: `Test`, baseId: `appe3hVONuwBkuQv1` }
@@ -53,11 +52,7 @@
       $signupStore.type = { value: `pupil` }
       const fieldNames = form.fields.map((field) => field.name) // list of form fields to validate
 
-      const response = await submitHandler(
-        fieldNames,
-        chapters,
-        $session.AIRTABLE_API_KEY
-      )
+      const response = await submitHandler(fieldNames, chapters, form.errMsg)
       if (response.success) success = true
       error = response.error
     } finally {
