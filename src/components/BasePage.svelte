@@ -33,8 +33,8 @@
     <Toc
       title=""
       openButtonLabel="Inhaltsverzeichnis öffnen"
-      headingSelector="article :is(h2, h3, h4, h5, h6)"
-      --toc-mobile-bg-color="var(--bodyBg)"
+      headingSelector="article :is(h2, h3, h4)"
+      --toc-mobile-bg="var(--bodyBg)"
     />
   {/if}
   <div>
