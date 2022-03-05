@@ -59,7 +59,7 @@
     font-weight: 300;
     background: var(--headerBg);
     box-shadow: 0 0 1ex black;
-    z-index: 4; /* needed to display above range slider pips on signup page */
+    z-index: 6; /* needed to stay above multiselect and range slider on signup page */
     padding: 3pt 1ex;
   }
   header.mobile {

@@ -33,7 +33,7 @@ repos:
         exclude_types: [yaml]
         # excluding Svelte files is temporary, should be reverted after i18n
         exclude: (yarn.lock|.+\.svelte)$
-        args: [--ignore-words-list, adresse]
+        args: [--ignore-words-list, 'adresse,afterall']
 
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v8.6.0

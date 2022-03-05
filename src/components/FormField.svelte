@@ -58,6 +58,8 @@
     --sms-input-bg="var(--accentBg)"
     --sms-input-height="3ex"
     --sms-border="0"
+    --sms-selected-bg="var(--green)"
+    --sms-selected-text-color="white"
   />
 {:else if type === `toggle`}
   <Toggle {name} bind:value />
