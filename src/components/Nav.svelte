@@ -100,7 +100,7 @@
           {/if}
         </span>
         {#if subNav && activeSubNav === idx}
-          <!-- TODO: toggle slide based on prefers reduced motion media query  -->
+          <!-- TODO: use media query to check if user prefers reduced motion and toggle (not slide) if so -->
           <ul
             transition:slide
             style="grid-template-columns: repeat({Math.min(

@@ -1065,7 +1065,7 @@ convert-to-spaces@^1.0.1:
   resolved "https://registry.yarnpkg.com/convert-to-spaces/-/convert-to-spaces-1.0.2.tgz#7e3e48bbe6d997b1417ddca2868204b4d3d85715"
   integrity sha1-fj5Iu+bZl7FBfdyihoIEtNPYVxU=
 
-cross-fetch@3.1.5, cross-fetch@^3.1.5:
+cross-fetch@3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
   integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
@@ -1515,11 +1515,6 @@ eventemitter3@^3.1.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
-
-events@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
-  integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
 extract-zip@2.0.1:
   version "2.0.1"
@@ -3079,10 +3074,10 @@ svelte-hmr@^0.14.9:
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.14.9.tgz#35f277efc789e1a6230185717347cddb2f8e9833"
   integrity sha512-bKE9+4qb4sAnA+TKHiYurUl970rjA0XmlP9TEP7K/ncyWz3m81kA4HOgmlZK/7irGK7gzZlaPDI3cmf8fp/+tg==
 
-svelte-multiselect@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/svelte-multiselect/-/svelte-multiselect-3.2.2.tgz#5e59d55a6c5ef0dbea065e3c2216a0c7bda996d9"
-  integrity sha512-kpyf8HMcq1Rb1OVJL3LvC2js/DMS3LDcq/dFj0rMJiB4JiUta9hVx8caimiQofSV01SM2d8Q00BCsj5znuJAZA==
+svelte-multiselect@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/svelte-multiselect/-/svelte-multiselect-4.0.0.tgz#4a32b6f8f0fecd46e810e9e60fff040ea8e62d8a"
+  integrity sha512-A1MLmoZ2Dmx1Inuws+a6edGKfsbXOh/M4/5pVuxkIbKn3VGGLkpvkTJF9RLQW12QBjwnxzFFniepLqxh78Zs8g==
 
 svelte-preprocess@^4.0.0, svelte-preprocess@^4.10.3:
   version "4.10.3"
