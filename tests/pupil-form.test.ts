@@ -11,7 +11,7 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
   // needs the dev server running on localhost:3000 to work, fails with
   // Error: net::ERR_CONNECTION_REFUSED otherwise
   await page.goto(`http://localhost:3000/signup-pupil`, {
-    timeout: 10000,
+    timeout: 15_000,
     waitUntil: `networkidle2`,
   })
 
