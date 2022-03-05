@@ -47,7 +47,13 @@
     return undefined
   }
   page.subscribe(close)
+
+  const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
 </script>
+
+{#each crawl_links as { title, url }}
+  <a href={url} style="position: absolute; visibility: hidden;">{title}</a>
+{/each}
 
 {#if mobile}
   <button
