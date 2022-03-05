@@ -24,6 +24,7 @@ export async function fill_multi_select(
   await page.focus(selector)
   for (const value of values) {
     await page.keyboard.type(value)
+    await page.keyboard.press(`ArrowDown`)
     await page.keyboard.press(`Enter`)
   }
   // close the dropdown after all values are entered
