@@ -47,7 +47,13 @@
     return undefined
   }
   page.subscribe(close)
+
+  const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
 </script>
+
+{#each crawl_links as { title, url }}
+  <a href={url} style="position: absolute; visibility: hidden;">{title}</a>
+{/each}
 
 {#if mobile}
   <button
@@ -100,7 +106,7 @@
           {/if}
         </span>
         {#if subNav && activeSubNav === idx}
-          <!-- TODO: toggle slide based on prefers reduced motion media query  -->
+          <!-- TODO: use media query to check if user prefers reduced motion and toggle (not slide) if so -->
           <ul
             transition:slide
             style="grid-template-columns: repeat({Math.min(
