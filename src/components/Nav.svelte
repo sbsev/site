@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import ChevronExpand from '@svicons/bootstrap/chevron-expand.svelte'
   import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
@@ -11,7 +12,6 @@
   import Plant from '@svicons/remix-fill/plant.svelte'
   import { slide } from 'svelte/transition'
   import type { NavLink } from '../types'
-  import { onClickOutside } from '../utils/actions'
 
   export let nav: NavLink[]
   export let mobile: boolean
@@ -28,6 +28,7 @@
 
   let isOpen = false
   let activeSubNav = -1
+  let node: HTMLElement
   const close = () => {
     isOpen = false
     activeSubNav = -1
@@ -46,10 +47,16 @@
     if (url !== `/` && $page.url.pathname.includes(url)) return `page`
     return undefined
   }
-  page.subscribe(close)
+  beforeNavigate(close)
 
   const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
 </script>
+
+<svelte:window
+  on:click={(event) => {
+    if (!node.contains(event.target)) close()
+  }}
+/>
 
 {#each crawl_links as { title, url }}
   <a href={url} style="position: absolute; visibility: hidden;">{title}</a>
@@ -57,7 +64,7 @@
 
 {#if mobile}
   <button
-    on:click|preventDefault={() => (isOpen = true)}
+    on:click|preventDefault|stopPropagation={() => (isOpen = true)}
     aria-label="Navigationsmenü öffnen"
     style="grid-area: nav;"
   >
@@ -75,7 +82,7 @@
   <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
 </a>
 
-<nav class:isOpen use:onClickOutside={close} class={mobile ? `mobile` : `desktop`}>
+<nav class:isOpen class={mobile ? `mobile` : `desktop`} bind:this={node}>
   <ul>
     {#each nav as { title, url, subNav }, idx}
       <li
