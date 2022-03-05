@@ -51,7 +51,7 @@
     "svelte-algolia": "^0.2.13",
     "svelte-check": "^2.4.5",
     "svelte-color-mode": "^0.1.4",
-    "svelte-multiselect": "^4.0.0",
+    "svelte-multiselect": "^4.0.1",
     "svelte-preprocess": "^4.10.3",
     "svelte-range-slider-pips": "^2.0.3",
     "svelte-toc": "^0.2.6",
