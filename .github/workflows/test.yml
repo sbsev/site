@@ -12,10 +12,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 17
           cache: yarn
