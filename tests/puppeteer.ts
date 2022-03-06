@@ -10,6 +10,7 @@ const local_args = {
   slowMo: 40,
 }
 
+// GitHub action and many other continuous integration runners set CI to 'true'
 const launch_args = process.env.CI ? {} : local_args
 
 beforeAll(async () => {

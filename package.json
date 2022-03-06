@@ -19,8 +19,8 @@
   "devDependencies": {
     "@mapbox/mapbox-gl-geocoder": "^4.7.4",
     "@rollup/plugin-yaml": "^3.1.0",
-    "@sveltejs/adapter-static": "^1.0.0-next.28",
-    "@sveltejs/kit": "^1.0.0-next.276",
+    "@sveltejs/adapter-static": "^1.0.0-next.29",
+    "@sveltejs/kit": "^1.0.0-next.294",
     "@svicons/bootstrap": "^0.1.6",
     "@svicons/boxicons-regular": "^0.1.6",
     "@svicons/boxicons-solid": "^0.1.6",
