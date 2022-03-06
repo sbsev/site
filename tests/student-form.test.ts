@@ -1,10 +1,5 @@
 import { expect, test } from 'vitest'
-import {
-  fill_input,
-  fill_multi_select,
-  fill_place_select,
-  move_slider,
-} from './helpers'
+import { fill_multi_select, fill_place_select, move_slider } from './helpers'
 import { page } from './puppeteer'
 
 test(`student signup form can be submitted after filling all required fields`, async () => {
@@ -19,9 +14,9 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await fill_multi_select(page, `#gender`, [`Weiblich`])
 
-  await fill_input(page, `#fullName`, `Foo Bar`)
+  await page.type(`#fullName`, `Foo Bar`)
 
-  await fill_input(page, `#email`, `foo@bar.com`)
+  await page.type(`#email`, `foo@bar.com`)
 
   await fill_multi_select(page, `input[name='subjects']`, [`Mathe`, `Physik`])
 
@@ -36,13 +31,13 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await fill_multi_select(page, `#discovery`, [`Freunde`])
 
-  await page.$eval(`#agreement`, (el) => el.click())
+  await page.click(`#agreement`)
 
-  await page.$eval(`#dataProtection`, (el) => el.click())
+  await page.click(`#dataProtection`)
 
-  await page.$eval(`button[type=submit].main`, (el) => el.click())
+  await page.click(`button[type=submit].main`)
 
-  await page.$eval(`button[type=submit].main`, (el: Element) => el.click())
+  await page.click(`button[type=submit].main`)
 
   const span = await page.waitForSelector(`main > section > span:first-child`)
 

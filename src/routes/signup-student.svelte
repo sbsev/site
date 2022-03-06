@@ -10,21 +10,20 @@
   import { submitHandler } from '../utils/airtable'
   import { fetchChapters, parseFormData } from '../fetch'
 
-  export const load: Load = async () => {
-    const options = (await import(`../signup-form/de/options.yml`)).default
-    let form = (await import(`../signup-form/de/student.yml`)).default
-    const meta = await import(`../signup-form/de/messages.yml`)
+  import options from '../signup-form/de/options.yml'
+  import raw_form from '../signup-form/de/student.yml'
+  import messages from '../signup-form/de/messages.yml'
 
+  export const load: Load = async () => {
     const chapters = (await fetchChapters()).filter(
       (chap: Chapter) => chap.acceptsSignups
     )
 
-    form = parseFormData({ ...form, ...meta })
-    if (dev) {
-      chapters[0] = { title: `Test`, baseId: `appe3hVONuwBkuQv1` }
-    }
+    const form = parseFormData({ ...raw_form, ...messages })
 
-    form = parseFormData({ ...form, ...meta })
+    if (dev) {
+      chapters[0] = { ...chapters[0], title: `Test`, baseId: `appe3hVONuwBkuQv1` }
+    }
 
     for (const field of form.fields) {
       if (field.name in options) {

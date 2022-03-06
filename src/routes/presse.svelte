@@ -13,20 +13,20 @@
 
     const pressItems = await fetchYamlList(`Presse`, `presse#`)
 
-    return { props: { page, pressItems } }
+    const itemsByYear = pressItems.reduce((acc, itm) => {
+      const year = itm.date.getFullYear()
+      if (!acc[year]) acc[year] = []
+      acc[year].push(itm)
+      return acc
+    }, {})
+
+    return { props: { page, pressItems: itemsByYear } }
   }
 </script>
 
 <script lang="ts">
-  export let pressItems: PressItem[]
+  export let pressItems: Record<number, PressItem[]>
   export let page: Page
-
-  const itemsByYear = pressItems.reduce((acc, itm) => {
-    const year = itm.date.getFullYear()
-    if (!acc[year]) acc[year] = []
-    acc[year].push(itm)
-    return acc
-  }, {}) as Record<number, PressItem[]>
 
   const imgStyle = `width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-bottom; margin: 0 5pt 0 0;`
@@ -34,7 +34,7 @@
 
 <BasePage {page}>
   <svelte:fragment slot="afterArticle">
-    {#each Object.entries(itemsByYear).reverse() as [year, pressArr] (year)}
+    {#each Object.entries(pressItems).reverse() as [year, pressArr] (year)}
       <h2>{year}</h2>
       <ul class="items">
         {#each pressArr as { title, id, img, url, date, chapter, source } (id)}

@@ -1,16 +1,11 @@
 import type { Page } from 'puppeteer'
 
-export async function fill_input(page: Page, selector: string, value: string) {
-  await page.focus(selector)
-  await page.keyboard.type(value)
-}
-
 export async function fill_place_select(
   page: Page,
   selector: string,
   value: string
 ) {
-  await fill_input(page, selector, value)
+  await page.type(selector, value)
   await page.waitForSelector(`.mapboxgl-ctrl-geocoder--suggestion`)
   await page.keyboard.press(`ArrowDown`)
   await page.keyboard.press(`Enter`)

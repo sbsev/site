@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import yaml from 'js-yaml'
-import type { Chapter, Page, Post } from './types'
+import type { Chapter, Form, Page, Post } from './types'
 import marked from './utils/marked'
 
 const prefixSlug = (prefix: string) => (obj: Page | Post) => {
@@ -269,7 +269,7 @@ export async function fetchYamlList(
 const stripOuterParTag = (str: string) =>
   str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-export function parseFormData(obj: Record<string, unknown>) {
+export function parseFormData(obj: Form): Form {
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
   renderer.link = (href: string, _: string, text: string) =>
@@ -278,7 +278,7 @@ export function parseFormData(obj: Record<string, unknown>) {
 
   for (const [key, itm] of Object.entries(obj)) {
     if ([`title`, `note`].includes(key)) {
-      // strip lines of leading white space to prevent indented code blocks
+      // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
       const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
       obj[key] = stripOuterParTag(marked(markdown))

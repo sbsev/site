@@ -1,10 +1,5 @@
 import { expect, test } from 'vitest'
-import {
-  fill_input,
-  fill_multi_select,
-  fill_place_select,
-  move_slider,
-} from './helpers'
+import { fill_multi_select, fill_place_select, move_slider } from './helpers'
 import { page } from './puppeteer'
 
 test(`pupil signup form can be submitted after filling all required fields`, async () => {
@@ -19,7 +14,7 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
 
   await fill_multi_select(page, `#gender`, [`Männlich`])
 
-  await fill_input(page, `#firstName`, `Foo Bar`)
+  await page.type(`#firstName`, `Foo Bar`)
 
   await fill_multi_select(page, `input[name='subjects']`, [`Mathe`, `Englisch`])
 
@@ -33,23 +28,23 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
   await fill_place_select(page, `div[name='places'] input`, `Heidelberg`)
   await page.waitForSelector(`input[data-place='2']`)
 
-  await fill_input(page, `#birthYear`, `2010`)
+  await page.type(`#birthYear`, `2010`)
 
-  await page.$eval(`#online`, (el: Element) => el.click())
+  await page.click(`#online`)
 
-  await fill_input(page, `#nameContact`, `Baz Bar`)
+  await page.type(`#nameContact`, `Baz Bar`)
 
-  await fill_input(page, `#phoneContact`, `012 345 678`)
+  await page.type(`#phoneContact`, `012 345 678`)
 
-  await fill_input(page, `#emailContact`, `baz@bar.com`)
+  await page.type(`#emailContact`, `baz@bar.com`)
 
-  await fill_input(page, `#orgContact`, `Privat`)
+  await page.type(`#orgContact`, `Privat`)
 
-  await page.$eval(`#need`, (el: Element) => el.click())
+  await page.click(`#need`)
 
-  await page.$eval(`#dataProtection`, (el: Element) => el.click())
+  await page.click(`#dataProtection`)
 
-  await page.$eval(`button[type=submit].main`, (el: Element) => el.click())
+  await page.click(`button[type=submit].main`)
 
   const span = await page.waitForSelector(`main > section > span:first-child`)
 
