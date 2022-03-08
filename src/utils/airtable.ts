@@ -3,19 +3,21 @@ import { get } from 'svelte/store'
 import { signupStore } from '../stores'
 import type { Chapter, SignupStore } from '../types'
 
-async function airtablePost(
-  baseId: string,
+const api_key = import.meta.env.VITE_AIRTABLE_API_KEY
+if (!api_key) throw `missing Airtable API key, got ${api_key}`
+
+async function airtable_post_records(
+  base_id: string,
   table: string,
-  data: { [key: string]: unknown },
-  apiKey: string
+  data: { [key: string]: unknown }
 ) {
   const response = await fetch(
-    `https://api.airtable.com/v0/${baseId}/${table}`,
+    `https://api.airtable.com/v0/${base_id}/${table}`,
     {
       method: `POST`,
       headers: {
         'Content-Type': `application/json`,
-        authorization: `Bearer ${apiKey}`,
+        authorization: `Bearer ${api_key}`,
       },
       body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
     }
@@ -23,15 +25,13 @@ async function airtablePost(
   return await response.json()
 }
 
-const toStr = (str: unknown) => (str ? String(str) : undefined)
+const to_str = (str: unknown) => (str ? String(str) : undefined)
 
 export async function sendToAirtable(
   data: SignupStore,
   chapterBaseId: string,
   test = false
 ): Promise<Response[]> {
-  const apiKey = import.meta.env.VITE_AIRTABLE_API_KEY
-  if (!apiKey) throw `missing Airtable API key, got ${apiKey}`
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
   // common fields for both students and pupils
@@ -48,7 +48,7 @@ export async function sendToAirtable(
 
     Fächer: data.subjects.value,
     Geschlecht: data.gender.value?.[0],
-    Bemerkung: toStr(data.remarks.value),
+    Bemerkung: to_str(data.remarks.value),
     Datenschutz: data.dataProtection.value,
     Quelle: `landing: ${location.origin}${window.visitedPages[1]}, prev: ${window.visitedPages[0]}`, // analytics
   }
@@ -56,14 +56,14 @@ export async function sendToAirtable(
   if (data.type.value === `student`) {
     const studentFields = {
       'Vor- und Nachname': data.fullName.value,
-      Telefon: toStr(data.phone.value),
-      Klassenstufen: toStr(data.levels.value) || `1-13`,
+      Telefon: to_str(data.phone.value),
+      Klassenstufen: to_str(data.levels.value) || `1-13`,
       Schulform: data.schoolTypes.value,
       // pass undefined in case Number(data.semester.value) is NaN (which Airtable can't handle)
       'Semester Anmeldung': Number(data.semester.value) || undefined,
-      'E-Mail': toStr(data.email.value),
+      'E-Mail': to_str(data.email.value),
       Studienfach: data.studySubject.value,
-      Geburtsort: toStr(data.birthPlace.value),
+      Geburtsort: to_str(data.birthPlace.value),
       Geburtsdatum: data.birthDate.value,
       Werbemaßnahme: data.discovery.value?.[0],
       // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
@@ -74,13 +74,13 @@ export async function sendToAirtable(
     // type === 'Pupil'
     const pupilFields = {
       Vorname: data.firstName.value,
-      Klassenstufe: toStr(data.level.value), // no fallback value here since it's a required field for pupils
+      Klassenstufe: to_str(data.level.value), // no fallback value here since it's a required field for pupils
       Schulform: data.schoolTypes.value?.[0],
       Geburtsdatum: data.birthYear.value + `-01-01`,
       Kontaktperson: data.nameContact.value,
-      'E-Mail Kontaktperson': toStr(data.emailContact.value),
-      'Telefon Kontaktperson': toStr(data.phoneContact.value),
-      'Organisation Kontaktperson': toStr(data.orgContact.value),
+      'E-Mail Kontaktperson': to_str(data.emailContact.value),
+      'Telefon Kontaktperson': to_str(data.phoneContact.value),
+      'Organisation Kontaktperson': to_str(data.orgContact.value),
       Werbemaßnahme: data.discovery.value?.[0],
       Online: data.online.value,
     }
@@ -103,30 +103,30 @@ export async function sendToAirtable(
 
   if (test) {
     console.log(`chapterFields:`, chapterFields) // eslint-disable-line no-console
-    return await airtablePost(testBaseId, table, chapterFields, apiKey)
+    return await airtable_post_records(testBaseId, table, chapterFields)
   }
   // use Promise.all() to fail fast if one record creation fails
   return await Promise.all([
-    airtablePost(globalBaseId, table, globalFields, apiKey),
-    airtablePost(chapterBaseId, table, chapterFields, apiKey),
+    airtable_post_records(globalBaseId, table, globalFields),
+    airtable_post_records(chapterBaseId, table, chapterFields),
   ])
 }
 
 export async function submitHandler(
-  fieldsToValidate: (keyof SignupStore)[],
+  fields_to_validate: (keyof SignupStore)[],
   chapters: Chapter[],
-  errMsg: Record<string, string>
+  err_msg: Record<string, string>
 ): Promise<{ error?: Error; success?: boolean }> {
   // handles form validation and Plausible event reporting
   const signupData = get(signupStore)
 
   // form validation
-  for (const name of fieldsToValidate) {
+  for (const name of fields_to_validate) {
     const field = signupData[name]
     const isEmptyArr = Array.isArray(field.value) && !field.value.length
     if (field.required && (isEmptyArr || !field.value)) {
       try {
-        field.error = errMsg.required
+        field.error = err_msg.required
         signupStore.set(signupData)
         field.node?.focus()
         field.node?.scrollIntoView()
