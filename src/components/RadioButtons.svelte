@@ -1,9 +1,9 @@
-<script>
-  export let options
-  export let value = undefined
+<script lang="ts">
+  export let options: (string | number | boolean)[]
+  export let value: string | number | boolean | null = null
   export let required = false
   export let style = ``
-  export let name = ``
+  export let id: string | null = null
 </script>
 
 <div {style}>
@@ -11,8 +11,7 @@
     <label>
       <input
         type="radio"
-        id={name ? `${name}-${idx}` : undefined}
-        {name}
+        id={id ? `${id}-${idx}` : null}
         bind:group={value}
         value={option}
         {required}

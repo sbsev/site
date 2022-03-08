@@ -26,9 +26,9 @@
     }
 
     for (const field of form.fields) {
-      if (field.name in options) {
-        field.options = options[field.name]
-      } else if (field.name === `chapter`) {
+      if (field.id in options) {
+        field.options = options[field.id]
+      } else if (field.id === `chapter`) {
         field.options = chapters.map((chap: Chapter) => chap.title)
       }
     }
@@ -50,9 +50,9 @@
     isSubmitting = true
     try {
       $signupStore.type = { value: `pupil` }
-      const fieldNames = form.fields.map((field) => field.name) // list of form fields to validate
+      const fieldIds = form.fields.map((field) => field.id) // list of form fields to validate
 
-      const response = await submitHandler(fieldNames, chapters, form.errMsg)
+      const response = await submitHandler(fieldIds, chapters, form.errMsg)
       if (response.success) success = true
       error = response.error
     } finally {

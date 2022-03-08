@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let name: string
+  export let id: string
   export let value = false // whether the toggle is on or off
   export let required = false
   export let input: HTMLInputElement | undefined = undefined
@@ -12,11 +12,10 @@
   }
 </script>
 
-<label for={name}>
+<label>
   <input
     type="checkbox"
-    id={name}
-    {name}
+    {id}
     bind:checked={value}
     {required}
     bind:this={input}
