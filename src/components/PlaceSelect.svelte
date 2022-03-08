@@ -10,7 +10,7 @@
   export let value: Place[] = [] // currently selected places
   export let placeholder = ``
   export let div: HTMLDivElement
-  export let name: string | null = null
+  export let id: string | null = null
 
   let markers: Marker[] = []
   let map: Map
@@ -53,7 +53,7 @@
   }
 </script>
 
-<Geocoder {placeholder} {selectHandler} {name} bind:div />
+<Geocoder {placeholder} {selectHandler} {id} bind:div />
 <ol>
   {#each value ?? [] as place, idx}
     <li>

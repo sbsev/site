@@ -13,10 +13,10 @@
   export let selectHandler: (result: Result) => void
   export let placeholder = ``
   export let required = false
-  export let name: string | null = null
+  export let id: string | null = null
   export let div: HTMLDivElement
 
-  const mapboxKey = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
+  const mapboxKey = import.meta.env.VITE_MAPBOX_PUBLIC_KEY as string
 
   function ignoreUpDownArrows(event: KeyboardEvent) {
     // don't move text cursor when user presses up/down arrows to choose from auto-completions
@@ -35,7 +35,7 @@
       types: `address,locality,neighborhood,poi`,
     })
 
-    geocoder.addTo(`#geocoder`)
+    geocoder.addTo(div)
 
     geocoder.on(`result`, (event: { result: Result }) => {
       geocoder.clear()
@@ -45,14 +45,7 @@
 </script>
 
 <!-- has to be <div/>, <input/> won't work -->
-<div
-  id="geocoder"
-  {name}
-  {placeholder}
-  {required}
-  bind:this={div}
-  on:keydown={ignoreUpDownArrows}
-/>
+<div {id} {placeholder} {required} bind:this={div} on:keydown={ignoreUpDownArrows} />
 
 <style>
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {

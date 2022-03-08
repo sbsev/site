@@ -181,10 +181,9 @@ export type CustomTypes =
   | 'radio'
 export type FormFieldType = StandardTypes | CustomTypes
 
-// used by both signup forms src/routes/anmeldung-{student,schueler}.svelte
 export type FormFieldProps = {
   title: string
-  name: keyof SignupStore
+  id: keyof SignupStore
   note?: string
   required?: boolean
   placeholder?: string

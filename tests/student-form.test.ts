@@ -2,10 +2,12 @@ import { expect, test } from 'vitest'
 import { fill_multi_select, fill_place_select, move_slider } from './helpers'
 import { page } from './puppeteer'
 
+const port = process.env.PORT ?? 3000
+
 test(`student signup form can be submitted after filling all required fields`, async () => {
   // needs the dev server running on localhost:3000 to work, fails with
   // Error: net::ERR_CONNECTION_REFUSED otherwise
-  await page.goto(`http://localhost:3000/signup-student`, {
+  await page.goto(`http://localhost:${port}/signup-student`, {
     timeout: 15_000,
     waitUntil: `networkidle2`,
   })
@@ -23,10 +25,10 @@ test(`student signup form can be submitted after filling all required fields`, a
   // rangeSlider
   await move_slider(page, `.rangeNub`)
 
-  await fill_place_select(page, `div[name='places'] input`, `Hamburg`)
+  await fill_place_select(page, `#places input`, `Hamburg`)
   await page.waitForSelector(`input[data-place='1']`)
 
-  await fill_place_select(page, `div[name='places'] input`, `Heidelberg`)
+  await fill_place_select(page, `#places input`, `Heidelberg`)
   await page.waitForSelector(`input[data-place='2']`)
 
   await fill_multi_select(page, `#discovery`, [`Freunde`])
@@ -43,7 +45,7 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   if (!span) throw new Error(`No success span found`)
 
-  const text = await (await span.getProperty(`textContent`)).jsonValue()
+  const text = await page.evaluate((el) => el.textContent, span)
 
   expect(text).toBe(`🎉 ⭐ 🎉`)
 })
