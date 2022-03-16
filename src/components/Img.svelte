@@ -6,6 +6,7 @@
   export let title = ``
   export let pictureStyle = ``
   export let imgStyle = ``
+  export let loading = `lazy`
   export let sizes: ImgSize[] = [
     { w: 1500 },
     { w: 1200 },
@@ -43,7 +44,15 @@
   <picture style={pictureStyle}>
     <source srcset={srcSet(`q=80&fit=fill&fm=webp`)} type="image/webp" />
     <source srcset={srcSet(`q=80&fit=fill`)} />
-    <img src="{src}?{toQueryStr(sizes[0])}&q=80" {alt} {width} {height} {title} {style} />
+    <img
+      src="{src}?{toQueryStr(sizes[0])}&q=80"
+      {alt}
+      {width}
+      {height}
+      {title}
+      {style}
+      {loading}
+    />
   </picture>
 {/if}
 
