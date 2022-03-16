@@ -59,7 +59,12 @@
 />
 
 {#each crawl_links as { title, url }}
-  <a href={url} style="position: absolute; visibility: hidden;">{title}</a>
+  <a
+    href={url}
+    style="position: absolute; visibility: hidden;"
+    aria-hidden="true"
+    tabindex="-1">{title}</a
+  >
 {/each}
 
 {#if mobile}
