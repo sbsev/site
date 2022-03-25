@@ -6,5 +6,5 @@ export const get: RequestHandler = async () => {
   const social = await fetchYaml(`Social`)
 
   if (posts && social) return { body: { posts, social } }
-  else return { fallthrough: true }
+  else return { status: 404 }
 }

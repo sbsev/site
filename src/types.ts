@@ -77,7 +77,13 @@ export type Image = {
 }
 
 export type Yaml = {
-  [key: string]: unknown
+  [key: string]:
+    | string
+    | number
+    | Date
+    | boolean
+    | (string | number | Date | boolean)[]
+    | Yaml
 }
 
 export type PressItem = {
