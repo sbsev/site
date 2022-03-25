@@ -40,7 +40,6 @@
     "@typescript-eslint/parser": "^5.16.0",
     "eslint": "^8.11.0",
     "eslint-plugin-svelte3": "^3.4.0",
-    "events": "^3.3.0",
     "js-yaml": "^4.1.0",
     "mapbox-gl": "^2.7.1",
     "marked": "^4.0.12",
