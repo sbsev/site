@@ -7,5 +7,5 @@ export const get: RequestHandler = async ({ params }) => {
   const page = await fetchPage(`standorte/${slug}`)
 
   if (page) return { body: { page, slug } }
-  else return { fallthrough: true }
+  else return { status: 404 }
 }

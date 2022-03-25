@@ -3,14 +3,12 @@ import type { Handle } from '@sveltejs/kit'
 import { indexAlgolia } from 'svelte-algolia/server-side'
 import { algoliaConfig } from './utils/algolia'
 
-// only update Algolia indices if required env vars are defined
-if (
-  dev === false &&
-  import.meta.env.VITE_ALGOLIA_APP_ID &&
-  import.meta.env.VITE_ALGOLIA_ADMIN_KEY
-) {
-  // update Algolia search indices on production builds
-  indexAlgolia(algoliaConfig)
+const appId = import.meta.env.VITE_ALGOLIA_APP_ID as string
+const apiKey = import.meta.env.VITE_ALGOLIA_ADMIN_KEY as string
+
+// only update Algolia indices on production builds if required env vars are defined
+if (dev === false && appId && apiKey) {
+  indexAlgolia({ ...algoliaConfig, appId, apiKey })
 }
 
 // signup pages exhibit SSR errors, we somehow get duplicate DOM nodes

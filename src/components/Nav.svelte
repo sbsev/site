@@ -34,11 +34,10 @@
     activeSubNav = -1
   }
 
-  const setActiveSubNav = (idx: number, disabled: boolean) => () => {
-    if (disabled) return
+  const setActiveSubNav = (idx: number) => () => {
     // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
-    if (activeSubNav !== idx) activeSubNav = idx
-    else activeSubNav = -1
+    if (activeSubNav === idx) activeSubNav = -1
+    else activeSubNav = idx
   }
 
   // isCurrent needs to be reactive to respond to changes in $page.url.pathname
@@ -91,8 +90,8 @@
   <ul>
     {#each nav as { title, url, subNav }, idx}
       <li
-        on:mouseenter={setActiveSubNav(idx, mobile)}
-        on:mouseleave={setActiveSubNav(-1, mobile)}
+        on:mouseenter={mobile ? null : setActiveSubNav(idx)}
+        on:mouseleave={mobile ? null : setActiveSubNav(-1)}
       >
         <span>
           <a
@@ -238,7 +237,6 @@
     top: 3ex;
     display: grid;
     gap: 5pt 1em;
-    width: max-content;
     max-height: 80vh;
     overflow-y: auto;
     overscroll-behavior: none;
