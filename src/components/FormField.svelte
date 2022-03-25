@@ -58,11 +58,13 @@
     bind:input
     bind:selectedLabels={value}
     --sms-options-bg="var(--accentBg)"
-    --sms-input-bg="var(--accentBg)"
-    --sms-input-height="3ex"
+    --sms-bg="var(--accentBg)"
+    --sms-height="3ex"
     --sms-border="0"
     --sms-selected-bg="var(--green)"
     --sms-selected-text-color="white"
+    --sms-min-height="32px"
+    --sms-button-hover-color="#dbecfd"
   />
 {:else if type === `toggle`}
   <Toggle {id} bind:value />
@@ -108,8 +110,8 @@
 <style>
   label {
     display: block;
-    font-weight: bolder;
-    font-size: 2.5ex;
+    font-weight: bold;
+    font-size: 18pt;
     margin: 1em 0 1ex;
   }
   label.required::after {
@@ -121,7 +123,7 @@
     margin: 1em 0;
     background: var(--accentBg);
     width: 100%;
-    height: 2em;
+    height: 32px;
   }
   input:focus {
     border: 1px solid var(--linkColor);
