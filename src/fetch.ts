@@ -8,10 +8,10 @@ const prefixSlug = (prefix: string) => (obj: Page | Post) => {
   return obj
 }
 
-export async function airtableFetch(
+export async function airtableFetch<T>(
   query: string,
   options = {}
-): Promise<Record<string, unknown>> {
+): Promise<T> {
   const apiKey = import.meta.env.VITE_AIRTABLE_CHAPTER_BASE_APP_ID
 
   if (!apiKey) throw `Missing Airtable API key. Please add to .env`

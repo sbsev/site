@@ -1,38 +1,15 @@
 <script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
   import Child from '@svicons/fa-solid/child.svelte'
   import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
   import Place from '@svicons/material-sharp/place.svelte'
   import ChapterMap from '../components/ChapterMap.svelte'
   import type { Chapter, Page } from '../types'
-  import { fetchChapters, fetchPage } from '../fetch'
-
-  export const load: Load = async () => {
-    const page = await fetchPage(`/`)
-    const chapters = await fetchChapters()
-
-    // const { students, pupils } = await airtableFetch(
-    //   `{
-    //     students: studentenStatistiken {
-    //       id
-    //     }
-    //     pupils: schuelerStatistiken {
-    //       id
-    //     }
-    //   }`,
-    //   { cache: `force-cache` }
-    // )
-    return { props: { page, chapters } }
-  }
 </script>
 
 <script lang="ts">
   export let chapters: Chapter[]
   export let page: Page
-
-  let windowWidth: number
-
-  $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
+  export let counts: { [key: string]: number }
 </script>
 
 <h1>
@@ -42,8 +19,6 @@
 <svelte:head>
   <title>Studenten bilden Schüler e.V. - Startseite</title>
 </svelte:head>
-
-<svelte:window bind:innerWidth={windowWidth} />
 
 <h2>
   Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte
@@ -56,11 +31,11 @@
     <Place height="2.5ex" style="vertical-align: middle;" />Standorte
   </div>
   <div style="background: var(--green);">
-    <span>2872</span>
+    <span>{counts.students}</span>
     <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
   </div>
   <div style="background: var(--orange);">
-    <span>3186</span>
+    <span>{counts.pupils}</span>
     <Child height="2.5ex" style="vertical-align: middle;" />Schüler:innen
   </div>
   <div style="background: var(--lightBlue);">
