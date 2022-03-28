@@ -18,7 +18,6 @@
   export let max: number | null = null
   export let maxSelect: number | null = null
 
-  let input: HTMLInputElement
   let label: HTMLLabelElement
   let slider: HTMLDivElement
 
@@ -55,7 +54,6 @@
     {options}
     {maxSelect}
     noOptionsMsg="Keine passenden Optionen"
-    bind:input
     bind:selectedLabels={value}
     --sms-options-bg="var(--accentBg)"
     --sms-bg="var(--accentBg)"
