@@ -1,7 +1,6 @@
 <script lang="ts">
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
-  import IntersectionObserver from '../../components/IntersectionObserver.svelte'
   import PostPreview from '../../components/PostPreview.svelte'
   import Social from '../../components/Social.svelte'
   import TagList from '../../components/TagList.svelte'
@@ -11,13 +10,10 @@
   export let social: Record<string, string>
 
   let activeTag: BlogTag
-  let nVisible = 12
-  const onIntersect = () => (nVisible += 6)
 
   $: filteredPosts = posts.filter(
     (post) => activeTag === `Alle` || post.tags.includes(activeTag)
   )
-  $: visiblePosts = filteredPosts.slice(0, nVisible)
 
   const tagCounter: Record<string, number> = { Alle: posts.length }
 
@@ -36,13 +32,12 @@
 <TagList {tagOccurrences} bind:activeTag />
 
 <ul>
-  {#each visiblePosts as post (post.slug)}
+  {#each filteredPosts as post (post.slug)}
     <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
       <PostPreview {post} />
     </li>
   {/each}
 </ul>
-<IntersectionObserver on:intersect={onIntersect} top={200} />
 
 <style>
   ul {

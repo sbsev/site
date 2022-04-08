@@ -15,10 +15,6 @@ body > div {
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
 }
-* {
-  /* when scrolling elements into view, add margin above so they don't end up hidden by the fixed header */
-  scroll-margin-top: 100px;
-}
 main {
   hyphens: auto;
   width: 100vw;
@@ -105,12 +101,10 @@ tbody tr:nth-child(odd) {
 .btn {
   display: block;
   white-space: nowrap;
-  margin: 1ex;
   color: white !important;
   border-radius: 5pt;
   padding: 1ex 1.5ex;
   transition: 0.3s;
-  width: max-content;
   margin: 1em auto;
   cursor: pointer;
 }
@@ -229,6 +223,9 @@ p > :is(picture + em, a + em) {
   display: block;
 }
 
+:where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 100px;
+}
 /* heading links inserted by custom heading renderer in src/utils/marked.ts */
 :where(h2, h3, h4, h5, h6) a[aria-hidden='true'] {
   transition: 0.3s;
