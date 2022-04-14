@@ -37,6 +37,8 @@ export const signupStore = sessionStore<SignupStore>(
   {} as SignupStore
 )
 
-export const microcopy = readable({}, (set) => {
-  fetchYaml(`smallTexts`).then((data: Yaml) => set(data))
-})
+// export const microcopy = readable({}, (set) => {
+//   fetchYaml(`smallTexts`).then((data: Yaml) => set(data))
+// })
+
+export const microcopy = writable({})
