@@ -36,60 +36,60 @@
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
 
-{#if $microcopy.country == 'de'}
+{#if $microcopy?.country == 'de'}
   <h1>
     <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
   </h1>
 {:else}
   <h1>
-    {$microcopy.indexPage.name}
+    {$microcopy?.indexPage?.name}
   </h1>
 {/if}
 
 <svelte:head>
-  <title>{$microcopy.indexPage.name}</title>
+  <title>{$microcopy?.indexPage?.name}</title>
 </svelte:head>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
 <h2>
-  {$microcopy.indexPage.theme}
+  {JSON.stringify($microcopy?.indexPage?.theme)}
   <!-- {JSON.stringify($microcopy)} -->
 </h2>
 
 <section>
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage.boxes
-      .locationsName}
+    <Place height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage?.boxes
+      ?.locationsName}
   </div>
   <div style="background: var(--green);">
-    <span>{$microcopy.indexPage.boxes.studentsNumber}</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage
-      .boxes.studentsName}
+    <span>{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage
+      ?.boxes?.studentsName}
   </div>
   <div style="background: var(--orange);">
-    <span>{$microcopy.indexPage.boxes.pupilsNumber}</span>
-    <Child height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage.boxes
-      .pupilsName}
+    <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
+    <Child height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage?.boxes
+      ?.pupilsName}
   </div>
   <div style="background: var(--lightBlue);">
-    <span>{$microcopy.indexPage.boxes.scholarshipNumber}</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage
-      .boxes.scholarshipName}
+    <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage
+      ?.boxes?.scholarshipName}
   </div>
 </section>
 
 <h2>
   <!-- choose on map -->
-  {@html $microcopy.indexPage.chooseLocation}
+  {@html $microcopy?.indexPage?.chooseLocation}
 </h2>
 
 <ChapterMap {chapters} />
 
 <h2>
   <!-- register now -->
-  {@html $microcopy.indexPage.register}
+  {@html $microcopy?.indexPage?.register}
 </h2>
 
 <article>

@@ -48,12 +48,12 @@
 
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
-    <Update {style} />{$microcopy.basepage.last}
+    <Update {style} />{$microcopy?.basepage?.last}
     {date}
   </time>
   <address>
-    <a href="mailto:{$microcopy.basepage.email} {title}">
-      {$microcopy.basepage.feedback}
+    <a href="mailto:{$microcopy?.basepage?.email} {title}">
+      {$microcopy?.basepage?.feedback}
     </a>
   </address>
 {/if}

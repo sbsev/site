@@ -14,7 +14,7 @@
 
 <h1>
   <Place height="2.2ex" {style} />
-  {$microcopy.chapterList.locations}
+  {$microcopy?.chapterList?.locations}
 </h1>
 <ol>
   {#each openChapters as { title, slug }}
@@ -24,7 +24,7 @@
 {#if startingChapters.length > 2}
   <h1>
     <Construction height="2.2ex" {style} />
-    {$microcopy.chapterList.funding}
+    {$microcopy?.chapterList?.funding}
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}

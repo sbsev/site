@@ -24,7 +24,7 @@
 
 <footer>
   <img src="/favicon.svg" alt="SbS Logo" height="60" />
-  <span>© {new Date().getFullYear()} {$microcopy.footer.name}</span>
+  <span>© {new Date().getFullYear()} {$microcopy?.footer?.name}</span>
   <div>
     {#each links as { title, url }}
       <a sveltekit:prefetch href={url}>
@@ -34,22 +34,18 @@
     {/each}
   </div>
   <span>
-    {@html $microcopy.footer.siteInfos}
-    <!-- Diese Seite ist
+    {@html $microcopy?.footer?.site}
     <a href="https://github.com/sbsev/svelte-site">
       <OpenSource
         height="2.5ex"
         style="vertical-align: bottom; padding-right: 3pt;"
       />open source
     </a>
-    und verwendet
-    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
-      keine
-      <Cookie height="2.2ex" style="vertical-align: middle;" />
-      Cookies.
-    </a> -->
+    {@html $microcopy?.footer?.uses}
+    <Cookie height="2.2ex" style="vertical-align: middle;" />
+    Cookies.
   </span>
-  {#if $microcopy.country == 'de'}
+  {#if $microcopy?.country == 'de'}
     <Social {social} style="margin-top: 1ex;" />
   {/if}
 </footer>
