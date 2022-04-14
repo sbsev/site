@@ -5,6 +5,7 @@
   import Email from '@svicons/material-sharp/email.svelte'
   import BasePage from '../../components/BasePage.svelte'
   import type { Page } from '../../types'
+  import { microcopy } from '../../stores'
 
   export let page: Page
   export let slug: string
@@ -15,40 +16,55 @@
 <BasePage {page}>
   <!-- needed to hide info buttons on /standorte/gruenden page -->
   {#if page?.yaml?.showSignupButtons !== false}
-    <h2 style="text-align: center; margin-top: 2em;">Anmeldungen</h2>
+    <h2 style="text-align: center; margin-top: 2em;">{$microcopy.location.register}</h2>
     <section>
       <span>
-        Willst du bei uns mitmachen?
+        {$microcopy.location.joinStudent}
         <a
           sveltekit:prefetch
           href="/signup-student?chapter={page.title}"
           class="btn blue"
         >
-          <GraduationCap {style} />Als Student:in anmelden
+          <GraduationCap {style} />{$microcopy.location.registerStudent}
         </a>
-        <a sveltekit:prefetch href="/mitmachen/nachhilfelehrer" class="btn blue stroke">
-          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Studierende
+        <a
+          sveltekit:prefetch
+          href={$microcopy.location.linkStudentInfo}
+          class="btn blue stroke"
+        >
+          <InfoCircle style={style + `margin-right: 6pt;`} />{$microcopy.location
+            .infoStudentButton}
         </a>
       </span>
       <span>
-        Suchst du Nachhilfe?
+        {$microcopy.location.joinPupil}
         <a sveltekit:prefetch href="/signup-pupil?chapter={page.title}" class="btn green">
-          <Child {style} />Als Schüler:in anmelden
+          <Child {style} />{$microcopy.location.registerPupil}
         </a>
-        <a sveltekit:prefetch href="/mitmachen/schueler" class="btn green stroke">
-          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Schüler:innen</a
+        <a
+          sveltekit:prefetch
+          href={$microcopy.location.linkPupilInfo}
+          class="btn green stroke"
+        >
+          <InfoCircle style={style + `margin-right: 6pt;`} />{$microcopy.location
+            .infoPupilButton}</a
         >
       </span>
       <span>
-        Interesse an Standortleitung?
+        {$microcopy.location.leadLocation}
         <a
-          href="mailto:info.{slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}"
+          href="mailto:info.{slug}{$microcopy.location.mailTo} {page.title}"
           class="btn orange"
         >
-          <Email {style} />Schreib uns
+          <Email {style} />{$microcopy.location.writeMailButton}
         </a>
-        <a sveltekit:prefetch href="/mitmachen/standortleiter" class="btn orange stroke">
-          <InfoCircle style={style + `margin-right: 6pt;`} />Infos für Standortleitende</a
+        <a
+          sveltekit:prefetch
+          href={$microcopy.location.linkLeadingInfo}
+          class="btn orange stroke"
+        >
+          <InfoCircle style={style + `margin-right: 6pt;`} />{$microcopy.location
+            .infoLeadingButton}</a
         >
       </span>
     </section>

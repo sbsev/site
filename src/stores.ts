@@ -1,5 +1,6 @@
-import { writable } from 'svelte/store'
-import type { SignupStore } from './types'
+import { writable, readable } from 'svelte/store'
+import type { SignupStore, Yaml } from './types'
+import { fetchYaml } from './fetch'
 
 const hasSessionStore = typeof sessionStorage !== `undefined`
 const hasLocalStore = typeof localStorage !== `undefined`
@@ -35,3 +36,7 @@ export const signupStore = sessionStore<SignupStore>(
   `SignupStore`,
   {} as SignupStore
 )
+
+export const microcopy = readable({}, (set) => {
+  fetchYaml(`smallTexts`).then((data: Yaml) => set(data))
+})

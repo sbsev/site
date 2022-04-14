@@ -2,6 +2,7 @@
   import Construction from '@svicons/material-sharp/construction.svelte'
   import Place from '@svicons/material-sharp/place.svelte'
   import type { Chapter } from '../types'
+  import { microcopy } from '../stores'
 
   export let chapters: Chapter[]
 
@@ -13,7 +14,7 @@
 
 <h1>
   <Place height="2.2ex" {style} />
-  Unsere Standorte
+  {$microcopy.chapterList.locations}
 </h1>
 <ol>
   {#each openChapters as { title, slug }}
@@ -23,7 +24,7 @@
 {#if startingChapters.length > 2}
   <h1>
     <Construction height="2.2ex" {style} />
-    Standorte in Gründung
+    {$microcopy.chapterList.funding}
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}

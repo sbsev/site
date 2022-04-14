@@ -6,6 +6,7 @@
   import ChapterMap from '../components/ChapterMap.svelte'
   import type { Chapter, Page } from '../types'
   import { fetchChapters, fetchPage } from '../fetch'
+  import { microcopy } from '../stores'
 
   export const load: Load = async () => {
     const page = await fetchPage(`/`)
@@ -35,51 +36,60 @@
   $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
 </script>
 
-<h1>
-  <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
-</h1>
+{#if $microcopy.country == 'de'}
+  <h1>
+    <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
+  </h1>
+{:else}
+  <h1>
+    {$microcopy.indexPage.name}
+  </h1>
+{/if}
 
 <svelte:head>
-  <title>Studenten bilden Schüler e.V. - Startseite</title>
+  <title>{$microcopy.indexPage.name}</title>
 </svelte:head>
 
 <svelte:window bind:innerWidth={windowWidth} />
 
 <h2>
-  Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte
-  Kinder
+  {$microcopy.indexPage.theme}
+  <!-- {JSON.stringify($microcopy)} -->
 </h2>
 
 <section>
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" style="vertical-align: middle;" />Standorte
+    <Place height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage.boxes
+      .locationsName}
   </div>
   <div style="background: var(--green);">
-    <span>2872</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
+    <span>{$microcopy.indexPage.boxes.studentsNumber}</span>
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage
+      .boxes.studentsName}
   </div>
   <div style="background: var(--orange);">
-    <span>3186</span>
-    <Child height="2.5ex" style="vertical-align: middle;" />Schüler:innen
+    <span>{$microcopy.indexPage.boxes.pupilsNumber}</span>
+    <Child height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage.boxes
+      .pupilsName}
   </div>
   <div style="background: var(--lightBlue);">
-    <span>3</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Stipendien
+    <span>{$microcopy.indexPage.boxes.scholarshipNumber}</span>
+    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy.indexPage
+      .boxes.scholarshipName}
   </div>
 </section>
 
 <h2>
-  Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der
-  Karte!
+  <!-- choose on map -->
+  {@html $microcopy.indexPage.chooseLocation}
 </h2>
 
 <ChapterMap {chapters} />
 
 <h2>
-  Oder melde dich direkt <a sveltekit:prefetch href="/signup-student">
-    <strong>bei uns an.</strong>
-  </a>
+  <!-- register now -->
+  {@html $microcopy.indexPage.register}
 </h2>
 
 <article>
