@@ -35,7 +35,7 @@
       <span style="background: var(--darkGreen)" />
       {$microcopy?.map?.text?.funding}
     </div>
-    <small>{@html $microcopy?.map?.text?.zoom}</small>
+    <!-- <small>{@html $microcopy?.map?.text?.zoom}</small> -->
   </legend>
 </div>
 

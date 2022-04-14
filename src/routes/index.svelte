@@ -53,7 +53,7 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <h2>
-  {JSON.stringify($microcopy?.indexPage?.theme)}
+  {$microcopy?.indexPage?.theme}
   <!-- {JSON.stringify($microcopy)} -->
 </h2>
 
