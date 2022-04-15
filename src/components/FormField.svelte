@@ -58,7 +58,7 @@
     --sms-options-bg="var(--accentBg)"
     --sms-bg="var(--accentBg)"
     --sms-height="3ex"
-    --sms-border="0"
+    --sms-border="1px solid var(--lightBg)"
     --sms-selected-bg="var(--green)"
     --sms-selected-text-color="white"
     --sms-min-height="32px"

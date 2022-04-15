@@ -1,5 +1,6 @@
 import rollupYaml from '@rollup/plugin-yaml'
 import adapter from '@sveltejs/adapter-static'
+import path from 'path'
 import preprocess from 'svelte-preprocess'
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -21,6 +22,12 @@ export default {
       build: {
         rollupOptions: {
           output: { manualChunks: undefined },
+        },
+      },
+
+      resolve: {
+        alias: {
+          $src: path.resolve(`./src`),
         },
       },
     },
