@@ -107,6 +107,8 @@ tbody tr:nth-child(odd) {
   transition: 0.3s;
   margin: 1em auto;
   cursor: pointer;
+  width: fit-content;
+  box-sizing: border-box;
 }
 .btn.small {
   display: inline-block;

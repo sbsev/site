@@ -15,6 +15,10 @@
     "sourceMap": true,
 
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    "paths": {
+      "$src/*": ["./src/*"]
+    }
   }
 }

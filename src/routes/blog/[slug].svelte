@@ -1,12 +1,24 @@
-<script lang="ts">
+<script lang="ts" context="module">
+  import Img from '$src/components/Img.svelte'
+  import ToolTip from '$src/components/ToolTip.svelte'
+  import { fetchPost } from '$src/fetch'
+  import type { Post } from '$src/types'
+  import type { Load } from '@sveltejs/kit'
   import PersonCircle from '@svicons/bootstrap/person-circle.svelte'
   import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
   import HistoryEdu from '@svicons/material-sharp/history-edu.svelte'
   import Calendar from '@svicons/octicons/calendar.svelte'
-  import Img from '../../components/Img.svelte'
-  import ToolTip from '../../components/ToolTip.svelte'
-  import type { Post } from '../../types'
 
+  export const load: Load = async ({ params }) => {
+    const post = await fetchPost(params.slug)
+
+    if (!post) return { status: 404 }
+
+    return { props: { post } }
+  }
+</script>
+
+<script lang="ts">
   export let post: Post
 
   $: ({ title, body, cover } = post)
