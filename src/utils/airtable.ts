@@ -8,24 +8,21 @@ async function airtable_post_records(
   table: string,
   data: { [key: string]: unknown }
 ) {
-  const response = await fetch(
-    `https://api.github.com/repos/chris234567/actions-server/dispatches`,
-    {
-      method: `POST`,
-      headers: {
-        'Content-Type': `application/json`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Authorization': `Bearer ${import.meta.env.VITE_GITHUB_ACCESS_TOKEN}`,
+  return await fetch(`https://api.github.com/repos/sbsev/actions/dispatches`, {
+    method: `POST`,
+    headers: {
+      'Content-Type': `application/json`,
+      Accept: `application/vnd.github.v3+json`,
+      Authorization: `Bearer ${import.meta.env.VITE_GITHUB_ACCESS_TOKEN}`,
+    },
+    body: JSON.stringify({
+      event_type: `create-airtable-entry`,
+      client_payload: {
+        url: `https://api.airtable.com/v0/${baseId}/${table}`,
+        records: { records: [{ fields: data }], typecast: true },
       },
-      body: JSON.stringify({
-        'event_type': 'create-airtable-entry',
-        'client_payload': { 
-          'url': `https://api.airtable.com/v0/${baseId}/${table}`,
-          'records': { records: [{ fields: data }], typecast: true } }
-      }),
-    }
-  )
-  return await response.json()
+    }),
+  })
 }
 
 const to_str = (str: unknown) => (str ? String(str) : undefined)
