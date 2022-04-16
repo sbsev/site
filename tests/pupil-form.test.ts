@@ -35,7 +35,10 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
 
   await page.fill(`#phoneContact`, `012 345 678`)
 
-  await page.fill(`#emailContact`, `baz@bar.com`)
+  await page.fill(
+    `#emailContact`,
+    `florian.kleinicke@studenten-bilden-schueler.de`
+  )
 
   await page.fill(`#orgContact`, `Privat`)
 
