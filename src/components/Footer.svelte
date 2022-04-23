@@ -1,10 +1,10 @@
 <script lang="ts">
   import Cookie from '@svicons/boxicons-solid/cookie.svelte'
   import DocumentText from '@svicons/ionicons-solid/document-text.svelte'
-  import Euro from '@svicons/material-sharp/euro.svelte'
-  import PrivacyTip from '@svicons/material-sharp/privacy-tip.svelte'
   import Law from '@svicons/octicons/law.svelte'
   import OpenSource from '@svicons/remix-fill/open-source.svelte'
+  import Euro from '~icons/ic/round-euro'
+  import PrivacyTip from '~icons/ic/round-privacy-tip'
   import type { Link } from '../types'
   import Social from './Social.svelte'
 

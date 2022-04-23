@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Construction from '@svicons/material-sharp/construction.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
+  import Place from '~icons/ic/place'
+  import Construction from '~icons/ic/round-construction'
   import type { Chapter } from '../types'
 
   export let chapters: Chapter[]

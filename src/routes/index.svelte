@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import Child from '@svicons/fa-solid/child.svelte'
-  import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
+  import Child from '~icons/fa-solid/child'
+  import UserGraduate from '~icons/fa-solid/user-graduate'
+  import Place from '~icons/ic/place'
   import ChapterMap from '../components/ChapterMap.svelte'
-  import type { Chapter, Page } from '../types'
   import { fetchChapters, fetchPage } from '../fetch'
+  import type { Chapter, Page } from '../types'
 
   export const load: Load = async () => {
     const page = await fetchPage(`/`)

@@ -1,18 +1,18 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import ChalkboardTeacher from '@svicons/fa-solid/chalkboard-teacher.svelte'
-  import HandsHelping from '@svicons/fa-solid/hands-helping.svelte'
-  import Tags from '@svicons/fa-solid/tags.svelte'
-  import ExitToApp from '@svicons/material-sharp/exit-to-app.svelte'
-  import FilterFrames from '@svicons/material-sharp/filter-frames.svelte'
-  import MiscellaneousServices from '@svicons/material-sharp/miscellaneous-services.svelte'
-  import SelectAll from '@svicons/material-sharp/select-all.svelte'
-  import SupportAgent from '@svicons/material-sharp/support-agent.svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
+  import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
+  import HandsHelping from '~icons/fa-solid/hands-holding'
+  import Tags from '~icons/fa-solid/tags'
+  import ExitToApp from '~icons/ic/exit-to-app'
+  import FilterFrames from '~icons/ic/filter-frames'
+  import MiscellaneousServices from '~icons/ic/miscellaneous-services'
+  import SelectAll from '~icons/ic/select-all'
+  import SupportAgent from '~icons/ic/support-agent'
   import Collapsible from '../components/Collapsible.svelte'
-  import type { FAQ } from '../types'
   import { fetchYamlList } from '../fetch'
+  import type { FAQ } from '../types'
 
   export const load: Load = async () => {
     const faqs = await fetchYamlList(`FAQ`, `faq#`)

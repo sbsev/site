@@ -1,9 +1,9 @@
 <script lang="ts">
   import Link from '@svicons/boxicons-regular/link.svelte'
-  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
-  import Tags from '@svicons/fa-solid/tags.svelte'
-  import Email from '@svicons/material-sharp/email.svelte'
   import Calendar from '@svicons/octicons/calendar.svelte'
+  import GraduationCap from '~icons/fa-solid/graduation-cap'
+  import Tags from '~icons/fa-solid/tags'
+  import Email from '~icons/ic/email'
   import type { Post } from '../types'
   import Img from './Img.svelte'
   import ToolTip from './ToolTip.svelte'

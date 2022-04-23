@@ -6,7 +6,7 @@
   import Twitter from '@svicons/fa-brands/twitter.svelte'
   import Xing from '@svicons/fa-brands/xing-square.svelte'
   import Youtube from '@svicons/fa-brands/youtube.svelte'
-  import Email from '@svicons/material-sharp/email.svelte'
+  import Email from '~icons/ic/email'
 
   export let social: Record<keyof typeof icons, string>
   export let style = ``

@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
   import Newspaper from '@svicons/ionicons-solid/newspaper.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
   import Calendar from '@svicons/octicons/calendar.svelte'
+  import Place from '~icons/ic/place'
   import BasePage from '../components/BasePage.svelte'
   import Img from '../components/Img.svelte'
-  import type { Page, PressItem } from '../types'
   import { fetchPage, fetchYamlList } from '../fetch'
+  import type { Page, PressItem } from '../types'
 
   export const load: Load = async () => {
     const page = await fetchPage(`presse`)

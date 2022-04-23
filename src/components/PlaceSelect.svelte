@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
-  import Delete from '@svicons/material-sharp/delete.svelte'
-  import mapbox from 'mapbox-gl'
   import type { Map, Marker } from 'mapbox-gl'
+  import mapbox from 'mapbox-gl'
+  import Delete from '~icons/ic/delete'
   import type { Place } from '../types'
   import Geocoder from './Geocoder.svelte'
   import MapComp from './Map.svelte'

@@ -2,6 +2,7 @@ import rollupYaml from '@rollup/plugin-yaml'
 import adapter from '@sveltejs/adapter-static'
 import path from 'path'
 import preprocess from 'svelte-preprocess'
+import Icons from 'unplugin-icons/vite'
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -13,7 +14,7 @@ export default {
     prerender: { default: true },
 
     vite: {
-      plugins: [rollupYaml()],
+      plugins: [rollupYaml(), Icons({ compiler: `svelte`, autoInstall: true })],
 
       ssr: {
         external: [`algoliasearch`],
