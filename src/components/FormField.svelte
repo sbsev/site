@@ -21,10 +21,10 @@
   let label: HTMLLabelElement
   let slider: HTMLDivElement
 
-  let value: string | number | boolean | (string | number)[] | undefined =
-    $signupStore[id].value
+  let value: string | number | boolean | (string | number)[] | undefined
 
   $: $signupStore[id] = { required, node: label }
+  $: $signupStore[id].value = value
   $: $signupStore[id].node = label
   $: if (value) $signupStore[id].error = ``
 </script>
