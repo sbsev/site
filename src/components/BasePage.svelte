@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Update from '@svicons/material-sharp/update.svelte'
   import Toc from 'svelte-toc/Toc.svelte'
+  import Update from '~icons/ic/update'
   import Img from '../components/Img.svelte'
   import type { Page } from '../types'
 

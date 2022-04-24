@@ -1,11 +1,11 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import Child from '@svicons/fa-solid/child.svelte'
-  import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
+  import Child from '~icons/fa-solid/child'
+  import UserGraduate from '~icons/fa-solid/user-graduate'
+  import Place from '~icons/ic/place'
   import ChapterMap from '../components/ChapterMap.svelte'
-  import type { Chapter, Page } from '../types'
   import { fetchChapters, fetchPage } from '../fetch'
+  import type { Chapter, Page } from '../types'
 
   export const load: Load = async () => {
     const page = await fetchPage(`/`)
@@ -30,9 +30,7 @@
   export let chapters: Chapter[]
   export let page: Page
 
-  let windowWidth: number
-
-  $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
+  const style = `vertical-align: text-top; margin-right: 5pt;`
 </script>
 
 <h1>
@@ -43,29 +41,27 @@
   <title>Studenten bilden Schüler e.V. - Startseite</title>
 </svelte:head>
 
-<svelte:window bind:innerWidth={windowWidth} />
-
 <h2>
   Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte
   Kinder
 </h2>
 
-<section>
+<section style="white-space: nowrap;">
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" style="vertical-align: middle;" />Standorte
+    <strong><Place {style} />Standorte</strong>
   </div>
   <div style="background: var(--green);">
     <span>2872</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
+    <strong><UserGraduate {style} />Studierende</strong>
   </div>
   <div style="background: var(--orange);">
     <span>3186</span>
-    <Child height="2.5ex" style="vertical-align: middle;" />Schüler:innen
+    <strong><Child {style} />Schüler:innen</strong>
   </div>
   <div style="background: var(--lightBlue);">
     <span>3</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Stipendien
+    <strong><UserGraduate {style} />Stipendien</strong>
   </div>
 </section>
 
