@@ -4,10 +4,10 @@
   import { fetchPost } from '$src/fetch'
   import type { Post } from '$src/types'
   import type { Load } from '@sveltejs/kit'
-  import Calendar from '@svicons/octicons/calendar.svelte'
   import PersonCircle from '~icons/bi/person-circle'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
   import HistoryEdu from '~icons/ic/round-history-edu'
+  import Calendar from '~icons/octicon/calendar'
 
   export const load: Load = async ({ params }) => {
     const post = await fetchPost(params.slug)

@@ -1,18 +1,17 @@
 <script lang="ts" context="module">
   import { dev } from '$app/env'
   import type { Load } from '@sveltejs/kit'
-  import Plant from '@svicons/remix-fill/plant.svelte'
+  import Plant from '~icons/ri/plant-fill'
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import FormField from '../components/FormField.svelte'
   import Modal from '../components/Modal.svelte'
+  import { fetchChapters, parseFormData } from '../fetch'
+  import messages from '../signup-form/de/messages.yml'
+  import options from '../signup-form/de/options.yml'
+  import raw_form from '../signup-form/de/student.yml'
   import { signupStore } from '../stores'
   import type { Chapter, Form } from '../types'
   import { submitHandler } from '../utils/airtable'
-  import { fetchChapters, parseFormData } from '../fetch'
-
-  import options from '../signup-form/de/options.yml'
-  import raw_form from '../signup-form/de/student.yml'
-  import messages from '../signup-form/de/messages.yml'
 
   export const load: Load = async () => {
     const chapters = (await fetchChapters()).filter(

@@ -30,9 +30,7 @@
   export let chapters: Chapter[]
   export let page: Page
 
-  let windowWidth: number
-
-  $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
+  const style = `vertical-align: text-top; margin-right: 5pt;`
 </script>
 
 <h1>
@@ -43,29 +41,27 @@
   <title>Studenten bilden Schüler e.V. - Startseite</title>
 </svelte:head>
 
-<svelte:window bind:innerWidth={windowWidth} />
-
 <h2>
   Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte
   Kinder
 </h2>
 
-<section>
+<section style="white-space: nowrap;">
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" style="vertical-align: middle;" />Standorte
+    <strong><Place {style} />Standorte</strong>
   </div>
   <div style="background: var(--green);">
     <span>2872</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Studierende
+    <strong><UserGraduate {style} />Studierende</strong>
   </div>
   <div style="background: var(--orange);">
     <span>3186</span>
-    <Child height="2.5ex" style="vertical-align: middle;" />Schüler:innen
+    <strong><Child {style} />Schüler:innen</strong>
   </div>
   <div style="background: var(--lightBlue);">
     <span>3</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />Stipendien
+    <strong><UserGraduate {style} />Stipendien</strong>
   </div>
 </section>
 

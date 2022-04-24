@@ -8,11 +8,11 @@
   const openChapters = chapters.filter((ch) => ch.acceptsSignups)
   const startingChapters = chapters.filter((ch) => !ch.acceptsSignups)
 
-  const style = `vertical-align: -4pt;`
+  const style = `vertical-align: middle;`
 </script>
 
 <h1>
-  <Place height="2.2ex" {style} />
+  <Place {style} />
   Unsere Standorte
 </h1>
 <ol>
@@ -22,7 +22,7 @@
 </ol>
 {#if startingChapters.length > 2}
   <h1>
-    <Construction height="2.2ex" {style} />
+    <Construction {style} />
     Standorte in Gründung
   </h1>
   <ol>

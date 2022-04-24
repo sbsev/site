@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import Calendar from '@svicons/octicons/calendar.svelte'
   import PriceRibbon from '~icons/fa-solid/award'
+  import Calendar from '~icons/octicon/calendar'
   import BasePage from '../components/BasePage.svelte'
   import Img from '../components/Img.svelte'
   import { fetchPage, fetchYamlList } from '../fetch'

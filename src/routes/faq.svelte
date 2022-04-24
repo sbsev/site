@@ -3,13 +3,13 @@
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
   import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
-  import HandsHelping from '~icons/fa-solid/hands-holding'
+  import HandsHelping from '~icons/fa-solid/hands-helping'
   import Tags from '~icons/fa-solid/tags'
   import ExitToApp from '~icons/ic/exit-to-app'
   import FilterFrames from '~icons/ic/filter-frames'
-  import MiscellaneousServices from '~icons/ic/miscellaneous-services'
+  import MiscellaneousServices from '~icons/ic/round-miscellaneous-services'
+  import SupportAgent from '~icons/ic/round-support-agent'
   import SelectAll from '~icons/ic/select-all'
-  import SupportAgent from '~icons/ic/support-agent'
   import Collapsible from '../components/Collapsible.svelte'
   import { fetchYamlList } from '../fetch'
   import type { FAQ } from '../types'
@@ -71,7 +71,7 @@
       <Collapsible {id} active={id === hash}>
         <span slot="title">
           {title}
-          <Tags width="1.4ex" style="margin: 0 3pt 0 1ex" />
+          <Tags width="16pt" style="margin: 0 3pt 0 10pt; vertical-align: middle;" />
           <small>{tags.join(`, `)}</small>
         </span>
         {@html body}

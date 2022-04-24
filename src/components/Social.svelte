@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Facebook from '@svicons/fa-brands/facebook.svelte'
-  import Github from '@svicons/fa-brands/github.svelte'
-  import Instagram from '@svicons/fa-brands/instagram.svelte'
-  import Linkedin from '@svicons/fa-brands/linkedin.svelte'
-  import Twitter from '@svicons/fa-brands/twitter.svelte'
-  import Xing from '@svicons/fa-brands/xing-square.svelte'
-  import Youtube from '@svicons/fa-brands/youtube.svelte'
+  import Facebook from '~icons/fa-brands/facebook'
+  import Github from '~icons/fa-brands/github'
+  import Instagram from '~icons/fa-brands/instagram'
+  import Linkedin from '~icons/fa-brands/linkedin'
+  import Twitter from '~icons/fa-brands/twitter'
+  import Xing from '~icons/fa-brands/xing-square'
+  import Youtube from '~icons/fa-brands/youtube'
   import Email from '~icons/ic/email'
 
   export let social: Record<keyof typeof icons, string>
@@ -26,7 +26,7 @@
 <div {style} class:vertical class:fixed>
   {#each include as key}
     <a href={social[key]} aria-label={key}>
-      <svelte:component this={icons[key]} height="2.5ex" />
+      <svelte:component this={icons[key]} />
     </a>
   {/each}
 </div>

@@ -1,10 +1,9 @@
 <script lang="ts">
-  import GitBranch from '@svicons/boxicons-regular/git-branch.svelte'
-  import CircleWithCross from '@svicons/entypo/circle-with-cross.svelte'
-  import StatsChart from '@svicons/ionicons-solid/stats-chart.svelte'
   import type { SvelteComponent } from 'svelte'
   import { fade, slide } from 'svelte/transition'
   import ChevronExpand from '~icons/bi/chevron-expand'
+  import GitBranch from '~icons/bx/git-branch'
+  import CircleWithCross from '~icons/entypo/circle-with-cross'
   import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
   import Donate from '~icons/fa-solid/donate'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
@@ -17,6 +16,7 @@
   import RateReview from '~icons/ic/rate-review'
   import Euro from '~icons/ic/round-euro'
   import SelectAll from '~icons/ic/select-all'
+  import StatsChart from '~icons/ion/stats-chart'
   import type { BlogTag } from '../types'
 
   export let tagOccurrences: [BlogTag, number][]
