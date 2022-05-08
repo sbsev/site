@@ -55,6 +55,7 @@
     {maxSelect}
     noOptionsMsg="Keine passenden Optionen"
     bind:selected={value}
+    {required}
     --sms-options-bg="var(--accentBg)"
     --sms-bg="var(--accentBg)"
     --sms-height="3ex"
@@ -111,6 +112,7 @@
     font-weight: bold;
     font-size: 18pt;
     margin: 1em 0 1ex;
+    scroll-margin-top: 10em;
   }
   label.required::after {
     color: red;

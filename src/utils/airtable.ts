@@ -6,13 +6,15 @@ import type { Chapter, SignupStore } from '../types'
 const api_key = import.meta.env.VITE_AIRTABLE_API_KEY
 if (!api_key) throw `missing Airtable API key, got ${api_key}`
 
-async function airtable_post_records(
+// Send a POST request to the Airtable API to create new rows in the base and table
+// specified by base_id and table_id.
+async function airtable_post_new_records(
   base_id: string,
-  table: string,
+  table_id: string,
   data: { [key: string]: unknown }
 ) {
   const response = await fetch(
-    `https://api.airtable.com/v0/${base_id}/${table}`,
+    `https://api.airtable.com/v0/${base_id}/${table_id}`,
     {
       method: `POST`,
       headers: {
@@ -27,7 +29,7 @@ async function airtable_post_records(
 
 const to_str = (str: unknown) => (str ? String(str) : undefined)
 
-export async function sendToAirtable(
+export async function prepare_signup_data_for_airtable(
   data: SignupStore,
   chapterBaseId: string,
   test = false
@@ -81,7 +83,7 @@ export async function sendToAirtable(
       'E-Mail Kontaktperson': to_str(data.emailContact.value),
       'Telefon Kontaktperson': to_str(data.phoneContact.value),
       'Organisation Kontaktperson': to_str(data.orgContact.value),
-      Werbemaßnahme: data.discovery.value?.[0],
+      Werbemaßnahme: data.discovery.value,
       Online: data.online.value,
     }
     fields = { ...fields, ...pupilFields }
@@ -103,16 +105,16 @@ export async function sendToAirtable(
 
   if (test) {
     console.log(`chapterFields:`, chapterFields) // eslint-disable-line no-console
-    return await airtable_post_records(testBaseId, table, chapterFields)
+    return await airtable_post_new_records(testBaseId, table, chapterFields)
   }
   // use Promise.all() to fail fast if one record creation fails
   return await Promise.all([
-    airtable_post_records(globalBaseId, table, globalFields),
-    airtable_post_records(chapterBaseId, table, chapterFields),
+    airtable_post_new_records(globalBaseId, table, globalFields),
+    airtable_post_new_records(chapterBaseId, table, chapterFields),
   ])
 }
 
-export async function submitHandler(
+export async function signup_form_submit_handler(
   fields_to_validate: (keyof SignupStore)[],
   chapters: Chapter[],
   err_msg: Record<string, string>
@@ -131,7 +133,7 @@ export async function submitHandler(
         field.node?.focus()
         field.node?.scrollIntoView()
       } catch (error) {
-        console.error(`error in validating field ${name}`, error)
+        console.error(`error in validating field ${name}:`, error)
       }
       return {} // abort submission
     }
@@ -155,7 +157,7 @@ export async function submitHandler(
   }
 
   try {
-    const responses = await sendToAirtable(signupData, baseId)
+    const responses = await prepare_signup_data_for_airtable(signupData, baseId)
 
     const err = responses.find((res) => `error` in res)
     if (err) throw err

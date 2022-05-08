@@ -11,7 +11,7 @@
   import raw_form from '../signup-form/de/student.yml'
   import { signupStore } from '../stores'
   import type { Chapter, Form } from '../types'
-  import { submitHandler } from '../utils/airtable'
+  import { signup_form_submit_handler } from '../utils/airtable'
 
   export const load: Load = async () => {
     const chapters = (await fetchChapters()).filter(
@@ -52,7 +52,7 @@
       $signupStore.type = { value: `student` }
       const fieldIds = form.fields.map((field) => field.id) // list of form fields to validate
 
-      const response = await submitHandler(fieldIds, chapters, form.errMsg)
+      const response = await signup_form_submit_handler(fieldIds, chapters, form.errMsg)
       if (response.success) success = true
       error = response.error
     } finally {
@@ -76,6 +76,7 @@
     </h1>
 
     {@html form.header.note}
+
     {#each form.fields as props}
       <FormField {...props} />
     {/each}

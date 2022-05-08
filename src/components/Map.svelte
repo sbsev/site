@@ -31,6 +31,8 @@
       maxZoom,
     })
 
+    map.on(`load`, map.resize) // ensure map takes up full available width
+
     for (const { lng, lat, title, url, classes } of markers) {
       const anchor = document.createElement(`a`)
       anchor.innerHTML = title.slice(0, 4)
