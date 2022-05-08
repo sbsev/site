@@ -140,7 +140,7 @@ export async function signup_form_submit_handler(
   }
 
   const chapter = signupData.chapter.value?.[0]
-  const type = signupData.type.value?.[0]
+  const type = signupData.type.value
   const chapterAndType = {
     chapter: chapter,
     type,
