@@ -4,12 +4,14 @@
   import UserGraduate from '~icons/fa-solid/user-graduate'
   import Place from '~icons/ic/place'
   import ChapterMap from '../components/ChapterMap.svelte'
-  import { fetchChapters, fetchPage } from '../fetch'
-  import type { Chapter, Page } from '../types'
+  import PostPreview from '../components/PostPreview.svelte'
+  import { fetchChapters, fetchPage, fetchPosts } from '../fetch'
+  import type { Chapter, Page, Post } from '../types'
 
   export const load: Load = async () => {
     const page = await fetchPage(`/`)
     const chapters = await fetchChapters()
+    const posts = await fetchPosts(`limit = 5`)
 
     // const { students, pupils } = await airtableFetch(
     //   `{
@@ -22,13 +24,14 @@
     //   }`,
     //   { cache: `force-cache` }
     // )
-    return { props: { page, chapters } }
+    return { props: { page, chapters, posts } }
   }
 </script>
 
 <script lang="ts">
   export let chapters: Chapter[]
   export let page: Page
+  export let posts: Post[]
 
   const style = `vertical-align: text-top; margin-right: 5pt;`
 </script>
@@ -77,6 +80,12 @@
     <strong>bei uns an.</strong>
   </a>
 </h2>
+
+<div style="display: flex;">
+  {#each posts as post}
+    <PostPreview {post} />
+  {/each}
+</div>
 
 <article>
   {@html page.body}

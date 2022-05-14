@@ -199,8 +199,8 @@ const postQuery = (slug: string) => `{
   }
 }`
 
-const postsQuery = `{
-  posts: postCollection(order: date_DESC) {
+const postsQuery = (query = ``) => `{
+  posts: postCollection(order: date_DESC, ${query}) {
     ${postFragment}
   }
 }`
@@ -225,8 +225,8 @@ export async function fetchPost(slug: string): Promise<Post> {
   return post
 }
 
-export async function fetchPosts(): Promise<Post[]> {
-  const data = await contentfulFetch(postsQuery)
+export async function fetchPosts(query = ``): Promise<Post[]> {
+  const data = await contentfulFetch(postsQuery(query))
   const posts = data?.posts?.items
   return await Promise.all(posts.map(processPost))
 }
