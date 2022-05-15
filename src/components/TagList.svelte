@@ -3,7 +3,6 @@
   import { fade, slide } from 'svelte/transition'
   import ChevronExpand from '~icons/bi/chevron-expand'
   import GitBranch from '~icons/bx/git-branch'
-  import CircleWithCross from '~icons/entypo/circle-with-cross'
   import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
   import Donate from '~icons/fa-solid/donate'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
@@ -14,6 +13,7 @@
   import Public from '~icons/ic/public'
   import QuestionAnswer from '~icons/ic/question-answer'
   import RateReview from '~icons/ic/rate-review'
+  import CloseCross from '~icons/ic/round-close'
   import Euro from '~icons/ic/round-euro'
   import SelectAll from '~icons/ic/select-all'
   import StatsChart from '~icons/ion/stats-chart'
@@ -50,7 +50,7 @@
   {#if viewWidth < 750}
     <button on:click={() => (open = !open)} aria-label="Blog Tags öffnen">
       {#if open}
-        <CircleWithCross {style} />
+        <CloseCross {style} />
       {:else}
         <ChevronExpand {style} />
       {/if}

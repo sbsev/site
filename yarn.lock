@@ -190,13 +190,6 @@
   dependencies:
     "@iconify/types" "^1.0.12"
 
-"@iconify-json/entypo@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@iconify-json/entypo/-/entypo-1.1.1.tgz#325dacfd90965dd466523b1f2b2f6a741d5af768"
-  integrity sha512-UKraoiXJxBuLe6z2SMPp8s7a50k/YjjRbUaYrecES0SKYJ+abTIMZMB5WY5NX5eClqMuKESq4wavzxHM0oQYQg==
-  dependencies:
-    "@iconify/types" "^1.0.12"
-
 "@iconify-json/fa-brands@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@iconify-json/fa-brands/-/fa-brands-1.1.1.tgz#a2c1a523df70386b9522edc92b8cb9f425fdd20b"
@@ -1043,6 +1036,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dotenv@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.1.tgz#8f8f9d94876c35dac989876a5d3a82a267fdce1d"
+  integrity sha512-1K6hR6wtk2FviQ4kEiSjFiH5rpzEVi8WW0x96aztHVMhEspNpc4DVOUTEHtEva5VThQ8IaBX1Pe4gSzpVVUsKQ==
 
 duplexer3@^0.1.4:
   version "0.1.4"
