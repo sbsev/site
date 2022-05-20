@@ -49,13 +49,13 @@
     (itm) => activeTag === `Alle` || itm.tags.includes(activeTag)
   )
   // count tag occurrences
-  const tags = studyPlatforms.reduce(
-    (acc, itm) => {
-      itm.tags.forEach((tag) => (acc[tag] = acc[tag] ? acc[tag] + 1 : 1))
-      return acc
-    },
-    { Alle: studyPlatforms.length }
-  )
+  const tags = { Alle: studyPlatforms.length } as Record<string, number>
+  for (const itm of studyPlatforms) {
+    for (const tag of itm.tags) {
+      tags[tag] = (tags[tag] ?? 0) + 1
+    }
+  }
+
   const imgStyle = `width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: -3pt;`
 
@@ -132,6 +132,9 @@
     border-radius: 4pt;
     transition: 0.2s;
     color: white;
+  }
+  button.active {
+    background: var(--darkerGreen);
   }
   button:hover {
     background: var(--green);
