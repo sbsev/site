@@ -50,9 +50,13 @@
 
     try {
       $signupStore.type = { value: `student` }
-      const fieldIds = form.fields.map((field) => field.id) // list of form fields to validate
+      const field_ids_to_validate = form.fields.map((field) => field.id) // list of form fields to validate
 
-      const response = await signup_form_submit_handler(fieldIds, chapters, form.errMsg)
+      const response = await signup_form_submit_handler(
+        field_ids_to_validate,
+        chapters,
+        form.errMsg
+      )
       if (response.success) success = true
       error = response.error
     } finally {

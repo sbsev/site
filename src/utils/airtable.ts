@@ -98,19 +98,17 @@ export async function prepare_signup_data_for_airtable(
     Spur: window.visitedPages.join(`,\n`),
   }
 
-  const chapterFields = { ...fields, Kontaktpersonen: data.nameContact?.value }
-
   const globalBaseId = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
   const testBaseId = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
-    console.log(`chapterFields:`, chapterFields) // eslint-disable-line no-console
-    return await airtable_post_new_records(testBaseId, table, chapterFields)
+    console.log(`fields:`, fields) // eslint-disable-line no-console
+    return await airtable_post_new_records(testBaseId, table, fields)
   }
   // use Promise.all() to fail fast if one record creation fails
   return await Promise.all([
     airtable_post_new_records(globalBaseId, table, globalFields),
-    airtable_post_new_records(chapterBaseId, table, chapterFields),
+    airtable_post_new_records(chapterBaseId, table, fields),
   ])
 }
 
