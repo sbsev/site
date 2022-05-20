@@ -36,7 +36,7 @@ fields:
 
   - id: email
     title: E-Mail
-    note: Gmx und Web.de blockieren regelmäßig unsere Emails. Am Besten gibst du eine Emailadresse von einem anderen Anbieter an.
+    note: Gmx und Web.de blockieren regelmäßig die Zustellung unserer Emails. Wenn möglich, gib uns bitte deine Mailadresse eines anderen Anbieters.
     required: true
     type: email
 
