@@ -1,0 +1,82 @@
+country: de
+
+indexPage:
+  name: Studenten bilden Schüler
+  theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
+  chooseLocation: 'Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!'
+
+  register:
+    'Oder melde dich direkt <a sveltekit:prefetch href="/signup-student">
+    <strong>bei uns an.</strong>
+    </a>'
+  boxes:
+    locationsName: Standorte
+    studentsName: Studierende
+    studentsNumber: 2872
+    pupilsName: Schüler:innen
+    pupilsNumber: 3186
+    scholarshipName: Stipendien
+    scholarshipNumber: 6
+
+footer:
+  name: 'Studenten bilden Schüler'
+  siteInfos: 'Diese Seite ist
+    <a href="https://github.com/sbsev/svelte-site">
+    <OpenSource
+    height="2.5ex"
+    style="vertical-align: bottom; padding-right: 3pt;"
+    />open source
+    </a>
+    und verwendet keine
+    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
+    use
+    <Cookie height="2.2ex" style="vertical-align: middle;" />
+    cookies.
+    </a>'
+  site: 'Diese Seite ist'
+  uses: 'und verwendet keine'
+
+map:
+  location:
+    lng: 10
+    lat: 51.3
+    zoom: 5.05
+    minZoom: 4
+    maxZoom: 10
+  text:
+    active: 'aktiver Standort'
+    funding: 'in Gründung'
+
+chapterList:
+  locations: 'Unsere Standorte'
+  funding: 'Standorte in Gründung'
+
+location:
+  register: 'Anmeldungen'
+  joinStudent: 'Willst du bei uns mitmachen?'
+  registerStudent: 'Als Student:in anmelden'
+  linkStudentInfo: '"/mitmachen/nachhilfelehrer"'
+  infoStudentButton: 'Infos für Studierende'
+  joinPupil: 'Suchst du Nachhilfe?'
+  registerPupil: 'Als Schüler:in anmelden'
+  linkPupilInfo: '"/mitmachen/schueler"'
+  infoPupilButton: 'Infos für Schüler:innen'
+  leadLocation: 'Interesse an Standortleitung?'
+  mailTo: 'mailto:info.{slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}'
+  writeMailButton: 'Schreib uns'
+  linkLeadingInfo: '"/mitmachen/standortleiter"'
+  infoLeadingButton: 'Infos für Standortleitende'
+  contact: 'Kontakt'
+  questions: 'Noch Fragen? Schreib uns eine Mail!'
+  url: 'studenten-bilden-schueler.de'
+  student: 'studenten'
+  forStudents: 'für Studierende'
+  pupil: 'schueler'
+  info: 'info'
+  forPartner: 'für Soziale Einrichtungen und Nachhilfeanfragen'
+  generalRequests: 'für Allgemeine Anfragen'
+
+basepage:
+  last: 'Zuletzt bearbeitet:'
+  feedback: 'Feedback zu dieser Seite?'
+  email: 'it@studenten-bilden-schueler.de?subject=Feedback zu Seite:'

@@ -1,0 +1,116 @@
+header:
+  title: Anmeldung Studierende
+  note: |
+    <p align="center">
+    Du möchtest Nachhilfe bekommen? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Anmeldung Schüler</a>
+    </p>
+
+    ## Formular für Studierende
+
+    Deine Angaben werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
+    Bitte fülle alle mit rotem Stern markierten Felder aus und klicke anschließend auf "Anmeldung abschicken".
+
+fields:
+  - id: chapter
+    title: Standort
+    note: An welchem Standort möchtest du Nachhilfe geben?
+    type: select
+    required: true
+    maxSelect: 1
+
+  - id: gender
+    title: Geschlecht
+    type: select
+    required: true
+    maxSelect: 1
+
+  - id: fullName
+    title: Vor- und Nachname
+    note: Bitte so angeben, wie er im Personalausweis steht. Wird für die Ausstellung des kostenlosen Führungszeugnisses benötigt.
+    required: true
+
+  - id: phone
+    title: Telefon
+    note: Bevorzugt eine Handynummer, damit wir dich zur Vermittlung gut erreichen können.
+    type: tel
+
+  - id: email
+    title: E-Mail
+    note: Gmx und Web.de blockieren regelmäßig unsere Emails. Am Besten gibst du eine Emailadresse von einem anderen Anbieter an.
+    required: true
+    type: email
+
+  - id: studySubject
+    title: Studienfach
+    note: Was studierst du?
+
+  - id: semester
+    title: Semester
+    note: In welchem Semester studierst du?
+    type: number
+    min: 1
+    max: 50
+
+  - id: birthPlace
+    title: Geburtsort
+    note: Dein Geburtsdatum und -ort brauchen wir so wie diese im Personalausweis stehen, um dir einen Antrag auf Befreiung von der Gebühr für das polizeiliche Führungszeugnis auszustellen. Da du dich bei uns ehrenamtlich engagierst, bekommst du das Zeugnis mit diesem Antrag kostenlos.
+
+  - id: birthDate
+    title: Geburtsdatum
+    note: z.B. 31.02.2001
+    type: date
+
+  - id: subjects
+    title: Fächer
+    note: In welchen Fächern möchtest du Nachhilfe geben? Nicht aufgeführte Fächer gerne unter Bemerkungen angeben.
+    type: select
+    required: true
+
+  - id: schoolTypes
+    title: Schulform
+    type: select
+    note: Kinder von welchen Schulen möchtest du bevorzugt unterrichten?
+
+  - id: levels
+    title: Klassenstufen
+    note: Beispiel 5 - 8
+    type: doubleRange
+    min: 1
+    max: 13
+
+  - id: places
+    title: Wo in der Stadt?
+    note: |
+      Bitte gib einige Adressen an, in deren Nähe du bereit wärst, Nachhilfe zu geben.
+
+      Beispiele: Uniplatz 1, Marktplatz 15, Stadtbibliothek.
+    required: true
+    placeholder: Ort der Nachhilfe
+    type: placeSelect
+
+  - id: remarks
+    title: Bemerkungen
+    note: Gibt es noch etwas, was du uns mitteilen möchtest?
+
+  - id: discovery
+    title: Werbemaßnahme
+    note: Hilf uns, unsere Werbung effektiver zu gestalten, indem du uns verrätst, wie du uns gefunden hast. Wenn die passende Werbemaßnahme nicht aufgeführt ist, bitte das Zutreffendste auswählen.
+    type: select
+    required: true
+    maxSelect: 1
+
+  - id: agreement
+    title: Vereinbarungen
+    note: |
+      Hiermit erkläre ich mich gemäß [der Vereinbarungen auf unserer Webseite](/vereinbarungen) mit folgenden Erklärungen einverstanden:
+      - [Verpflichtung zur Verschwiegenheit und Nichtbeeinflussung](/vereinbarungen#verpflichtung-zu-verschwiegenheit-und-nichtbeeinflussung)
+      - [Erklärung über Vorstrafen](/vereinbarungen#erklärung-zu-vorstrafen)
+    required: true
+    type: toggle
+
+  - id: dataProtection
+    title: Verarbeitung personenbezogener Daten
+    note: |
+      Durch Anklicken des Reglers bestätige ich, die Informationen zur Verarbeitung personenbezogener Daten unter [Vereinbarungen](/vereinbarungen) zur Kenntnis genommen zu haben und in die Datenverarbeitung zum Zwecke des Matchings mit Nachhilfeschülern einzuwilligen. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
+    required: true
+    type: toggle

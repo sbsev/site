@@ -1,0 +1,147 @@
+header:
+  title: Anmeldung Schüler:innen
+  note: |
+    <p align="center">
+    Du möchtest Nachhilfe geben? <a class="btn small green" href="/signup-student" sveltekit:prefetch>Anmeldung Studierende</a>
+    </p>
+
+    ## Formular für Eltern und soziale Einrichtungen
+
+    Wir freuen uns über dein Interesse! So geht's zur Nachhilfe:
+
+      1. Bitte fülle alle mit rotem Stern markierten Felder aus und klicke anschließend auf "Anmeldung abschicken".
+      2. Unsere Standortleitung bearbeitet deine Anfrage und matched dich mit einem unserer Nachhilfelehrkräfte.
+      3. Wir organisieren das erste Treffen zwischen euch beiden.
+      4. Die wöchentliche Nachhilfe von 1-2 Stunden arrangiert ihr anschließend unter euch.
+
+    Bitte hab Verständnis, dass die Vermittlung Wochen dauern kann. Wir bemühen uns an allen Standorten ständig neue Nachhilfelehrkräfte zu rekrutieren, um dich so schnell wie möglich zu vermitteln.
+
+    Die Daten, die du hier eingibst, werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
+
+fields:
+  - id: chapter
+    title: Standort
+    note: Wähle einen unserer Nachhilfestandorte.
+    required: true
+    type: select
+    maxSelect: 1
+
+  - id: gender
+    title: Geschlecht Schüler:in
+    required: true
+    type: select
+    maxSelect: 1
+
+  - id: firstName
+    title: Vorname Schüler:in
+    note: |
+      Aus Datenschutzgründen bitte nicht den Nachnamen nennen. Bei mehreren Anmeldungen jeweils ein Formular ausfüllen. Wenn mehrere Schüler:innen mit gleichen Vornamen von einer Kontaktperson angemeldet werden, bitte den ersten Buchstaben vom Nachnamen hinzufügen.
+    required: true
+
+  - id: subjects
+    title: Fächer
+    note: |
+      In welchem Fach möchtest du Nachhilfe erhalten? Für nicht aufgeführte Fächer oder sonstige Hinweise, bitte das Fach "Anderes" wählen und im Kommentarfeld unten beschreiben.
+    type: select
+    required: true
+
+  - id: schoolTypes
+    title: Schulform
+    note: |
+      Auf welche Schule gehst du?
+
+      Für nicht aufgeführte Schultypen oder sonstige Hinweise, bitte "Anderes" wählen und im Kommentarfeld unten beschreiben.
+    type: select
+    required: true
+    maxSelect: 1
+
+  - id: level
+    title: Klassenstufe
+    required: true
+    type: singleRange
+    min: 1
+    max: 13
+
+  - id: places
+    title: Wo in der Stadt?
+    note: |
+      Bitte gib eine oder mehrere Adressen an, in deren Nähe die Nachhilfe stattfinden kann.
+
+      Beispiele: Meinestraße 4, Uniplatz 1, Stadtbibliothek.
+    required: true
+    placeholder: Ort der Nachhilfe
+    type: placeSelect
+
+  - id: birthYear
+    title: Geburtsjahr Schüler:in
+    required: true
+    note: |
+      z.B. 2006, falls nicht bekannt, einfach ein ungefähres Geburtsjahr eingeben.
+    type: number
+    min: 1960
+    max: 2025
+
+  - id: online
+    title: Ist Online-Nachhilfe in Ordnung?
+    note: |
+      Aufgrund der Pandemie muss die Nachhilfe vielerorts zur Zeit online stattfinden ohne persönliche Treffen zwischen Schülern und Studierenden.
+
+      Hat das Kind Zugang zu einem Laptop, Tablet o.ä. und ist technisch in der Lage, Online-Nachhilfe zu erhalten? Wenn nicht, [können wir auch da helfen](/blog/spende-laptops).
+    type: toggle
+    maxSelect: 1
+
+  - id: remarks
+    title: Bemerkungen
+    note: |
+      Hast du weitere Infos für uns?
+
+      Hier können genauere Informationen zu Klassenstufe, Schulfächern, Förderschwerpunkte und Schultyp gegeben werden, die deine oben gewählten Antworten näher beschreiben.
+
+  - id: nameContact
+    title: Name Kontaktperson
+    note: Wie lautet der Vor- und Nachname deiner Kontaktperson (z.B. Eltern oder Sozialarbeiter:in)?
+    required: true
+
+  - id: phoneContact
+    title: Telefon Kontaktperson
+    note: Wie lautet die Telefonnummer für mögliche Rückfragen an die Kontaktperson?
+    required: true
+    type: tel
+
+  - id: emailContact
+    title: E-Mail Kontaktperson
+    note: |
+      Wir schicken innerhalb von einer Minute eine Bestätigungs-Email an diese Adresse.
+    required: true
+    type: email
+
+  - id: orgContact
+    title: Organisation Kontaktperson
+    note: |
+      Gehört die Kontaktperson einer Organisation an (z.B. Diakonie, Caritas, Jugendzentrum)? Bei Privatanmeldungen (z.B. durch Eltern) bitte den Namen der Schule angeben.
+    required: true
+
+  - id: need
+    title: Finanzielle Benachteiligung
+    note: Unser Angebot richtet sich speziell an Kinder und Jugendliche, für die aufgrund ihrer finanziellen Situation reguläre, kostenpflichtige Nachhilfe keine Option ist. Wir bitten um Bestätigung, dass dies auf deine Anfrage zutrifft.
+    required: true
+    type: toggle
+
+  - id: discovery
+    title: Werbemaßnahme
+    note: Hilf uns, unsere Werbung effektiver zu gestalten, indem du uns verrätst, wie du uns gefunden hast.
+
+  - id: dataProtection
+    title: Einwilligung in die Datenverarbeitung
+    note: |
+      Informationen zur Verarbeitung deiner personenbezogenen Daten findest du unter [Vereinbarungen](/vereinbarungen#verarbeitung-personenbezogener-daten). Durch Klicken des Reglers versichere ich, dass ich diese Infos zur Kenntnis genommen habe und meine Einwilligung gebe. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
+
+      #### Minderjährige
+
+      Sofern der Schüler das 16. Lebensjahr nicht vollendet hat, muss zusätzlich zum Schüler auch der Sorgeberechtigte die Einwilligung erteilen.
+
+      #### Sorgeberechtigung
+
+      Sofern mehrere Personen sorgeberechtigt sind, versichere ich, dass auch die anderen Sorgeberechtigten mit der Verarbeitung der Daten nach dieser Datenschutzerklärung einverstanden sind.
+    required: true
+    type: toggle
