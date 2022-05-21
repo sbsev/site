@@ -60,8 +60,8 @@
     <strong><Child {style} />Schüler:innen</strong>
   </div>
   <div style="background: var(--lightBlue);">
-    <span>3</span>
-    <strong><UserGraduate {style} />Stipendien</strong>
+    <span>6</span>
+    <strong><UserGraduate {style} /><a style="color: white;" sveltekit:prefetch href="/stipendium">Stipendien</a></strong>
   </div>
 </section>
 
