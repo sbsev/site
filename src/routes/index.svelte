@@ -61,7 +61,13 @@
   </div>
   <div style="background: var(--lightBlue);">
     <span>6</span>
-    <strong><UserGraduate {style} /><a style="color: white;" sveltekit:prefetch href="/stipendium">Stipendien</a></strong>
+    <strong
+      ><UserGraduate {style} /><a
+        style="color: white;"
+        sveltekit:prefetch
+        href="/stipendium">Stipendien</a
+      ></strong
+    >
   </div>
 </section>
 
