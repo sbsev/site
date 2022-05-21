@@ -80,6 +80,7 @@ export async function prepare_signup_data_for_airtable(
       Schulform: data.schoolTypes.value?.[0],
       Geburtsdatum: data.birthYear.value + `-01-01`,
       Kontaktperson: data.nameContact.value,
+      Kontaktpersonen: data.nameContact?.value,
       'E-Mail Kontaktperson': to_str(data.emailContact.value),
       'Telefon Kontaktperson': to_str(data.phoneContact.value),
       'Organisation Kontaktperson': to_str(data.orgContact.value),
