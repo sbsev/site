@@ -1,18 +1,17 @@
 <script lang="ts" context="module">
   import { dev } from '$app/env'
   import type { Load } from '@sveltejs/kit'
-  import Plant from '@svicons/remix-fill/plant.svelte'
+  import Plant from '~icons/ri/plant-fill'
   import CircleSpinner from '../components/CircleSpinner.svelte'
   import FormField from '../components/FormField.svelte'
   import Modal from '../components/Modal.svelte'
-  import { signupStore } from '../stores'
-  import type { Chapter, Form } from '../types'
-  import { submitHandler } from '../utils/airtable'
   import { fetchChapters, parseFormData } from '../fetch'
-
+  import messages from '../signup-form/de/messages.yml'
   import options from '../signup-form/de/options.yml'
   import raw_form from '../signup-form/de/pupil.yml'
-  import messages from '../signup-form/de/messages.yml'
+  import { signupStore } from '../stores'
+  import type { Chapter, Form } from '../types'
+  import { signup_form_submit_handler } from '../utils/airtable'
 
   export const load: Load = async () => {
     const chapters = (await fetchChapters()).filter(
@@ -50,9 +49,13 @@
     isSubmitting = true
     try {
       $signupStore.type = { value: `pupil` }
-      const fieldIds = form.fields.map((field) => field.id) // list of form fields to validate
+      const field_ids_to_validate = form.fields.map((field) => field.id) // list of form fields to validate
 
-      const response = await submitHandler(fieldIds, chapters, form.errMsg)
+      const response = await signup_form_submit_handler(
+        field_ids_to_validate,
+        chapters,
+        form.errMsg
+      )
       if (response.success) success = true
       error = response.error
     } finally {

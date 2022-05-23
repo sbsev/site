@@ -2,7 +2,7 @@
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
   import { signupStore } from '../stores'
-  import type { SignupStore, FormFieldType } from '../types'
+  import type { FormFieldType, SignupStore } from '../types'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
   import Toggle from './Toggle.svelte'
@@ -54,11 +54,12 @@
     {options}
     {maxSelect}
     noOptionsMsg="Keine passenden Optionen"
-    bind:selectedLabels={value}
+    bind:selected={value}
+    {required}
     --sms-options-bg="var(--accentBg)"
     --sms-bg="var(--accentBg)"
     --sms-height="3ex"
-    --sms-border="0"
+    --sms-border="1px solid var(--lightBg)"
     --sms-selected-bg="var(--green)"
     --sms-selected-text-color="white"
     --sms-min-height="32px"
@@ -67,7 +68,7 @@
 {:else if type === `toggle`}
   <Toggle {id} bind:value />
 {:else if type === `placeSelect`}
-  <PlaceSelect {id} bind:value {placeholder} bnd:div />
+  <PlaceSelect {id} bind:value {placeholder} />
 {:else if type === `singleRange`}
   <RangeSlider bind:slider float bind:values={value} {min} {max} pips all="label" />
 {:else if type === `doubleRange`}
@@ -111,6 +112,7 @@
     font-weight: bold;
     font-size: 18pt;
     margin: 1em 0 1ex;
+    scroll-margin-top: 10em;
   }
   label.required::after {
     color: red;

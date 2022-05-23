@@ -77,7 +77,7 @@ export async function fetchChapters(): Promise<Chapter[]> {
 
 export async function base64Thumbnail(
   url: string,
-  options: { type?: string; w?: number; h?: number }
+  options?: { type?: string; w?: number; h?: number }
 ): Promise<string> {
   const { type = `jpg`, w = 10, h = 10 } = options ?? {}
 
@@ -206,6 +206,7 @@ const postsQuery = `{
 }`
 
 async function processPost(post: Post) {
+  if (!post) return
   renderBody(post)
   prefixSlug(`/blog/`)(post)
   post.author.photo.base64 = await base64Thumbnail(post.author.photo.src, {

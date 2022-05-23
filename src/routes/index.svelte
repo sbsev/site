@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import Child from '@svicons/fa-solid/child.svelte'
-  import UserGraduate from '@svicons/fa-solid/user-graduate.svelte'
-  import Place from '@svicons/material-sharp/place.svelte'
+  import Child from '~icons/fa-solid/child'
+  import UserGraduate from '~icons/fa-solid/user-graduate'
+  import Place from '~icons/ic/place'
   import ChapterMap from '../components/ChapterMap.svelte'
-  import type { Chapter, Page } from '../types'
   import { fetchChapters, fetchPage } from '../fetch'
   import { microcopy } from '../stores'
+  import type { Chapter, Page } from '../types'
 
   export const load: Load = async () => {
     const page = await fetchPage(`/`)
@@ -31,9 +31,7 @@
   export let chapters: Chapter[]
   export let page: Page
 
-  let windowWidth: number
-
-  $: nImages = windowWidth > 1100 ? 7 : windowWidth < 600 ? 3 : 6
+  const style = `vertical-align: text-top; margin-right: 5pt;`
 </script>
 
 {#if $microcopy?.country == 'de'}
@@ -50,33 +48,32 @@
   <title>{$microcopy?.indexPage?.name}</title>
 </svelte:head>
 
-<svelte:window bind:innerWidth={windowWidth} />
-
 <h2>
   {$microcopy?.indexPage?.theme}
   <!-- {JSON.stringify($microcopy)} -->
 </h2>
 
-<section>
+<section style="white-space: nowrap;">
   <div style="background: var(--lightBlue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <Place height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage?.boxes
-      ?.locationsName}
+    <strong><Place {style} />{$microcopy?.indexPage?.boxes?.locationsName}</strong>
   </div>
   <div style="background: var(--green);">
     <span>{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage
-      ?.boxes?.studentsName}
+    <strong><UserGraduate {style} />{$microcopy?.indexPage?.boxes?.studentsName}</strong>
   </div>
   <div style="background: var(--orange);">
     <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
-    <Child height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage?.boxes
-      ?.pupilsName}
+    <strong><Child {style} />{$microcopy?.indexPage?.boxes?.pupilsName}</strong>
   </div>
   <div style="background: var(--lightBlue);">
     <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
-    <UserGraduate height="2.5ex" style="vertical-align: middle;" />{$microcopy?.indexPage
-      ?.boxes?.scholarshipName}
+    <strong>
+      <UserGraduate {style} />
+      <a style="color: white;" sveltekit:prefetch href="/stipendium">
+        {$microcopy?.indexPage?.boxes?.scholarshipName}
+      </a>
+    </strong>
   </div>
 </section>
 

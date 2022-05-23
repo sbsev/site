@@ -1,12 +1,25 @@
-<script lang="ts">
-  import InfoCircle from '@svicons/entypo/info-with-circle.svelte'
-  import Child from '@svicons/fa-solid/child.svelte'
-  import GraduationCap from '@svicons/fa-solid/graduation-cap.svelte'
-  import Email from '@svicons/material-sharp/email.svelte'
-  import BasePage from '../../components/BasePage.svelte'
-  import type { Page } from '../../types'
-  import { microcopy } from '../../stores'
+<script lang="ts" context="module">
+  import BasePage from '$src/components/BasePage.svelte'
+  import { fetchPage } from '$src/fetch'
+  import type { Page } from '$src/types'
+  import type { Load } from '@sveltejs/kit'
+  import InfoCircle from '~icons/bi/info-circle-fill'
+  import Child from '~icons/fa-solid/child'
+  import GraduationCap from '~icons/fa-solid/graduation-cap'
+  import Email from '~icons/ic/email'
 
+  export const load: Load = async ({ params }) => {
+    const { slug } = params
+
+    const page = await fetchPage(`standorte/${slug}`)
+
+    if (!page) return { status: 404 }
+
+    return { props: { page, slug } }
+  }
+</script>
+
+<script lang="ts">
   export let page: Page
   export let slug: string
 

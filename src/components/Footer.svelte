@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Cookie from '@svicons/boxicons-solid/cookie.svelte'
-  import DocumentText from '@svicons/ionicons-solid/document-text.svelte'
-  import Euro from '@svicons/material-sharp/euro.svelte'
-  import PrivacyTip from '@svicons/material-sharp/privacy-tip.svelte'
-  import Law from '@svicons/octicons/law.svelte'
-  import OpenSource from '@svicons/remix-fill/open-source.svelte'
+  import Cookie from '~icons/bxs/cookie'
+  import Euro from '~icons/ic/round-euro'
+  import PrivacyTip from '~icons/ic/round-privacy-tip'
+  import DocumentText from '~icons/ion/document-text'
+  import Law from '~icons/octicon/law'
+  import OpenSource from '~icons/ri/open-source-fill'
   import type { Link } from '../types'
   import Social from './Social.svelte'
   import { microcopy } from '../stores'
@@ -18,8 +18,6 @@
 
   export let links: Link[]
   export let social: Record<keyof typeof icons, string>
-
-  const style = `height: 1em; vertical-align: -3pt; padding-right: 2pt;`
 </script>
 
 <footer>
@@ -28,7 +26,10 @@
   <div>
     {#each links as { title, url }}
       <a sveltekit:prefetch href={url}>
-        <svelte:component this={icons[title]} {style} />
+        <svelte:component
+          this={icons[title]}
+          style="vertical-align: middle; padding-right: 3pt;"
+        />
         {title}
       </a>
     {/each}
@@ -36,13 +37,10 @@
   <span>
     {@html $microcopy?.footer?.site}
     <a href="https://github.com/sbsev/svelte-site">
-      <OpenSource
-        height="2.5ex"
-        style="vertical-align: bottom; padding-right: 3pt;"
-      />open source
+      <OpenSource style="vertical-align: bottom; padding-right: 3pt;" />open source
     </a>
     {@html $microcopy?.footer?.uses}
-    <Cookie height="2.2ex" style="vertical-align: middle;" />
+    <Cookie style="vertical-align: middle;" />
     Cookies.
   </span>
   {#if $microcopy?.country == 'de'}
@@ -69,7 +67,7 @@
   footer div {
     margin: auto;
     display: flex;
-    gap: 1em;
+    gap: 2em;
     flex-wrap: wrap;
     justify-content: center;
   }
