@@ -7,6 +7,7 @@
   import Child from '~icons/fa-solid/child'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
   import Email from '~icons/ic/email'
+  import { microcopy } from '../../stores'
 
   export const load: Load = async ({ params }) => {
     const { slug } = params
