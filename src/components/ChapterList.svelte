@@ -24,7 +24,7 @@
 {#if startingChapters.length > 2}
   <h1>
     <Construction {style} />
-    {$microcopy?.chapterList?.funding}
+    {$microcopy?.chapterList?.inSetup}
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}

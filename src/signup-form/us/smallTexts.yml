@@ -46,12 +46,12 @@ map:
     maxZoom: 6
   text:
     active: 'active location'
-    funding: 'beeing funded'
+    inSetup: 'beeing funded'
     zoom: 'zoom with <kbd>ctrl/cmd</kbd>'
 
 chapterList:
   locations: 'Our Locations'
-  funding: 'Locations beeing funded'
+  inSetup: 'Locations beeing funded'
 
 location:
   register: 'Registrations'

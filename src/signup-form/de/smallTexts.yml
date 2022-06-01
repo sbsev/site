@@ -3,7 +3,7 @@ comment: This yaml file is not used by the website. It's a copy of the version t
 country: de
 
 indexPage:
-  name: Studenten bilden Schüler
+  title: Studenten bilden Schüler
   theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
   chooseLocation: 'Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!'
 
@@ -21,7 +21,7 @@ indexPage:
     scholarshipNumber: 6
 
 footer:
-  name: 'Studenten bilden Schüler'
+  name: 'Studenten bilden Schüler e.V.'
   siteInfos: 'Diese Seite ist
     <a href="https://github.com/sbsev/svelte-site">
     <OpenSource
@@ -47,11 +47,11 @@ map:
     maxZoom: 10
   text:
     active: 'aktiver Standort'
-    funding: 'in Gründung'
+    inSetup: 'in Gründung'
 
 chapterList:
   locations: 'Unsere Standorte'
-  funding: 'Standorte in Gründung'
+  inSetup: 'Standorte in Gründung'
 
 location:
   register: 'Anmeldungen'

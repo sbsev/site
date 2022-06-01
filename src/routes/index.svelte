@@ -40,17 +40,16 @@
   </h1>
 {:else}
   <h1>
-    {$microcopy?.indexPage?.name}
+    {$microcopy?.indexPage?.title}
   </h1>
 {/if}
 
 <svelte:head>
-  <title>{$microcopy?.indexPage?.name}</title>
+  <title>{$microcopy?.indexPage?.title}</title>
 </svelte:head>
 
 <h2>
   {$microcopy?.indexPage?.theme}
-  <!-- {JSON.stringify($microcopy)} -->
 </h2>
 
 <section style="white-space: nowrap;">
