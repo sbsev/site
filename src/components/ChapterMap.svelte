@@ -14,6 +14,7 @@
 
 <script lang="ts">
   export let chapters: Chapter[]
+  export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? {}
 </script>
 
 <div>
@@ -24,6 +25,11 @@
       title: chap.token,
       url: chap.slug,
     }))}
+    {lng}
+    {lat}
+    {zoom}
+    {minZoom}
+    {maxZoom}
   />
 
   <legend>
@@ -35,7 +41,6 @@
       <span style="background: var(--darkGreen)" />
       {$microcopy?.map?.text?.inSetup}
     </div>
-    <!-- <small>{@html $microcopy?.map?.text?.zoom}</small> -->
   </legend>
 </div>
 
