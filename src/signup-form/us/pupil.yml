@@ -1,147 +1,147 @@
-header:
-  title: Anmeldung Schüler:innen
-  note: |
+headers:
+  title: Registration students
+  notes: |
     <p align="center">
-    Du möchtest Nachhilfe geben? <a class="btn small green" href="/signup-student" sveltekit:prefetch>Anmeldung Studierende</a>
+    Would you like to give tuition? <a class="btn small green" href="/signup-student" sveltekit:prefetch>Registration student</a>
     </p>
 
-    ## Formular für Eltern und soziale Einrichtungen
+    ## Form for parents and social institutions
 
-    Wir freuen uns über dein Interesse! So geht's zur Nachhilfe:
+    We appreciate your interest! How to get tutoring:
 
-      1. Bitte fülle alle mit rotem Stern markierten Felder aus und klicke anschließend auf "Anmeldung abschicken".
-      2. Unsere Standortleitung bearbeitet deine Anfrage und matched dich mit einem unserer Nachhilfelehrkräfte.
-      3. Wir organisieren das erste Treffen zwischen euch beiden.
-      4. Die wöchentliche Nachhilfe von 1-2 Stunden arrangiert ihr anschließend unter euch.
+      1. Please fill out all fields marked with a red star and then click on "Submit registration".
+      2. Our site management will process your request and match you with one of our tutors.
+      3. We organize the first meeting between you two.
+      4. You then arrange the weekly tutoring of 1-2 hours among yourselves.
 
-    Bitte hab Verständnis, dass die Vermittlung Wochen dauern kann. Wir bemühen uns an allen Standorten ständig neue Nachhilfelehrkräfte zu rekrutieren, um dich so schnell wie möglich zu vermitteln.
+    Please understand that the mediation can take weeks. We strive to constantly recruit new tutors at all locations in order to place you as quickly as possible.
 
-    Die Daten, die du hier eingibst, werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
+    The data you enter here will be stored in [Airtable](https://airtable.com). Information on data processing can be found in our [privacy policy](/privacy policy).
 
 fields:
   - id: chapter
-    title: Standort
-    note: Wähle einen unserer Nachhilfestandorte.
+    title: Location
+    note: Choose one of our tutoring locations.
     required: true
     type: select
     maxSelect: 1
 
   - id: gender
-    title: Geschlecht Schüler:in
+    title: Student Gender
     required: true
     type: select
     maxSelect: 1
 
   - id: firstName
-    title: Vorname Schüler:in
-    note: |
-      Aus Datenschutzgründen bitte nicht den Nachnamen nennen. Bei mehreren Anmeldungen jeweils ein Formular ausfüllen. Wenn mehrere Schüler:innen mit gleichen Vornamen von einer Kontaktperson angemeldet werden, bitte den ersten Buchstaben vom Nachnamen hinzufügen.
+    title: First name student
+    notes: |
+      For privacy reasons, please do not give your last name. If registering multiple times, fill out one form each. If several students with the same first name are registered by a contact person, please add the first letter of the last name.
     required: true
 
   - id: subjects
-    title: Fächer
-    note: |
-      In welchem Fach möchtest du Nachhilfe erhalten? Für nicht aufgeführte Fächer oder sonstige Hinweise, bitte das Fach "Anderes" wählen und im Kommentarfeld unten beschreiben.
+    title: Fan
+    notes: |
+      In which subject would you like to receive tutoring? For subjects not listed or other information, please select the subject "Other" and describe it in the comment field below.
     type: select
     required: true
 
   - id: schoolTypes
-    title: Schulform
-    note: |
-      Auf welche Schule gehst du?
+    title: Type of school
+    notes: |
+      what school do you go to
 
-      Für nicht aufgeführte Schultypen oder sonstige Hinweise, bitte "Anderes" wählen und im Kommentarfeld unten beschreiben.
+      For school types not listed or other information, please select "Other" and describe in the comment field below.
     type: select
     required: true
     maxSelect: 1
 
   - id: level
-    title: Klassenstufe
+    title: Grade Level
     required: true
     type: singleRange
-    min: 1
+    minutes: 1
     max: 13
 
   - id: places
-    title: Wo in der Stadt?
-    note: |
-      Bitte gib eine oder mehrere Adressen an, in deren Nähe die Nachhilfe stattfinden kann.
+    title: Where in town?
+    notes: |
+      Please enter one or more addresses in the vicinity of which the tutoring can take place.
 
-      Beispiele: Meinestraße 4, Uniplatz 1, Stadtbibliothek.
+      Examples: Meinestraße 4, Uniplatz 1, city library.
     required: true
-    placeholder: Ort der Nachhilfe
+    placeholder: place of tutoring
     type: placeSelect
 
   - id: birthYear
-    title: Geburtsjahr Schüler:in
+    title: Year of birth student
     required: true
-    note: |
-      z.B. 2006, falls nicht bekannt, einfach ein ungefähres Geburtsjahr eingeben.
+    notes: |
+      e.g. 2006, if not known, simply enter an approximate year of birth.
     type: number
     min: 1960
     max: 2025
 
   - id: online
-    title: Ist Online-Nachhilfe in Ordnung?
-    note: |
-      Aufgrund der Pandemie muss die Nachhilfe vielerorts zur Zeit online stattfinden ohne persönliche Treffen zwischen Schülern und Studierenden.
+    title: Is online tutoring okay?
+    notes: |
+      Due to the pandemic, tutoring has to take place online in many places without personal meetings between pupils and students.
 
-      Hat das Kind Zugang zu einem Laptop, Tablet o.ä. und ist technisch in der Lage, Online-Nachhilfe zu erhalten? Wenn nicht, [können wir auch da helfen](/blog/spende-laptops).
+      Does the child have access to a laptop, tablet, etc. and is technically capable of receiving online tutoring? If not, [we can also help](/blog/spende-laptops).
     type: toggle
     maxSelect: 1
 
   - id: remarks
-    title: Bemerkungen
-    note: |
-      Hast du weitere Infos für uns?
+    title: Remarks
+    notes: |
+      Do you have any further information for us?
 
-      Hier können genauere Informationen zu Klassenstufe, Schulfächern, Förderschwerpunkte und Schultyp gegeben werden, die deine oben gewählten Antworten näher beschreiben.
+      More detailed information on class level, school subjects, funding priorities and type of school can be given here, which describes your above-selected answers in more detail.
 
   - id: nameContact
-    title: Name Kontaktperson
-    note: Wie lautet der Vor- und Nachname deiner Kontaktperson (z.B. Eltern oder Sozialarbeiter:in)?
+    title: Contact Name
+    note: What is the first and last name of your contact person (e.g. parents or social worker)?
     required: true
 
   - id: phoneContact
-    title: Telefon Kontaktperson
-    note: Wie lautet die Telefonnummer für mögliche Rückfragen an die Kontaktperson?
+    title: Telephone contact person
+    note: What is the telephone number for possible queries to the contact person?
     required: true
-    type: tel
+    type: phone
 
-  - id: emailContact
-    title: E-Mail Kontaktperson
-    note: |
-      Wir schicken innerhalb von einer Minute eine Bestätigungs-Email an diese Adresse.
+  - id:emailContact
+    title: Email Contact Person
+    notes: |
+      We'll send a confirmation email to this address within a minute.
     required: true
     type: email
 
   - id: orgContact
-    title: Organisation Kontaktperson
-    note: |
-      Gehört die Kontaktperson einer Organisation an (z.B. Diakonie, Caritas, Jugendzentrum)? Bei Privatanmeldungen (z.B. durch Eltern) bitte den Namen der Schule angeben.
+    title: Organization Contact Person
+    notes: |
+      Does the contact person belong to an organization (e.g. Diakonie, Caritas, youth center)? For private registrations (e.g. by parents), please state the name of the school.
     required: true
 
   - id: need
-    title: Finanzielle Benachteiligung
-    note: Unser Angebot richtet sich speziell an Kinder und Jugendliche, für die aufgrund ihrer finanziellen Situation reguläre, kostenpflichtige Nachhilfe keine Option ist. Wir bitten um Bestätigung, dass dies auf deine Anfrage zutrifft.
+    title: Financial Deprivation
+    note: Our offer is aimed specifically at children and young people for whom regular, fee-based tutoring is not an option due to their financial situation. We ask for confirmation that this applies to your request.
     required: true
     type: toggle
 
   - id: discovery
-    title: Werbemaßnahme
-    note: Hilf uns, unsere Werbung effektiver zu gestalten, indem du uns verrätst, wie du uns gefunden hast.
+    title: Promotion
+    note: Help us make our advertising more effective by telling us how you found us.
 
   - id: dataProtection
-    title: Einwilligung in die Datenverarbeitung
-    note: |
-      Informationen zur Verarbeitung deiner personenbezogenen Daten findest du unter [Vereinbarungen](/vereinbarungen#verarbeitung-personenbezogener-daten). Durch Klicken des Reglers versichere ich, dass ich diese Infos zur Kenntnis genommen habe und meine Einwilligung gebe. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
+    title: Consent to data processing
+    notes: |
+      Information on the processing of your personal data can be found under [Agreements](/agreements#processing-personal-data). By clicking on the controller, I assure that I have taken note of this information and give my consent. I am aware that this consent is voluntary and that I can revoke it at any time.
 
-      #### Minderjährige
+       #### Minors
 
-      Sofern der Schüler das 16. Lebensjahr nicht vollendet hat, muss zusätzlich zum Schüler auch der Sorgeberechtigte die Einwilligung erteilen.
+       If the student has not reached the age of 16, the student's legal guardian must also give their consent.
 
-      #### Sorgeberechtigung
+       #### Custody
 
-      Sofern mehrere Personen sorgeberechtigt sind, versichere ich, dass auch die anderen Sorgeberechtigten mit der Verarbeitung der Daten nach dieser Datenschutzerklärung einverstanden sind.
+       If several persons have custody, I assure that the other persons with custody agree to the processing of the data in accordance with this data protection declaration.
     required: true
     type: toggle

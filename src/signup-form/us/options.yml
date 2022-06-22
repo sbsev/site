@@ -1,65 +1,65 @@
 types:
-  - Student
-  - Schüler
+  - University student
+  - Pupils
 locales:
-  - Deutsch
+  - German
   - English
 online:
-  - Keine Angabe
-  - Ja
-  - Nein
+  - No information
+  - Yes
+  - No
 gender:
-  - Männlich
-  - Weiblich
-  - Divers
+  - Masculine
+  - Feminine
+  - Miscellaneous
 discovery:
-  - Internetrecherche
-  - Freunde
-  - Fachschaft
-  - Email
+  - Internet research
+  - Friends
+  - Student Council
+  - E-mail
   - Instagram
   - Facebook
   - Twitter/Xing/LinkedIn/YouTube/...
-  - Aushang/Abrisszettel
-  - Werbung in Vorlesung
-  - Flyer
-  - Infostand/Vereinspräsentation
-  - Bericht in Zeitung/Internet
-  - Auflistung in Ehrenamtsregister
-  - Kooperationsparter
-  - Coronaschool
-  - MitVergnügen
-  - Organisation Tatendrang
-  - Jodel
-  - Andere Maßnahme
+  - Notice/tear-off sheet
+  - Advertising in lecture
+  - Flyers
+  - Information stand/club presentation
+  - Report in newspaper/Internet
+  - Listing in volunteer register
+  - Cooperation partners
+  - Corona school
+  - With pleasure
+  - Organization zest for action
+  - Yodel
+  - Other measure
 schoolTypes:
-  - Grundschule
-  - Mittelschule
-  - Berufsschule
-  - Gymnasium
-  - Ausbildung
-  - Hauptschule
-  - Realschule
-  - Flüchtlingsschule
-  - Andere
+  - Elementary school
+  - middle school
+  - Professional school
+  - High school
+  - Education
+  - Secondary schools
+  - Secondary school
+  - Refugee school
+  - Other
 subjects:
-  - Alle Unterstufenfächer
-  - Mathe
-  - Deutsch
-  - Englisch
-  - Gesellschaftskunde/Politik
-  - Erdkunde/Geographie
-  - Wirtschaft
-  - Chemie
-  - Biologie
-  - Physik
-  - Geschichte
-  - Informatik
-  - Französisch
-  - Spanisch
-  - Latein
-  - Sport
-  - Musik
-  - Philosophie
-  - Religion/Ethik
-  - Deutsch als Fremdsprache
+  - All lower school subjects
+  - Maths
+  - German
+  - English
+  - Social Studies/Politics
+  - Geography
+  - Business
+  - Chemistry
+  - Biology
+  - Physics
+  - Story
+  - Informatics
+  - French
+  - Spanish
+  - Latin
+  - Sports
+  - music
+  - philosophy
+  - Religion/Ethics
+  - German as a foreign language

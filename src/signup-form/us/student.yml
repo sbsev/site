@@ -1,116 +1,116 @@
 header:
-  title: Anmeldung Studierende
-  note: |
+  title: Student Registration
+  notes: |
     <p align="center">
-    Du möchtest Nachhilfe bekommen? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Anmeldung Schüler</a>
+    Would you like to get tutoring? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Signup student</a>
     </p>
 
-    ## Formular für Studierende
+    ## Form for students
 
-    Deine Angaben werden in [Airtable](https://airtable.com) gespeichert. Informationen zur Datenverarbeitung findest du in unserer [Datenschutzerklärung](/datenschutz).
-    Bitte fülle alle mit rotem Stern markierten Felder aus und klicke anschließend auf "Anmeldung abschicken".
+    Your details will be saved in [Airtable](https://airtable.com). Information on data processing can be found in our [privacy policy](/privacy policy).
+    Please fill out all fields marked with a red star and then click on "Submit registration".
 
 fields:
   - id: chapter
-    title: Standort
-    note: An welchem Standort möchtest du Nachhilfe geben?
+    title: Location
+    note: At which location would you like to give tutoring?
     type: select
     required: true
     maxSelect: 1
 
   - id: gender
-    title: Geschlecht
+    title: Gender
     type: select
     required: true
     maxSelect: 1
 
   - id: fullName
-    title: Vor- und Nachname
-    note: Bitte so angeben, wie er im Personalausweis steht. Wird für die Ausstellung des kostenlosen Führungszeugnisses benötigt.
+    title: first and last name
+    note: Please enter it as it appears on your ID card. Is required for issuing the free certificate of good conduct.
     required: true
 
   - id: phone
-    title: Telefon
-    note: Bevorzugt eine Handynummer, damit wir dich zur Vermittlung gut erreichen können.
-    type: tel
+    title: Phone
+    note: Preferably a cell phone number so that we can easily reach you for mediation.
+    type: phone
 
-  - id: email
-    title: E-Mail
-    note: Gmx und Web.de blockieren regelmäßig unsere Emails. Am Besten gibst du eine Emailadresse von einem anderen Anbieter an.
+  - ID: email
+    title: Email
+    note: Gmx and Web.de regularly block our emails. It is best to enter an email address from another provider.
     required: true
     type: email
 
   - id: studySubject
-    title: Studienfach
-    note: Was studierst du?
+    title: Subject
+    note: What are you studying?
 
   - id: semester
     title: Semester
-    note: In welchem Semester studierst du?
+    note: In which semester are you studying?
     type: number
-    min: 1
+    minutes: 1
     max: 50
 
   - id: birthPlace
-    title: Geburtsort
-    note: Dein Geburtsdatum und -ort brauchen wir so wie diese im Personalausweis stehen, um dir einen Antrag auf Befreiung von der Gebühr für das polizeiliche Führungszeugnis auszustellen. Da du dich bei uns ehrenamtlich engagierst, bekommst du das Zeugnis mit diesem Antrag kostenlos.
+    title: Birthplace
+    note: We need your date and place of birth as they appear on your ID card in order to issue you with an application for an exemption from the police clearance fee. Since you are volunteering with us, you will receive the certificate with this application free of charge.
 
   - id: birthDate
-    title: Geburtsdatum
-    note: z.B. 31.02.2001
+    title: Date of Birth
+    note: e.g. 02/31/2001
     type: date
 
   - id: subjects
-    title: Fächer
-    note: In welchen Fächern möchtest du Nachhilfe geben? Nicht aufgeführte Fächer gerne unter Bemerkungen angeben.
+    title: Fan
+    note: In which subjects would you like to give private tuition? Please indicate subjects that are not listed in the comments.
     type: select
     required: true
 
   - id: schoolTypes
-    title: Schulform
+    title: Type of school
     type: select
-    note: Kinder von welchen Schulen möchtest du bevorzugt unterrichten?
+    note: Children from which schools would you prefer to teach?
 
   - id: levels
-    title: Klassenstufen
-    note: Beispiel 5 - 8
+    title: Class Levels
+    note: Example 5 - 8
     type: doubleRange
-    min: 1
+    minutes: 1
     max: 13
 
   - id: places
-    title: Wo in der Stadt?
-    note: |
-      Bitte gib einige Adressen an, in deren Nähe du bereit wärst, Nachhilfe zu geben.
+    title: Where in town?
+    notes: |
+      Please provide a few addresses where you would be willing to tutor.
 
-      Beispiele: Uniplatz 1, Marktplatz 15, Stadtbibliothek.
+      Examples: Uniplatz 1, Marktplatz 15, City Library.
     required: true
-    placeholder: Ort der Nachhilfe
+    placeholder: place of tutoring
     type: placeSelect
 
   - id: remarks
-    title: Bemerkungen
-    note: Gibt es noch etwas, was du uns mitteilen möchtest?
+    title: Remarks
+    note: Is there anything else you would like to tell us?
 
   - id: discovery
-    title: Werbemaßnahme
-    note: Hilf uns, unsere Werbung effektiver zu gestalten, indem du uns verrätst, wie du uns gefunden hast. Wenn die passende Werbemaßnahme nicht aufgeführt ist, bitte das Zutreffendste auswählen.
+    title: Promotion
+    note: Help us make our advertising more effective by telling us how you found us. If the appropriate advertising measure is not listed, please select the most appropriate one.
     type: select
     required: true
     maxSelect: 1
 
   - id: agreement
-    title: Vereinbarungen
-    note: |
-      Hiermit erkläre ich mich gemäß [der Vereinbarungen auf unserer Webseite](/vereinbarungen) mit folgenden Erklärungen einverstanden:
-      - [Verpflichtung zur Verschwiegenheit und Nichtbeeinflussung](/vereinbarungen#verpflichtung-zu-verschwiegenheit-und-nichtbeeinflussung)
-      - [Erklärung über Vorstrafen](/vereinbarungen#erklärung-zu-vorstrafen)
+    title: Agreements
+    notes: |
+      I hereby agree to the following statements in accordance with [the agreements on our website](/agreements):
+      - [Obligation of confidentiality and non-influence](/agreements#commitment-to-confidentiality-and-non-influence)
+      - [Declaration of criminal record](/agreements#declaration-of-criminal record)
     required: true
     type: toggle
 
   - id: dataProtection
-    title: Verarbeitung personenbezogener Daten
-    note: |
-      Durch Anklicken des Reglers bestätige ich, die Informationen zur Verarbeitung personenbezogener Daten unter [Vereinbarungen](/vereinbarungen) zur Kenntnis genommen zu haben und in die Datenverarbeitung zum Zwecke des Matchings mit Nachhilfeschülern einzuwilligen. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
+    title: Processing of personal data
+    notes: |
+      By clicking on the controller, I confirm that I have read the information on the processing of personal data under [Agreements](/agreements) and that I consent to the data processing for the purpose of matching with tutoring students. I am aware that this consent is voluntary and that I can revoke it at any time.
     required: true
     type: toggle
