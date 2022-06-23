@@ -1,6 +1,6 @@
 header:
   title: Student Registration
-  notes: |
+  note: |
     <p align="center">
     Would you like to get tutoring? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Signup student</a>
     </p>
@@ -32,9 +32,9 @@ fields:
   - id: phone
     title: Phone
     note: Preferably a cell phone number so that we can easily reach you for mediation.
-    type: phone
+    type: tel
 
-  - ID: email
+  - id: email
     title: Email
     note: Gmx and Web.de regularly block our emails. It is best to enter an email address from another provider.
     required: true
@@ -48,7 +48,7 @@ fields:
     title: Semester
     note: In which semester are you studying?
     type: number
-    minutes: 1
+    min: 1
     max: 50
 
   - id: birthPlace
@@ -61,7 +61,7 @@ fields:
     type: date
 
   - id: subjects
-    title: Fan
+    title: Subjects
     note: In which subjects would you like to give private tuition? Please indicate subjects that are not listed in the comments.
     type: select
     required: true
@@ -75,12 +75,12 @@ fields:
     title: Class Levels
     note: Example 5 - 8
     type: doubleRange
-    minutes: 1
+    min: 1
     max: 13
 
   - id: places
     title: Where in town?
-    notes: |
+    note: |
       Please provide a few addresses where you would be willing to tutor.
 
       Examples: Uniplatz 1, Marktplatz 15, City Library.
@@ -101,7 +101,7 @@ fields:
 
   - id: agreement
     title: Agreements
-    notes: |
+    note: |
       I hereby agree to the following statements in accordance with [the agreements on our website](/agreements):
       - [Obligation of confidentiality and non-influence](/agreements#commitment-to-confidentiality-and-non-influence)
       - [Declaration of criminal record](/agreements#declaration-of-criminal record)
@@ -110,7 +110,7 @@ fields:
 
   - id: dataProtection
     title: Processing of personal data
-    notes: |
+    note: |
       By clicking on the controller, I confirm that I have read the information on the processing of personal data under [Agreements](/agreements) and that I consent to the data processing for the purpose of matching with tutoring students. I am aware that this consent is voluntary and that I can revoke it at any time.
     required: true
     type: toggle

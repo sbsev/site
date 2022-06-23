@@ -65,7 +65,7 @@
         >
       </span>
       <span>
-        {$microcopy?.location?.leadLocation}
+        {$microcopy?.location?.locationManagement}
         <a
           href="mailto:info.{slug}{$microcopy?.location?.mailTo} {page.title}"
           class="btn orange"

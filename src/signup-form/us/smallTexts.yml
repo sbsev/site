@@ -1,4 +1,4 @@
-comment: This yaml file is not used by the website. It's a copy of the version that is on contentful
+comment: This yaml is both on github and on contentful for versioning and checking of correctness. Only the version on contentful is actually used!
 
 country: us
 
@@ -47,7 +47,6 @@ map:
   text:
     active: 'active location'
     inSetup: 'beeing funded'
-    zoom: 'zoom with <kbd>ctrl/cmd</kbd>'
 
 chapterList:
   locations: 'Our Locations'
@@ -63,8 +62,8 @@ location:
   registerPupil: 'Register as kid'
   linkPupilInfo: '/mitmachen/schueler'
   infoPupilButton: 'Infos for kids'
-  leadLocation: 'Want to lead a location?'
-  mailTo: '@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interest in helping to lead location '
+  locationManagement: 'Want to lead a location?'
+  mailTo: 'mailto:info.{slug}@studenten-bilden-schueler.de?subject=Interest in helping to lead location '
   writeMailButton: 'Mail us'
   linkLeadingInfo: '/mitmachen/standortleiter'
   infoLeadingButton: 'How to lead location'
@@ -82,3 +81,8 @@ basepage:
   last: 'Last change:'
   feedback: 'Feedback for this page?'
   email: 'it@studenten-bilden-schueler.de?subject=Feedback for Page:'
+
+meta:
+  name: 'Studenten for Students'
+  description: 'Free tutoring for children in need.'
+  url: studenten-bilden-schueler.de

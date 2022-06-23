@@ -8,7 +8,6 @@
 
   export let map: mapboxgl.Map | null = null
   export let markers: MapMarker[] = []
-  // default values for map that are overwritten when Map is called
   export let lng = 10
   export let lat = 51.3
   export let zoom = 5.05

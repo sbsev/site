@@ -63,8 +63,8 @@ location:
   registerPupil: 'Als Schüler:in anmelden'
   linkPupilInfo: '/mitmachen/schueler'
   infoPupilButton: 'Infos für Schüler:innen'
-  leadLocation: 'Interesse an Standortleitung?'
-  mailTo: 'mailto:info.{slug}@studenten-bilden-schueler.de?cc=standortbetreuung@studenten-bilden-schueler.de&subject=Interesse an Standortleitung in {page.title}'
+  locationManagement: 'Interesse an Standortleitung?'
+  mailTo: 'mailto:info.{slug}@studenten-bilden-schueler.de?subject=Interesse an Standortleitung in {page.title}'
   writeMailButton: 'Schreib uns'
   linkLeadingInfo: '/mitmachen/standortleiter'
   infoLeadingButton: 'Infos für Standortleitende'
@@ -82,3 +82,8 @@ basepage:
   last: 'Zuletzt bearbeitet:'
   feedback: 'Feedback zu dieser Seite?'
   email: 'it@studenten-bilden-schueler.de?subject=Feedback zu Seite:'
+
+meta:
+  name: 'Studenten bilden Schüler e.V.'
+  description: 'Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen in deutschlandweit über 50 Unistädten.'
+  url: studenten-bilden-schueler.de

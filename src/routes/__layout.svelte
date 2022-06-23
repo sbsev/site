@@ -45,6 +45,15 @@
   })
 </script>
 
+<!-- Moved these here, from app.html, so these parameter can get different attributes for each site -->
+<svelte:head>
+  <title>{$microcopy?.meta?.name}</title>
+  <meta name="author" content={$microcopy?.meta?.name} />
+  <meta name="description" content={$microcopy?.meta?.description} />
+  <!-- see netlify.toml file for where this script originates -->
+  <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
+</svelte:head>
+
 <Header {nav} />
 <main>
   <slot />
