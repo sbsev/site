@@ -6,6 +6,7 @@
   import FormField from '../components/FormField.svelte'
   import Modal from '../components/Modal.svelte'
   import { fetchChapters, parseFormData } from '../fetch'
+  // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
   import messages from '../signup-form/de/messages.yml'
   import options from '../signup-form/de/options.yml'
   import raw_form from '../signup-form/de/pupil.yml'

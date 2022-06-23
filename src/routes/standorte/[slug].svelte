@@ -28,7 +28,8 @@
 </script>
 
 <BasePage {page}>
-  <!-- needed to hide info buttons on /standorte/gruenden page -->
+  <!-- Buttons at the end of the chapter pages to contact the dfferent chapter manager by mail
+  showSignupButtons should be set false when chapter is still in setup -->
   {#if page?.yaml?.showSignupButtons !== false}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>

@@ -41,7 +41,7 @@ footer:
 map:
   location:
     lng: 10
-    lat: 51.3
+    lat: 51.6
     zoom: 5.05
     minZoom: 4
     maxZoom: 10

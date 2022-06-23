@@ -3,7 +3,7 @@ comment: This yaml is both on github and on contentful for versioning and checki
 country: us
 
 indexPage:
-  name: Students for Students
+  title: Students for Students
   theme: Free tutoring by student volunteers for financially disadvantaged children
   chooseLocation: 'Choose you <a sveltekit:prefetch href="/standorte"><strong>location</strong></a> on the map!'
 
