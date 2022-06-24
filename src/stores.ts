@@ -35,3 +35,5 @@ export const signupStore = sessionStore<SignupStore>(
   `SignupStore`,
   {} as SignupStore
 )
+
+export const microcopy = writable({})

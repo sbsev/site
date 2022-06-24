@@ -7,6 +7,7 @@
   import OpenSource from '~icons/ri/open-source-fill'
   import type { Link } from '../types'
   import Social from './Social.svelte'
+  import { microcopy } from '../stores'
 
   const icons = {
     Impressum: Law,
@@ -21,7 +22,7 @@
 
 <footer>
   <img src="/favicon.svg" alt="SbS Logo" height="60" />
-  <span>© {new Date().getFullYear()} Studenten bilden Schüler e.V.</span>
+  <span>© {new Date().getFullYear()} {$microcopy?.footer?.name}</span>
   <div>
     {#each links as { title, url }}
       <a sveltekit:prefetch href={url}>
@@ -34,18 +35,17 @@
     {/each}
   </div>
   <span>
-    Diese Seite ist
+    {@html $microcopy?.footer?.site}
     <a href="https://github.com/sbsev/svelte-site">
       <OpenSource style="vertical-align: bottom; padding-right: 3pt;" />open source
     </a>
-    und verwendet
-    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
-      keine
-      <Cookie style="vertical-align: middle;" />
-      Cookies.
-    </a>
+    {@html $microcopy?.footer?.uses}
+    <Cookie style="vertical-align: middle;" />
+    Cookies.
   </span>
-  <Social {social} style="margin-top: 1ex;" />
+  {#if $microcopy?.country == `de`}
+    <Social {social} style="margin-top: 1ex;" />
+  {/if}
 </footer>
 
 <style>

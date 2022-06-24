@@ -5,6 +5,7 @@
   import Header from '../components/Header.svelte'
   import type { Chapter, Link, NavLink } from '../types'
   import { fetchChapters, fetchYaml } from '../fetch'
+  import { microcopy } from '../stores'
   import '../app.css'
 
   export const load: Load = async () => {
@@ -12,6 +13,8 @@
     const footer = await fetchYaml(`Footer`)
     const social = await fetchYaml(`Social`)
     const chapters = await fetchChapters()
+    const smallTexts = await fetchYaml(`smallTexts`)
+    microcopy.set(smallTexts)
 
     // ensure the non-chapter link spans all chapter subnav columns
     nav.find((el: NavLink) => el.url === `/standorte`).subNav[0].spanCols = true
@@ -41,6 +44,15 @@
     window.visitedPages.push(location.pathname + location.search)
   })
 </script>
+
+<!-- Moved these here, from app.html, so these parameter can get different attributes for each site -->
+<svelte:head>
+  <title>{$microcopy?.meta?.name}</title>
+  <meta name="author" content={$microcopy?.meta?.name} />
+  <meta name="description" content={$microcopy?.meta?.description} />
+  <!-- see netlify.toml file for where this script originates -->
+  <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
+</svelte:head>
 
 <Header {nav} />
 <main>

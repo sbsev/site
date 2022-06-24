@@ -1,0 +1,88 @@
+comment: This yaml is both on github and on contentful for versioning and checking of correctness. Only the version on contentful is actually used!
+
+country: us
+
+indexPage:
+  title: Students for Students
+  theme: Free tutoring by student volunteers for financially disadvantaged children
+  chooseLocation: 'Choose you <a sveltekit:prefetch href="/standorte"><strong>location</strong></a> on the map!'
+
+  register: 'Or just <a sveltekit:prefetch href="/signup-student">
+    <strong>register on our website.</strong>
+    </a>'
+  boxes:
+    locationsName: locations
+    studentsName: students
+    studentsNumber: 1
+    pupilsName: kids
+    pupilsNumber: 2
+    scholarshipName: Founded
+    scholarshipNumber: 2022
+
+footer:
+  name: 'Students for Students'
+  siteInfos: 'This website is
+    <a href="https://github.com/sbsev/svelte-site">
+    <OpenSource
+    height="2.5ex"
+    style="vertical-align: bottom; padding-right: 3pt;"
+    />open source
+    </a>
+    and does not
+    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
+    use
+    <Cookie height="2.2ex" style="vertical-align: middle;" />
+    cookies.
+    </a>'
+  site: 'This website is'
+  uses: 'and does not use'
+
+map:
+  location:
+    lng: -96
+    lat: 38
+    zoom: 3.95
+    minZoom: 3.5
+    maxZoom: 6
+  text:
+    active: 'active location'
+    inSetup: 'beeing funded'
+
+chapterList:
+  locations: 'Our Locations'
+  inSetup: 'Locations beeing funded'
+
+location:
+  register: 'Registrations'
+  joinStudent: 'Do you want to join us?'
+  registerStudent: 'Register as Tutor'
+  linkStudentInfo: '/mitmachen/nachhilfelehrer'
+  infoStudentButton: 'Infos for Tutors'
+  joinPupil: 'Looking for help?'
+  registerPupil: 'Register as kid'
+  linkPupilInfo: '/mitmachen/schueler'
+  infoPupilButton: 'Infos for kids'
+  locationManagement: 'Want to lead a location?'
+  mailTo: 'mailto:info.{slug}@studenten-bilden-schueler.de?subject=Interest in helping to lead location '
+  writeMailButton: 'Mail us'
+  linkLeadingInfo: '/mitmachen/standortleiter'
+  infoLeadingButton: 'How to lead location'
+  contact: 'Contakt'
+  questions: 'Questions? Write us a mail!'
+  url: 'studenten-bilden-schueler.de'
+  student: 'studenten'
+  forStudents: 'for tutors'
+  pupil: 'schueler'
+  info: 'info'
+  forPartner: 'für social associations and tutoring requests'
+  generalRequests: 'for general requests'
+
+basepage:
+  last: 'Last change:'
+  feedback: 'Feedback for this page?'
+  email: 'it@studenten-bilden-schueler.de?subject=Feedback for Page:'
+
+meta:
+  name: 'Studenten for Students'
+  description: 'Free tutoring for children in need.'
+  url: studenten-bilden-schueler.de

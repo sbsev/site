@@ -3,6 +3,7 @@
   import Update from '~icons/ic/update'
   import Img from '../components/Img.svelte'
   import type { Page } from '../types'
+  import { microcopy } from '../stores'
 
   export let page: Page
 
@@ -47,12 +48,12 @@
 
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
-    <Update {style} />Zuletzt bearbeitet:
+    <Update {style} />{$microcopy?.basepage?.last}
     {date}
   </time>
   <address>
-    <a href="mailto:it@studenten-bilden-schueler.de?subject=Feedback zu Seite: {title}">
-      Feedback zu dieser Seite?
+    <a href="mailto:{$microcopy?.basepage?.email} {title}">
+      {$microcopy?.basepage?.feedback}
     </a>
   </address>
 {/if}

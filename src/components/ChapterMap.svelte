@@ -3,6 +3,7 @@
   import Map from '../components/Map.svelte'
   import type { Chapter } from '../types'
   import { fetchChapters } from '../fetch'
+  import { microcopy } from '../stores'
 
   export const load: Load = async () => {
     const chapters = await fetchChapters()
@@ -13,6 +14,7 @@
 
 <script lang="ts">
   export let chapters: Chapter[]
+  export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? {}
 </script>
 
 <div>
@@ -23,16 +25,22 @@
       title: chap.token,
       url: chap.slug,
     }))}
+    {lng}
+    {lat}
+    {zoom}
+    {minZoom}
+    {maxZoom}
   />
 
   <legend>
     <div>
-      <span style="background: var(--lightBlue)" /> aktiver Standort
+      <span style="background: var(--lightBlue)" />
+      {$microcopy?.map?.text?.active}
     </div>
     <div>
-      <span style="background: var(--darkGreen)" /> in Gründung
+      <span style="background: var(--darkGreen)" />
+      {$microcopy?.map?.text?.inSetup}
     </div>
-    <small>Zoomen mit <kbd>ctrl/cmd</kbd></small>
   </legend>
 </div>
 

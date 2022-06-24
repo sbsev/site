@@ -1,0 +1,65 @@
+types:
+  - University student
+  - Pupils
+locales:
+  - German
+  - English
+online:
+  - No information
+  - Yes
+  - No
+gender:
+  - Masculine
+  - Feminine
+  - Miscellaneous
+discovery:
+  - Internet research
+  - Friends
+  - Student Council
+  - E-mail
+  - Instagram
+  - Facebook
+  - Twitter/Xing/LinkedIn/YouTube/...
+  - Notice/tear-off sheet
+  - Advertising in lecture
+  - Flyers
+  - Information stand/club presentation
+  - Report in newspaper/Internet
+  - Listing in volunteer register
+  - Cooperation partners
+  - Corona school
+  - With pleasure
+  - Organization zest for action
+  - Yodel
+  - Other measure
+schoolTypes:
+  - Elementary school
+  - middle school
+  - Professional school
+  - High school
+  - Education
+  - Secondary schools
+  - Secondary school
+  - Refugee school
+  - Other
+subjects:
+  - All lower school subjects
+  - Maths
+  - German
+  - English
+  - Social Studies/Politics
+  - Geography
+  - Business
+  - Chemistry
+  - Biology
+  - Physics
+  - Story
+  - Informatics
+  - French
+  - Spanish
+  - Latin
+  - Sports
+  - music
+  - philosophy
+  - Religion/Ethics
+  - German as a foreign language

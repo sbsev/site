@@ -1,0 +1,147 @@
+header:
+  title: Registration students
+  note: |
+    <p align="center">
+    Would you like to give tuition? <a class="btn small green" href="/signup-student" sveltekit:prefetch>Registration student</a>
+    </p>
+
+    ## Form for parents and social institutions
+
+    We appreciate your interest! How to get tutoring:
+
+      1. Please fill out all fields marked with a red star and then click on "Submit registration".
+      2. Our site management will process your request and match you with one of our tutors.
+      3. We organize the first meeting between you two.
+      4. You then arrange the weekly tutoring of 1-2 hours among yourselves.
+
+    Please understand that the mediation can take weeks. We strive to constantly recruit new tutors at all locations in order to place you as quickly as possible.
+
+    The data you enter here will be stored in [Airtable](https://airtable.com). Information on data processing can be found in our [privacy policy](/privacy policy).
+
+fields:
+  - id: chapter
+    title: Location
+    note: Choose one of our tutoring locations.
+    required: true
+    type: select
+    maxSelect: 1
+
+  - id: gender
+    title: Student Gender
+    required: true
+    type: select
+    maxSelect: 1
+
+  - id: firstName
+    title: First name student
+    note: |
+      For privacy reasons, please do not give your last name. If registering multiple times, fill out one form each. If several students with the same first name are registered by a contact person, please add the first letter of the last name.
+    required: true
+
+  - id: subjects
+    title: Fan
+    note: |
+      In which subject would you like to receive tutoring? For subjects not listed or other information, please select the subject "Other" and describe it in the comment field below.
+    type: select
+    required: true
+
+  - id: schoolTypes
+    title: Type of school
+    note: |
+      what school do you go to
+
+      For school types not listed or other information, please select "Other" and describe in the comment field below.
+    type: select
+    required: true
+    maxSelect: 1
+
+  - id: level
+    title: Grade Level
+    required: true
+    type: singleRange
+    min: 1
+    max: 13
+
+  - id: places
+    title: Where in town?
+    note: |
+      Please enter one or more addresses in the vicinity of which the tutoring can take place.
+
+      Examples: Meinestraße 4, Uniplatz 1, city library.
+    required: true
+    placeholder: place of tutoring
+    type: placeSelect
+
+  - id: birthYear
+    title: Year of birth student
+    required: true
+    note: |
+      e.g. 2006, if not known, simply enter an approximate year of birth.
+    type: number
+    min: 1960
+    max: 2025
+
+  - id: online
+    title: Is online tutoring okay?
+    note: |
+      Due to the pandemic, tutoring has to take place online in many places without personal meetings between pupils and students.
+
+      Does the child have access to a laptop, tablet, etc. and is technically capable of receiving online tutoring? If not, [we can also help](/blog/spende-laptops).
+    type: toggle
+    maxSelect: 1
+
+  - id: remarks
+    title: Remarks
+    note: |
+      Do you have any further information for us?
+
+      More detailed information on class level, school subjects, funding priorities and type of school can be given here, which describes your above-selected answers in more detail.
+
+  - id: nameContact
+    title: Contact Name
+    note: What is the first and last name of your contact person (e.g. parents or social worker)?
+    required: true
+
+  - id: phoneContact
+    title: Telephone contact person
+    note: What is the telephone number for possible queries to the contact person?
+    required: true
+    type: tel
+
+  - id: emailContact
+    title: Email Contact Person
+    note: |
+      We'll send a confirmation email to this address within a minute.
+    required: true
+    type: email
+
+  - id: orgContact
+    title: Organization Contact Person
+    note: |
+      Does the contact person belong to an organization (e.g. Diakonie, Caritas, youth center)? For private registrations (e.g. by parents), please state the name of the school.
+    required: true
+
+  - id: need
+    title: Financial Deprivation
+    note: Our offer is aimed specifically at children and young people for whom regular, fee-based tutoring is not an option due to their financial situation. We ask for confirmation that this applies to your request.
+    required: true
+    type: toggle
+
+  - id: discovery
+    title: Promotion
+    note: Help us make our advertising more effective by telling us how you found us.
+
+  - id: dataProtection
+    title: Consent to data processing
+    note: |
+      Information on the processing of your personal data can be found under [Agreements](/agreements#processing-personal-data). By clicking on the controller, I assure that I have taken note of this information and give my consent. I am aware that this consent is voluntary and that I can revoke it at any time.
+
+       #### Minors
+
+       If the student has not reached the age of 16, the student's legal guardian must also give their consent.
+
+       #### Custody
+
+       If several persons have custody, I assure that the other persons with custody agree to the processing of the data in accordance with this data protection declaration.
+    required: true
+    type: toggle

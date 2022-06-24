@@ -2,6 +2,7 @@
   import Place from '~icons/ic/place'
   import Construction from '~icons/ic/round-construction'
   import type { Chapter } from '../types'
+  import { microcopy } from '../stores'
 
   export let chapters: Chapter[]
 
@@ -13,7 +14,7 @@
 
 <h1>
   <Place {style} />
-  Unsere Standorte
+  {$microcopy?.chapterList?.locations}
 </h1>
 <ol>
   {#each openChapters as { title, slug }}
@@ -23,7 +24,7 @@
 {#if startingChapters.length > 2}
   <h1>
     <Construction {style} />
-    Standorte in Gründung
+    {$microcopy?.chapterList?.inSetup}
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}
