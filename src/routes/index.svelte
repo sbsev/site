@@ -35,7 +35,7 @@
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
-{#if $microcopy?.country == 'de'}
+{#if $microcopy?.country == `de`}
   <h1>
     <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
   </h1>

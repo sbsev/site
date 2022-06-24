@@ -43,7 +43,7 @@
     <Cookie style="vertical-align: middle;" />
     Cookies.
   </span>
-  {#if $microcopy?.country == 'de'}
+  {#if $microcopy?.country == `de`}
     <Social {social} style="margin-top: 1ex;" />
   {/if}
 </footer>
