@@ -1,6 +1,6 @@
 import rollupYaml from '@rollup/plugin-yaml'
 import { sveltekit } from '@sveltejs/kit/vite'
-import path from 'path'
+import { resolve } from 'path'
 import Icons from 'unplugin-icons/vite'
 
 export default {
@@ -14,15 +14,9 @@ export default {
     port: 3000,
   },
 
-  build: {
-    rollupOptions: {
-      output: { manualChunks: undefined },
-    },
-  },
-
   resolve: {
     alias: {
-      $src: path.resolve(`./src`),
+      $src: resolve(`./src`),
     },
   },
 
