@@ -9,7 +9,5 @@ export default {
     adapter: adapter(),
 
     prerender: { default: true },
-
-    trailingSlash: `ignore`, // GitHub issue discussing Netlify: https://git.io/JngRL
   },
 }
