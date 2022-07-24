@@ -4,6 +4,7 @@ import { afterAll, beforeAll } from 'vitest'
 
 export let browser: Browser
 export let page: Page
+// make sure tests try to access localhost on the same port the dev server is running on (defaults to 3000)
 export const port = process.env.PORT ?? 3000
 
 const browser_name = (process.env.BROWSER ?? `chromium`) as

@@ -10,6 +10,10 @@ export default {
     Icons({ compiler: `svelte`, autoInstall: true }),
   ],
 
+  server: {
+    port: 3000,
+  },
+
   build: {
     rollupOptions: {
       output: { manualChunks: undefined },
