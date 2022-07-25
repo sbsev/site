@@ -15,9 +15,8 @@
   import { signup_form_submit_handler } from '../utils/airtable'
 
   export const load: Load = async () => {
-    const chapters = (await fetchChapters()).filter(
-      (chap: Chapter) => chap.acceptsSignups
-    )
+    let chapters = await fetchChapters()
+    chapters = chapters.filter((chap) => chap.acceptsSignups)
 
     const form = parseFormData({ ...raw_form, ...messages })
 
@@ -29,7 +28,7 @@
       if (field.id in options) {
         field.options = options[field.id]
       } else if (field.id === `chapter`) {
-        field.options = chapters.map((chap: Chapter) => chap.title)
+        field.options = chapters.map((chap) => chap.title)
       }
     }
 

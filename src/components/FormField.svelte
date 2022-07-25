@@ -107,6 +107,11 @@
 {/if}
 
 <style>
+  /* TODO: remove this once svelte-multiselect@5.0.5 is out, for which
+    --sms-text-color="var(--textColor)" will be a simpler fix */
+  :global(div.multiselect ul.selected input) {
+    color: var(--textColor);
+  }
   label {
     display: block;
     font-weight: bold;
