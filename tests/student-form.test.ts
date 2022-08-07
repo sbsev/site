@@ -4,8 +4,6 @@ import { fill_place, fill_select, move_slider } from './helpers.ts'
 test(`student signup form can be submitted after filling all required fields`, async ({
   page,
 }) => {
-  // needs the dev server running on localhost:3000 to work, fails with
-  // Error: net::ERR_CONNECTION_REFUSED otherwise
   await page.goto(`/signup-student`)
 
   await fill_select(page, `#chapter`, [`Test`])

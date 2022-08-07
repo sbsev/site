@@ -49,7 +49,6 @@
     "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
     "svelte": "3.49.0",
-    "svelte-algolia": "^0.2.16",
     "svelte-check": "^2.7.2",
     "svelte-color-mode": "^0.1.4",
     "svelte-multiselect": "^5.0.4",
