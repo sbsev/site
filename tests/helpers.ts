@@ -1,39 +1,4 @@
-import type { Browser, Page } from 'playwright'
-import * as playwright from 'playwright'
-import { createServer } from 'vite'
-import { afterAll, beforeAll } from 'vitest'
-
-let browser: Browser
-export let page: Page
-// make sure tests try to access localhost on the same port the dev server is running on (defaults to 3000)
-export const port = Number(process.env.PORT ?? 3000)
-
-const browser_name = (process.env.BROWSER ?? `chromium`) as
-  | 'chromium'
-  | 'firefox'
-  | 'webkit'
-
-const local_args = {
-  headless: false,
-  slowMo: 40,
-}
-
-// GitHub action and many other continuous integration runners set CI to 'true'
-const launch_args = process.env.CI ? {} : local_args
-
-beforeAll(async () => {
-  browser = await playwright[browser_name].launch(launch_args)
-  page = await browser.newPage()
-  const previewServer = await createServer({
-    mode: `dev`,
-    server: { port },
-  })
-  await previewServer.listen()
-})
-
-afterAll(async () => {
-  await browser.close()
-})
+import type { Page } from 'playwright'
 
 export async function fill_select(
   page: Page,

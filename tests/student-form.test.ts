@@ -1,13 +1,12 @@
-import { expect, test } from 'vitest'
-import { fill_place, fill_select, move_slider, page, port } from './helpers'
+import { expect, test } from '@playwright/test'
+import { fill_place, fill_select, move_slider } from './helpers.ts'
 
-test(`student signup form can be submitted after filling all required fields`, async () => {
+test(`student signup form can be submitted after filling all required fields`, async ({
+  page,
+}) => {
   // needs the dev server running on localhost:3000 to work, fails with
   // Error: net::ERR_CONNECTION_REFUSED otherwise
-  await page.goto(`http://localhost:${port}/signup-student`, {
-    timeout: 15_000,
-    waitUntil: `networkidle`,
-  })
+  await page.goto(`/signup-student`)
 
   await fill_select(page, `#chapter`, [`Test`])
 
