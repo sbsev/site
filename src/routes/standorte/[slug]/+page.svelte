@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BasePage from '$src/lib/BasePage.svelte'
+  import BasePage from '$lib/BasePage.svelte'
   import { microcopy } from 'src/stores'
   import InfoCircle from '~icons/bi/info-circle-fill'
   import Child from '~icons/fa-solid/child'
