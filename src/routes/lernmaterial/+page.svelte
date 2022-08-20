@@ -1,5 +1,4 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
   import CardText from '~icons/bi/card-text'
@@ -12,22 +11,11 @@
   import SelectAll from '~icons/ic/select-all'
   import Atom from '~icons/simple-icons/atom'
   import Disqus from '~icons/simple-icons/disqus'
-  import BasePage from '../components/BasePage.svelte'
-  import Img from '../components/Img.svelte'
-  import { fetchPage, fetchYamlList } from '../fetch'
-  import type { Page, StudyPlatform } from '../types'
+  import BasePage from '../../components/BasePage.svelte'
+  import Img from '../../components/Img.svelte'
+  import type { PageData } from './$types'
 
-  export const load: Load = async () => {
-    const page = await fetchPage(`lernmaterial`)
-    const studyPlatforms = await fetchYamlList(`Lernmaterial`, `lernmaterial#`)
-
-    return { props: { page, studyPlatforms } }
-  }
-</script>
-
-<script lang="ts">
-  export let studyPlatforms: StudyPlatform[]
-  export let page: Page
+  export let data: PageData
 
   const icons = {
     Alle: SelectAll,
@@ -45,12 +33,12 @@
   const email = `it@studenten-bilden-schueler.de`
   let hash: string
 
-  $: filtered = studyPlatforms.filter(
+  $: filtered = data.studyPlatforms?.filter(
     (itm) => activeTag === `Alle` || itm.tags.includes(activeTag)
   )
   // count tag occurrences
-  const tags = { Alle: studyPlatforms.length } as Record<string, number>
-  for (const itm of studyPlatforms) {
+  const tags = { Alle: data.studyPlatforms?.length } as Record<string, number>
+  for (const itm of data.studyPlatforms) {
     for (const tag of itm.tags) {
       tags[tag] = (tags[tag] ?? 0) + 1
     }
@@ -67,7 +55,7 @@
 <!-- used to briefly flash an list item as active when it's hash is found in the URL -->
 <svelte:window on:hashchange={setHash} />
 
-<BasePage {page}>
+<BasePage page={data.page}>
   <svelte:fragment slot="afterArticle">
     <ul class="tags">
       {#each Object.entries(tags) as [tag, count]}

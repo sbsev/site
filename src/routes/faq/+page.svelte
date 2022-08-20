@@ -1,5 +1,4 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
   import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
@@ -10,18 +9,10 @@
   import MiscellaneousServices from '~icons/ic/round-miscellaneous-services'
   import SupportAgent from '~icons/ic/round-support-agent'
   import SelectAll from '~icons/ic/select-all'
-  import Collapsible from '../components/Collapsible.svelte'
-  import { fetchYamlList } from '../fetch'
-  import type { FAQ } from '../types'
+  import Collapsible from '../../components/Collapsible.svelte'
+  import type { PageData } from './$types'
 
-  export const load: Load = async () => {
-    const faqs = await fetchYamlList(`FAQ`, `faq#`)
-    return { props: { faqs } }
-  }
-</script>
-
-<script lang="ts">
-  export let faqs: FAQ[]
+  export let data: PageData
 
   const icons = {
     'Rund ums Engagement': HandsHelping,
@@ -37,16 +28,16 @@
   const email = `info@studenten-bilden-schueler.de`
   let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
-  $: filteredFaqs = faqs.filter(
+  $: filteredFaqs = data.faqs.filter(
     (faq) => activeTag === `Alle` || faq.tags.includes(activeTag)
   )
   // count tag occurrences
-  const tags = faqs.reduce(
+  const tags = data.faqs?.reduce(
     (obj, faq) => {
       faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
       return obj
     },
-    { Alle: faqs.length }
+    { Alle: data.faqs?.length }
   )
 </script>
 

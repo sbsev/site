@@ -1,35 +1,13 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import Child from '~icons/fa-solid/child'
   import UserGraduate from '~icons/fa-solid/user-graduate'
   import Place from '~icons/ic/place'
   import ChapterMap from '../components/ChapterMap.svelte'
-  import { fetchChapters, fetchPage } from '../fetch'
   import { microcopy } from '../stores'
-  import type { Chapter, Page } from '../types'
+  import type { PageData } from './$types'
 
-  export const load: Load = async () => {
-    const page = await fetchPage(`/`)
-    const chapters = await fetchChapters()
-
-    // const { students, pupils } = await airtableFetch(
-    //   `{
-    //     students: studentenStatistiken {
-    //       id
-    //     }
-    //     pupils: schuelerStatistiken {
-    //       id
-    //     }
-    //   }`,
-    //   { cache: `force-cache` }
-    // )
-    return { props: { page, chapters } }
-  }
-</script>
-
-<script lang="ts">
-  export let chapters: Chapter[]
-  export let page: Page
+  export let data: PageData
+  $: ({ chapters, page } = data)
 
   const style = `vertical-align: text-top; margin-right: 5pt;`
 </script>

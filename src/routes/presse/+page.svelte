@@ -1,32 +1,13 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import Place from '~icons/ic/place'
   import Newspaper from '~icons/ion/newspaper'
   import Calendar from '~icons/octicon/calendar'
-  import BasePage from '../components/BasePage.svelte'
-  import Img from '../components/Img.svelte'
-  import { fetchPage, fetchYamlList } from '../fetch'
-  import type { Page, PressItem } from '../types'
+  import BasePage from '../../components/BasePage.svelte'
+  import Img from '../../components/Img.svelte'
+  import type { PageData } from './$types'
 
-  export const load: Load = async () => {
-    const page = await fetchPage(`presse`)
-
-    const pressItems = await fetchYamlList(`Presse`, `presse#`)
-
-    const itemsByYear = pressItems.reduce((acc, itm) => {
-      const year = itm.date.getFullYear()
-      if (!acc[year]) acc[year] = []
-      acc[year].push(itm)
-      return acc
-    }, {})
-
-    return { props: { page, pressItems: itemsByYear } }
-  }
-</script>
-
-<script lang="ts">
-  export let pressItems: Record<number, PressItem[]>
-  export let page: Page
+  export let data: PageData
+  $: ({ pressItems, page } = data)
 
   const imgStyle = `width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-bottom; margin: 0 5pt 0 0;`
