@@ -4,8 +4,8 @@
   import Modal from '$lib/Modal.svelte'
   import Plant from '~icons/ri/plant-fill'
   // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
-  import { signupStore } from '../../stores'
-  import { signup_form_submit_handler } from '../../utils/airtable'
+  import { signupStore } from 'src/stores'
+  import { signup_form_submit_handler } from 'src/utils/airtable'
   import type { PageData } from './$types'
 
   export let data: PageData

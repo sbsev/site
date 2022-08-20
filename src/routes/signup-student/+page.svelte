@@ -2,9 +2,9 @@
   import CircleSpinner from '$lib/CircleSpinner.svelte'
   import FormField from '$lib/FormField.svelte'
   import Modal from '$lib/Modal.svelte'
+  import { signupStore } from 'src/stores'
+  import { signup_form_submit_handler } from 'src/utils/airtable'
   import Plant from '~icons/ri/plant-fill'
-  import { signupStore } from '../../stores'
-  import { signup_form_submit_handler } from '../../utils/airtable'
 
   import type { PageData } from './$types'
   export let data: PageData

@@ -1,10 +1,10 @@
 <script lang="ts">
   import BasePage from '$src/lib/BasePage.svelte'
+  import { microcopy } from 'src/stores'
   import InfoCircle from '~icons/bi/info-circle-fill'
   import Child from '~icons/fa-solid/child'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
   import Email from '~icons/ic/email'
-  import { microcopy } from '../../../stores'
   import type { PageData } from './$types'
 
   export let data: PageData
