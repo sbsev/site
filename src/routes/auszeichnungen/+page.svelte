@@ -1,23 +1,12 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import PriceRibbon from '~icons/fa-solid/award'
   import Calendar from '~icons/octicon/calendar'
-  import BasePage from '../components/BasePage.svelte'
-  import Img from '../components/Img.svelte'
-  import { fetchPage, fetchYamlList } from '../fetch'
-  import type { Award, Page } from '../types'
+  import BasePage from '../../components/BasePage.svelte'
+  import Img from '../../components/Img.svelte'
+  import type { PageData } from './$types'
 
-  export const load: Load = async () => {
-    const page = await fetchPage(`auszeichnungen`)
-    const awards = await fetchYamlList(`Auszeichnungen`, `auszeichnungen#`)
-
-    return { props: { page, awards } }
-  }
-</script>
-
-<script lang="ts">
-  export let awards: Award[]
-  export let page: Page
+  export let data: PageData
+  $: ({ awards, page } = data)
 
   const imgStyle = `width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `height: 2.2ex; vertical-align: text-top; margin: 0 5pt 0 0;`

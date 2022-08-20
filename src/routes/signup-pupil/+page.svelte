@@ -1,45 +1,15 @@
-<script lang="ts" context="module">
-  import { dev } from '$app/env'
-  import type { Load } from '@sveltejs/kit'
-  import Plant from '~icons/ri/plant-fill'
-  import CircleSpinner from '../components/CircleSpinner.svelte'
-  import FormField from '../components/FormField.svelte'
-  import Modal from '../components/Modal.svelte'
-  import { fetchChapters, parseFormData } from '../fetch'
-  // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
-  import messages from '../signup-form/de/messages.yml'
-  import options from '../signup-form/de/options.yml'
-  import raw_form from '../signup-form/de/pupil.yml'
-  import { signupStore } from '../stores'
-  import type { Chapter, Form } from '../types'
-  import { signup_form_submit_handler } from '../utils/airtable'
-
-  export const load: Load = async () => {
-    const chapters = (await fetchChapters()).filter(
-      (chap: Chapter) => chap.acceptsSignups
-    )
-
-    const form = parseFormData({ ...raw_form, ...messages })
-
-    if (dev) {
-      chapters[0] = { ...chapters[0], title: `Test`, baseId: `appe3hVONuwBkuQv1` }
-    }
-
-    for (const field of form.fields) {
-      if (field.id in options) {
-        field.options = options[field.id]
-      } else if (field.id === `chapter`) {
-        field.options = chapters.map((chap: Chapter) => chap.title)
-      }
-    }
-
-    return { props: { chapters, form } }
-  }
-</script>
-
 <script lang="ts">
-  export let chapters: Chapter[]
-  export let form: Form
+  import Plant from '~icons/ri/plant-fill'
+  import CircleSpinner from '../../components/CircleSpinner.svelte'
+  import FormField from '../../components/FormField.svelte'
+  import Modal from '../../components/Modal.svelte'
+  // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
+  import { signupStore } from '../../stores'
+  import { signup_form_submit_handler } from '../../utils/airtable'
+  import type { PageData } from './$types'
+
+  export let data: PageData
+  $: ({ chapters, form } = data)
 
   let success = false
   let error: Error | undefined = undefined

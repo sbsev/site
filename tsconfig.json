@@ -1,5 +1,5 @@
-// https://github.com/sveltejs/language-tools/blob/master/docs/preprocessors/typescript.md
 {
+  "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "module": "esnext",
@@ -15,7 +15,6 @@
     "sourceMap": true,
 
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
 
     "paths": {
       "$src/*": ["./src/*"]

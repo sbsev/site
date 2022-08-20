@@ -24,9 +24,7 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: |
-          yarn dev &
-          yarn test
+        run: yarn test
         env:
           # needed to fetch website content
           VITE_CONTENTFUL_SPACE_ID: ${{ secrets.VITE_CONTENTFUL_SPACE_ID }}

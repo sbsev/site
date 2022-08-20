@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Search from 'svelte-algolia'
+  // import Search from 'svelte-algolia'
   import { ColorMode, ModalColorPicker } from 'svelte-color-mode'
   import type { NavLink } from '../types'
   import { colors, colorsByMode } from '../utils/colors'
@@ -12,19 +12,19 @@
   let viewWidth: number
   $: mobile = viewWidth < breakpoint
 
-  const searchProps = {
-    indices: Object.fromEntries(
-      [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
-    ),
-    appId: import.meta.env.VITE_ALGOLIA_APP_ID,
-    searchKey: import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
-    loadingStr: `Suche läuft...`,
-    noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
-    resultReporter: (hits: unknown[]) =>
-      hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
-    placeholder: `Suche`,
-    ariaLabel: `Suche`,
-  }
+  // const searchProps = {
+  //   indices: Object.fromEntries(
+  //     [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
+  //   ),
+  //   appId: import.meta.env.VITE_ALGOLIA_APP_ID,
+  //   searchKey: import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
+  //   loadingStr: `Suche läuft...`,
+  //   noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
+  //   resultReporter: (hits: unknown[]) =>
+  //     hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
+  //   placeholder: `Suche`,
+  //   ariaLabel: `Suche`,
+  // }
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -39,12 +39,12 @@
     lightName="Hell"
   />
 
-  <Search
+  <!-- <Search
     {...searchProps}
     --hitsBgColor="var(--bodyBg)"
     --iconColor="var(--headerColor)"
     --inputColor="white"
-  />
+  /> -->
 </header>
 
 <style>

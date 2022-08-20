@@ -1,32 +1,5 @@
-import type { Browser, Page } from 'playwright'
-import * as playwright from 'playwright'
-import { afterAll, beforeAll } from 'vitest'
+import type { Page } from 'playwright'
 
-export let browser: Browser
-export let page: Page
-export const port = process.env.PORT ?? 3000
-
-const browser_name = (process.env.BROWSER ?? `chromium`) as
-  | 'chromium'
-  | 'firefox'
-  | 'webkit'
-
-const local_args = {
-  headless: false,
-  slowMo: 40,
-}
-
-// GitHub action and many other continuous integration runners set CI to 'true'
-const launch_args = process.env.CI ? {} : local_args
-
-beforeAll(async () => {
-  browser = await playwright[browser_name].launch(launch_args)
-  page = await browser.newPage()
-})
-
-afterAll(async () => {
-  await browser.close()
-})
 export async function fill_select(
   page: Page,
   selector: string,

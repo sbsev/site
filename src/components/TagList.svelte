@@ -17,10 +17,21 @@
   import Euro from '~icons/ic/round-euro'
   import SelectAll from '~icons/ic/select-all'
   import StatsChart from '~icons/ion/stats-chart'
-  import type { BlogTag } from '../types'
+  import type { BlogTag, Post } from '../types'
 
-  export let tagOccurrences: [BlogTag, number][]
+  export let posts: Post[]
   export let activeTag = `Alle`
+
+  const tagCounter: Record<string, number> = { Alle: posts.length }
+
+  // count tag occurrences
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      tagCounter[tag] = (tagCounter[tag] ?? 0) + 1
+    }
+  }
+
+  const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][]
 
   const icons: Record<BlogTag, typeof SvelteComponent> = {
     Alle: SelectAll,

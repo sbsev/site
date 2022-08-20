@@ -1,28 +1,14 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import BasePage from '$src/components/BasePage.svelte'
-  import { fetchPage } from '$src/fetch'
-  import type { Page } from '$src/types'
-  import type { Load } from '@sveltejs/kit'
   import InfoCircle from '~icons/bi/info-circle-fill'
   import Child from '~icons/fa-solid/child'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
   import Email from '~icons/ic/email'
-  import { microcopy } from '../../stores'
+  import { microcopy } from '../../../stores'
+  import type { PageData } from './$types'
 
-  export const load: Load = async ({ params }) => {
-    const { slug } = params
-
-    const page = await fetchPage(`standorte/${slug}`)
-
-    if (!page) return { status: 404 }
-
-    return { props: { page, slug } }
-  }
-</script>
-
-<script lang="ts">
-  export let page: Page
-  export let slug: string
+  export let data: PageData
+  $: ({ page, slug } = data)
 
   const style = `vertical-align: -3pt; height: 18pt; margin-right: 3pt;`
 </script>
