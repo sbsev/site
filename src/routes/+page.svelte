@@ -1,8 +1,8 @@
 <script lang="ts">
+  import ChapterMap from '$lib/ChapterMap.svelte'
   import Child from '~icons/fa-solid/child'
   import UserGraduate from '~icons/fa-solid/user-graduate'
   import Place from '~icons/ic/place'
-  import ChapterMap from '../components/ChapterMap.svelte'
   import { microcopy } from '../stores'
   import type { PageData } from './$types'
 

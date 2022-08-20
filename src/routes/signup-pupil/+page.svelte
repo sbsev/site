@@ -1,8 +1,8 @@
 <script lang="ts">
+  import CircleSpinner from '$lib/CircleSpinner.svelte'
+  import FormField from '$lib/FormField.svelte'
+  import Modal from '$lib/Modal.svelte'
   import Plant from '~icons/ri/plant-fill'
-  import CircleSpinner from '../../components/CircleSpinner.svelte'
-  import FormField from '../../components/FormField.svelte'
-  import Modal from '../../components/Modal.svelte'
   // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
   import { signupStore } from '../../stores'
   import { signup_form_submit_handler } from '../../utils/airtable'

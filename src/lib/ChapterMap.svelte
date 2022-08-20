@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import Map from '../components/Map.svelte'
-  import type { Chapter } from '../types'
   import { fetchChapters } from '../fetch'
   import { microcopy } from '../stores'
+  import type { Chapter } from '../types'
+  import Map from './Map.svelte'
 
   export const load: Load = async () => {
     const chapters = await fetchChapters()

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { afterNavigate } from '$app/navigation'
+  import Footer from '$lib/Footer.svelte'
+  import Header from '$lib/Header.svelte'
   import '../app.css'
-  import Footer from '../components/Footer.svelte'
-  import Header from '../components/Header.svelte'
   import { microcopy } from '../stores'
   import type { LayoutData } from './$types'
 

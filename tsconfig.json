@@ -16,10 +16,6 @@
 
     "forceConsistentCasingInFileNames": true,
 
-    "paths": {
-      "$src/*": ["./src/*"]
-    },
-
     "types": ["unplugin-icons/types/svelte"]
   }
 }

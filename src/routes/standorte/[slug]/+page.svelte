@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BasePage from '$src/components/BasePage.svelte'
+  import BasePage from '$src/lib/BasePage.svelte'
   import InfoCircle from '~icons/bi/info-circle-fill'
   import Child from '~icons/fa-solid/child'
   import GraduationCap from '~icons/fa-solid/graduation-cap'

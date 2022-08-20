@@ -1,4 +1,6 @@
 <script lang="ts">
+  import BasePage from '$lib/BasePage.svelte'
+  import Img from '$lib/Img.svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
   import CardText from '~icons/bi/card-text'
@@ -11,8 +13,6 @@
   import SelectAll from '~icons/ic/select-all'
   import Atom from '~icons/simple-icons/atom'
   import Disqus from '~icons/simple-icons/disqus'
-  import BasePage from '../../components/BasePage.svelte'
-  import Img from '../../components/Img.svelte'
   import type { PageData } from './$types'
 
   export let data: PageData

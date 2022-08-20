@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Img from '$src/components/Img.svelte'
-  import ToolTip from '$src/components/ToolTip.svelte'
+  import Img from '$src/lib/Img.svelte'
+  import ToolTip from '$src/lib/ToolTip.svelte'
   import type { Post } from '$src/types'
   import PersonCircle from '~icons/bi/person-circle'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
