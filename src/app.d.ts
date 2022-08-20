@@ -9,21 +9,21 @@ interface Window {
 }
 
 declare module '*pupil.yml' {
-  const form: import('./types').Form
+  const form: import('./lib/types').Form
   export default form
 }
 
 declare module '*student.yml' {
-  const form: import('./types').Form
+  const form: import('./lib/types').Form
   export default form
 }
 
 declare module '*options.yml' {
-  const options: import('./types').FormSelectOptions
+  const options: import('./lib/types').FormSelectOptions
   export default options
 }
 
 declare module '*messages.yml' {
-  const messages: import('./types').FormMessages
+  const messages: import('./lib/types').FormMessages
   export default messages
 }

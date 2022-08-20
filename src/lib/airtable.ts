@@ -1,7 +1,7 @@
 // eslint-disable no-console
 import { get } from 'svelte/store'
-import { signupStore } from '../stores'
-import type { Chapter, SignupStore } from '../types'
+import { signupStore } from './stores'
+import type { Chapter, SignupStore } from './types'
 
 const api_key = import.meta.env.VITE_AIRTABLE_API_KEY
 if (!api_key) throw `missing Airtable API key, got ${api_key}`

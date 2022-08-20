@@ -11,7 +11,7 @@
   import QuestionAnswer from '~icons/ic/round-question-answer'
   import PeopleCircle from '~icons/ion/people-circle'
   import Plant from '~icons/ri/plant-fill'
-  import type { NavLink } from '../types'
+  import type { NavLink } from './types'
 
   export let nav: NavLink[]
   export let mobile: boolean

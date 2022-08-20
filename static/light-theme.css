@@ -1,0 +1,16 @@
+:root {
+  --textColor: black;
+  --linkColor: var(--blue);
+  --hoverColor: var(--lightBlue);
+  --bodyBg: var(--lightestGray);
+  --accentBg: white;
+  --lightBg: var(--lighterGray);
+  --shadow: var(--gray);
+  --borderColor: var(--lightBlue);
+  --headingColor: var(--lightBlue);
+  --headerBg: var(--darkBlue);
+  --headerColor: white;
+  --footerBg: var(--darkBlue);
+  --invert: 0;
+  --transparent: rgba(255, 255, 255, 0.8);
+}

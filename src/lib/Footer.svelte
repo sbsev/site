@@ -5,9 +5,9 @@
   import DocumentText from '~icons/ion/document-text'
   import Law from '~icons/octicon/law'
   import OpenSource from '~icons/ri/open-source-fill'
-  import type { Link } from '../types'
   import Social from './Social.svelte'
-  import { microcopy } from '../stores'
+  import { microcopy } from './stores'
+  import type { Link } from './types'
 
   const icons = {
     Impressum: Law,

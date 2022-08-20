@@ -1,6 +1,6 @@
+import { fetchPage } from '$lib/fetch'
 import type { PageLoad } from '@sveltejs/kit'
 import { error } from '@sveltejs/kit'
-import { fetchPage } from '../../fetch'
 
 export const load: PageLoad = async ({ params }) => {
   // delegate route to static/robots.txt

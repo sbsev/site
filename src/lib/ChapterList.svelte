@@ -1,8 +1,8 @@
 <script lang="ts">
   import Place from '~icons/ic/place'
   import Construction from '~icons/ic/round-construction'
-  import type { Chapter } from '../types'
-  import { microcopy } from '../stores'
+  import { microcopy } from './stores'
+  import type { Chapter } from './types'
 
   export let chapters: Chapter[]
 

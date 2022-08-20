@@ -4,9 +4,9 @@
   import Tags from '~icons/fa-solid/tags'
   import Email from '~icons/ic/email'
   import Calendar from '~icons/octicon/calendar'
-  import type { Post } from '../types'
   import Img from './Img.svelte'
   import ToolTip from './ToolTip.svelte'
+  import type { Post } from './types'
 
   export let post: Post
 

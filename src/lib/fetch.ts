@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import yaml from 'js-yaml'
+import marked from '../utils/marked'
 import type { Chapter, Form, Page, Post } from './types'
-import marked from './utils/marked'
 
 const prefixSlug = (prefix: string) => (obj: Page | Post) => {
   obj.slug = prefix + obj.slug

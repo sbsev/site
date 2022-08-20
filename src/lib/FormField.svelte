@@ -1,11 +1,11 @@
 <script lang="ts">
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
-  import { signupStore } from '../stores'
-  import type { FormFieldType, SignupStore } from '../types'
   import PlaceSelect from './PlaceSelect.svelte'
   import RadioButtons from './RadioButtons.svelte'
+  import { signupStore } from './stores'
   import Toggle from './Toggle.svelte'
+  import type { FormFieldType, SignupStore } from './types'
 
   export let title: string
   export let note = ``

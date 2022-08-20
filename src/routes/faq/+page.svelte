@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Collapsible from '$lib/Collapsible.svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
   import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
@@ -9,7 +10,6 @@
   import MiscellaneousServices from '~icons/ic/round-miscellaneous-services'
   import SupportAgent from '~icons/ic/round-support-agent'
   import SelectAll from '~icons/ic/select-all'
-  import Collapsible from '../../components/Collapsible.svelte'
   import type { PageData } from './$types'
 
   export let data: PageData

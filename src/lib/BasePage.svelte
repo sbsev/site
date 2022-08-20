@@ -1,9 +1,9 @@
 <script lang="ts">
   import Toc from 'svelte-toc/Toc.svelte'
   import Update from '~icons/ic/update'
-  import Img from '../components/Img.svelte'
-  import type { Page } from '../types'
-  import { microcopy } from '../stores'
+  import Img from './Img.svelte'
+  import { microcopy } from './stores'
+  import type { Page } from './types'
 
   export let page: Page
 

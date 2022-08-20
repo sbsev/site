@@ -17,7 +17,7 @@
   import Euro from '~icons/ic/round-euro'
   import SelectAll from '~icons/ic/select-all'
   import StatsChart from '~icons/ion/stats-chart'
-  import type { BlogTag, Post } from '../types'
+  import type { BlogTag, Post } from './types'
 
   export let posts: Post[]
   export let activeTag = `Alle`

@@ -2,7 +2,7 @@
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
-  import type { MapMarker } from '../types'
+  import type { MapMarker } from './types'
 
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 

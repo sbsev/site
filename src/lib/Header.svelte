@@ -1,17 +1,18 @@
 <script lang="ts">
   // import Search from 'svelte-algolia'
-  import { ColorMode, ModalColorPicker } from 'svelte-color-mode'
+  import BrightnessAuto from '~icons/bi/laptop'
+  import Sun from '~icons/ic/round-wb-sunny'
   import type { NavLink } from '../types'
-  import { colors, colorsByMode } from '../utils/colors'
+  import Moon from './icons/Moon.svelte'
+
   import Nav from './Nav.svelte'
-  import SearchHit from './SearchHit.svelte'
+  import { colorMode } from './stores'
 
   export let nav: NavLink[]
   export let breakpoint = 1100
 
   let viewWidth: number
   $: mobile = viewWidth < breakpoint
-
   // const searchProps = {
   //   indices: Object.fromEntries(
   //     [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
@@ -25,6 +26,17 @@
   //   placeholder: `Suche`,
   //   ariaLabel: `Suche`,
   // }
+  const color_mode_icons = [
+    [`light`, BrightnessAuto],
+    [`dark`, Moon],
+    [`system`, Sun],
+  ] as const
+  let mode_idx = 0
+
+  function set_color_mode() {
+    mode_idx = (mode_idx + 1) % color_mode_icons.length
+    $colorMode = color_mode_icons[mode_idx][0]
+  }
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -32,12 +44,18 @@
 <header class={mobile ? `mobile` : `desktop`}>
   <Nav {nav} {mobile} />
 
-  <ColorMode {colorsByMode} otherColors={colors} />
-  <ModalColorPicker
-    ariaLabelBtnOpener="Farbmodus öffnen"
-    darkName="Dunkel"
-    lightName="Hell"
-  />
+  <!-- TODO: i18n the color mode titles -->
+  <button
+    title="Set color mode"
+    on:click={set_color_mode}
+    style="display: flex; color: white;"
+  >
+    <svelte:component
+      this={color_mode_icons[mode_idx][1]}
+      width="1em"
+      title="Color mode {$colorMode}"
+    />
+  </button>
 
   <!-- <Search
     {...searchProps}

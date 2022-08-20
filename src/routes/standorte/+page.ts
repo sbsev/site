@@ -1,4 +1,4 @@
-import { fetchChapters, fetchPage } from '$src/fetch'
+import { fetchChapters, fetchPage } from '$lib/fetch'
 import type { PageLoad } from '@sveltejs/kit'
 
 export const load: PageLoad = async ({ url }) => {

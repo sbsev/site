@@ -1,9 +1,9 @@
 <script lang="ts">
+  import ChapterMap from '$lib/ChapterMap.svelte'
+  import { microcopy } from '$lib/stores'
   import Child from '~icons/fa-solid/child'
   import UserGraduate from '~icons/fa-solid/user-graduate'
   import Place from '~icons/ic/place'
-  import ChapterMap from '../components/ChapterMap.svelte'
-  import { microcopy } from '../stores'
   import type { PageData } from './$types'
 
   export let data: PageData
@@ -15,7 +15,12 @@
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
 {#if $microcopy?.country == `de`}
   <h1>
-    <img src="/name.svg" alt="Studenten bilden Schüler" width="1924px" height="163px" />
+    <img
+      src="/logo-name.svg"
+      alt="Studenten bilden Schüler"
+      width="1924px"
+      height="163px"
+    />
   </h1>
 {:else}
   <h1>

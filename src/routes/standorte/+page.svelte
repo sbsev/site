@@ -1,7 +1,7 @@
 <script lang="ts">
-  import BasePage from '$src/components/BasePage.svelte'
-  import ChapterList from '$src/components/ChapterList.svelte'
-  import ChapterMap from '$src/components/ChapterMap.svelte'
+  import BasePage from '$lib/BasePage.svelte'
+  import ChapterList from '$lib/ChapterList.svelte'
+  import ChapterMap from '$lib/ChapterMap.svelte'
   import type { PageData } from './$types'
 
   export let data: PageData

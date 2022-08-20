@@ -4,15 +4,16 @@ import type { SignupStore } from './types'
 const hasSessionStore = typeof sessionStorage !== `undefined`
 const hasLocalStore = typeof localStorage !== `undefined`
 
-export const colorModeKey = `colorMode`
+export const colorModeKey = `color-mode`
 
-export const colorMode = writable<`light` | `dark` | `auto`>(
-  (hasLocalStore && localStorage[colorModeKey]) || `auto`
+type ColorMode = `light` | `dark` | `system`
+
+export const colorMode = writable<ColorMode>(
+  (hasLocalStore && localStorage[colorModeKey]) || `system`
 )
 
 colorMode.subscribe(
-  (val: `light` | `dark` | `auto`) =>
-    hasLocalStore && (localStorage[colorModeKey] = val)
+  (val: ColorMode) => hasLocalStore && (localStorage[colorModeKey] = val)
 )
 
 function sessionStore<T>(name: string, initialValue: T) {

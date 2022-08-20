@@ -1,4 +1,4 @@
-import { fetchPages, fetchPosts, fetchYamlList } from '../fetch.js'
+import { fetchPages, fetchPosts, fetchYamlList } from '$lib/fetch.js'
 
 function processResults(
   fetchFunction: typeof fetchPages | typeof fetchPosts | typeof fetchYamlList,

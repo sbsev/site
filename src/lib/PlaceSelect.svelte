@@ -3,9 +3,9 @@
   import type { Map, Marker } from 'mapbox-gl'
   import mapbox from 'mapbox-gl'
   import Delete from '~icons/ic/delete'
-  import type { Place } from '../types'
   import Geocoder from './Geocoder.svelte'
   import MapComp from './Map.svelte'
+  import type { Place } from './types'
 
   export let value: Place[] = [] // currently selected places
   export let placeholder = ``

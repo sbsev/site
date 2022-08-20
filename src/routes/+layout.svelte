@@ -1,9 +1,9 @@
 <script lang="ts">
   import { afterNavigate } from '$app/navigation'
+  import Footer from '$lib/Footer.svelte'
+  import Header from '$lib/Header.svelte'
+  import { colorMode, microcopy } from '$lib/stores'
   import '../app.css'
-  import Footer from '../components/Footer.svelte'
-  import Header from '../components/Header.svelte'
-  import { microcopy } from '../stores'
   import type { LayoutData } from './$types'
 
   export let data: LayoutData
@@ -24,6 +24,9 @@
   <meta name="description" content={$microcopy?.meta?.description} />
   <!-- see netlify.toml file for where this script originates -->
   <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
+
+  <meta name="color-scheme" content={$colorMode} />
+  <link rel="stylesheet" href="/{$colorMode}-theme.css" />
 </svelte:head>
 
 <Header {nav} />

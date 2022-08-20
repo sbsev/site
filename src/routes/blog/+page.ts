@@ -1,4 +1,4 @@
-import { fetchPosts, fetchYaml } from '$src/fetch'
+import { fetchPosts, fetchYaml } from '$lib/fetch'
 import type { PageLoad } from '@sveltejs/kit'
 
 export const load: PageLoad = async () => {
