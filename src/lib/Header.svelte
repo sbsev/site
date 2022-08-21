@@ -1,12 +1,8 @@
 <script lang="ts">
   // import Search from 'svelte-algolia'
-  import BrightnessAuto from '~icons/bi/laptop'
-  import Sun from '~icons/ic/round-wb-sunny'
-  import type { NavLink } from '../types'
-  import Moon from './icons/Moon.svelte'
-
   import Nav from './Nav.svelte'
-  import { colorMode } from './stores'
+  import ThemeSwitcher from './ThemeSwitcher.svelte'
+  import type { NavLink } from './types'
 
   export let nav: NavLink[]
   export let breakpoint = 1100
@@ -26,17 +22,6 @@
   //   placeholder: `Suche`,
   //   ariaLabel: `Suche`,
   // }
-  const color_mode_icons = [
-    [`light`, BrightnessAuto],
-    [`dark`, Moon],
-    [`system`, Sun],
-  ] as const
-  let mode_idx = 0
-
-  function set_color_mode() {
-    mode_idx = (mode_idx + 1) % color_mode_icons.length
-    $colorMode = color_mode_icons[mode_idx][0]
-  }
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -44,19 +29,7 @@
 <header class={mobile ? `mobile` : `desktop`}>
   <Nav {nav} {mobile} />
 
-  <!-- TODO: i18n the color mode titles -->
-  <button
-    title="Set color mode"
-    on:click={set_color_mode}
-    style="display: flex; color: white;"
-  >
-    <svelte:component
-      this={color_mode_icons[mode_idx][1]}
-      width="1em"
-      title="Color mode {$colorMode}"
-    />
-  </button>
-
+  <ThemeSwitcher />
   <!-- <Search
     {...searchProps}
     --hitsBgColor="var(--bodyBg)"
