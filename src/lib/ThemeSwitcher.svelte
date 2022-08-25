@@ -22,5 +22,9 @@
   on:click={set_color_mode}
   style="display: flex; color: white;"
 >
-  <svelte:component this={color_mode_icons[$colorMode][0]} width="1em" />
+  <svelte:component
+    this={color_mode_icons[$colorMode][0]}
+    width="1em"
+    title={$colorMode}
+  />
 </button>

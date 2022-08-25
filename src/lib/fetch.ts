@@ -14,7 +14,7 @@ export async function airtableFetch(
 ): Promise<Record<string, unknown>> {
   const apiKey = import.meta.env.VITE_AIRTABLE_CHAPTER_BASE_APP_ID
 
-  if (!apiKey) throw `Missing Airtable API key. Please add to .env`
+  if (!apiKey) throw `Missing Airtable API key. Please add to .env file`
 
   const response = await fetch(
     `https://api.baseql.com/airtable/graphql/${apiKey}`,
@@ -36,8 +36,9 @@ export async function contentfulFetch(query: string) {
   const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
   const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
 
-  if (!token || !id)
-    throw `Missing Contentful access token and/or space ID. Please add to .env`
+  if (!token || !id) {
+    throw `Missing Contentful access token and/or space ID. Please add to .env file`
+  }
 
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
   const ctfGraphqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`

@@ -14,6 +14,10 @@ export default {
     port: 3000,
   },
 
+  preview: {
+    port: 3000,
+  },
+
   resolve: {
     alias: {
       $src: resolve(`./src`),
