@@ -1,11 +1,23 @@
 import { dev } from '$app/env'
 import { fetchChapters, parseFormData } from '$lib/fetch'
 import type { PageLoad } from '@sveltejs/kit'
-import messages from '../../signup-form/de/messages.yml'
-import options from '../../signup-form/de/options.yml'
-import raw_form from '../../signup-form/de/student.yml'
+import { microcopy } from '$lib/stores'
+import { get } from 'svelte/store'
+// import messages from '../../signup-form/de/messages.yml'
+// import options from '../../signup-form/de/options.yml'
+// import raw_form from '../../signup-form/de/student.yml'
 
 export const load: PageLoad = async () => {
+  // this does not work yet, when the url is directly called
+  // The problem is that microcopy is undefined when the page is loaded directly
+  var country = get(microcopy).country
+  console.log('country', country)
+  const messages = (await import(`../../signup-form/${country}/messages.yml`))
+    .default
+  const options = (await import(`../../signup-form/${country}/options.yml`))
+    .default
+  const raw_form = (await import(`../../signup-form/${country}/student.yml`))
+    .default
   let chapters = await fetchChapters()
   chapters = chapters.filter((chap) => chap.acceptsSignups)
 

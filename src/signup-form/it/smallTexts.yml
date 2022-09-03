@@ -1,0 +1,88 @@
+comment: Only the version of this yml file that is stored on contentful is used.
+  The version of this file on git is just a copy to document changes.
+
+country: it
+
+indexPage:
+  title: Universitari per Scolari
+  theme: Tutoraggio gratuito da parte di universitari volontari per scolari economicamente svantaggiati.
+  chooseLocation: 'Scegliere la tua <a sveltekit:prefetch href="/standorte"><strong>sede</strong></a> sulla mappa!'
+
+  register: 'Oppure <a sveltekit:prefetch href="/signup-student">
+    <strong>contattaci</strong>
+    </a> direttamente'
+  boxes:
+    locationsName: Sedi
+    studentsName: Universitari
+    studentsNumber: 10
+    pupilsName: Scolari
+    pupilsNumber: 20
+    scholarshipName: Fondazione
+    scholarshipNumber: 2022
+footer:
+  name: 'Universitari per Scolari - ODV'
+  siteInfos: 'Questa pagina è
+    <a href="https://github.com/sbsev/svelte-site">
+    <OpenSource
+    height="2.5ex"
+    style="vertical-align: bottom; padding-right: 3pt;"
+    />open source
+    </a>
+    e non
+    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
+    usa
+    <Cookie height="2.2ex" style="vertical-align: middle;" />
+    cookies.
+    </a>'
+  site: 'Questa pagina è'
+  uses: 'e non usa'
+
+map:
+  location:
+    lng: 12.57
+    lat: 41.87
+    zoom: 5.05
+    minZoom: 4
+    maxZoom: 10
+  text:
+    active: 'Seda attiva'
+    inSetup: 'in fondazione'
+
+chapterList:
+  locations: 'Le nostre sedi'
+  inSetup: 'Sedi in fondazione'
+
+location:
+  register: 'Registrazioni'
+  joinStudent: 'Vuoi partecipare?'
+  registerStudent: 'Registrati come tutor'
+  linkStudentInfo: '/partecipare/tutor'
+  infoStudentButton: 'Informazioni per i tutor'
+  joinPupil: 'Stai cercando un tutoraggio?'
+  registerPupil: 'Registrati come studente'
+  linkPupilInfo: '/partecipare/studente'
+  infoPupilButton: 'Informazioni per i studenti'
+  locationManagement: 'Sei interessato alla gestione di uma sede?'
+  mailTo: 'mailto:info.{slug}@universitari-per-scolari.it?subject=Interesse per la gestione della sede in {page.title}'
+  writeMailButton: 'Scrivici'
+  linkLeadingInfo: '/partecipare/gestore-della-sede'
+  infoLeadingButton: 'Informazioni per i gestori della sede'
+  contact: 'Contatto'
+  questions: "Hai delle domande? Scrivici un'e-mail!"
+  url: 'https://sbs-italy.netlify.app/'
+  student: 'tutor'
+  forStudents: 'per i tutor'
+  pupil: 'studenti'
+  info: 'info'
+  forPartner: 'per le istituzioni sociali e le richieste di tutoraggio'
+  generalRequests: 'per richieste di carattere generale'
+
+basepage:
+  last: 'Ultima modifica:'
+  feedback: 'Feedback su questa pagina?'
+  email: 'it@universitari-per-scolari.it?subject=Feedback su questa pagina:'
+
+meta:
+  name: 'Universitari per Scolari - ODV'
+  description: 'Tutoraggio volontario da parte di universitari per scolari in tutta la Italia.'
+  url: https://sbs-italy.netlify.app/

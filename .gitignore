@@ -11,4 +11,7 @@ package
 
 # secrets
 .env
+.env*
+!.env.example
 googleTranslateApiKey.json
+

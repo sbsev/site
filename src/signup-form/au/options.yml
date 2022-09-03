@@ -1,0 +1,65 @@
+types:
+  - Student
+  - Schüler
+locales:
+  - Deutsch
+  - English
+online:
+  - Keine Angabe
+  - Ja
+  - Nein
+gender:
+  - Männlich
+  - Weiblich
+  - Divers
+discovery:
+  - Internetrecherche
+  - Freunde
+  - Fachschaft
+  - Email
+  - Instagram
+  - Facebook
+  - Twitter/Xing/LinkedIn/YouTube/...
+  - Aushang/Abrisszettel
+  - Werbung in Vorlesung
+  - Flyer
+  - Infostand/Vereinspräsentation
+  - Bericht in Zeitung/Internet
+  - Auflistung in Ehrenamtsregister
+  - Kooperationsparter
+  - Coronaschool
+  - MitVergnügen
+  - Organisation Tatendrang
+  - Jodel
+  - Andere Maßnahme
+schoolTypes:
+  - Grundschule
+  - Mittelschule
+  - Berufsschule
+  - Gymnasium
+  - Ausbildung
+  - Hauptschule
+  - Realschule
+  - Flüchtlingsschule
+  - Andere
+subjects:
+  - Alle Unterstufenfächer
+  - Mathe
+  - Deutsch
+  - Englisch
+  - Gesellschaftskunde/Politik
+  - Erdkunde/Geographie
+  - Wirtschaft
+  - Chemie
+  - Biologie
+  - Physik
+  - Geschichte
+  - Informatik
+  - Französisch
+  - Spanisch
+  - Latein
+  - Sport
+  - Musik
+  - Philosophie
+  - Religion/Ethik
+  - Deutsch als Fremdsprache

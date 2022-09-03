@@ -1,6 +1,6 @@
 comment: This yaml is both on github and on contentful for versioning and checking of correctness. Only the version on contentful is actually used!
 
-country: de
+country: at
 
 indexPage:
   title: Studenten bilden Schüler
@@ -17,9 +17,8 @@ indexPage:
     studentsNumber: 2872
     pupilsName: Schüler:innen
     pupilsNumber: 3186
-    scholarshipName: Stipendien
-    scholarshipNumber: 9
-    stuff: '<a style="color: white;" sveltekit:prefetch href="/stipendium">Stipendien</a>'
+    scholarshipName: '<a style="color: white;" sveltekit:prefetch href="/stipendium">Gründung</a>'
+    scholarshipNumber: 2022
 
 footer:
   name: 'Studenten bilden Schüler e.V.'
@@ -41,9 +40,9 @@ footer:
 
 map:
   location:
-    lng: 10
-    lat: 51.6
-    zoom: 5.05
+    lng: 13.55
+    lat: 47.71
+    zoom: 6.00
     minZoom: 4
     maxZoom: 10
   text:
