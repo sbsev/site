@@ -53,9 +53,7 @@
     <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
       <UserGraduate {style} />
-      <a style="color: white;" sveltekit:prefetch href="/stipendium">
-        {$microcopy?.indexPage?.boxes?.scholarshipName}
-      </a>
+      {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
 </section>
