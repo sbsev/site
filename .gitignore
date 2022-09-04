@@ -14,4 +14,3 @@ package
 .env*
 !.env.example
 googleTranslateApiKey.json
-
