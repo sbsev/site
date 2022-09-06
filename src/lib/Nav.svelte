@@ -80,7 +80,7 @@
   on:click={close}
   class="logo"
   href="/"
-  sveltekit:prefetch
+  data-sveltekit-prefetch
   aria-current={isCurrent(`/`)}
 >
   <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
@@ -96,7 +96,7 @@
         <span>
           <a
             on:click={close}
-            sveltekit:prefetch
+            data-sveltekit-prefetch
             aria-current={isCurrent(url)}
             href={url}
             style="display: flex; align-items: center;"
@@ -126,7 +126,7 @@
               <li class:spanCols class:lightFont>
                 <a
                   on:click={close}
-                  sveltekit:prefetch
+                  data-sveltekit-prefetch
                   aria-current={isCurrent(url)}
                   href={url}
                   >{title}

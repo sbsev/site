@@ -1,4 +1,4 @@
-// import { dev } from '$app/env'
+// import { dev } from '$app/environment'
 // import { indexAlgolia } from 'svelte-algolia/server-side'
 // import { algoliaConfig } from './utils/algolia'
 
@@ -9,12 +9,3 @@
 // if (dev === false && appId && apiKey) {
 //   indexAlgolia({ ...algoliaConfig, appId, apiKey })
 // }
-
-import type { Handle } from '@sveltejs/kit'
-
-// signup pages exhibit SSR errors, we somehow get duplicate DOM nodes
-// maybe because they're generated from objects with referential inequality
-const no_ssr_routes = [`/anmeldung`, `/signup-pupil`, `/signup-student`]
-
-export const handle: Handle = ({ event, resolve }) =>
-  resolve(event, { ssr: !no_ssr_routes.includes(event.url.pathname) })

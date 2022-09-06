@@ -27,3 +27,5 @@ export const load: LayoutLoad = async () => {
 
   return { nav, footer, social }
 }
+
+export const prerender = true
