@@ -2,7 +2,7 @@ header:
   title: Anmeldung Studierende
   note: |
     <p align="center">
-    Du möchtest Nachhilfe bekommen? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Anmeldung Schüler:innen</a>
+    Du möchtest Nachhilfe bekommen? <a class="btn small green" href="/signup-pupil" data-sveltekit-prefetch>Anmeldung Schüler:innen</a>
     </p>
 
     ## Formular für Studierende

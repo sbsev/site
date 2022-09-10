@@ -42,7 +42,7 @@ const renderer = {
   link(href: string, title: string, text: string) {
     if (href.startsWith(`/`)) {
       title = title ? `title="${title}"` : ``
-      return `<a sveltekit:prefetch href="${href}" ${title}>${text}</a>`
+      return `<a data-sveltekit-prefetch href="${href}" ${title}>${text}</a>`
     }
     return false // delegate to default marked link renderer
   },

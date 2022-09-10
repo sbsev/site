@@ -17,7 +17,7 @@
   //   searchKey: import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
   //   loadingStr: `Suche läuft...`,
   //   noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
-  //   resultReporter: (hits: unknown[]) =>
+  //   resultCounter: (hits: unknown[]) =>
   //     hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
   //   placeholder: `Suche`,
   //   ariaLabel: `Suche`,

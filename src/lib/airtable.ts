@@ -4,7 +4,7 @@ import { signupStore } from './stores'
 import type { Chapter, SignupStore } from './types'
 
 const api_key = import.meta.env.VITE_AIRTABLE_API_KEY
-if (!api_key) throw `missing Airtable API key, got ${api_key}`
+if (!api_key) throw new Error(`missing Airtable API key, got ${api_key}`)
 
 // Send a POST request to the Airtable API to create new rows in the base and table
 // specified by base_id and table_id.
