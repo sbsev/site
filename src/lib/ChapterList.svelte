@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Place from '~icons/ic/place'
-  import Construction from '~icons/ic/round-construction'
+  import Icon from '@iconify/svelte'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
@@ -8,12 +7,10 @@
 
   const openChapters = chapters.filter((ch) => ch.acceptsSignups)
   const startingChapters = chapters.filter((ch) => !ch.acceptsSignups)
-
-  const style = `vertical-align: middle;`
 </script>
 
 <h1>
-  <Place {style} />
+  <Icon icon="ic:place" inline />
   {$microcopy?.chapterList?.locations}
 </h1>
 <ol>
@@ -23,7 +20,7 @@
 </ol>
 {#if startingChapters.length > 2}
   <h1>
-    <Construction {style} />
+    <Icon icon="ic:round-construction" inline />
     {$microcopy?.chapterList?.inSetup}
   </h1>
   <ol>

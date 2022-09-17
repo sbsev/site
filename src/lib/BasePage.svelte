@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Toc from 'svelte-toc/Toc.svelte'
-  import Update from '~icons/ic/update'
+  import Icon from '@iconify/svelte'
+  import Toc from 'svelte-toc'
   import Img from './Img.svelte'
   import { microcopy } from './stores'
   import type { Page } from './types'
@@ -9,7 +9,6 @@
 
   $: ({ title, slug, cover, body, toc, yaml, sys } = page)
   $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
-  const style = `height: 3ex; vertical-align: bottom; padding-right: 4pt;`
 </script>
 
 <svelte:head>
@@ -48,7 +47,12 @@
 
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
-    <Update {style} />{$microcopy?.basepage?.last}
+    <Icon
+      icon="ic:update"
+      width="1.3em"
+      style="padding: 0 4pt; vertical-align: middle;"
+    />
+    {$microcopy?.basepage?.lastUpdated}
     {date}
   </time>
   <address>
@@ -98,6 +102,7 @@
     margin: 0 1em;
     width: max-content;
     max-width: 80vw;
+    box-sizing: border-box;
   }
   figcaption {
     position: absolute;

@@ -12,7 +12,7 @@
 [![Tests](https://github.com/sbsev/svelte-site/actions/workflows/test.yml/badge.svg)](https://github.com/sbsev/svelte-site/actions/workflows/test.yml)
 [![Lighthouse](https://github.com/sbsev/svelte-site/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/sbsev/svelte-site/actions/workflows/lighthouse.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sbsev/svelte-site/main.svg)](https://results.pre-commit.ci/latest/github/sbsev/svelte-site/main)
-[![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-darkblue?logo=pytorchlightning)](https://stackblitz.com/github/sbsev/svelte-site)
+[![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-darkblue?logo=stackblitz)](https://stackblitz.com/github/sbsev/svelte-site)
 
 </h3>
 

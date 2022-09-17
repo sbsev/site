@@ -1,7 +1,7 @@
 <script lang="ts">
   import Img from '$lib/Img.svelte'
   import ToolTip from '$lib/ToolTip.svelte'
-  import type { Post } from '$src/types'
+  import type { Post } from '$lib/types'
   import PersonCircle from '~icons/bi/person-circle'
   import GraduationCap from '~icons/fa-solid/graduation-cap'
   import HistoryEdu from '~icons/ic/round-history-edu'

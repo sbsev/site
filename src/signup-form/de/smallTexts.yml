@@ -79,7 +79,7 @@ location:
   generalRequests: 'für Allgemeine Anfragen'
 
 basepage:
-  last: 'Zuletzt bearbeitet:'
+  lastUpdated: 'Zuletzt bearbeitet:'
   feedback: 'Feedback zu dieser Seite?'
   email: 'it@studenten-bilden-schueler.de?subject=Feedback zu Seite:'
 
