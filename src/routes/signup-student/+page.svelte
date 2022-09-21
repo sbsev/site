@@ -4,7 +4,7 @@
   import FormField from '$lib/FormField.svelte'
   import Modal from '$lib/Modal.svelte'
   import { signupStore } from '$lib/stores'
-  import Plant from '~icons/ri/plant-fill'
+  import Icon from '@iconify/svelte'
 
   import type { PageData } from './$types'
   export let data: PageData
@@ -45,7 +45,7 @@
     <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
     <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
-      <Plant height="1em" style="vertical-align: -3pt;" />
+      <Icon icon="ri:plant-fill" inline />
       {@html form.header.title}
     </h1>
 

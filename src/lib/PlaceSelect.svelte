@@ -1,15 +1,15 @@
 <script lang="ts">
+  import Icon from '@iconify/svelte'
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import type { Map, Marker } from 'mapbox-gl'
   import mapbox from 'mapbox-gl'
-  import Delete from '~icons/ic/delete'
   import Geocoder from './Geocoder.svelte'
   import MapComp from './Map.svelte'
   import type { Place } from './types'
 
   export let value: Place[] = [] // currently selected places
   export let placeholder = ``
-  export let div: HTMLDivElement
+  export let div: HTMLDivElement | null = null
   export let id: string | null = null
 
   let markers: Marker[] = []
@@ -64,7 +64,7 @@
         disabled
       />
       <button on:click={deletePlace(idx)} type="button">
-        <Delete style="width: 3ex; vertical-align: middle;" />
+        <Icon icon="ic:delete" style="width: 3ex;" inline />
       </button>
     </li>
   {/each}
