@@ -5,9 +5,9 @@ country: us
 indexPage:
   title: Students for Students
   theme: Free tutoring by student volunteers for financially disadvantaged children
-  chooseLocation: 'Choose you <a sveltekit:prefetch href="/standorte"><strong>location</strong></a> on the map!'
+  chooseLocation: 'Choose you <a data-sveltekit-prefetch href="/standorte"><strong>location</strong></a> on the map!'
 
-  register: 'Or just <a sveltekit:prefetch href="/signup-student">
+  register: 'Or just <a data-sveltekit-prefetch href="/signup-student">
     <strong>register on our website.</strong>
     </a>'
   boxes:

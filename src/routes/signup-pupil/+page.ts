@@ -1,4 +1,4 @@
-import { dev } from '$app/env'
+import { dev } from '$app/environment'
 import { fetchChapters, parseFormData } from '$lib/fetch'
 import type { PageLoad } from '@sveltejs/kit'
 // to make the signup form i18n-compatible,

@@ -25,7 +25,7 @@
   <span>© {new Date().getFullYear()} {$microcopy?.footer?.name}</span>
   <div>
     {#each links as { title, url }}
-      <a sveltekit:prefetch href={url}>
+      <a data-sveltekit-prefetch href={url}>
         <svelte:component
           this={icons[title]}
           style="vertical-align: middle; padding-right: 3pt;"

@@ -2,7 +2,7 @@ header:
   title: Anmeldung Schüler:innen
   note: |
     <p align="center">
-    Du möchtest Nachhilfe geben? Hier geht's zur <a class="btn small green" href="/signup-student" sveltekit:prefetch>Anmeldung für Studierende</a>
+    Du möchtest Nachhilfe geben? Hier geht's zur <a class="btn small green" href="/signup-student" data-sveltekit-prefetch>Anmeldung für Studierende</a>
     </p>
 
     ## Formular für Eltern und soziale Einrichtungen

@@ -18,10 +18,10 @@
 </script>
 
 <section>
-  <a sveltekit:prefetch href={slug}>
+  <a data-sveltekit-prefetch href={slug}>
     <Img sizes={[{ w: 400, h: 300 }]} {...cover} {imgStyle} /></a
   >
-  <h3><a sveltekit:prefetch href={slug}>{title}</a></h3>
+  <h3><a data-sveltekit-prefetch href={slug}>{title}</a></h3>
   <div>
     <ToolTip>
       <Img

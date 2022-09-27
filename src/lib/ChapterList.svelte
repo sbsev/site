@@ -18,7 +18,7 @@
 </h1>
 <ol>
   {#each openChapters as { title, slug }}
-    <li><a sveltekit:prefetch href={slug}>{title}</a></li>
+    <li><a data-sveltekit-prefetch href={slug}>{title}</a></li>
   {/each}
 </ol>
 {#if startingChapters.length > 2}
@@ -28,7 +28,7 @@
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}
-      <li><a sveltekit:prefetch href={slug}>{title}</a></li>
+      <li><a data-sveltekit-prefetch href={slug}>{title}</a></li>
     {/each}
   </ol>
 {/if}

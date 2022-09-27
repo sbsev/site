@@ -5,10 +5,10 @@ country: de
 indexPage:
   title: Studenten bilden Schüler
   theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
-  chooseLocation: 'Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!'
+  chooseLocation: 'Wähle deinen <a data-sveltekit-prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!'
 
   register:
-    'Oder melde dich direkt <a sveltekit:prefetch href="/signup-student">
+    'Oder melde dich direkt <a data-sveltekit-prefetch href="/signup-student">
     <strong>bei uns an.</strong>
     </a>'
   boxes:

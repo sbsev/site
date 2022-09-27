@@ -22,14 +22,14 @@
       <span>
         {$microcopy?.location?.joinStudent}
         <a
-          sveltekit:prefetch
+          data-sveltekit-prefetch
           href="/signup-student?chapter={page.title}"
           class="btn blue"
         >
           <GraduationCap {style} />{$microcopy?.location?.registerStudent}
         </a>
         <a
-          sveltekit:prefetch
+          data-sveltekit-prefetch
           href={$microcopy?.location?.linkStudentInfo}
           class="btn blue stroke"
         >
@@ -39,11 +39,15 @@
       </span>
       <span>
         {$microcopy?.location?.joinPupil}
-        <a sveltekit:prefetch href="/signup-pupil?chapter={page.title}" class="btn green">
+        <a
+          data-sveltekit-prefetch
+          href="/signup-pupil?chapter={page.title}"
+          class="btn green"
+        >
           <Child {style} />{$microcopy?.location?.registerPupil}
         </a>
         <a
-          sveltekit:prefetch
+          data-sveltekit-prefetch
           href={$microcopy?.location?.linkPupilInfo}
           class="btn green stroke"
         >
@@ -60,7 +64,7 @@
           <Email {style} />{$microcopy?.location?.writeMailButton}
         </a>
         <a
-          sveltekit:prefetch
+          data-sveltekit-prefetch
           href={$microcopy?.location?.linkLeadingInfo}
           class="btn orange stroke"
         >

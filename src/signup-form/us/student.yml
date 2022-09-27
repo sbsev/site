@@ -2,7 +2,7 @@ header:
   title: Student Registration
   note: |
     <p align="center">
-    Would you like to get tutoring? <a class="btn small green" href="/signup-pupil" sveltekit:prefetch>Signup student</a>
+    Would you like to get tutoring? <a class="btn small green" href="/signup-pupil" data-sveltekit-prefetch>Signup student</a>
     </p>
 
     ## Form for students
