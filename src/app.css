@@ -200,8 +200,15 @@ section:before {
   position: absolute;
   top: 0;
   bottom: 0;
-  /* width: 10000px; */
-  /* left: -5000px; */
+  /* width: 100vw; */
+  width: 60em;
+  /* left: -20vw; */
+  right: -5em;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  /* left: -20vw; */
+  /* max-width: 50em; */
+  /* place-items: center; */
   z-index: -1;
 }
 section.blue:before {
