@@ -200,16 +200,8 @@ section:before {
   position: absolute;
   top: 0;
   bottom: 0;
-  /* width: 100vw; */
-  /* width: 55em; */
-  /* left: -20vw; */
-  right: -1em;
-  left: -1em;
-  /* margin-left: auto; */
-  /* margin-right: auto; */
-  /* left: -20vw; */
-  /* max-width: 50em; */
-  /* place-items: center; */
+  right: clamp(-3em, -4vw, -1em);
+  left: clamp(-3em, -4vw, -1em);
   z-index: -1;
 }
 section.blue:before {
