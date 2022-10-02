@@ -1,23 +1,18 @@
 <script lang="ts">
-  import Cookie from '~icons/bxs/cookie'
-  import Euro from '~icons/ic/round-euro'
-  import PrivacyTip from '~icons/ic/round-privacy-tip'
-  import DocumentText from '~icons/ion/document-text'
-  import Law from '~icons/octicon/law'
-  import OpenSource from '~icons/ri/open-source-fill'
+  import Icon from '@iconify/svelte'
   import Social from './Social.svelte'
   import { microcopy } from './stores'
   import type { Link } from './types'
 
-  const icons = {
-    Impressum: Law,
-    Datenschutz: PrivacyTip,
-    Spenden: Euro,
-    Satzung: DocumentText,
+  const icon_map: Record<string, string> = {
+    Impressum: `octicon:law`,
+    Datenschutz: `ic:round-privacy-tip`,
+    Spenden: `ic:round-euro`,
+    Satzung: `ion:document-text`,
   }
 
   export let links: Link[]
-  export let social: Record<keyof typeof icons, string>
+  export let social: Record<keyof typeof icon_map, string>
 </script>
 
 <footer>
@@ -26,10 +21,7 @@
   <div>
     {#each links as { title, url }}
       <a data-sveltekit-prefetch href={url}>
-        <svelte:component
-          this={icons[title]}
-          style="vertical-align: middle; padding-right: 3pt;"
-        />
+        <Icon inline icon={icon_map[title]} />
         {title}
       </a>
     {/each}
@@ -37,10 +29,10 @@
   <span>
     {@html $microcopy?.footer?.site}
     <a href="https://github.com/sbsev/svelte-site">
-      <OpenSource style="vertical-align: bottom; padding-right: 3pt;" />open source
+      <Icon inline icon="ri:open-source-fill" style="padding-right: 3pt;" />open source
     </a>
     {@html $microcopy?.footer?.uses}
-    <Cookie style="vertical-align: middle;" />
+    <Icon inline icon="bxs:cookie" />
     Cookies.
   </span>
   {#if $microcopy?.country == `de`}

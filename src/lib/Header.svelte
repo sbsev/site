@@ -1,6 +1,7 @@
 <script lang="ts">
-  // import Search from 'svelte-algolia'
+  import Search from 'svelte-algolia'
   import Nav from './Nav.svelte'
+  import SearchHit from './SearchHit.svelte'
   import ThemeSwitcher from './ThemeSwitcher.svelte'
   import type { NavLink } from './types'
 
@@ -9,19 +10,19 @@
 
   let viewWidth: number
   $: mobile = viewWidth < breakpoint
-  // const searchProps = {
-  //   indices: Object.fromEntries(
-  //     [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
-  //   ),
-  //   appId: import.meta.env.VITE_ALGOLIA_APP_ID,
-  //   searchKey: import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
-  //   loadingStr: `Suche läuft...`,
-  //   noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
-  //   resultCounter: (hits: unknown[]) =>
-  //     hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
-  //   placeholder: `Suche`,
-  //   ariaLabel: `Suche`,
-  // }
+  const searchProps = {
+    indices: Object.fromEntries(
+      [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
+    ),
+    appId: import.meta.env.VITE_ALGOLIA_APP_ID,
+    searchKey: import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
+    loadingMsg: `Suche läuft...`,
+    noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
+    resultCounter: (hits: unknown[]) =>
+      hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
+    placeholder: `Suche`,
+    ariaLabel: `Suche`,
+  }
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -30,12 +31,12 @@
   <Nav {nav} {mobile} />
 
   <ThemeSwitcher />
-  <!-- <Search
+  <Search
     {...searchProps}
-    --hitsBgColor="var(--bodyBg)"
-    --iconColor="var(--headerColor)"
-    --inputColor="white"
-  /> -->
+    --search-hits-bg-color="var(--bodyBg)"
+    --search-icon-color="var(--headerColor)"
+    --search-input-color="white"
+  />
 </header>
 
 <style>

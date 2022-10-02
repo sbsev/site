@@ -1,32 +1,17 @@
 <script lang="ts">
-  import Facebook from '~icons/fa-brands/facebook'
-  import Github from '~icons/fa-brands/github'
-  import Instagram from '~icons/fa-brands/instagram'
-  import Linkedin from '~icons/fa-brands/linkedin'
-  import Twitter from '~icons/fa-brands/twitter'
-  import Xing from '~icons/fa-brands/xing-square'
-  import Youtube from '~icons/fa-brands/youtube'
-  import Email from '~icons/ic/email'
+  import Icon from '@iconify/svelte'
 
-  export let social: Record<keyof typeof icons, string>
+  export let social: Record<string, string>
   export let style = ``
   export let vertical = false
   export let fixed = false
-  export let include: (keyof typeof icons)[] = [
-    `Facebook`,
-    `Twitter`,
-    `Instagram`,
-    `Youtube`,
-    `Linkedin`,
-  ]
-
-  const icons = { Facebook, Github, Instagram, Linkedin, Twitter, Xing, Youtube, Email }
+  export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
 </script>
 
 <div {style} class:vertical class:fixed>
   {#each include as key}
     <a href={social[key]} aria-label={key}>
-      <svelte:component this={icons[key]} />
+      <Icon icon="fa-brands:{key.toLowerCase()}" />
     </a>
   {/each}
 </div>

@@ -1,16 +1,14 @@
 <script lang="ts">
   import BasePage from '$lib/BasePage.svelte'
   import Img from '$lib/Img.svelte'
-  import Place from '~icons/ic/place'
-  import Newspaper from '~icons/ion/newspaper'
-  import Calendar from '~icons/octicon/calendar'
+  import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
 
   export let data: PageData
   $: ({ pressItems, page } = data)
 
   const imgStyle = `width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
-  const style = `height: 2.2ex; vertical-align: text-bottom; margin: 0 5pt 0 0;`
+  const style = `margin: 0 5pt 0 0;`
 </script>
 
 <BasePage {page}>
@@ -27,9 +25,18 @@
               <a href={url}>{title}</a>
             </h3>
             <div>
-              <span><Newspaper {style} />{source}</span>
-              <span><Calendar {style} />{new Date(date).toLocaleDateString(`de`)}</span>
-              <span><Place {style} />Standort {chapter}</span>
+              <span>
+                <Icon inline icon="ion:newspaper" {style} />
+                {source}
+              </span>
+              <span>
+                <Icon inline icon="octicon:calendar" {style} />
+                {new Date(date).toLocaleDateString(`de`)}
+              </span>
+              <span>
+                <Icon inline icon="ic:place" {style} />
+                Standort {chapter}
+              </span>
             </div>
           </li>
         {/each}

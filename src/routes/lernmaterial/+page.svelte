@@ -1,32 +1,23 @@
 <script lang="ts">
   import BasePage from '$lib/BasePage.svelte'
   import Img from '$lib/Img.svelte'
+  import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
-  import CardText from '~icons/bi/card-text'
-  import Erlang from '~icons/fa-brands/erlang'
-  import Tags from '~icons/fa-solid/tags'
-  import Functions from '~icons/ic/functions'
-  import GroupWork from '~icons/ic/group-work'
-  import Language from '~icons/ic/language'
-  import Science from '~icons/ic/round-science'
-  import SelectAll from '~icons/ic/select-all'
-  import Atom from '~icons/simple-icons/atom'
-  import Disqus from '~icons/simple-icons/disqus'
   import type { PageData } from './$types'
 
   export let data: PageData
 
-  const icons = {
-    Alle: SelectAll,
-    Mathe: Functions,
-    Wissenschaft: Science,
-    'Lernen mit Karteikarten': CardText,
-    'Viele Fächer': GroupWork,
-    'Deutsche Sprache': Language,
-    Englisch: Erlang,
-    Deutschunterricht: Disqus,
-    Physik: Atom,
+  const icon_map: Record<string, string> = {
+    Alle: `ic:select-all`,
+    Mathe: `ic:functions`,
+    Wissenschaft: `ic:round-science`,
+    'Lernen mit Karteikarten': `bi:card-text`,
+    'Viele Fächer': `ic:group-work`,
+    'Deutsche Sprache': `ic:language`,
+    Englisch: `fa-brands:erlang`,
+    Deutschunterricht: `simple-icons:disqus`,
+    Physik: `simple-icons:atom`,
   }
 
   let activeTag = `Alle`
@@ -45,7 +36,6 @@
   }
 
   const imgStyle = `width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;`
-  const style = `height: 2.2ex; vertical-align: -3pt;`
 
   function setHash() {
     hash = window.location.hash.replace(`#`, ``)
@@ -61,10 +51,10 @@
       {#each Object.entries(tags) as [tag, count]}
         <li>
           <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
-            <svelte:component this={icons[tag]} {style} />
+            <Icon inline icon={icon_map[tag]} />
             {tag}
-            ({count})</button
-          >
+            ({count})
+          </button>
         </li>
       {/each}
     </ul>
@@ -77,7 +67,7 @@
           <h3 {id} active={id === hash}>
             <a href={url}>{title}</a>
           </h3>
-          <span><Tags {style} /> {tags.join(`, `)}</span>
+          <span><Icon icon="fa-solid:tags" inline /> {tags.join(`, `)}</span>
           {@html body}
         </li>
       {/each}

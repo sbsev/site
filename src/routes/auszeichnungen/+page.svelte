@@ -1,15 +1,14 @@
 <script lang="ts">
   import BasePage from '$lib/BasePage.svelte'
   import Img from '$lib/Img.svelte'
-  import PriceRibbon from '~icons/fa-solid/award'
-  import Calendar from '~icons/octicon/calendar'
+  import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
 
   export let data: PageData
   $: ({ awards, page } = data)
 
   const imgStyle = `width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
-  const style = `height: 2.2ex; vertical-align: text-top; margin: 0 5pt 0 0;`
+  const style = `margin: 0 5pt 0 0;`
 </script>
 
 <BasePage {page}>
@@ -19,8 +18,14 @@
         <a href={url}><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
         <h3 {id}><a href={url}>{title}</a></h3>
         <div>
-          <span><Calendar {style} />{date}</span>
-          <span><PriceRibbon {style} />{prize}</span>
+          <span>
+            <Icon inline icon="octicon:calendar" {style} />
+            {date}
+          </span>
+          <span>
+            <Icon inline icon="fa-solid:award" {style} />
+            {prize}
+          </span>
         </div>
       </li>
     {/each}

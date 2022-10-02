@@ -46,11 +46,11 @@ map:
     maxZoom: 6
   text:
     active: 'active location'
-    inSetup: 'beeing funded'
+    inSetup: 'being funded'
 
 chapterList:
   locations: 'Our Locations'
-  inSetup: 'Locations beeing funded'
+  inSetup: 'Locations being funded'
 
 location:
   register: 'Registrations'
@@ -67,7 +67,7 @@ location:
   writeMailButton: 'Mail us'
   linkLeadingInfo: '/mitmachen/standortleiter'
   infoLeadingButton: 'How to lead location'
-  contact: 'Contakt'
+  contact: 'Contact'
   questions: 'Questions? Write us a mail!'
   url: 'studenten-bilden-schueler.de'
   student: 'studenten'
@@ -78,7 +78,7 @@ location:
   generalRequests: 'for general requests'
 
 basepage:
-  last: 'Last change:'
+  lastUpdated: 'Last updated:'
   feedback: 'Feedback for this page?'
   email: 'it@studenten-bilden-schueler.de?subject=Feedback for Page:'
 

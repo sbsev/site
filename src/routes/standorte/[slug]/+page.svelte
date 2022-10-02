@@ -1,16 +1,13 @@
 <script lang="ts">
   import BasePage from '$lib/BasePage.svelte'
   import { microcopy } from '$lib/stores'
-  import InfoCircle from '~icons/bi/info-circle-fill'
-  import Child from '~icons/fa-solid/child'
-  import GraduationCap from '~icons/fa-solid/graduation-cap'
-  import Email from '~icons/ic/email'
+  import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
 
   export let data: PageData
   $: ({ page, slug } = data)
 
-  const style = `vertical-align: -3pt; height: 18pt; margin-right: 3pt;`
+  const style = `margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
@@ -26,15 +23,19 @@
           href="/signup-student?chapter={page.title}"
           class="btn blue"
         >
-          <GraduationCap {style} />{$microcopy?.location?.registerStudent}
+          <Icon inline icon="fa-solid:graduation-cap" {style} />{$microcopy?.location
+            ?.registerStudent}
         </a>
         <a
           data-sveltekit-prefetch
           href={$microcopy?.location?.linkStudentInfo}
           class="btn blue stroke"
         >
-          <InfoCircle style={style + `margin-right: 6pt;`} />{$microcopy?.location
-            ?.infoStudentButton}
+          <Icon
+            inline
+            icon="bi:info-circle-fill"
+            style={style + `margin-right: 6pt;`}
+          />{$microcopy?.location?.infoStudentButton}
         </a>
       </span>
       <span>
@@ -44,15 +45,19 @@
           href="/signup-pupil?chapter={page.title}"
           class="btn green"
         >
-          <Child {style} />{$microcopy?.location?.registerPupil}
+          <Icon inline icon="fa-solid:child" {style} />{$microcopy?.location
+            ?.registerPupil}
         </a>
         <a
           data-sveltekit-prefetch
           href={$microcopy?.location?.linkPupilInfo}
           class="btn green stroke"
         >
-          <InfoCircle style={style + `margin-right: 6pt;`} />{$microcopy?.location
-            ?.infoPupilButton}</a
+          <Icon
+            inline
+            icon="bi:info-circle-fill"
+            style={style + `margin-right: 6pt;`}
+          />{$microcopy?.location?.infoPupilButton}</a
         >
       </span>
       <span>
@@ -61,15 +66,18 @@
           href="mailto:info.{slug}{$microcopy?.location?.mailTo} {page.title}"
           class="btn orange"
         >
-          <Email {style} />{$microcopy?.location?.writeMailButton}
+          <Icon inline icon="ic:email" {style} />{$microcopy?.location?.writeMailButton}
         </a>
         <a
           data-sveltekit-prefetch
           href={$microcopy?.location?.linkLeadingInfo}
           class="btn orange stroke"
         >
-          <InfoCircle style={style + `margin-right: 6pt;`} />{$microcopy?.location
-            ?.infoLeadingButton}</a
+          <Icon
+            inline
+            icon="bi:info-circle-fill"
+            style={style + `margin-right: 6pt;`}
+          />{$microcopy?.location?.infoLeadingButton}</a
         >
       </span>
     </section>
@@ -87,7 +95,7 @@
             title="{$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}"
             class="btn blue"
           >
-            <Email style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />
+            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
             {$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.forStudents}
@@ -99,7 +107,7 @@
             title="{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             class="btn green"
           >
-            <Email style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />
+            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
             {$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.forPartner}
@@ -110,7 +118,7 @@
             title="{$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}"
             class="btn orange"
           >
-            <Email style="width: 15pt; vertical-align: -3pt; margin: 0 3pt 0 0;" />
+            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
             {$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.generalRequests}

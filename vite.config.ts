@@ -1,9 +1,9 @@
 import rollupYaml from '@rollup/plugin-yaml'
 import { sveltekit } from '@sveltejs/kit/vite'
-import { resolve } from 'path'
 import Icons from 'unplugin-icons/vite'
+import type { UserConfig } from 'vite'
 
-export default {
+const vite_config: UserConfig = {
   plugins: [
     sveltekit(),
     rollupYaml(),
@@ -17,14 +17,6 @@ export default {
   preview: {
     port: 3000,
   },
-
-  resolve: {
-    alias: {
-      $src: resolve(`./src`),
-    },
-  },
-
-  test: {
-    testTimeout: 60_000,
-  },
 }
+
+export default vite_config

@@ -14,7 +14,7 @@
   export let placeholder = ``
   export let required = false
   export let id: string | null = null
-  export let div: HTMLDivElement
+  export let div: HTMLDivElement | null = null
 
   const mapboxKey = import.meta.env.VITE_MAPBOX_PUBLIC_KEY as string
 
