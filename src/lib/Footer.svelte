@@ -1,5 +1,6 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
+  import { repository } from '../../package.json'
   import Social from './Social.svelte'
   import { microcopy } from './stores'
   import type { Link } from './types'
@@ -28,7 +29,7 @@
   </div>
   <span>
     {@html $microcopy?.footer?.site}
-    <a href="https://github.com/sbsev/svelte-site">
+    <a href={repository}>
       <Icon inline icon="ri:open-source-fill" style="padding-right: 3pt;" />open source
     </a>
     {@html $microcopy?.footer?.uses}

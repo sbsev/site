@@ -12,7 +12,7 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
 
   await page.fill(`#firstName`, `Foo Bar`)
 
-  await fill_select(page, `input[name='subjects']`, [`Mathe`, `Englisch`])
+  await fill_select(page, `input#subjects`, [`Mathe`, `Englisch`])
 
   await fill_select(page, `#schoolTypes`, [`Realschule`])
 

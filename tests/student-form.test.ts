@@ -14,7 +14,7 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await page.fill(`#email`, `florian.kleinicke@studenten-bilden-schueler.de`)
 
-  await fill_select(page, `input[name='subjects']`, [`Mathe`, `Physik`])
+  await fill_select(page, `input#subjects`, [`Mathe`, `Physik`])
 
   // rangeSlider
   await move_slider(page, `.rangeNub`)
