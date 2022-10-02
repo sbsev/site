@@ -1,27 +1,25 @@
 <script lang="ts">
   import Collapsible from '$lib/Collapsible.svelte'
+  import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
-  import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
-  import HandsHelping from '~icons/fa-solid/hands-helping'
-  import Tags from '~icons/fa-solid/tags'
-  import ExitToApp from '~icons/ic/exit-to-app'
-  import FilterFrames from '~icons/ic/filter-frames'
-  import MiscellaneousServices from '~icons/ic/round-miscellaneous-services'
-  import SupportAgent from '~icons/ic/round-support-agent'
-  import SelectAll from '~icons/ic/select-all'
   import type { PageData } from './$types'
 
   export let data: PageData
 
-  const icons = {
-    'Rund ums Engagement': HandsHelping,
-    Nachhilfe: ChalkboardTeacher,
-    Vermittlung: SupportAgent,
-    Alle: SelectAll,
-    Rahmenbedingungen: FilterFrames,
-    Vereinsaustritt: ExitToApp,
-    Sonstiges: MiscellaneousServices,
+  const icons: Record<string, string> = {
+    'Rund ums Engagement': `fa-solid:hands-helping`,
+    Nachhilfe: `fa-solid:chalkboard-teacher`,
+    Vermittlung: `ic:round-support-agent`,
+    Alle: `ic:select-all`,
+    Rahmenbedingungen: `ic:filter-frames`,
+    Vereinsaustritt: `ic:exit-to-app`,
+    Sonstiges: `ic:round-miscellaneous-services`,
+    Datenschutz: `ic:round-privacy-tip`,
+    'Tipps für Standorte': `ic:round-storefront`,
+    Versicherung: `map:insurance-agency`,
+    Mitgliederversammlung: `ic:round-group`,
+    Führungszeugnis: `ic:round-assignment-ind`,
   }
 
   let activeTag = `Alle`
@@ -46,10 +44,10 @@
 
 <h1>FAQs</h1>
 <ul class="tags">
-  {#each Object.entries(tags) as [tag, count] (tag)}
+  {#each Object.entries(tags).sort() as [tag, count] (tag)}
     <li>
       <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
-        <svelte:component this={icons[tag]} style="height: 2ex; vertical-align: -3pt;" />
+        <Icon inline icon={icons[tag]} />
         {tag}
         ({count})</button
       >
@@ -62,7 +60,7 @@
       <Collapsible {id} active={id === hash}>
         <span slot="title">
           {title}
-          <Tags width="16pt" style="margin: 0 3pt 0 10pt; vertical-align: middle;" />
+          <Icon icon="fa-solid:tags" width="16pt" style="margin: 0 3pt 0 10pt;" />
           <small>{tags.join(`, `)}</small>
         </span>
         {@html body}

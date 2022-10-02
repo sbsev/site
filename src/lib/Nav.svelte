@@ -1,29 +1,21 @@
 <script lang="ts">
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
+  import Icon from '@iconify/svelte'
   import { slide } from 'svelte/transition'
-  import ChevronExpand from '~icons/bi/chevron-expand'
-  import HandsHelping from '~icons/fa-solid/hands-helping'
-  import Rss from '~icons/fa-solid/rss-square'
-  import Menu from '~icons/heroicons-solid/menu'
-  import Place from '~icons/ic/place'
-  import AlternateEmail from '~icons/ic/round-alternate-email'
-  import QuestionAnswer from '~icons/ic/round-question-answer'
-  import PeopleCircle from '~icons/ion/people-circle'
-  import Plant from '~icons/ri/plant-fill'
   import type { NavLink } from './types'
 
   export let nav: NavLink[]
   export let mobile: boolean
 
-  const icons = {
-    'Über Uns': Plant,
-    Standorte: Place,
-    FAQ: QuestionAnswer,
-    Mitmachen: PeopleCircle,
-    Blog: Rss,
-    Kontakt: AlternateEmail,
-    Internes: HandsHelping,
+  const icon_map: Record<string, string> = {
+    'Über Uns': `ri:plant-fill`,
+    Standorte: `ic:place`,
+    Mitmachen: `ion:people-circle`,
+    Blog: `fa-solid:rss-square`,
+    Kontakt: `ic:round-alternate-email`,
+    Internes: `fa-solid:hands-helping`,
+    Anmeldung: `ic:round-assignment-ind`,
   }
 
   let isOpen = false
@@ -72,7 +64,7 @@
     aria-label="Navigationsmenü öffnen"
     style="grid-area: nav;"
   >
-    <Menu />
+    <Icon icon="heroicons-solid:menu" />
   </button>
 {/if}
 
@@ -101,7 +93,7 @@
             href={url}
             style="display: flex; align-items: center;"
           >
-            <svelte:component this={icons[title]} style="margin: 0 10pt 0 0;" />
+            <Icon icon={icon_map[title]} style="margin: 0 5pt 0 0;" />
             {title}
           </a>
           {#if subNav}
@@ -109,7 +101,7 @@
               on:click={setActiveSubNav(idx, false)}
               aria-label="Untermenü {title} öffnen"
             >
-              <ChevronExpand height="20pt" />
+              <Icon icon="bi:chevron-expand" />
             </button>
           {/if}
         </span>

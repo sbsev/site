@@ -1,21 +1,15 @@
 <script lang="ts">
   import Img from '$lib/Img.svelte'
   import ToolTip from '$lib/ToolTip.svelte'
-  import type { Post } from '$lib/types'
-  import PersonCircle from '~icons/bi/person-circle'
-  import GraduationCap from '~icons/fa-solid/graduation-cap'
-  import HistoryEdu from '~icons/ic/round-history-edu'
-  import Calendar from '~icons/octicon/calendar'
+  import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
 
   export let data: PageData
   $: ({ post } = data)
 
-  export let post: Post
-
   $: ({ title, body, cover } = post)
   $: ({ bio, fieldOfStudy, name, photo } = post.author)
-  const style = `height: 18pt; vertical-align: -3pt; padding: 0 3pt;`
+  const style = `padding: 0 3pt;`
 </script>
 
 <article>
@@ -32,26 +26,26 @@
       von
       {#if bio || fieldOfStudy}
         <ToolTip minWidth="18em">
-          <PersonCircle {style} />
+          <Icon inline icon="bi:person-circle" {style} />
           <strong>{name}</strong>
           <span slot="tip">
-            <HistoryEdu {style} />
+            <Icon inline icon="ic:round-history-edu" {style} />
             Bio:
             {bio}
             {#if fieldOfStudy}
               <br />
-              <GraduationCap {style} />
+              <Icon inline icon="fa-solid:graduation-cap" {style} />
               Studiert:
               {fieldOfStudy}
             {/if}
           </span>
         </ToolTip>
       {:else}
-        <PersonCircle {style} />
+        <Icon inline icon="bi:person-circle" {style} />
         <strong>{name}</strong>
       {/if}
       am
-      <Calendar {style} />
+      <Icon inline icon="octicon:calendar" {style} />
       <strong>{new Date(post.date).toLocaleDateString(`de`)}</strong>
     </span>
   </section>

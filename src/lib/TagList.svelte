@@ -1,22 +1,6 @@
 <script lang="ts">
-  import type { SvelteComponent } from 'svelte'
+  import Icon from '@iconify/svelte'
   import { fade, slide } from 'svelte/transition'
-  import ChevronExpand from '~icons/bi/chevron-expand'
-  import GitBranch from '~icons/bx/git-branch'
-  import ChalkboardTeacher from '~icons/fa-solid/chalkboard-teacher'
-  import Donate from '~icons/fa-solid/donate'
-  import GraduationCap from '~icons/fa-solid/graduation-cap'
-  import HandsHelping from '~icons/fa-solid/handshake'
-  import Tags from '~icons/fa-solid/tags'
-  import BeachAccess from '~icons/ic/beach-access'
-  import EventAvailable from '~icons/ic/event-available'
-  import Public from '~icons/ic/public'
-  import QuestionAnswer from '~icons/ic/question-answer'
-  import RateReview from '~icons/ic/rate-review'
-  import CloseCross from '~icons/ic/round-close'
-  import Euro from '~icons/ic/round-euro'
-  import SelectAll from '~icons/ic/select-all'
-  import StatsChart from '~icons/ion/stats-chart'
   import type { BlogTag, Post } from './types'
 
   export let posts: Post[]
@@ -33,37 +17,39 @@
 
   const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][]
 
-  const icons: Record<BlogTag, typeof SvelteComponent> = {
-    Alle: SelectAll,
-    Spenden: Euro,
-    Werbung: Public,
-    Standortleiter: GraduationCap,
-    Erfahrungsberichte: RateReview,
-    Nachhilfelehrer: ChalkboardTeacher,
-    Interview: QuestionAnswer,
-    'Soziale Partner': HandsHelping,
-    Events: EventAvailable,
-    Freizeit: BeachAccess,
-    IT: GitBranch,
-    Bundesvorstand: StatsChart,
-    Stipendium: Donate,
+  const icons: Record<BlogTag, string> = {
+    Alle: `ic:select-all`,
+    Spenden: `ic:round-euro`,
+    Werbung: `ic:public`,
+    Standortleiter: `fa-solid:graduation-cap`,
+    Erfahrungsberichte: `ic:rate-review`,
+    Nachhilfelehrer: `fa-solid:chalkboard-teacher`,
+    Interview: `ic:question-answer`,
+    'Soziale Partner': `fa-solid:handshake`,
+    Events: `ic:event-available`,
+    Freizeit: `ic:beach-access`,
+    IT: `bx:git-branch`,
+    Bundesvorstand: `ion:stats-chart`,
+    Stipendium: `fa-solid:donate`,
+    Mentoring: `fa-solid:chalkboard-teacher`,
+    Auszeichnung: `fa-solid:award`,
   }
 
   let open = false
   let viewWidth: number
-  const style = `height: 18pt; vertical-align: middle; margin-right: 5pt;`
+  const style = `height: 18pt; margin-right: 5pt;`
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
 
 <h2>
-  <Tags style="height: 16pt; margin-right: 5pt;" />Tags
+  <Icon icon="fa-solid:tags" style="height: 18pt;" />Tags
   {#if viewWidth < 750}
     <button on:click={() => (open = !open)} aria-label="Blog Tags öffnen">
       {#if open}
-        <CloseCross {style} />
+        <Icon inline icon="ic:round-close" {style} />
       {:else}
-        <ChevronExpand {style} />
+        <Icon inline icon="bi:chevron-expand" {style} />
       {/if}
     </button>
   {/if}
@@ -78,10 +64,7 @@
           class:active={activeTag === tag}
           on:click={() => (activeTag = tag)}
         >
-          <svelte:component
-            this={icons[tag]}
-            style="height: 2.2ex; vertical-align: -3pt; margin-right: 6pt"
-          />
+          <Icon inline icon={icons[tag]} style="margin-right: 6pt" />
           {tag} ({count})
         </button>
       </li>

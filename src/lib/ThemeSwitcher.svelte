@@ -1,14 +1,12 @@
 <script lang="ts">
-  import Laptop from '~icons/bi/laptop'
-  import Sun from '~icons/ic/round-wb-sunny'
-  import Moon from '~icons/octicon/moon-16'
+  import Icon from '@iconify/svelte'
   import { colorMode } from './stores'
 
   // TODO: i18n the color mode titles
   const color_mode_icons = {
-    light: [Sun, `system`],
-    dark: [Moon, `light`],
-    system: [Laptop, `dark`],
+    light: [`ic:round-wb-sunny`, `system`],
+    dark: [`octicon:moon-16`, `light`],
+    system: [`bi:laptop`, `dark`],
   } as const
 
   function set_color_mode() {
@@ -22,9 +20,5 @@
   on:click={set_color_mode}
   style="display: flex; color: white;"
 >
-  <svelte:component
-    this={color_mode_icons[$colorMode][0]}
-    width="1em"
-    title={$colorMode}
-  />
+  <Icon icon={color_mode_icons[$colorMode][0]} title={$colorMode} />
 </button>
