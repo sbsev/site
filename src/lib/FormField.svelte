@@ -40,7 +40,8 @@
 </label>
 
 {#if note}
-  {@html note}
+  <!-- wrapping @html in <p> seems to help with https://github.com/sveltejs/svelte/issues/7698 (though not in minimal repro) -->
+  <p>{@html note}</p>
 {/if}
 
 {#if $signupStore[id]?.error}

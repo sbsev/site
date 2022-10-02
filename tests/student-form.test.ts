@@ -4,7 +4,7 @@ import { fill_place, fill_select, move_slider } from './helpers.ts'
 test(`student signup form can be submitted after filling all required fields`, async ({
   page,
 }) => {
-  await page.goto(`/signup-student`)
+  await page.goto(`/signup-student`, { waitUntil: `networkidle` })
 
   await fill_select(page, `#chapter`, [`Test`])
 

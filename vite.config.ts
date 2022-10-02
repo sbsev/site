@@ -7,6 +7,9 @@ const vite_config: UserConfig = {
 
   server: {
     port: 3000,
+    fs: {
+      allow: [`..`],
+    },
   },
 
   preview: {

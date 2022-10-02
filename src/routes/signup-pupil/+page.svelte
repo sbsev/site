@@ -38,7 +38,7 @@
 {#if success}
   <section>
     <span>{form.submitSuccess.title}</span>
-    {@html form.submitSuccess.note}
+    <p>{@html form.submitSuccess.note}</p>
   </section>
 {:else}
   <form onsubmit="return false;" on:submit|preventDefault={submit}>
@@ -50,7 +50,8 @@
       {@html form.header.title}
     </h1>
 
-    {@html form.header.note}
+    <!-- wrapping @html in <p> seems to help with https://github.com/sveltejs/svelte/issues/7698 (though not in minimal repro) -->
+    <p>{@html form.header.note}</p>
 
     {#each form.fields as props}
       <FormField {...props} />
@@ -59,8 +60,8 @@
     <h3>
       {@html form.submit.title}
     </h3>
-    {@html form.submit.note}
-    <!-- class main used by CSS selector in test/signupForm.js -->
+    <p>{@html form.submit.note}</p>
+    <!-- class main used by CSS selector in signup form tests -->
     <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
         <CircleSpinner color="white" />
@@ -73,7 +74,7 @@
     <Modal on:close={() => (modalOpen = false)} style="background: var(--bodyBg);">
       <div>
         <span>{form.submitError.title}</span>
-        {@html form.submitError.note}
+        <p>{@html form.submitError.note}</p>
 
         <pre><code>
           {JSON.stringify(error, null, 2)}

@@ -18,7 +18,7 @@ export async function getSpace() {
   const client = contentful.createClient({
     accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
   })
-  return await client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+  return await client.getSpace(process.env.VITE_CONTENTFUL_SPACE_ID)
 }
 
 export async function searchStringInContentType(args) {
