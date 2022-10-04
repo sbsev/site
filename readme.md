@@ -9,10 +9,10 @@
 <h3 align="center">
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2bcf7f93-7c33-40f4-9843-bbbf22ea213b/deploy-status)](https://app.netlify.com/sites/sbsev/deploys)
-[![Tests](https://github.com/sbsev/svelte-site/actions/workflows/test.yml/badge.svg)](https://github.com/sbsev/svelte-site/actions/workflows/test.yml)
-[![Lighthouse](https://github.com/sbsev/svelte-site/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/sbsev/svelte-site/actions/workflows/lighthouse.yml)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sbsev/svelte-site/main.svg)](https://results.pre-commit.ci/latest/github/sbsev/svelte-site/main)
-[![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-darkblue?logo=stackblitz)](https://stackblitz.com/github/sbsev/svelte-site)
+[![Tests](https://github.com/sbsev/site/actions/workflows/test.yml/badge.svg)](https://github.com/sbsev/site/actions/workflows/test.yml)
+[![Lighthouse](https://github.com/sbsev/site/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/sbsev/site/actions/workflows/lighthouse.yml)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sbsev/site/main.svg)](https://results.pre-commit.ci/latest/github/sbsev/site/main)
+[![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-darkblue?logo=stackblitz)](https://stackblitz.com/github/sbsev/site)
 
 </h3>
 
@@ -27,7 +27,7 @@ Running this site locally requires [`git`](https://git-scm.com) and [`yarn`](htt
 1. Clone the repo and change into its directory.
 
    ```sh
-   git clone https://github.com/sbsev/svelte-site && cd svelte-site
+   git clone https://github.com/sbsev/site sbs-site && cd sbs-site
    ```
 
 2. (optional) Setup [`pre-commit` hooks](https://pre-commit.com).

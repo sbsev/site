@@ -21,19 +21,6 @@ indexPage:
 
 footer:
   name: 'Students for Students'
-  siteInfos: 'This website is
-    <a href="https://github.com/sbsev/svelte-site">
-    <OpenSource
-    height="2.5ex"
-    style="vertical-align: bottom; padding-right: 3pt;"
-    />open source
-    </a>
-    and does not
-    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
-    use
-    <Cookie height="2.2ex" style="vertical-align: middle;" />
-    cookies.
-    </a>'
   site: 'This website is'
   uses: 'and does not use'
 
