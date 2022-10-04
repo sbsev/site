@@ -22,19 +22,6 @@ indexPage:
 
 footer:
   name: 'Studenten bilden Schüler e.V.'
-  siteInfos: 'Diese Seite ist
-    <a href="https://github.com/sbsev/svelte-site">
-    <OpenSource
-    height="2.5ex"
-    style="vertical-align: bottom; padding-right: 3pt;"
-    />open source
-    </a>
-    und verwendet keine
-    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
-    use
-    <Cookie height="2.2ex" style="vertical-align: middle;" />
-    cookies.
-    </a>'
   site: 'Diese Seite ist'
   uses: 'und verwendet keine'
 
