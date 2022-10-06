@@ -27,6 +27,10 @@
   $: $signupStore[id].value = value
   $: $signupStore[id].node = label
   $: if (value) $signupStore[id].error = ``
+
+  function input_type(node: HTMLInputElement): void {
+    node.type = type
+  }
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
@@ -86,15 +90,8 @@
   />
 {:else if type === `radio`}
   <RadioButtons bind:value {options} />
-{:else if type === `email`}
-  <input type="email" bind:value {id} {placeholder} />
-{:else if type === `date`}
-  <input type="date" bind:value {id} {placeholder} />
-{:else if type === `tel`}
-  <input type="tel" bind:value {id} {placeholder} />
-{:else if type === `text`}
-  <input type="text" bind:value {id} {placeholder} />
 {:else if type === `number`}
+  <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
   <input
     type="number"
     bind:value
@@ -104,7 +101,8 @@
     {min}
     {max}
   />
-  <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
+{:else}
+  <input use:input_type bind:value {id} {placeholder} />
 {/if}
 
 <style>
