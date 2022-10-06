@@ -138,6 +138,7 @@ export async function signup_form_submit_handler(
     }
   }
 
+  // somehow value changed from an array to an string
   const chapter = signupData.chapter.value?.[0]
   const type = signupData.type.value
   const chapterAndType = {
