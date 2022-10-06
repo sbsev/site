@@ -40,7 +40,7 @@
     "svelte": "3.50.1",
     "svelte-algolia": "^0.3.1",
     "svelte-check": "^2.9.1",
-    "svelte-multiselect": "^7.0.0",
+    "svelte-multiselect": "^7.0.1",
     "svelte-preprocess": "^4.10.7",
     "svelte-range-slider-pips": "^2.0.3",
     "svelte-toc": "^0.4.0",
