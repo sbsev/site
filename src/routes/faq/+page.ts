@@ -1,7 +1,6 @@
 import { fetchYamlList } from '$lib/fetch'
-import type { PageLoad } from '@sveltejs/kit'
+import type { PageLoad } from './$types'
 
-export const load: PageLoad = async () => {
-  const faqs = await fetchYamlList(`FAQ`, `faq#`)
-  return { faqs }
+export const load: PageLoad = () => {
+  return { faqs: fetchYamlList(`FAQ`, `faq#`) }
 }

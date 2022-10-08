@@ -49,7 +49,7 @@ export async function prepare_signup_data_for_airtable(
     // in Safari. Should do nothing in other browsers.
 
     Fächer: data.subjects.value,
-    Geschlecht: data.gender.value?.[0],
+    Geschlecht: data.gender.value,
     Bemerkung: to_str(data.remarks.value),
     Datenschutz: data.dataProtection.value,
     Quelle: `landing: ${location.origin}${window.visitedPages[1]}, prev: ${window.visitedPages[0]}`, // analytics
@@ -67,7 +67,7 @@ export async function prepare_signup_data_for_airtable(
       Studienfach: data.studySubject.value,
       Geburtsort: to_str(data.birthPlace.value),
       Geburtsdatum: data.birthDate.value,
-      Werbemaßnahme: data.discovery.value?.[0],
+      Werbemaßnahme: data.discovery.value,
       // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
       // in Safari. Should do nothing in other browsers.
     }
@@ -77,7 +77,7 @@ export async function prepare_signup_data_for_airtable(
     const pupilFields = {
       Vorname: data.firstName.value,
       Klassenstufe: to_str(data.level.value), // no fallback value here since it's a required field for pupils
-      Schulform: data.schoolTypes.value?.[0],
+      Schulform: data.schoolTypes.value,
       Geburtsdatum: data.birthYear.value + `-01-01`,
       Kontaktperson: data.nameContact.value,
       Kontaktpersonen: data.nameContact?.value,
@@ -95,7 +95,7 @@ export async function prepare_signup_data_for_airtable(
   // fields not present in local chapter tables
   const globalFields = {
     ...fields,
-    Standort: data.chapter.value?.[0],
+    Standort: data.chapter.value,
     Spur: window.visitedPages.join(`,\n`),
   }
 
@@ -138,7 +138,7 @@ export async function signup_form_submit_handler(
     }
   }
 
-  const chapter = signupData.chapter.value?.[0]
+  const chapter = signupData.chapter.value
   const type = signupData.type.value
   const chapterAndType = {
     chapter: chapter,

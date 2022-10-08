@@ -1,9 +1,9 @@
 import { dev } from '$app/environment'
 import { fetchChapters, parseFormData } from '$lib/fetch'
-import type { PageLoad } from '@sveltejs/kit'
 import messages from '../../signup-form/de/messages.yml'
 import options from '../../signup-form/de/options.yml'
 import raw_form from '../../signup-form/de/student.yml'
+import type { PageLoad } from './$types'
 
 export const load: PageLoad = async () => {
   let chapters = await fetchChapters()

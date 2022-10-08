@@ -5,10 +5,8 @@
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
-  export const load: Load = async () => {
-    const chapters = await fetchChapters()
-
-    return { props: { chapters } }
+  export const load: Load = () => {
+    return { props: { chapters: fetchChapters() } }
   }
 </script>
 

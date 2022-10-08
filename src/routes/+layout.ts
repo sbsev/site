@@ -1,7 +1,7 @@
 import { fetchChapters, fetchYaml } from '$lib/fetch'
 import { microcopy } from '$lib/stores'
 import type { Chapter, NavLink } from '$lib/types'
-import type { LayoutLoad } from '@sveltejs/kit'
+import type { LayoutLoad } from './$types'
 
 export const load: LayoutLoad = async () => {
   const nav = await fetchYaml(`Nav`)

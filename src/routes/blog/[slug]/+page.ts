@@ -1,6 +1,6 @@
 import { fetchPost } from '$lib/fetch'
-import type { PageLoad } from '@sveltejs/kit'
 import { error } from '@sveltejs/kit'
+import type { PageLoad } from './$types'
 
 export const load: PageLoad = async ({ params }) => {
   const post = await fetchPost(params.slug)

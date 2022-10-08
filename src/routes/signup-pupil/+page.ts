@@ -1,6 +1,6 @@
 import { dev } from '$app/environment'
 import { fetchChapters, parseFormData } from '$lib/fetch'
-import type { PageLoad } from '@sveltejs/kit'
+import type { PageLoad } from './$types'
 // to make the signup form i18n-compatible,
 // these 3 files need to be imported adaptively (same in the student form)
 import messages from '../../signup-form/de/messages.yml'
