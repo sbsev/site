@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import marked from '../utils/marked'
 import type { Chapter, Form, Page, Post } from './types'
@@ -8,7 +9,7 @@ const prefixSlug = (prefix: string) => (obj: Page | Post) => {
   return obj
 }
 
-export async function airtableFetch(
+export async function airtable_fetch(
   query: string,
   options = {}
 ): Promise<Record<string, unknown>> {
@@ -32,7 +33,7 @@ export async function airtableFetch(
   return data
 }
 
-export async function contentfulFetch(query: string) {
+export async function contentful_fetch(query: string) {
   const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
   const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
 
@@ -52,6 +53,7 @@ export async function contentfulFetch(query: string) {
   const { data, error } = await response.json()
 
   if (error) throw error
+  if (!data) throw sveltekit_error(404, `No data returned from Contentful`)
   return data
 }
 
@@ -71,12 +73,12 @@ const chaptersQuery = `{
   }
 }`
 
-export async function fetchChapters(): Promise<Chapter[]> {
-  const { chapters } = await contentfulFetch(chaptersQuery)
+export async function fetch_chapters(): Promise<Chapter[]> {
+  const { chapters } = await contentful_fetch(chaptersQuery)
   return chapters?.items?.map(prefixSlug(`/standorte/`))
 }
 
-export async function base64Thumbnail(
+export async function base64_thumbnail(
   url: string,
   options?: { type?: string; w?: number; h?: number }
 ): Promise<string> {
@@ -133,7 +135,7 @@ const pageFragment = `
   }
 `
 
-const pageQuery = (slug: string) => `{
+const page_query = (slug: string) => `{
   pages: pageCollection(where: {slug_in: ["${slug}", "/${slug}"]}) {
     ${pageFragment}
   }
@@ -150,7 +152,7 @@ export async function fetchPage(slug: string): Promise<Page | null> {
 
   if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
 
-  const data = await contentfulFetch(pageQuery(slug))
+  const data = await contentful_fetch(page_query(slug))
   const page = data?.pages?.items[0]
   if (!page) return null
 
@@ -161,13 +163,13 @@ export async function fetchPage(slug: string): Promise<Page | null> {
     })
   }
 
-  page.cover.base64 = await base64Thumbnail(page.cover.src)
+  page.cover.base64 = await base64_thumbnail(page.cover.src)
 
   return renderBody(page)
 }
 
-export async function fetchPages(): Promise<Page[]> {
-  const data = await contentfulFetch(pagesQuery)
+export async function fetch_pages(): Promise<Page[]> {
+  const data = await contentful_fetch(pagesQuery)
   return data?.pages?.items?.map(renderBody)
 }
 
@@ -194,42 +196,42 @@ const postFragment = `
   }
 `
 
-const postQuery = (slug: string) => `{
+const post_query = (slug: string) => `{
   posts: postCollection(order: date_DESC, where: {slug_in: ["${slug}", "/${slug}"]}) {
     ${postFragment}
   }
 }`
 
-const postsQuery = `{
+const posts_query = `{
   posts: postCollection(order: date_DESC) {
     ${postFragment}
   }
 }`
 
-async function processPost(post: Post) {
+async function process_post(post: Post) {
   if (!post) return
   renderBody(post)
   prefixSlug(`/blog/`)(post)
-  post.author.photo.base64 = await base64Thumbnail(post.author.photo.src, {
+  post.author.photo.base64 = await base64_thumbnail(post.author.photo.src, {
     w: 3,
     h: 3,
   })
-  post.cover.base64 = await base64Thumbnail(post.cover.src)
+  post.cover.base64 = await base64_thumbnail(post.cover.src)
   return post
 }
 
-export async function fetchPost(slug: string): Promise<Post> {
-  if (!slug) throw `fetchPost requires a slug, got '${slug}'`
-  const data = await contentfulFetch(postQuery(slug))
+export async function fetch_post(slug: string): Promise<Post> {
+  if (!slug) throw `fetch_post() requires a slug, got '${slug}'`
+  const data = await contentful_fetch(post_query(slug))
   const post = data?.posts?.items[0]
-  await processPost(post)
+  await process_post(post)
   return post
 }
 
-export async function fetchPosts(): Promise<Post[]> {
-  const data = await contentfulFetch(postsQuery)
+export async function fetch_posts(): Promise<Post[]> {
+  const data = await contentful_fetch(posts_query)
   const posts = data?.posts?.items
-  return await Promise.all(posts.map(processPost))
+  return await Promise.all(posts.map(process_post))
 }
 
 const yamlQuery = (title: string) => `{
@@ -240,13 +242,13 @@ const yamlQuery = (title: string) => `{
   }
 }`
 
-export async function fetchYaml(title: string) {
-  if (!title) throw `fetchYaml requires a title, got '${title}'`
-  const { yml } = await contentfulFetch(yamlQuery(title))
+export async function fetch_yaml(title: string) {
+  if (!title) throw `fetch_yaml() requires a title, got '${title}'`
+  const { yml } = await contentful_fetch(yamlQuery(title))
   return yaml.load(yml?.items[0]?.data)
 }
 
-function titleToSlug(itm: Record<string, unknown> & { title: string }) {
+function title_to_slug(itm: Record<string, unknown> & { title: string }) {
   itm.slug = itm.title
     .toLowerCase()
     .replace(/ä/g, `ae`)
@@ -259,19 +261,19 @@ function titleToSlug(itm: Record<string, unknown> & { title: string }) {
   return itm
 }
 
-export async function fetchYamlList(
+export async function fetch_yaml_list(
   title: string,
   slugPrefix: string
 ): Promise<Record<string, unknown>[]> {
-  const list = await fetchYaml(title)
-  return list.map(renderBody).map(titleToSlug).map(prefixSlug(slugPrefix))
+  const list = await fetch_yaml(title)
+  return list.map(renderBody).map(title_to_slug).map(prefixSlug(slugPrefix))
 }
 
 // remove outer-most paragraph tags (if any)
-const stripOuterParTag = (str: string) =>
+const strip_outer_par_tag = (str: string) =>
   str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
-export function parseFormData(obj: Form): Form {
+export function parse_form_data(obj: Form): Form {
   const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
   renderer.link = (href: string, _: string, text: string) =>
@@ -283,8 +285,8 @@ export function parseFormData(obj: Form): Form {
       // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
       const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-      obj[key] = stripOuterParTag(marked(markdown))
-    } else if (typeof itm === `object` && itm !== null) parseFormData(itm)
+      obj[key] = strip_outer_par_tag(marked(markdown))
+    } else if (typeof itm === `object` && itm !== null) parse_form_data(itm)
   }
   return obj
 }

@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
-  import { fetchChapters } from './fetch'
+  import { fetch_chapters } from './fetch'
   import Map from './Map.svelte'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
   export const load: Load = () => {
-    return { props: { chapters: fetchChapters() } }
+    return { props: { chapters: fetch_chapters() } }
   }
 </script>
 

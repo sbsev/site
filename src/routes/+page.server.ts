@@ -1,11 +1,11 @@
-import { fetchChapters, fetchPage } from '$lib/fetch'
+import { fetchPage, fetch_chapters } from '$lib/fetch'
 import type { PageLoad } from './$types'
 
 export const load: PageLoad = async () => {
   return {
     page: fetchPage(`/`),
-    chapters: fetchChapters(),
-    // ...airtableFetch(
+    chapters: fetch_chapters(),
+    // ...airtable_fetch(
     //   `{
     //     students: studentenStatistiken {
     //       id

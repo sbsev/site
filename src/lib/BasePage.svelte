@@ -35,6 +35,7 @@
       openButtonLabel="Inhaltsverzeichnis öffnen"
       headingSelector="article :is(h2, h3, h4)"
       --toc-mobile-bg="var(--bodyBg)"
+      --toc-width="20em"
     />
   {/if}
   <div>

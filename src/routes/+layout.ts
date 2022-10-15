@@ -1,14 +1,14 @@
-import { fetchChapters, fetchYaml } from '$lib/fetch'
+import { fetch_chapters, fetch_yaml } from '$lib/fetch'
 import { microcopy } from '$lib/stores'
 import type { Chapter, NavLink } from '$lib/types'
 import type { LayoutLoad } from './$types'
 
 export const load: LayoutLoad = async () => {
-  const nav = await fetchYaml(`Nav`)
-  const footer = await fetchYaml(`Footer`)
-  const social = await fetchYaml(`Social`)
-  const chapters = await fetchChapters()
-  const smallTexts = await fetchYaml(`smallTexts`)
+  const nav = await fetch_yaml(`Nav`)
+  const footer = await fetch_yaml(`Footer`)
+  const social = await fetch_yaml(`Social`)
+  const chapters = await fetch_chapters()
+  const smallTexts = await fetch_yaml(`smallTexts`)
   microcopy.set(smallTexts)
 
   // ensure the non-chapter link spans all chapter subnav columns

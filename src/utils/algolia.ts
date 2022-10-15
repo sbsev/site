@@ -1,7 +1,10 @@
-import { fetchPages, fetchPosts, fetchYamlList } from '$lib/fetch.js'
+import { fetch_pages, fetch_posts, fetch_yaml_list } from '$lib/fetch.js'
 
 function processResults(
-  fetchFunction: typeof fetchPages | typeof fetchPosts | typeof fetchYamlList,
+  fetchFunction:
+    | typeof fetch_pages
+    | typeof fetch_posts
+    | typeof fetch_yaml_list,
   ...args: unknown[]
 ) {
   return async () => {
@@ -30,15 +33,15 @@ export const algoliaConfig = {
   apiKey: import.meta.env.VITE_ALGOLIA_ADMIN_KEY,
   // partialUpdates: true,
   indices: [
-    { name: `Seiten`, getData: processResults(fetchPages) },
-    { name: `Posts`, getData: processResults(fetchPosts) },
+    { name: `Seiten`, getData: processResults(fetch_pages) },
+    { name: `Posts`, getData: processResults(fetch_posts) },
     {
       name: `FAQs`,
-      getData: processResults(fetchYamlList, `FAQ`, `faq#`),
+      getData: processResults(fetch_yaml_list, `FAQ`, `faq#`),
     },
     {
       name: `Lernmaterial`,
-      getData: processResults(fetchYamlList, `Lernmaterial`, `lernmaterial#`),
+      getData: processResults(fetch_yaml_list, `Lernmaterial`, `lernmaterial#`),
     },
   ],
   settings: {
