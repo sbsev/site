@@ -12,14 +12,14 @@
 </script>
 
 <section>
-  <a data-sveltekit-prefetch href={slug}>
+  <a href={slug}>
     <Img
       sizes={[{ w: 400, h: 300 }]}
       {...cover}
       imgStyle="border-radius: 1ex 1ex 0 0; height: 15em;"
     /></a
   >
-  <h3><a data-sveltekit-prefetch href={slug}>{title}</a></h3>
+  <h3><a href={slug}>{title}</a></h3>
   <div>
     <ToolTip>
       <Img

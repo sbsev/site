@@ -13,7 +13,7 @@
   {#if $page.status === 404}
     <p>
       😅 Ooops! Diese Seite konnte nicht gefunden.
-      <a data-sveltekit-prefetch href="/">Zurück zur Startseite</a>.
+      <a href="/">Zurück zur Startseite</a>.
     </p>
   {/if}
 

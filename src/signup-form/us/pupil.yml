@@ -2,7 +2,7 @@ header:
   title: Registration students
   note: |
     <p align="center">
-    Would you like to give tuition? <a class="btn small green" href="/signup-student" data-sveltekit-prefetch>Registration student</a>
+    Would you like to give tuition? <a class="btn small green" href="/signup-student">Registration student</a>
     </p>
 
     ## Form for parents and social institutions

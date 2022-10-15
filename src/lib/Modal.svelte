@@ -48,7 +48,7 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="modal-background" on:click|self={close}>
+<div class="modal-background" on:click|self={close} on:keyup|self={close}>
   <div
     use:preventOverScroll
     class="modal"

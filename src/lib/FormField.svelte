@@ -39,6 +39,7 @@
   class:required
   bind:this={label}
   on:click={(e) => type === `toggle` && e.preventDefault()}
+  on:keyup={(e) => type === `toggle` && e.preventDefault()}
 >
   {@html title}
 </label>

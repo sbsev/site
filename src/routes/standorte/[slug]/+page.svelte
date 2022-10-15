@@ -18,19 +18,11 @@
     <section>
       <span>
         {$microcopy?.location?.joinStudent}
-        <a
-          data-sveltekit-prefetch
-          href="/signup-student?chapter={page.title}"
-          class="btn blue"
-        >
+        <a href="/signup-student?chapter={page.title}" class="btn blue">
           <Icon inline icon="fa-solid:graduation-cap" {style} />{$microcopy?.location
             ?.registerStudent}
         </a>
-        <a
-          data-sveltekit-prefetch
-          href={$microcopy?.location?.linkStudentInfo}
-          class="btn blue stroke"
-        >
+        <a href={$microcopy?.location?.linkStudentInfo} class="btn blue stroke">
           <Icon
             inline
             icon="bi:info-circle-fill"
@@ -40,19 +32,11 @@
       </span>
       <span>
         {$microcopy?.location?.joinPupil}
-        <a
-          data-sveltekit-prefetch
-          href="/signup-pupil?chapter={page.title}"
-          class="btn green"
-        >
+        <a href="/signup-pupil?chapter={page.title}" class="btn green">
           <Icon inline icon="fa-solid:child" {style} />{$microcopy?.location
             ?.registerPupil}
         </a>
-        <a
-          data-sveltekit-prefetch
-          href={$microcopy?.location?.linkPupilInfo}
-          class="btn green stroke"
-        >
+        <a href={$microcopy?.location?.linkPupilInfo} class="btn green stroke">
           <Icon
             inline
             icon="bi:info-circle-fill"
@@ -68,11 +52,7 @@
         >
           <Icon inline icon="ic:email" {style} />{$microcopy?.location?.writeMailButton}
         </a>
-        <a
-          data-sveltekit-prefetch
-          href={$microcopy?.location?.linkLeadingInfo}
-          class="btn orange stroke"
-        >
+        <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
           <Icon
             inline
             icon="bi:info-circle-fill"

@@ -13,12 +13,12 @@
 
 <div>
   {#if cover?.src}
-    <a data-sveltekit-prefetch href={slug} on:click={close}>
+    <a href={slug} on:click={close}>
       <Img {...cover} sizes={[{ w: 150 }]} imgStyle="height: auto;" />
     </a>
   {/if}
   <h3>
-    <a data-sveltekit-prefetch href={slug} on:click={close}>{@html title}</a>
+    <a href={slug} on:click={close}>{@html title}</a>
   </h3>
   {#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
   {#if author}<span>{author.name}</span>{/if}

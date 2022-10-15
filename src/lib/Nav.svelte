@@ -68,13 +68,7 @@
   </button>
 {/if}
 
-<a
-  on:click={close}
-  class="logo"
-  href="/"
-  data-sveltekit-prefetch
-  aria-current={isCurrent(`/`)}
->
+<a on:click={close} class="logo" href="/" aria-current={isCurrent(`/`)}>
   <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
 </a>
 
@@ -88,7 +82,6 @@
         <span>
           <a
             on:click={close}
-            data-sveltekit-prefetch
             aria-current={isCurrent(url)}
             href={url}
             style="display: flex; align-items: center;"
@@ -116,12 +109,7 @@
           >
             {#each subNav as { title, url, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
-                <a
-                  on:click={close}
-                  data-sveltekit-prefetch
-                  aria-current={isCurrent(url)}
-                  href={url}
-                >
+                <a on:click={close} aria-current={isCurrent(url)} href={url}>
                   {title}
                 </a>
               </li>
