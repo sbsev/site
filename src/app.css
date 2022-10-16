@@ -1,31 +1,31 @@
 /* brand colors */
 :root {
   --blue: #0b4abf;
-  --darkBlue: #003056;
-  --darkerBlue: #061725;
-  --lightBlue: #00a1ff;
-  --lighterBlue: #06c5ff;
+  --dark-blue: #003056;
+  --darker-blue: #061725;
+  --light-blue: #00a1ff;
+  --lighter-blue: #06c5ff;
 
   --green: #89ba17;
-  --darkGreen: #4d8711;
-  --darkerGreen: #3c660f;
-  --lightGreen: #95d50f;
-  --lighterGreen: #caef76;
+  --dark-green: #4d8711;
+  --darker-green: #3c660f;
+  --light-green: #95d50f;
+  --lighter-green: #caef76;
 
   --yellow: #f9ff00;
-  --darkYellow: #ffca35;
-  --lightYellow: #fbff6c;
+  --dark-yellow: #ffca35;
+  --light-yellow: #fbff6c;
 
   --orange: #e8ab00;
-  --darkOrange: #d88100;
-  --lightOrange: #ffca29;
+  --dark-orange: #d88100;
+  --light-orange: #ffca29;
 
   --gray: #464849;
-  --altGray: #313441;
-  --lightGray: #d8d8d8;
-  --lighterGray: #efefef;
-  --lightestGray: #f6f6f6;
-  --darkGray: #2a2c30;
+  --alt-gray: #313441;
+  --light-gray: #d8d8d8;
+  --lighter-gray: #efefef;
+  --lightest-gray: #f6f6f6;
+  --dark-gray: #2a2c30;
 }
 
 body {
@@ -152,19 +152,19 @@ tbody tr:nth-child(odd) {
   background: var(--blue);
 }
 .btn.blue:hover {
-  background: var(--lightBlue);
+  background: var(--light-blue);
 }
 .btn.green {
   background: var(--green);
 }
 .btn.green:hover {
-  background: var(--darkGreen);
+  background: var(--dark-green);
 }
 .btn.orange {
   background: var(--orange);
 }
 .btn.orange:hover {
-  background: var(--darkOrange);
+  background: var(--dark-orange);
 }
 .btn.stroke {
   color: var(--textColor) !important;
@@ -193,7 +193,7 @@ section.blue a {
   color: var(--green);
 }
 section.green a {
-  color: var(--darkBlue);
+  color: var(--dark-blue);
 }
 section:before {
   content: '';
@@ -205,10 +205,10 @@ section:before {
   z-index: -1;
 }
 section.blue:before {
-  background: var(--darkBlue);
+  background: var(--dark-blue);
 }
 section.green:before {
-  background: var(--darkGreen);
+  background: var(--dark-green);
 }
 section:is(.blue, .green) blockquote {
   background: rgba(0, 0, 0, 0.3);
@@ -227,7 +227,7 @@ div.box-list ul {
 div.box-list ul li {
   padding: 5pt 1ex;
   border-radius: 5pt;
-  background: var(--darkBlue);
+  background: var(--dark-blue);
   flex: 1;
   text-align: center;
   box-shadow: 0 0 2em -1em var(--shadow);
@@ -247,7 +247,7 @@ section.blue div.box-list ul li {
   box-shadow: 0 0 2em -1em black;
 }
 section.blue div.box-list ul li a {
-  color: var(--darkBlue);
+  color: var(--dark-blue);
 }
 /* captions */
 p > :is(picture + em, a + em) {

@@ -52,7 +52,7 @@
     color: white;
   }
   footer :global(a) {
-    color: var(--lightBlue);
+    color: var(--light-blue);
   }
   footer :global(a:hover) {
     color: var(--green);

@@ -86,7 +86,7 @@
     padding: 2pt 6pt 2pt 2pt;
   }
   ol li span + input + button {
-    color: var(--lightGray);
+    color: var(--light-gray);
     transition: 0.3s;
   }
   ol li span + input + button:hover {

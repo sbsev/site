@@ -96,7 +96,7 @@
     padding: 0 1ex;
   }
   button {
-    background: var(--darkGreen);
+    background: var(--dark-green);
     padding: 3pt 1ex;
     border-radius: 4pt;
     transition: 0.2s;

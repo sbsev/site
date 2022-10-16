@@ -32,11 +32,11 @@
 
   <legend>
     <div>
-      <span style="background: var(--lightBlue)" />
+      <span style="background: var(--light-blue)" />
       {$microcopy?.map?.text?.active}
     </div>
     <div>
-      <span style="background: var(--darkGreen)" />
+      <span style="background: var(--dark-green)" />
       {$microcopy?.map?.text?.inSetup}
     </div>
   </legend>
@@ -72,10 +72,10 @@
     line-height: 14pt;
   }
   :global(a.chapter.active) {
-    background-color: var(--lightBlue);
+    background-color: var(--light-blue);
   }
   :global(a.chapter.starting) {
-    background-color: var(--darkGreen);
+    background-color: var(--dark-green);
   }
   :global(a.chapter:hover) {
     background-color: var(--blue);
@@ -91,9 +91,9 @@
     box-sizing: border-box;
   }
   :global(a.chapter.active::after) {
-    border-color: var(--lightBlue) transparent transparent transparent;
+    border-color: var(--light-blue) transparent transparent transparent;
   }
   :global(a.chapter.starting::after) {
-    border-color: var(--darkGreen) transparent transparent transparent;
+    border-color: var(--dark-green) transparent transparent transparent;
   }
 </style>

@@ -1,16 +1,16 @@
 :root {
   --textColor: black;
   --linkColor: var(--blue);
-  --hoverColor: var(--lightBlue);
-  --bodyBg: var(--lightestGray);
+  --hoverColor: var(--light-blue);
+  --bodyBg: var(--lightest-gray);
   --accentBg: white;
-  --lightBg: var(--lighterGray);
+  --lightBg: var(--lighter-gray);
   --shadow: var(--gray);
-  --borderColor: var(--lightBlue);
-  --headingColor: var(--lightBlue);
-  --headerBg: var(--darkBlue);
+  --borderColor: var(--light-blue);
+  --headingColor: var(--light-blue);
+  --headerBg: var(--dark-blue);
   --headerColor: white;
-  --footerBg: var(--darkBlue);
+  --footerBg: var(--dark-blue);
   --invert: 0;
   --transparent: rgba(255, 255, 255, 0.8);
 }

@@ -42,11 +42,11 @@
     transition: 0.3s;
   }
   input:not(:checked) + span:hover {
-    background: var(--lightGreen);
+    background: var(--light-green);
     transform: scale(1.03);
   }
   input:checked + span {
     box-shadow: inset 0 0 1em -3pt black;
-    background: var(--darkGreen);
+    background: var(--dark-green);
   }
 </style>
