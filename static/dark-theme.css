@@ -1,15 +1,15 @@
 :root {
   --textColor: white;
-  --linkColor: var(--lightBlue);
+  --linkColor: var(--light-blue);
   --hoverColor: var(--green);
-  --bodyBg: var(--darkerBlue);
-  --accentBg: var(--altGray);
-  --lightBg: var(--darkGray);
+  --bodyBg: var(--darker-blue);
+  --accentBg: var(--alt-gray);
+  --lightBg: var(--dark-gray);
   --shadow: black;
-  --borderColor: var(--darkGreen);
-  --headingColor: var(--lightGreen);
-  --headerBg: var(--darkerBlue);
-  --headerColor: var(--lightBlue);
+  --borderColor: var(--dark-green);
+  --headingColor: var(--light-green);
+  --headerBg: var(--darker-blue);
+  --headerColor: var(--light-blue);
   --footerBg: black;
   --invert: 1;
   --transparent: rgba(0, 0, 0, 0.5);

@@ -35,7 +35,7 @@
 </h2>
 
 <section style="white-space: nowrap;">
-  <div style="background: var(--lightBlue);">
+  <div style="background: var(--light-blue);">
     <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
       <Icon inline icon="fa-solid:child" {style} />
@@ -56,7 +56,7 @@
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
-  <div style="background: var(--lightBlue);">
+  <div style="background: var(--light-blue);">
     <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />

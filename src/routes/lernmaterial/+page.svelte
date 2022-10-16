@@ -105,14 +105,14 @@
     font-size: calc(0.85em + 0.1vw);
   }
   button {
-    background: var(--darkGreen);
+    background: var(--dark-green);
     padding: 3pt 1ex;
     border-radius: 4pt;
     transition: 0.2s;
     color: white;
   }
   button.active {
-    background: var(--darkerGreen);
+    background: var(--darker-green);
   }
   button:hover {
     background: var(--green);

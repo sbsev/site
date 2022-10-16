@@ -81,7 +81,7 @@
     transition: 0.3s;
   }
   article :global(.toc-clicked) {
-    color: var(--lightBlue);
+    color: var(--light-blue);
   }
   figure {
     position: relative;
@@ -118,7 +118,7 @@
     text-align: center;
   }
   figcaption :global(a) {
-    color: var(--lightBlue);
+    color: var(--light-blue);
   }
   time {
     display: block;

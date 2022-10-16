@@ -21,7 +21,7 @@
   }
 </script>
 
-<h3 on:click={toggle} style="--angle: {$angle}" class:active>
+<h3 on:click={toggle} on:keyup={toggle} style="--angle: {$angle}" class:active>
   <span class="anchor" {id} />
   <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
   <slot name="title" />
@@ -39,7 +39,6 @@
     border-radius: 4pt;
     padding: 4pt 1ex;
     margin: 1em auto;
-    transition: 0.3s;
     max-width: 100%;
     transition: 0.6s;
   }

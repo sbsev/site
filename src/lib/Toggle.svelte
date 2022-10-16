@@ -35,7 +35,7 @@
     width: 2.7em;
     padding: 0.1em;
     box-sizing: border-box;
-    border: 1px solid var(--lightGray);
+    border: 1px solid var(--light-gray);
     border-radius: 0.75em;
     transition: 0.3s;
   }
@@ -61,6 +61,6 @@
     transform: translate(100%);
   }
   input:focus + span {
-    border: 1px solid var(--lightBlue);
+    border: 1px solid var(--light-blue);
   }
 </style>

@@ -103,12 +103,12 @@
     transition: 0.3s;
     padding: 1ex 1em;
     color: white;
-    background: var(--darkGreen);
+    background: var(--dark-green);
     font-size: 1.2em;
     border: 1pt solid transparent;
   }
   button[type='submit']:focus {
-    border: 1pt solid var(--lightBlue);
+    border: 1pt solid var(--light-blue);
   }
   button[type='submit']:disabled {
     cursor: default;
