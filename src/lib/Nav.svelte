@@ -41,6 +41,24 @@
   beforeNavigate(close)
 
   const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
+
+  let chars = []
+  let colored = []
+
+  function calculaterColoring(title: String) {
+    // if colorings have already been calculated on a previous hover
+    if (colored.find(elem => elem === title)) {
+      return true
+    }
+
+    if (!chars.find(elem => elem === title[0])) {
+      chars.push(title[0])
+      colored.push(title)
+      return true
+    } 
+
+    return false
+  }
 </script>
 
 <svelte:window
@@ -107,13 +125,49 @@
               4
             )}, 1fr);"
           >
-            {#each subNav as { title, url, spanCols, lightFont }}
-              <li class:spanCols class:lightFont>
-                <a on:click={close} aria-current={isCurrent(url)} href={url}>
-                  {title}
-                </a>
-              </li>
-            {/each}
+            <!-- Only apply readability rule to locations subnav -->
+            {#if title == "Standorte"}
+              {#each subNav as { title, url, spanCols, lightFont }}
+                <!-- Calculate if rule should be applied, i.e. name is first -->
+                {#if calculaterColoring(title)}
+                  <!-- Mark every location name that is the first of its alphabetical character -->
+                  <li class="first" class:spanCols class:lightFont>
+                    <a
+                    on:click={close}
+                    sveltekit:prefetch
+                    aria-current={isCurrent(url)}
+                    href={url}
+                    >
+                      {title}
+                    </a>
+                  </li>
+                {:else}
+                  <li class:spanCols class:lightFont>
+                    <a
+                      on:click={close}
+                      sveltekit:prefetch
+                      aria-current={isCurrent(url)}
+                      href={url}
+                      >
+                      {title}
+                    </a>
+                  </li>
+                {/if}    
+              {/each}
+            {:else}
+              {#each subNav as { title, url, spanCols, lightFont }}
+                <li class:spanCols class:lightFont>
+                  <a
+                    on:click={close}
+                    sveltekit:prefetch
+                    aria-current={isCurrent(url)}
+                    href={url}
+                    >
+                    {title}
+                  </a>
+                </li>
+              {/each}
+            {/if}
           </ul>
         {/if}
       </li>
@@ -228,5 +282,9 @@
   }
   nav.desktop button:first-child {
     display: none;
+  }
+  .first::first-letter {
+    color: green;
+    font-weight: bold;
   }
 </style>
