@@ -1,9 +1,9 @@
-import { fetchPage, fetch_yaml_list } from '$lib/fetch'
-import type { PageLoad } from './$types'
+import { fetch_page, fetch_yaml_list } from '$lib/fetch'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = () => {
+export const load: PageServerLoad = () => {
   return {
-    page: fetchPage(`lernmaterial`),
+    page: fetch_page(`lernmaterial`),
     studyPlatforms: fetch_yaml_list(`Lernmaterial`, `lernmaterial#`),
   }
 }

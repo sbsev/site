@@ -126,14 +126,6 @@ export type Award = {
   prize: string
 }
 
-export type MapMarker = {
-  lng: number
-  lat: number
-  title: string
-  url: string
-  classes: string[]
-}
-
 export type Place = {
   address: string
   lat: number

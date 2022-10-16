@@ -1,9 +1,9 @@
-import { fetchPage, fetch_chapters } from '$lib/fetch'
-import type { PageLoad } from './$types'
+import { fetch_chapters, fetch_page } from '$lib/fetch'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = async () => {
+export const load: PageServerLoad = async () => {
   return {
-    page: fetchPage(`/`),
+    page: fetch_page(`/`),
     chapters: fetch_chapters(),
     // ...airtable_fetch(
     //   `{

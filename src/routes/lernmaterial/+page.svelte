@@ -125,7 +125,7 @@
   }
   ul.items li {
     font-size: 0.85em;
-    background: var(--accentBg);
+    background: var(--accent-bg);
     padding: 1ex 3ex;
     border-radius: 4pt;
   }

@@ -1,11 +1,11 @@
-import { fetchPage } from '$lib/fetch'
+import { fetch_page } from '$lib/fetch'
 import { error } from '@sveltejs/kit'
-import type { PageLoad } from './$types'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
   const { slug } = params
 
-  const page = await fetchPage(`standorte/${slug}`)
+  const page = await fetch_page(`standorte/${slug}`)
 
   if (!page) throw error(404)
 

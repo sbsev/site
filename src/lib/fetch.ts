@@ -57,7 +57,7 @@ export async function contentful_fetch(query: string) {
   return data
 }
 
-const chaptersQuery = `{
+const chapters_query = `{
   chapters: chapterCollection(where: { showInNav: true }, order: title_ASC) {
     items {
       title
@@ -74,7 +74,7 @@ const chaptersQuery = `{
 }`
 
 export async function fetch_chapters(): Promise<Chapter[]> {
-  const { chapters } = await contentful_fetch(chaptersQuery)
+  const { chapters } = await contentful_fetch(chapters_query)
   return chapters?.items?.map(prefixSlug(`/standorte/`))
 }
 
@@ -102,7 +102,7 @@ export async function base64_thumbnail(
   }
 }
 
-function renderBody(itm: Page | Post) {
+function parse_body(itm: Page | Post) {
   if (!itm?.body) return itm
 
   itm.body = marked(itm.body) // generate HTML
@@ -111,7 +111,7 @@ function renderBody(itm: Page | Post) {
   return itm
 }
 
-const coverFragment = `
+const cover_fragment = `
   cover {
     src: url
     alt: description
@@ -121,14 +121,14 @@ const coverFragment = `
   }
 `
 
-const pageFragment = `
+const page_fragment = `
   items {
     title
     slug
     body
     toc
     yaml
-    ${coverFragment}
+    ${cover_fragment}
     sys {
       publishedAt
     }
@@ -137,17 +137,11 @@ const pageFragment = `
 
 const page_query = (slug: string) => `{
   pages: pageCollection(where: {slug_in: ["${slug}", "/${slug}"]}) {
-    ${pageFragment}
+    ${page_fragment}
   }
 }`
 
-const pagesQuery = `{
-  pages: pageCollection {
-    ${pageFragment}
-  }
-}`
-
-export async function fetchPage(slug: string): Promise<Page | null> {
+export async function fetch_page(slug: string): Promise<Page | null> {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
 
   if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
@@ -165,21 +159,25 @@ export async function fetchPage(slug: string): Promise<Page | null> {
 
   page.cover.base64 = await base64_thumbnail(page.cover.src)
 
-  return renderBody(page)
+  return parse_body(page)
 }
 
 export async function fetch_pages(): Promise<Page[]> {
-  const data = await contentful_fetch(pagesQuery)
-  return data?.pages?.items?.map(renderBody)
+  const data = await contentful_fetch(`{
+    pages: pageCollection {
+      ${page_fragment}
+    }
+  }`)
+  return data?.pages?.items?.map(parse_body)
 }
 
-const postFragment = `
+const post_fragment = `
   items {
     title
     slug
     date
     body
-    ${coverFragment}
+    ${cover_fragment}
     tags
     author {
       name
@@ -198,19 +196,19 @@ const postFragment = `
 
 const post_query = (slug: string) => `{
   posts: postCollection(order: date_DESC, where: {slug_in: ["${slug}", "/${slug}"]}) {
-    ${postFragment}
+    ${post_fragment}
   }
 }`
 
 const posts_query = `{
   posts: postCollection(order: date_DESC) {
-    ${postFragment}
+    ${post_fragment}
   }
 }`
 
 async function process_post(post: Post) {
   if (!post) return
-  renderBody(post)
+  parse_body(post)
   prefixSlug(`/blog/`)(post)
   post.author.photo.base64 = await base64_thumbnail(post.author.photo.src, {
     w: 3,
@@ -234,7 +232,7 @@ export async function fetch_posts(): Promise<Post[]> {
   return await Promise.all(posts.map(process_post))
 }
 
-const yamlQuery = (title: string) => `{
+const yaml_query = (title: string) => `{
   yml: yamlCollection(where: {title: "${title}"}) {
     items {
       data
@@ -244,7 +242,7 @@ const yamlQuery = (title: string) => `{
 
 export async function fetch_yaml(title: string) {
   if (!title) throw `fetch_yaml() requires a title, got '${title}'`
-  const { yml } = await contentful_fetch(yamlQuery(title))
+  const { yml } = await contentful_fetch(yaml_query(title))
   return yaml.load(yml?.items[0]?.data)
 }
 
@@ -266,7 +264,7 @@ export async function fetch_yaml_list(
   slugPrefix: string
 ): Promise<Record<string, unknown>[]> {
   const list = await fetch_yaml(title)
-  return list.map(renderBody).map(title_to_slug).map(prefixSlug(slugPrefix))
+  return list.map(parse_body).map(title_to_slug).map(prefixSlug(slugPrefix))
 }
 
 // remove outer-most paragraph tags (if any)

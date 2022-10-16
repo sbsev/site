@@ -1,9 +1,9 @@
-import { fetchPage, fetch_yaml_list } from '$lib/fetch'
-import type { PageLoad } from './$types'
+import { fetch_page, fetch_yaml_list } from '$lib/fetch'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = () => {
+export const load: PageServerLoad = () => {
   return {
-    page: fetchPage(`presse`),
+    page: fetch_page(`presse`),
     pressItems: fetch_yaml_list(`Presse`, `presse#`).then((items) => {
       return items.reduce((acc, itm) => {
         // split items into sub-lists by year

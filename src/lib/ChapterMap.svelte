@@ -61,6 +61,7 @@
     display: inline-block;
     border-radius: 50%;
     border: 1px dashed white;
+    box-sizing: border-box;
     vertical-align: text-bottom;
   }
   :global(a.chapter) {

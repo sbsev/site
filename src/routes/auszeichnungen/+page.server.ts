@@ -1,9 +1,9 @@
-import { fetchPage, fetch_yaml_list } from '$lib/fetch'
-import type { PageLoad } from './$types'
+import { fetch_page, fetch_yaml_list } from '$lib/fetch'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = () => {
+export const load: PageServerLoad = () => {
   return {
-    page: fetchPage(`auszeichnungen`),
+    page: fetch_page(`auszeichnungen`),
     awards: fetch_yaml_list(`Auszeichnungen`, `auszeichnungen#`),
   }
 }

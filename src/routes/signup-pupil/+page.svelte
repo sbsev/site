@@ -71,7 +71,7 @@
     </button>
   </form>
   {#if modalOpen}
-    <Modal on:close={() => (modalOpen = false)} style="background: var(--bodyBg);">
+    <Modal on:close={() => (modalOpen = false)} style="background: var(--body-bg);">
       <div>
         <span>{form.submitError.title}</span>
         <p>{@html form.submitError.note}</p>

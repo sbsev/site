@@ -51,10 +51,10 @@
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {
     width: 100%;
     max-width: none;
-    background: var(--accentBg);
+    background: var(--accent-bg);
     margin: 1em 0;
   }
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl input) {
-    color: var(--textColor) !important;
+    color: var(--text-color) !important;
   }
 </style>

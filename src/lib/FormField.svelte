@@ -62,10 +62,10 @@
     noOptionsMsg="Keine passenden Optionen"
     bind:selected={value}
     {required}
-    --sms-options-bg="var(--accentBg)"
-    --sms-bg="var(--accentBg)"
+    --sms-options-bg="var(--accent-bg)"
+    --sms-bg="var(--accent-bg)"
     --sms-height="3ex"
-    --sms-border="1px solid var(--lightBg)"
+    --sms-border="1px solid var(--light-bg)"
     --sms-selected-bg="var(--green)"
     --sms-selected-text-color="white"
     --sms-min-height="32px"
@@ -108,9 +108,9 @@
 
 <style>
   /* TODO: remove this once svelte-multiselect@5.0.5 is out, for which
-    --sms-text-color="var(--textColor)" will be a simpler fix */
+    --sms-text-color="var(--text-color)" will be a simpler fix */
   :global(div.multiselect ul.selected input) {
-    color: var(--textColor);
+    color: var(--text-color);
   }
   label {
     display: block;
@@ -126,12 +126,12 @@
   input {
     display: block;
     margin: 1em 0;
-    background: var(--accentBg);
+    background: var(--accent-bg);
     width: 100%;
     height: 32px;
   }
   input:focus {
-    border: 1px solid var(--linkColor);
+    border: 1px solid var(--link-color);
   }
   ::-webkit-calendar-picker-indicator {
     filter: invert(var(--invert));

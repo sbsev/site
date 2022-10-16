@@ -1,6 +1,6 @@
 import { fetch_yaml_list } from '$lib/fetch'
-import type { PageLoad } from './$types'
+import type { PageServerLoad } from './$types'
 
-export const load: PageLoad = () => {
+export const load: PageServerLoad = () => {
   return { faqs: fetch_yaml_list(`FAQ`, `faq#`) }
 }
