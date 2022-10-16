@@ -93,7 +93,7 @@
     color: var(--gray);
   }
   input {
-    background: var(--accentBg);
+    background: var(--accent-bg);
     width: 100%;
     text-overflow: ellipsis;
     height: 2em;

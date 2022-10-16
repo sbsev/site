@@ -1,16 +1,16 @@
 :root {
-  --textColor: black;
-  --linkColor: var(--blue);
-  --hoverColor: var(--light-blue);
-  --bodyBg: var(--lightest-gray);
-  --accentBg: white;
-  --lightBg: var(--lighter-gray);
+  --text-color: black;
+  --link-color: var(--blue);
+  --hover-color: var(--light-blue);
+  --body-bg: var(--lightest-gray);
+  --accent-bg: white;
+  --light-bg: var(--lighter-gray);
   --shadow: var(--gray);
-  --borderColor: var(--light-blue);
-  --headingColor: var(--light-blue);
-  --headerBg: var(--dark-blue);
-  --headerColor: white;
-  --footerBg: var(--dark-blue);
+  --border-color: var(--light-blue);
+  --heading-color: var(--light-blue);
+  --header-bg: var(--dark-blue);
+  --header-color: white;
+  --footer-bg: var(--dark-blue);
   --invert: 0;
   --transparent: rgba(255, 255, 255, 0.8);
 }

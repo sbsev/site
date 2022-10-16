@@ -93,7 +93,7 @@
     transition: 0.4s;
     display: flex;
     align-items: center;
-    background: var(--accentBg);
+    background: var(--accent-bg);
   }
   ul > li > button.active {
     box-shadow: inset 0 0 1em -5pt black;

@@ -36,8 +36,8 @@ body {
   /* https://modern-fluid-typography.vercel.app */
   font-size: clamp(1rem, 0.5vw + 1rem, 1.4rem);
   transition: 0.3s;
-  background: var(--bodyBg);
-  color: var(--textColor);
+  background: var(--body-bg);
+  color: var(--text-color);
 }
 /* outer div = hydration target */
 body > div {
@@ -51,20 +51,20 @@ main {
 }
 main h1 {
   text-align: center;
-  color: var(--headingColor);
+  color: var(--heading-color);
 }
 main img {
   width: 100%;
 }
 a {
-  color: var(--linkColor);
+  color: var(--link-color);
   text-decoration: none;
 }
 a:hover {
-  color: var(--hoverColor);
+  color: var(--hover-color);
 }
 button {
-  color: var(--textColor);
+  color: var(--text-color);
   background: transparent;
   font-size: 1em;
   border: none;
@@ -76,16 +76,16 @@ input,
 select {
   font-size: 1em;
   border-radius: 5pt;
-  border: 1px solid var(--lightBg);
-  color: var(--textColor);
+  border: 1px solid var(--light-bg);
+  color: var(--text-color);
   padding: 3pt 1ex;
   max-width: 100%;
   box-sizing: border-box;
 }
 blockquote {
-  border-left: 3pt solid var(--linkColor);
+  border-left: 3pt solid var(--link-color);
   padding: 3pt 8pt;
-  background: var(--lightBg);
+  background: var(--light-bg);
   margin: 1em 0;
 }
 table {
@@ -93,11 +93,11 @@ table {
   width: 100%;
 }
 table :is(td, th) {
-  border: 1px solid var(--textColor);
+  border: 1px solid var(--text-color);
   padding: 0.4em 0.8em;
 }
 tbody tr:nth-child(odd) {
-  background: var(--accentBg);
+  background: var(--accent-bg);
 }
 .grid {
   display: grid;
@@ -167,7 +167,7 @@ tbody tr:nth-child(odd) {
   background: var(--dark-orange);
 }
 .btn.stroke {
-  color: var(--textColor) !important;
+  color: var(--text-color) !important;
   background: none;
 }
 .btn.stroke.blue {

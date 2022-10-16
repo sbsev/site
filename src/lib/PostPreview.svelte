@@ -64,7 +64,7 @@
 
 <style>
   section {
-    background: var(--accentBg);
+    background: var(--accent-bg);
     border-radius: 1ex;
     display: grid;
     font-size: 0.9em;

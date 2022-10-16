@@ -48,7 +48,7 @@
     display: grid;
     gap: 3em;
     place-items: center;
-    background: var(--footerBg);
+    background: var(--footer-bg);
     color: white;
   }
   footer :global(a) {

@@ -36,7 +36,7 @@
     overflow: scroll;
     font-size: 0.9em;
     white-space: pre-wrap;
-    background: var(--accentBg);
+    background: var(--accent-bg);
     padding: 5pt 1em;
     border-radius: 3pt;
   }

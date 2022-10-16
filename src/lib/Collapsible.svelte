@@ -35,7 +35,7 @@
 <style>
   h3 {
     cursor: pointer;
-    background: var(--lightBg);
+    background: var(--light-bg);
     border-radius: 4pt;
     padding: 4pt 1ex;
     margin: 1em auto;

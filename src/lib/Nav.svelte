@@ -127,12 +127,12 @@
   }
   a,
   button {
-    color: var(--headerColor);
+    color: var(--header-color);
     border-radius: 5pt;
     padding: 0 3pt;
   }
   a:hover {
-    color: var(--hoverColor);
+    color: var(--hover-color);
   }
   a[aria-current] {
     color: var(--orange);
@@ -147,7 +147,7 @@
     list-style: none;
   }
   li::marker {
-    color: var(--headerColor);
+    color: var(--header-color);
   }
   nav {
     overflow: auto;
@@ -179,7 +179,7 @@
     padding: 1em;
     transition: 0.4s;
     max-height: calc(100vh - 2em);
-    background: var(--headerBg);
+    background: var(--header-bg);
     transform: translate(-120%);
     box-sizing: border-box;
     overscroll-behavior: none;
@@ -209,7 +209,7 @@
   }
   nav.desktop > ul > li > ul {
     position: absolute;
-    background: var(--headerBg);
+    background: var(--header-bg);
     padding: 1ex 1em;
     border-radius: 1ex;
     box-shadow: 0 0 1em black;
@@ -222,7 +222,7 @@
   }
   nav.desktop > ul > li > ul > li.spanCols {
     grid-column: 1/-1;
-    border-top: 1px solid var(--headerColor);
+    border-top: 1px solid var(--header-color);
     padding-top: 6pt;
     margin-top: 6pt;
   }

@@ -40,7 +40,7 @@
     transition: 0.3s;
   }
   input:checked + span {
-    background: var(--bodyBg);
+    background: var(--body-bg);
   }
   input {
     position: absolute;
