@@ -59,8 +59,8 @@
     {placeholder}
     {options}
     {maxSelect}
-    noOptionsMsg="Keine passenden Optionen"
-    bind:selected={value}
+    noMatchingOptionsMsg="Keine passenden Optionen"
+    bind:value
     {required}
     --sms-options-bg="var(--accent-bg)"
     --sms-bg="var(--accent-bg)"
