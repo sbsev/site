@@ -7,7 +7,7 @@
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
 
-  // required yarn add -D events @types/events
+  // required pnpm add -D events @types/events
   // https://github.com/mapbox/mapbox-gl-geocoder/issues/441
 
   export let selectHandler: (result: Result) => void
