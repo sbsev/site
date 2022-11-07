@@ -14,7 +14,7 @@
 <div>
   {#if cover?.src}
     <a href={slug} on:click={close}>
-      <Img {...cover} sizes={[{ w: 150 }]} imgStyle="height: auto;" />
+      <Img {...cover} sizes={[{ w: 150 }]} img_style="height: auto;" />
     </a>
   {/if}
   <h3>

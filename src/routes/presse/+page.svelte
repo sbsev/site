@@ -5,21 +5,24 @@
   import type { PageData } from './$types'
 
   export let data: PageData
-  $: ({ pressItems, page } = data)
 
-  const imgStyle = `width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `margin: 0 5pt 0 0;`
 </script>
 
-<BasePage {page}>
+<BasePage page={data.page}>
   <svelte:fragment slot="afterArticle">
-    {#each Object.entries(pressItems).reverse() as [year, pressArr] (year)}
+    {#each Object.entries(data.pressItems).reverse() as [year, pressArr] (year)}
       <h2>{year}</h2>
       <ul class="items">
         {#each pressArr as { title, id, img, url, date, chapter, source } (id)}
           <li>
             <a href={url}>
-              <Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} />
+              <Img
+                src={img}
+                alt={title}
+                sizes={[{ w: 175 }]}
+                img_style="width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;"
+              />
             </a>
             <h3 {id}>
               <a href={url}>{title}</a>

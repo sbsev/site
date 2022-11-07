@@ -5,10 +5,9 @@
   import type { PageData } from './$types'
 
   export let data: PageData
-  $: ({ post } = data)
 
-  $: ({ title, body, cover } = post)
-  $: ({ bio, fieldOfStudy, name, photo } = post.author)
+  $: ({ title, body, cover, date } = data.post)
+  $: ({ bio, fieldOfStudy, name, photo } = data.post.author)
   const style = `padding: 0 3pt;`
 </script>
 
@@ -16,8 +15,8 @@
   <Img
     sizes={[{ w: 1000 }, { w: 700 }, { w: 500 }, { w: 300 }]}
     {...cover}
-    imgStyle="height: auto;"
-    pictureStyle="margin: -2em 0 3em 0"
+    img_style="height: auto;"
+    picture_style="margin: -2em 0 3em 0"
   />
   <h1>{title}</h1>
   <section>
@@ -46,7 +45,7 @@
       {/if}
       am
       <Icon inline icon="octicon:calendar" {style} />
-      <strong>{new Date(post.date).toLocaleDateString(`de`)}</strong>
+      <strong>{new Date(date).toLocaleDateString(`de`)}</strong>
     </span>
   </section>
   {@html body}

@@ -17,7 +17,7 @@
 </svelte:head>
 
 <figure>
-  <Img {...cover} imgStyle="height: 100%" />
+  <Img {...cover} img_style="height: 100%" />
   {#if $$slots.title}
     <slot name="title" />
   {:else if title}
@@ -35,7 +35,9 @@
       openButtonLabel="Inhaltsverzeichnis öffnen"
       headingSelector="article :is(h2, h3, h4)"
       --toc-mobile-bg="var(--body-bg)"
-      --toc-width="20em"
+      --toc-min-width="10em"
+      --toc-font-size="11pt"
+      --toc-desktop-sticky-top="3em"
     />
   {/if}
   <div>
@@ -74,8 +76,8 @@
   article > div {
     width: 100%;
   }
-  article > :global(aside) {
-    flex: 30%;
+  article > :global(aside > nav) {
+    font-size: 9pt;
   }
   article :global(:where(h2, h3, h4, h5, h6)) {
     transition: 0.3s;

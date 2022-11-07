@@ -8,21 +8,20 @@
   import type { PageData } from './$types'
 
   export let data: PageData
-  $: ({ posts, social } = data)
 
-  let activeTag: BlogTag
+  let active_tag: BlogTag
 
-  $: filteredPosts = posts.filter(
-    (post) => activeTag === `Alle` || post.tags.includes(activeTag)
+  $: filtered_posts = data.posts.filter(
+    (post) => active_tag === `Alle` || post.tags.includes(active_tag)
   )
 </script>
 
-<Social {social} fixed vertical />
+<Social social={data.social} fixed vertical />
 
-<TagList {posts} bind:activeTag />
+<TagList posts={data.posts} bind:active_tag />
 
 <ul>
-  {#each filteredPosts as post (post.slug)}
+  {#each filtered_posts as post (post.slug)}
     <li animate:flip={{ duration: 200 }} transition:scale|local style="display: flex;">
       <PostPreview {post} />
     </li>

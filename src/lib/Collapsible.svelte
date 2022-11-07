@@ -21,10 +21,12 @@
   }
 </script>
 
-<h3 on:click={toggle} on:keyup={toggle} style="--angle: {$angle}" class:active>
+<h3 style="--angle: {$angle}" class:active>
   <span class="anchor" {id} />
-  <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
-  <slot name="title" />
+  <button on:click={toggle}>
+    <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
+    <slot name="title" />
+  </button>
 </h3>
 {#if isOpen}
   <div transition:slide={{ duration }}>

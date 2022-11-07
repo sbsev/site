@@ -22,12 +22,12 @@
     Führungszeugnis: `ic:round-assignment-ind`,
   }
 
-  let activeTag = `Alle`
+  let active_tag = `Alle`
   const email = `info@studenten-bilden-schueler.de`
   let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
   $: filteredFaqs = data.faqs.filter(
-    (faq) => activeTag === `Alle` || faq.tags.includes(activeTag)
+    (faq) => active_tag === `Alle` || faq.tags.includes(active_tag)
   )
   // count tag occurrences
   const tags = data.faqs?.reduce(
@@ -46,7 +46,7 @@
 <ul class="tags">
   {#each Object.entries(tags).sort() as [tag, count] (tag)}
     <li>
-      <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
+      <button class:active={active_tag === tag} on:click={() => (active_tag = tag)}>
         <Icon inline icon={icons[tag]} />
         {tag}
         ({count})</button

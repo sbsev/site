@@ -1,6 +1,6 @@
 // eslint-disable no-console
 import { get } from 'svelte/store'
-import { signupStore } from './stores'
+import { signupStore as signup_store } from './stores'
 import type { Chapter, SignupStore } from './types'
 
 const api_key = import.meta.env.VITE_AIRTABLE_API_KEY
@@ -56,7 +56,7 @@ export async function prepare_signup_data_for_airtable(
   }
 
   if (data.type.value === `student`) {
-    const studentFields = {
+    const student_fields = {
       'Vor- und Nachname': data.fullName.value,
       Telefon: to_str(data.phone.value),
       Klassenstufen: to_str(data.levels.value) || `1-13`,
@@ -71,10 +71,10 @@ export async function prepare_signup_data_for_airtable(
       // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
       // in Safari. Should do nothing in other browsers.
     }
-    fields = { ...fields, ...studentFields }
+    fields = { ...fields, ...student_fields }
   } else if (data.type.value === `pupil`) {
     // type === 'Pupil'
-    const pupilFields = {
+    const pupil_fields = {
       Vorname: data.firstName.value,
       Klassenstufe: to_str(data.level.value), // no fallback value here since it's a required field for pupils
       Schulform: data.schoolTypes.value,
@@ -87,7 +87,7 @@ export async function prepare_signup_data_for_airtable(
       Werbemaßnahme: data.discovery.value,
       Online: data.online.value,
     }
-    fields = { ...fields, ...pupilFields }
+    fields = { ...fields, ...pupil_fields }
   } else {
     console.error(`unknown signup type: ${data.type.value}`)
   }
@@ -99,16 +99,16 @@ export async function prepare_signup_data_for_airtable(
     Spur: window.visitedPages.join(`,\n`),
   }
 
-  const globalBaseId = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
-  const testBaseId = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
+  const global_base_id = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
+  const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
     console.log(`fields:`, fields) // eslint-disable-line no-console
-    return await airtable_post_new_records(testBaseId, table, fields)
+    return await airtable_post_new_records(test_base_id, table, fields)
   }
   // use Promise.all() to fail fast if one record creation fails
   return await Promise.all([
-    airtable_post_new_records(globalBaseId, table, globalFields),
+    airtable_post_new_records(global_base_id, table, globalFields),
     airtable_post_new_records(chapterBaseId, table, fields),
   ])
 }
@@ -119,16 +119,16 @@ export async function signup_form_submit_handler(
   err_msg: Record<string, string>
 ): Promise<{ error?: Error; success?: boolean }> {
   // handles form validation and Plausible event reporting
-  const signupData = get(signupStore)
+  const signup_data = get(signup_store)
 
   // form validation
   for (const name of fields_to_validate) {
-    const field = signupData[name]
-    const isEmptyArr = Array.isArray(field.value) && !field.value.length
-    if (field.required && (isEmptyArr || !field.value)) {
+    const field = signup_data[name]
+    const is_empty_arr = Array.isArray(field.value) && field.value.length === 0
+    if (field.required && (is_empty_arr || !field.value)) {
       try {
         field.error = err_msg.required
-        signupStore.set(signupData)
+        signup_store.set(signup_data)
         field.node?.focus()
         field.node?.scrollIntoView()
       } catch (error) {
@@ -138,13 +138,8 @@ export async function signup_form_submit_handler(
     }
   }
 
-  const chapter = signupData.chapter.value
-  const type = signupData.type.value
-  const chapterAndType = {
-    chapter: chapter,
-    type,
-    'chapter+type': `${type} aus ${chapter}`,
-  }
+  const chapter = signup_data.chapter.value
+  const type = signup_data.type.value
 
   const baseId = chapters?.find(({ title }) => chapter?.includes(title))?.baseId
   if (!baseId) {
@@ -156,15 +151,20 @@ export async function signup_form_submit_handler(
   }
 
   try {
-    const responses = await prepare_signup_data_for_airtable(signupData, baseId)
+    const responses = await prepare_signup_data_for_airtable(
+      signup_data,
+      baseId
+    )
 
     const err = responses.find((res) => `error` in res)
     if (err) throw err
 
-    window.plausible(`Signup`, { props: chapterAndType })
+    window.plausible(`Signup`, {
+      props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
+    })
     window.scrollTo({ top: 0, behavior: `smooth` })
 
-    signupStore.set({} as SignupStore) // reset store for potential next signup
+    signup_store.set({} as SignupStore) // reset store for potential next signup
     return { success: true }
   } catch (err) {
     const error = err as Error // cast from unknown
@@ -172,7 +172,8 @@ export async function signup_form_submit_handler(
     window.plausible(`Signup Error`, {
       props: {
         error: JSON.stringify(error, Object.getOwnPropertyNames(error)),
-        ...chapterAndType,
+        chapter,
+        type,
       },
     })
     return { error }
