@@ -5,17 +5,22 @@
   import type { PageData } from './$types'
 
   export let data: PageData
-  $: ({ awards, page } = data)
 
-  const imgStyle = `width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;`
   const style = `margin: 0 5pt 0 0;`
 </script>
 
-<BasePage {page}>
+<BasePage page={data.page}>
   <ul class="items" slot="afterArticle">
-    {#each awards as { title, id, img, url, date, prize } (title)}
+    {#each data.awards as { title, id, img, url, date, prize } (title)}
       <li>
-        <a href={url}><Img src={img} alt={title} sizes={[{ w: 175 }]} {imgStyle} /></a>
+        <a href={url}
+          ><Img
+            src={img}
+            alt={title}
+            sizes={[{ w: 175 }]}
+            img_style="width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;"
+          /></a
+        >
         <h3 {id}><a href={url}>{title}</a></h3>
         <div>
           <span>

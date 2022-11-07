@@ -4,8 +4,8 @@
   export let height = 100
   export let base64 = ``
   export let title = ``
-  export let pictureStyle = ``
-  export let imgStyle = ``
+  export let picture_style = ``
+  export let img_style = ``
   export let loading = `lazy`
   export let sizes: ImgSize[] = [
     { w: 1500 },
@@ -35,13 +35,13 @@
   $: srcSet = (params: string) =>
     sizes.map((size) => `${src}?${toQueryStr(size)}&${params} ${size.w}w`).join(`, `)
 
-  $: style = base64 ? `background-image: url('${base64}');${imgStyle}` : imgStyle
+  $: style = base64 ? `background-image: url('${base64}');${img_style}` : img_style
 </script>
 
 {#if src.endsWith(`.svg`)}
-  <img {src} {alt} {title} {width} {height} style={imgStyle} />
+  <img {src} {alt} {title} {width} {height} style={img_style} />
 {:else}
-  <picture style={pictureStyle}>
+  <picture style={picture_style}>
     <source srcset={srcSet(`q=80&fit=fill&fm=webp`)} type="image/webp" />
     <source srcset={srcSet(`q=80&fit=fill`)} />
     <img

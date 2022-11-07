@@ -20,12 +20,12 @@
     Physik: `simple-icons:atom`,
   }
 
-  let activeTag = `Alle`
+  let active_tag = `Alle`
   const email = `it@studenten-bilden-schueler.de`
   let hash: string
 
   $: filtered = data.studyPlatforms?.filter(
-    (itm) => activeTag === `Alle` || itm.tags.includes(activeTag)
+    (itm) => active_tag === `Alle` || itm.tags.includes(active_tag)
   )
   // count tag occurrences
   const tags = { Alle: data.studyPlatforms?.length } as Record<string, number>
@@ -34,8 +34,6 @@
       tags[tag] = (tags[tag] ?? 0) + 1
     }
   }
-
-  const imgStyle = `width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;`
 
   function setHash() {
     hash = window.location.hash.replace(`#`, ``)
@@ -50,7 +48,7 @@
     <ul class="tags">
       {#each Object.entries(tags) as [tag, count]}
         <li>
-          <button class:active={activeTag === tag} on:click={() => (activeTag = tag)}>
+          <button class:active={active_tag === tag} on:click={() => (active_tag = tag)}>
             <Icon inline icon={icon_map[tag]} />
             {tag}
             ({count})
@@ -62,7 +60,12 @@
       {#each filtered as { title, id, img, body, tags, url } (title)}
         <li animate:flip={{ duration: 200 }} transition:scale>
           <a href={url}>
-            <Img src={img} alt={title} sizes={[{ w: 150 }]} {imgStyle} />
+            <Img
+              src={img}
+              alt={title}
+              sizes={[{ w: 150 }]}
+              img_style="width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;"
+            />
           </a>
           <h3 {id} active={id === hash}>
             <a href={url}>{title}</a>

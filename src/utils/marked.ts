@@ -6,15 +6,15 @@ const renderer = {
     if (href?.includes(`images.ctfassets.net`) && !href.endsWith(`.svg`)) {
       title = title ? `title="${title}"` : ``
 
-      const srcSet = (params: string) =>
+      const srcset = (params: string) =>
         [900, 600, 400]
           .map((width) => `${href}?w=${width}&${params} ${width}w`)
           .join(`, `)
 
       return `
       <picture>
-        <source srcset="${srcSet(`q=80&fit=fill&fm=webp`)}" type="image/webp" />
-        <source srcset="${srcSet(`q=80&fit=fill`)}" />
+        <source srcset="${srcset(`q=80&fit=fill&fm=webp`)}" type="image/webp" />
+        <source srcset="${srcset(`q=80&fit=fill`)}" />
         <img src="${href}?w=900&q=80" alt="${text}" ${title} loading="lazy" />
       </picture>`
     }

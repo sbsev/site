@@ -5,7 +5,6 @@
   import type { PageData } from './$types'
 
   export let data: PageData
-  $: ({ chapters, page } = data)
 
   const style = `margin-right: 5pt;`
 </script>
@@ -36,7 +35,7 @@
 
 <section style="white-space: nowrap;">
   <div style="background: var(--light-blue);">
-    <span>{chapters.filter((ch) => ch.acceptsSignups).length}</span>
+    <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
       <Icon inline icon="fa-solid:child" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
@@ -70,7 +69,7 @@
   {@html $microcopy?.indexPage?.chooseLocation}
 </h2>
 
-<ChapterMap {chapters} />
+<ChapterMap chapters={data.chapters} />
 
 <h2>
   <!-- register now -->
@@ -78,7 +77,7 @@
 </h2>
 
 <article>
-  {@html page.body}
+  {@html data.page.body}
 </article>
 
 <style>

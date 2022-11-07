@@ -4,7 +4,7 @@
   import type { BlogTag, Post } from './types'
 
   export let posts: Post[]
-  export let activeTag = `Alle`
+  export let active_tag = `Alle`
 
   const tagCounter: Record<string, number> = { Alle: posts.length }
 
@@ -61,8 +61,8 @@
         <button
           transition:fade
           aria-label="Nach Tag {tag} filtern"
-          class:active={activeTag === tag}
-          on:click={() => (activeTag = tag)}
+          class:active={active_tag === tag}
+          on:click={() => (active_tag = tag)}
         >
           <Icon inline icon={icons[tag]} style="margin-right: 6pt" />
           {tag} ({count})

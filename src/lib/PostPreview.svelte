@@ -16,7 +16,7 @@
     <Img
       sizes={[{ w: 400, h: 300 }]}
       {...cover}
-      imgStyle="border-radius: 1ex 1ex 0 0; height: 15em;"
+      img_style="border-radius: 1ex 1ex 0 0; height: 15em;"
     /></a
   >
   <h3><a href={slug}>{title}</a></h3>
@@ -26,7 +26,7 @@
         {...author.photo}
         alt={author.name}
         sizes={[{ w: 100, h: 100 }]}
-        imgStyle="width: 4ex; height: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;"
+        img_style="width: 4ex; height: 4ex; border-radius: 50%; vertical-align: -8pt; margin-right: 1ex;"
       />
       {author.name}
       <address slot="tip">
