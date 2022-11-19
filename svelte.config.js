@@ -7,5 +7,9 @@ export default {
 
   kit: {
     adapter: adapter(),
+
+    prerender: {
+      handleMissingId: `warn`,
+    },
   },
 }
