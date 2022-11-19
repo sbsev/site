@@ -111,6 +111,6 @@ fields:
   - id: dataProtection
     title: Verarbeitung personenbezogener Daten
     note: |
-      Durch Anklicken des Reglers bestätige ich, die Informationen zur Verarbeitung personenbezogener Daten unter [Vereinbarungen](/vereinbarungen) zur Kenntnis genommen zu haben und in die Datenverarbeitung zum Zwecke des Matchings mit Nachhilfeschülern einzuwilligen. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
+      Durch Anklicken des Reglers bestätige ich, die Informationen zur Verarbeitung personenbezogener Daten unter [Datenschutz](/datenschutz) zur Kenntnis genommen zu haben und in die Datenverarbeitung zum Zwecke des Matchings mit Nachhilfeschülern einzuwilligen. Mir ist bewusst, dass diese Einwilligung freiwillig erfolgt und von mir jederzeit widerrufen werden kann.
     required: true
     type: toggle
