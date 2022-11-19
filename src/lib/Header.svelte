@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
-  import Search from 'svelte-algolia'
+  // import Search from 'svelte-algolia'
   import Nav from './Nav.svelte'
   import SearchHit from './SearchHit.svelte'
   import ThemeSwitcher from './ThemeSwitcher.svelte'
@@ -32,14 +31,12 @@
   <Nav {nav} {mobile} />
 
   <ThemeSwitcher />
-  {#if browser}
-    <Search
-      {...searchProps}
-      --search-hits-bg-color="var(--body-bg)"
-      --search-icon-color="var(--header-color)"
-      --search-input-color="white"
-    />
-  {/if}
+  <!-- <Search
+    {...searchProps}
+    --search-hits-bg-color="var(--body-bg)"
+    --search-icon-color="var(--header-color)"
+    --search-input-color="white"
+  /> -->
 </header>
 
 <style>
