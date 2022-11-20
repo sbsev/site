@@ -22,8 +22,11 @@
   <title>{$microcopy?.meta?.name}</title>
   <meta name="author" content={$microcopy?.meta?.name} />
   <meta name="description" content={$microcopy?.meta?.description} />
-  <!-- see netlify.toml file for where this script originates -->
-  <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
+  <script
+    defer
+    data-domain={$microcopy?.meta?.url}
+    src="https://plausible.io/js/plausible.js"
+  ></script>
 
   <meta name="color-scheme" content={$colorMode} />
   <link rel="stylesheet" href="/{$colorMode}-theme.css" />

@@ -8,7 +8,7 @@
 
 <h3 align="center">
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/2bcf7f93-7c33-40f4-9843-bbbf22ea213b/deploy-status)](https://app.netlify.com/sites/sbsev/deploys)
+[![Deployment](https://github.com/sbsev/site/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/sbsev/site/actions/workflows/gh-pages.yml)
 [![Tests](https://github.com/sbsev/site/actions/workflows/test.yml/badge.svg)](https://github.com/sbsev/site/actions/workflows/test.yml)
 [![Lighthouse](https://github.com/sbsev/site/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/sbsev/site/actions/workflows/lighthouse.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/sbsev/site/main.svg)](https://results.pre-commit.ci/latest/github/sbsev/site/main)
@@ -56,32 +56,6 @@ Running this site locally requires [`git`](https://git-scm.com) and [`pnpm`](htt
    pnpm dev
    ```
 
-## Deploy
+## Deployment
 
-To publish this site to netlify:
-
-1. Create an account with [netlify](https://netlify.com).
-2. Install the [`netlify-cli`](https://netlify.com/docs/cli).
-3. Login to your account.
-
-   ```sh
-   netlify login
-   ```
-
-4. Connect your GitHub repo with your netlify account for [continuous deployment](https://netlify.com/docs/cli/#continuous-deployment).
-
-   ```sh
-   netlify init
-   ```
-
-5. Create a production build.
-
-   ```sh
-   pnpm export
-   ```
-
-6. Finally deploy the site with
-
-   ```sh
-   netlify deploy
-   ```
+This site is deployed as static HTML via [this GitHub action](.github/workflows/gh-pages.yml).
