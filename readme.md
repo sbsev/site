@@ -58,4 +58,4 @@ Running this site locally requires [`git`](https://git-scm.com) and [`pnpm`](htt
 
 ## Deployment
 
-This site is deployed as static HTML via [this GitHub action](.github/workflows/gh-pages.yml).
+This site is deployed as static HTML to [GitHub Pages](https://github.com/sbsev/site/deployments/activity_log) ([by this action](.github/workflows/gh-pages.yml)).

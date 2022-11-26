@@ -1,43 +1,45 @@
 <script lang="ts">
-  import { dev } from '$app/environment'
   import { page } from '$app/stores'
+  import Icon from '@iconify/svelte'
+  import { name } from '../../package.json'
+
+  let online: boolean
 </script>
 
 <svelte:head>
-  <title>Fehler {$page.status} - Studenten bilden Schüler e.V.</title>
+  <title>Fehler {$page.status} &bull; {name}</title>
 </svelte:head>
 
-<div>
-  <h1>Fehler {$page.status}</h1>
+<svelte:window bind:online />
 
-  {#if $page.status === 404}
+<div>
+  <h1>Fehler {String($page.status).replace(`0`, `😵`)}: {$page.error?.message}</h1>
+  {#if $page.status >= 500}
     <p>
-      😅 Ooops! Diese Seite konnte nicht gefunden.
-      <a href="/">Zurück zur Startseite</a>.
+      When neu laden nicht hilft, schreib uns bitte eine E-Mail mit dem Fehlercode und
+      evtl. relevanten Informationen an
+      <a href="mailto:it@{name}" target="_blank" rel="noreferrer">it@{name}</a>. Danke! 🙏
     </p>
   {/if}
-
-  {#if dev && $page.error?.stack}
-    <h2>Stack Trace</h2>
-    <pre>{$page.error.stack}</pre>
+  {#if online === false}
+    Sieht aus als wärst du offline. Wenn du denkst, es liegt nicht an deiner Verbindung,
+    check bitte die
+    <a href="https://githubstatus.com">GitHub Status Seite</a>
+    da unsere Seite von &thinsp;<Icon icon="octicon:mark-github" inline />&thinsp; GitHub
+    Pages gehostet wird.
   {/if}
+
+  <p>
+    Zurück zur <a href=".">Startseite</a>.
+  </p>
 </div>
 
 <style>
   div {
+    font-size: 1.2em;
     max-width: 45em;
-    padding: 1em 3em;
+    padding: 5em 3em 1em;
     margin: auto;
-  }
-  p {
     text-align: center;
-  }
-  pre {
-    overflow: scroll;
-    font-size: 0.9em;
-    white-space: pre-wrap;
-    background: var(--accent-bg);
-    padding: 5pt 1em;
-    border-radius: 3pt;
   }
 </style>
