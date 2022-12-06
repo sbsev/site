@@ -3,7 +3,7 @@ import { get } from 'svelte/store'
 import { signupStore as signup_store } from './stores'
 import type { Chapter, SignupStore } from './types'
 
-const azure_url = (base_id:string, table_id:string) => '' // TODO
+const azure_url = (base_id: string, table_id: string) => '' // TODO
 
 // Send a POST request to the Airtable API to create new rows in the base and table
 // specified by base_id and table_id.
@@ -12,16 +12,13 @@ async function azure_post_new_records(
   table_id: string,
   data: { [key: string]: unknown }
 ) {
-  const response = await fetch(
-    azure_url(table_id, table_id),
-    {
-      method: `POST`,
-      headers: {
-        'Content-Type': `application/json`,
-      },
-      body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
-    }
-  )
+  const response = await fetch(azure_url(table_id, table_id), {
+    method: `POST`,
+    headers: {
+      'Content-Type': `application/json`,
+    },
+    body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
+  })
   return await response.json()
 }
 
@@ -104,7 +101,7 @@ export async function prepare_signup_data_for_azure(
   }
   // use Promise.all() to fail fast if one record creation fails
   return await Promise.all([
-  //  airtable_post_new_records(global_base_id, table, globalFields), <- this is handled by azure now
+    //  airtable_post_new_records(global_base_id, table, globalFields), <- this is handled by azure now
     azure_post_new_records(chapterBaseId, table, fields),
   ])
 }
@@ -147,10 +144,7 @@ export async function signup_form_submit_handler(
   }
 
   try {
-    const responses = await prepare_signup_data_for_azure(
-      signup_data,
-      baseId
-    )
+    const responses = await prepare_signup_data_for_azure(signup_data, baseId)
 
     const err = responses.find((res) => `error` in res)
     if (err) throw err
