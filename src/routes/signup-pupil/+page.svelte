@@ -3,7 +3,7 @@
   import FormField from '$lib/FormField.svelte'
   import Modal from '$lib/Modal.svelte'
   // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
-  import { signup_form_submit_handler } from '$lib/airtable'
+  import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
   import type { PageData } from './$types'

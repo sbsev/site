@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { signup_form_submit_handler } from '$lib/airtable'
+  import { signup_form_submit_handler } from '$lib/azure'
   import CircleSpinner from '$lib/CircleSpinner.svelte'
   import FormField from '$lib/FormField.svelte'
   import Modal from '$lib/Modal.svelte'
