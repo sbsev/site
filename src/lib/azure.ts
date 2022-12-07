@@ -3,9 +3,9 @@ import { get } from 'svelte/store'
 import { signupStore as signup_store } from './stores'
 import type { Chapter, SignupStore } from './types'
 
-const azure_url = (base_id: string, table_id: string) => `https://signup-sbs.azurewebsites.net/api/signup/${base_id}/${table_id}` // TODO
+const azure_url = (base_id: string, table_id: string) =>
+  `https://signup-sbs.azurewebsites.net/api/signup/${base_id}/${table_id}` // TODO
 const to_str = (str: unknown) => (str ? String(str) : undefined)
-
 
 // Send a POST request to the Airtable API to create new rows in the base and table
 // specified by base_id and table_id.
@@ -24,7 +24,7 @@ async function azure_post_new_records(
   return await response.json()
 }
 
-// Prepares the form data 
+// Prepares the form data
 export async function prepare_signup_data_for_azure(
   data: SignupStore,
   chapterBaseId: string,
