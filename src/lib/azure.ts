@@ -14,7 +14,7 @@ async function azure_post_new_records(
   table_id: string,
   data: { [key: string]: unknown }
 ) {
-  const response = await fetch(azure_url(table_id, table_id), {
+  const response = await fetch(azure_url(base_id, table_id), {
     method: `POST`,
     headers: {
       'Content-Type': `application/json`,
@@ -27,7 +27,7 @@ async function azure_post_new_records(
 // Prepares the form data
 export async function prepare_signup_data_for_azure(
   data: SignupStore,
-  chapterBaseId: string,
+  chapter_base_id: string,
   test = false
 ): Promise<Response[]> {
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
@@ -105,7 +105,7 @@ export async function prepare_signup_data_for_azure(
   // use Promise.all() to fail fast if one record creation fails
   // todo: simplify
   return await Promise.all([
-    azure_post_new_records(chapterBaseId, table, fields),
+    azure_post_new_records(chapter_base_id, table, globalFields),
   ])
 }
 
