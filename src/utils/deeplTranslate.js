@@ -5,7 +5,7 @@
 import translate from 'deepl'
 import 'dotenv/config'
 import prettier from 'prettier'
-import { getSpace } from './contentful'
+import { get_space } from './contentful'
 
 async function translateContentfulEntries() {
   try {
@@ -21,7 +21,7 @@ async function translateContentfulEntries() {
       field = `body`,
     ] = cli_args
 
-    const space = await getSpace()
+    const space = await get_space()
 
     const env = await space.getEnvironment(`master`)
     let { items } = await env.getEntries({ content_type: contentType })
