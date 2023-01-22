@@ -60,7 +60,7 @@ export const BlogTags = [
   `Auszeichnung`,
 ] as const // use const assertion to turn BlogTags into readonly tuple
 
-export type BlogTag = typeof BlogTags[number]
+export type BlogTag = (typeof BlogTags)[number]
 
 export type Post = Page & {
   author: Author

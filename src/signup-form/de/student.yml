@@ -103,8 +103,8 @@ fields:
     title: Vereinbarungen
     note: |
       Hiermit erkläre ich mich gemäß [der Vereinbarungen auf unserer Webseite](/vereinbarungen) mit folgenden Erklärungen einverstanden:
-      - [Verpflichtung zur Verschwiegenheit und Nichtbeeinflussung](/vereinbarungen#verpflichtung-zu-verschwiegenheit-und-nichtbeeinflussung)
-      - [Erklärung über Vorstrafen](/vereinbarungen#erklärung-zu-vorstrafen)
+      - [Verpflichtung zur Verschwiegenheit und Nichtbeeinflussung](/vereinbarungen#anhang-1-verpflichtung-zur-verschwiegenheit-und-nichtbeeinflussung)
+      - [Erklärung über Vorstrafen](/vereinbarungen#anhang-2-erklärung-zu-vorstrafen)
     required: true
     type: toggle
 
