@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Img from '$lib/Img.svelte'
-  import ToolTip from '$lib/ToolTip.svelte'
+  import { Img, ToolTip } from '$lib'
   import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
 

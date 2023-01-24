@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
   import Toc from 'svelte-toc'
-  import Img from './Img.svelte'
+  import { Img } from '.'
   import { microcopy } from './stores'
   import type { Page } from './types'
 

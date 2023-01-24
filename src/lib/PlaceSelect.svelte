@@ -1,10 +1,9 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
-  import type { Map, Marker } from 'mapbox-gl'
+  import type { Map as MapBox, Marker } from 'mapbox-gl'
   import mapbox from 'mapbox-gl'
-  import Geocoder from './Geocoder.svelte'
-  import MapComp from './Map.svelte'
+  import { Geocoder, Map } from '.'
   import type { Place } from './types'
 
   export let value: Place[] = [] // currently selected places
@@ -13,7 +12,7 @@
   export let id: string | null = null
 
   let markers: Marker[] = []
-  let map: Map
+  let map: MapBox
 
   function selectHandler(place: Result) {
     if (!place.center) {
@@ -70,7 +69,7 @@
   {/each}
 </ol>
 
-<MapComp bind:map css="height: 300px;" maxZoom={16} />
+<Map bind:map css="height: 300px;" maxZoom={16} />
 
 <style>
   ol {

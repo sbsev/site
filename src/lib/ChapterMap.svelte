@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit'
+  import { Map } from '.'
   import { fetch_chapters } from './fetch'
-  import Map from './Map.svelte'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 

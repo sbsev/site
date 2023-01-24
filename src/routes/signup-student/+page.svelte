@@ -1,8 +1,6 @@
 <script lang="ts">
+  import { CircleSpinner, FormField, Modal } from '$lib'
   import { signup_form_submit_handler } from '$lib/airtable'
-  import CircleSpinner from '$lib/CircleSpinner.svelte'
-  import FormField from '$lib/FormField.svelte'
-  import Modal from '$lib/Modal.svelte'
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
 
