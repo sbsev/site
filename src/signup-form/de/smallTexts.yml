@@ -1,4 +1,4 @@
-comment: This yaml file is not used by the website. It's a copy of the version that is on contentful
+comment: This yaml is both on github and on contentful for versioning and checking of correctness. Only the version on contentful is actually used!
 
 country: de
 
@@ -16,8 +16,8 @@ indexPage:
     studentsNumber: 2872
     pupilsName: Schüler:innen
     pupilsNumber: 3186
-    scholarshipName: Stipendien
-    scholarshipNumber: 7
+    scholarshipName: '<a style="color: white;" href="/stipendium">Stipendien</a>'
+    scholarshipNumber: 9
 
 footer:
   name: 'Studenten bilden Schüler e.V.'
@@ -50,7 +50,7 @@ location:
   linkPupilInfo: '/mitmachen/schueler'
   infoPupilButton: 'Infos für Schüler:innen'
   locationManagement: 'Interesse an Standortleitung?'
-  mailTo: 'mailto:info.{slug}@studenten-bilden-schueler.de?subject=Interesse an Standortleitung in {page.title}'
+  mailTo: '@studenten-bilden-schueler.de?subject=Interesse an Standortleitung in'
   writeMailButton: 'Schreib uns'
   linkLeadingInfo: '/mitmachen/standortleiter'
   infoLeadingButton: 'Infos für Standortleitende'
