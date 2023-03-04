@@ -4,7 +4,8 @@ import { signupStore as signup_store } from './stores'
 import type { Chapter, SignupStore } from './types'
 
 const azure_url = (base_id: string, table_id: string) =>
-  `https://signup-sbs.azurewebsites.net/api/signup/${base_id}/${table_id}` // TODO
+  `https://signup-sbs.azurewebsites.net/api/signup/${base_id}/${table_id}`
+
 const to_str = (str: unknown) => (str ? String(str) : undefined)
 
 // Send a POST request to the Airtable API to create new rows in the base and table
