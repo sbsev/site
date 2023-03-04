@@ -4,7 +4,7 @@ submitSuccess:
 
 submitError:
   title: 😢
-  note: Ein Fehler ist aufgetreten. Deine Anmeldung konnte nicht erfolgreich übermittelt werden. Bitte klicke erneut auf Absenden oder wende dich mit folgendem Fehlercode an [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular).
+  note: Ein Fehler ist aufgetreten. Deine Anmeldung konnte nicht erfolgreich übermittelt werden. Bitte klicke erneut auf Absenden oder wende dich mit deinem Standort und Namen an [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular).
 
 submit:
   title: Anmeldung abschicken

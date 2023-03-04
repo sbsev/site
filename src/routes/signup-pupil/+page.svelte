@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CircleSpinner, FormField, Modal } from '$lib'
   // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
-  import { signup_form_submit_handler } from '$lib/airtable'
+  import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
@@ -74,12 +74,12 @@
         <span>{form.submitError.title}</span>
         <p>{@html form.submitError.note}</p>
 
-        <pre><code>
+        <!-- <pre><code>
           {JSON.stringify(error, null, 2)}
         </code></pre>
         <pre><code>
           {JSON.stringify(error, Object.getOwnPropertyNames(error))}
-        </code></pre>
+        </code></pre> -->
       </div>
     </Modal>
   {/if}

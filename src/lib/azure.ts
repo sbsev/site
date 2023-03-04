@@ -3,37 +3,34 @@ import { get } from 'svelte/store'
 import { signupStore as signup_store } from './stores'
 import type { Chapter, SignupStore } from './types'
 
-const api_key = import.meta.env.VITE_AIRTABLE_API_KEY
-if (!api_key) throw new Error(`missing Airtable API key, got ${api_key}`)
+const azure_url = (base_id: string, table_id: string) =>
+  `https://signup-sbs.azurewebsites.net/api/signup/${base_id}/${table_id}`
+
+const to_str = (str: unknown) => (str ? String(str) : undefined)
 
 // Send a POST request to the Airtable API to create new rows in the base and table
 // specified by base_id and table_id.
-async function airtable_post_new_records(
+async function azure_post_new_records(
   base_id: string,
   table_id: string,
   data: { [key: string]: unknown }
 ) {
-  const response = await fetch(
-    `https://api.airtable.com/v0/${base_id}/${table_id}`,
-    {
-      method: `POST`,
-      headers: {
-        'Content-Type': `application/json`,
-        authorization: `Bearer ${api_key}`,
-      },
-      body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
-    }
-  )
+  const response = await fetch(azure_url(base_id, table_id), {
+    method: `POST`,
+    headers: {
+      'Content-Type': `application/json`,
+    },
+    body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
+  })
   return await response.json()
 }
 
-const to_str = (str: unknown) => (str ? String(str) : undefined)
-
-export async function prepare_signup_data_for_airtable(
+// Prepares the form data
+export async function prepare_signup_data_for_azure(
   data: SignupStore,
-  chapterBaseId: string,
+  chapter_base_id: string,
   test = false
-): Promise<Response[]> {
+): Promise<Response> {
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
   // common fields for both students and pupils
@@ -45,6 +42,7 @@ export async function prepare_signup_data_for_airtable(
     Koordinaten: Object.values(data.places?.value ?? [])
       .map(({ lat, lng }) => `lat=${lat},lng=${lng}`)
       .join(`;`),
+
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
 
@@ -99,18 +97,13 @@ export async function prepare_signup_data_for_airtable(
     Spur: window.visitedPages.join(`,\n`),
   }
 
-  const global_base_id = `appSswal9DNdJKRB8` // global base called 'Alle Standorte' in Airtable
   const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
     console.log(`fields:`, fields) // eslint-disable-line no-console
-    return await airtable_post_new_records(test_base_id, table, fields)
+    return await azure_post_new_records(test_base_id, table, fields)
   }
-  // use Promise.all() to fail fast if one record creation fails
-  return await Promise.all([
-    airtable_post_new_records(global_base_id, table, globalFields),
-    airtable_post_new_records(chapterBaseId, table, fields),
-  ])
+  return await azure_post_new_records(chapter_base_id, table, globalFields)
 }
 
 export async function signup_form_submit_handler(
@@ -151,13 +144,9 @@ export async function signup_form_submit_handler(
   }
 
   try {
-    const responses = await prepare_signup_data_for_airtable(
-      signup_data,
-      baseId
-    )
+    const response = await prepare_signup_data_for_azure(signup_data, baseId)
 
-    const err = responses.find((res) => `error` in res)
-    if (err) throw err
+    if (response.StatusCode !== 200) throw response.StatusCode
 
     window.plausible(`Signup`, {
       props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
