@@ -145,7 +145,6 @@ export async function signup_form_submit_handler(
 
   try {
     const response = await prepare_signup_data_for_azure(signup_data, baseId)
-    console.log('response', response)
 
     if (response.StatusCode !== 200) throw response.StatusCode
 
