@@ -14,14 +14,14 @@ import prettier from 'prettier'
 
 // See https://github.com/contentful/contentful-management.js/issues/57 for how to link entries/assets.
 
-export async function getSpace() {
+export async function get_space() {
   const client = contentful.createClient({
     accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
   })
-  return await client.getSpace(process.env.VITE_CONTENTFUL_SPACE_ID)
+  return await client.getSpace(process.env.CONTENTFUL_SPACE_ID)
 }
 
-export async function searchStringInContentType(args) {
+export async function search_string_in_content_type(args) {
   try {
     if (args.length < 1 || args.length > 4)
       throw `wrong number of CLI args, expected between 1 and 4, got ${args.length}`
@@ -33,14 +33,14 @@ export async function searchStringInContentType(args) {
       locale = `de`,
     } = args
 
-    console.log(`Now running searchStringInContentType with args = `, {
+    console.log(`Now running search_string_in_content_type with args = `, {
       searchTerm,
       contentType,
       field,
       locale,
     })
 
-    const space = await getSpace()
+    const space = await get_space()
 
     const env = await space.getEnvironment(`master`)
     let { items } = await env.getEntries({ content_type: contentType })
@@ -57,11 +57,11 @@ export async function searchStringInContentType(args) {
   }
 }
 
-export async function replaceStringInContentType(args) {
+export async function replace_string_in_content_type(args) {
   try {
-    const nArgs = Object.keys(args).length
-    if (nArgs < 2 || nArgs > 6)
-      throw `wrong number of CLI args, expected between 2 and 6, got ${nArgs}`
+    const n_args = Object.keys(args).length
+    if (n_args < 2 || n_args > 6)
+      throw `wrong number of CLI args, expected between 2 and 6, got ${n_args}`
 
     const {
       searchTerm,
@@ -72,7 +72,7 @@ export async function replaceStringInContentType(args) {
       locale = `de`,
     } = args
 
-    console.log(`Now running replaceStringInContentType with args = `, {
+    console.log(`Now running replace_string_in_content_type with args = `, {
       searchTerm,
       replaceTerm,
       contentType,
@@ -81,7 +81,7 @@ export async function replaceStringInContentType(args) {
       dryRun,
     })
 
-    const space = await getSpace()
+    const space = await get_space()
 
     const env = await space.getEnvironment(`master`)
     let { items } = await env.getEntries({ content_type: contentType })
@@ -124,11 +124,11 @@ export async function replaceStringInContentType(args) {
   }
 }
 
-export async function prettierFormatMd(args) {
+export async function prettier_format_md(args) {
   try {
-    const nArgs = Object.keys(args).length
-    if (nArgs < 0 || nArgs > 3)
-      throw `wrong number of CLI args, expected between 2 and 6, got ${nArgs}`
+    const n_args = Object.keys(args).length
+    if (n_args < 0 || n_args > 3)
+      throw `wrong number of CLI args, expected between 2 and 6, got ${n_args}`
 
     const { contentType = `page`, field = `body`, locale = `de` } = args
 
@@ -138,7 +138,7 @@ export async function prettierFormatMd(args) {
       locale,
     })
 
-    const space = await getSpace()
+    const space = await get_space()
 
     const env = await space.getEnvironment(`master`)
     let { items } = await env.getEntries({ content_type: contentType })
@@ -164,14 +164,17 @@ export async function prettierFormatMd(args) {
 }
 
 // To call functions in this file from the command line, run:
-// node src/utils/contentful.js searchStringInContentType arg1=foo arg2=bar
+// node src/contentful.js search_string_in_content_type arg1=foo arg2=bar
+
+// example on 2023-01-11
+// node src/contentful.js replace_string_in_content_type searchTerm='t*innen' replaceTerm='t\*innen'
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   // Module was not imported but called directly
   const funcs = {
-    searchStringInContentType,
-    replaceStringInContentType,
-    prettierFormatMd,
+    search_string_in_content_type,
+    replace_string_in_content_type,
+    prettier_format_md,
   }
 
   let [funcName, ...args] = process.argv.slice(2) // first two are path to node and the name of script

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Collapsible from '$lib/Collapsible.svelte'
+  import { Collapsible } from '$lib'
   import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ChapterMap from '$lib/ChapterMap.svelte'
+  import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
   import type { PageData } from './$types'

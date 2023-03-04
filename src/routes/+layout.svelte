@@ -1,7 +1,6 @@
 <script lang="ts">
   import { afterNavigate } from '$app/navigation'
-  import Footer from '$lib/Footer.svelte'
-  import Header from '$lib/Header.svelte'
+  import { Footer, Header } from '$lib'
   import { colorMode, microcopy } from '$lib/stores'
   import '../app.css'
   import type { LayoutData } from './$types'

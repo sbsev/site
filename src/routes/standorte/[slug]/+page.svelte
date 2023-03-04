@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BasePage from '$lib/BasePage.svelte'
+  import { BasePage } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
   import type { PageData } from './$types'

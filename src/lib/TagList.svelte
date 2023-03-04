@@ -33,6 +33,8 @@
     Stipendium: `fa-solid:donate`,
     Mentoring: `fa-solid:chalkboard-teacher`,
     Auszeichnung: `fa-solid:award`,
+    Sonstiges: `fa6-solid:earth-europe`,
+    Standorte: `fa6-solid:map-location-dot`,
   }
 
   let open = false

@@ -27,3 +27,5 @@ declare module '*messages.yml' {
   const messages: import('./lib/types').FormMessages
   export default messages
 }
+
+declare module '*package.json'

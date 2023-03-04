@@ -3,7 +3,7 @@
   import { preventOverScroll } from '../utils/actions'
 
   export let style: string
-  export let showCloseBtn = false
+  export let show_close_btn = false
 
   const dispatch = createEventDispatcher()
   const close = () => dispatch(`close`)
@@ -24,7 +24,7 @@
     window.scrollTo(...origScrollPos)
   })
 
-  const handleKeydown = (event: KeyboardEvent) => {
+  const handle_keydown = (event: KeyboardEvent) => {
     if (event.key === `Escape`) return close()
 
     if (event.key === `Tab`) {
@@ -46,7 +46,7 @@
   }
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window on:keydown={handle_keydown} />
 
 <div class="modal-background" on:click|self={close} on:keyup|self={close}>
   <div
@@ -57,7 +57,7 @@
     bind:this={modal}
     {style}
   >
-    {#if showCloseBtn}<button on:click={close}><span>&times;</span></button>{/if}
+    {#if show_close_btn}<button on:click={close}><span>&times;</span></button>{/if}
     <slot />
   </div>
 </div>
@@ -69,19 +69,20 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
     display: grid;
+    background: var(--zoo-modal-bg-behind, rgba(0, 0, 0, 0.6));
   }
   .modal {
     position: absolute;
     place-self: center;
-    width: calc(100vw - 8em);
-    max-width: 40em;
-    max-height: calc(100vh - 8em);
     overflow: auto;
     padding: 1em;
     border-radius: 5pt;
-    background: rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
+    width: var(--zoo-modal-width, 90vw);
+    max-width: var(--zoo-modal-max-width, 50em);
+    max-height: var(--zoo-modal-max-height, 90vh);
+    background: var(--zoo-modal-bg, rgba(0, 0, 0, 0.6));
   }
   button {
     position: absolute;

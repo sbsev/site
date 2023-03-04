@@ -5,15 +5,8 @@
 import 'dotenv/config'
 
 import { v2 } from '@google-cloud/translate'
-import contentful from 'contentful-management'
 import prettier from 'prettier'
-
-async function getSpace() {
-  const client = contentful.createClient({
-    accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
-  })
-  return await client.getSpace(process.env.CONTENTFUL_SPACE_ID)
-}
+import { get_space } from './contentful'
 
 async function translateContentfulEntries() {
   try {
@@ -29,7 +22,7 @@ async function translateContentfulEntries() {
       field = `body`,
     ] = cli_args
 
-    const space = await getSpace()
+    const space = await get_space()
 
     const env = await space.getEnvironment(`master`)
     let { items } = await env.getEntries({ content_type: contentType })

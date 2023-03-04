@@ -11,5 +11,9 @@ export default {
     prerender: {
       handleMissingId: `warn`,
     },
+
+    alias: {
+      $root: `.`,
+    },
   },
 }

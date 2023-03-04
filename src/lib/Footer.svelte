@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { repository } from '$root/package.json'
   import Icon from '@iconify/svelte'
-  import { repository } from '../../package.json'
-  import Social from './Social.svelte'
+  import { Social } from '.'
   import { microcopy } from './stores'
   import type { Link } from './types'
 

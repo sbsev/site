@@ -1,6 +1,5 @@
 <script lang="ts">
-  import BasePage from '$lib/BasePage.svelte'
-  import Img from '$lib/Img.svelte'
+  import { BasePage, Img } from '$lib'
   import Icon from '@iconify/svelte'
   import type { PageData } from './$types'
 
