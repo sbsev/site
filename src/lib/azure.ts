@@ -3,7 +3,6 @@ import { get } from 'svelte/store'
 import { signupStore as signup_store } from './stores'
 import type { Chapter, SignupStore } from './types'
 
-
 const azure_url = (base_id: string, table_id: string) =>
   `https://signup-sbs.azurewebsites.net/api/signup/${base_id}/${table_id}`
 
@@ -25,7 +24,6 @@ async function azure_post_new_records(
   })
   return await response.json()
 }
-
 
 // Prepares the form data
 export async function prepare_signup_data_for_azure(
@@ -146,9 +144,8 @@ export async function signup_form_submit_handler(
   }
 
   try {
-
     const response = await prepare_signup_data_for_azure(signup_data, baseId)
-    console.log("response", response)
+    console.log('response', response)
 
     if (response.StatusCode !== 200) throw response.StatusCode
 
