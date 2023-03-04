@@ -4,7 +4,7 @@ submitSuccess:
 
 submitError:
   title: 😢
-  note: An error has occurred. Your registration could not be sent successfully. Please click on Submit again or contact [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular) with the following error code.
+  note: An error has occurred. Your registration could not be sent successfully. Please click on Submit again or contact [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular) with your name and your chapter.
 
 submit:
   title: Submit registration

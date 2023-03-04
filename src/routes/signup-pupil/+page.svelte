@@ -76,12 +76,12 @@
         <span>{form.submitError.title}</span>
         <p>{@html form.submitError.note}</p>
 
-        <pre><code>
+        <!-- <pre><code>
           {JSON.stringify(error, null, 2)}
         </code></pre>
         <pre><code>
           {JSON.stringify(error, Object.getOwnPropertyNames(error))}
-        </code></pre>
+        </code></pre> -->
       </div>
     </Modal>
   {/if}
