@@ -3,9 +3,8 @@ import { fetch_chapters, parse_form_data } from '$lib/fetch'
 import messages from '../../signup-form/de/messages.yml'
 import options from '../../signup-form/de/options.yml'
 import raw_form from '../../signup-form/de/student.yml'
-import type { PageServerLoad } from './$types'
 
-export const load: PageServerLoad = async () => {
+export const load = async () => {
   let chapters = await fetch_chapters()
   chapters = chapters.filter((chap) => chap.acceptsSignups)
 

@@ -2,9 +2,8 @@
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
 
   const style = `margin-right: 5pt;`
 </script>

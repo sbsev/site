@@ -3,9 +3,8 @@
   import { Footer, Header } from '$lib'
   import { colorMode, microcopy } from '$lib/stores'
   import '../app.css'
-  import type { LayoutData } from './$types'
 
-  export let data: LayoutData
+  export let data
   $: ({ nav, footer, social } = data)
 
   afterNavigate(() => {

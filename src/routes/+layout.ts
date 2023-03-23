@@ -1,9 +1,8 @@
 import { fetch_chapters, fetch_yaml } from '$lib/fetch'
 import { microcopy } from '$lib/stores'
 import type { Chapter, NavLink } from '$lib/types'
-import type { LayoutLoad } from './$types'
 
-export const load: LayoutLoad = async () => {
+export const load = async () => {
   const nav = await fetch_yaml(`Nav`)
   const footer = await fetch_yaml(`Footer`)
   const social = await fetch_yaml(`Social`)

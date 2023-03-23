@@ -1,9 +1,8 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
 
   const style = `margin: 0 5pt 0 0;`
 </script>
