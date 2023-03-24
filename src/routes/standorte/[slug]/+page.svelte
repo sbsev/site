@@ -111,7 +111,6 @@
     </section>
   {/if}
 
-
   <svelte:fragment slot="afterBody">
     {#if page?.yaml?.showSignupButtons !== false}
       <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
