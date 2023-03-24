@@ -19,7 +19,7 @@
   <Map
     markers={chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
-      classes: [`chapter`, chap.acceptsSignups ? `active` : `starting`],
+      classes: [`chapter`, chap.acceptsSignups ? `active` : chap.partnerAssociation? 'partner': `starting`],
       title: chap.token,
       url: chap.slug,
     }))}
@@ -38,6 +38,10 @@
     <div>
       <span style="background: var(--dark-green)" />
       {$microcopy?.map?.text?.inSetup}
+    </div>
+    <div>
+      <span style="background: var(--grey)" />
+      {$microcopy?.map?.text?.partner}
     </div>
   </legend>
 </div>
@@ -78,6 +82,9 @@
   :global(a.chapter.starting) {
     background-color: var(--dark-green);
   }
+  :global(a.chapter.partner) {
+    background-color: var(--gray);
+  }
   :global(a.chapter:hover) {
     background-color: var(--blue);
   }
@@ -96,5 +103,8 @@
   }
   :global(a.chapter.starting::after) {
     border-color: var(--dark-green) transparent transparent transparent;
+  }
+  :global(a.chapter.partner::after) {
+    border-color: var(--gray) transparent transparent transparent;
   }
 </style>

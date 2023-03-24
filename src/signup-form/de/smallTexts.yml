@@ -46,6 +46,7 @@ location:
   linkStudentInfo: '/mitmachen/nachhilfelehrer'
   infoStudentButton: 'Infos für Studierende'
   joinPupil: 'Suchst du Nachhilfe?'
+  declinePupil: 'Leider ist die Warteliste voll'
   registerPupil: 'Als Schüler:in anmelden'
   linkPupilInfo: '/mitmachen/schueler'
   infoPupilButton: 'Infos für Schüler:innen'

@@ -6,7 +6,8 @@
   export let chapters: Chapter[]
 
   const openChapters = chapters.filter((ch) => ch.acceptsSignups)
-  const startingChapters = chapters.filter((ch) => !ch.acceptsSignups)
+  const startingChapters = chapters.filter((ch) => !ch.acceptsSignups && !ch.partnerAssociation)
+  const partnerChapters = chapters.filter((ch) => ch.partnerAssociation)
 </script>
 
 <h1>
@@ -25,6 +26,17 @@
   </h1>
   <ol>
     {#each startingChapters as { title, slug }}
+      <li><a href={slug}>{title}</a></li>
+    {/each}
+  </ol>
+{/if}
+{#if partnerChapters.length > 2}
+  <h1>
+    <Icon icon="ic:place" inline />
+    {$microcopy?.chapterList?.partner}
+  </h1>
+  <ol>
+    {#each partnerChapters as { title, slug }}
       <li><a href={slug}>{title}</a></li>
     {/each}
   </ol>
