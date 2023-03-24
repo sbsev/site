@@ -68,6 +68,7 @@ const chapters_query = `{
       }
       baseId
       acceptsSignups
+      deactivatePupils
       token
     }
   }

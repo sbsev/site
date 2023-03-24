@@ -13,7 +13,7 @@
 <BasePage {page}>
   <!-- Buttons at the end of the chapter pages to contact the dfferent chapter manager by mail
   showSignupButtons should be set false when chapter is still in setup -->
-  {#if page?.yaml?.showSignupButtons !== false}
+  {#if page?.yaml?.showSignupButtons !== false && page?.yaml?.allowPupils !== false}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
@@ -61,7 +61,56 @@
         >
       </span>
     </section>
+  {:else if page?.yaml?.allowPupils == false}
+    <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
+    <section>
+      <span>
+        {$microcopy?.location?.joinStudent}
+        <a href="/signup-student?chapter={page.title}" class="btn blue">
+          <Icon inline icon="fa-solid:graduation-cap" {style} />{$microcopy?.location
+            ?.registerStudent}
+        </a>
+        <a href={$microcopy?.location?.linkStudentInfo} class="btn blue stroke">
+          <Icon
+            inline
+            icon="bi:info-circle-fill"
+            style={style + `margin-right: 6pt;`}
+          />{$microcopy?.location?.infoStudentButton}
+        </a>
+      </span>
+      <span>
+        {$microcopy?.location?.joinPupil}
+        <a class="btn green">
+          <Icon inline icon="fa-solid:child" {style} />{$microcopy?.location
+            ?.declinePupil}
+        </a>
+        <a href={$microcopy?.location?.linkPupilInfo} class="btn green stroke">
+          <Icon
+            inline
+            icon="bi:info-circle-fill"
+            style={style + `margin-right: 6pt;`}
+          />{$microcopy?.location?.infoPupilButton}</a
+        >
+      </span>
+      <span>
+        {$microcopy?.location?.locationManagement}
+        <a
+          href="mailto:info.{slug}{$microcopy?.location?.mailTo} {page.title}"
+          class="btn orange"
+        >
+          <Icon inline icon="ic:email" {style} />{$microcopy?.location?.writeMailButton}
+        </a>
+        <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
+          <Icon
+            inline
+            icon="bi:info-circle-fill"
+            style={style + `margin-right: 6pt;`}
+          />{$microcopy?.location?.infoLeadingButton}</a
+        >
+      </span>
+    </section>
   {/if}
+
 
   <svelte:fragment slot="afterBody">
     {#if page?.yaml?.showSignupButtons !== false}
