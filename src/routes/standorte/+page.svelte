@@ -1,8 +1,7 @@
 <script lang="ts">
   import { BasePage, ChapterList, ChapterMap } from '$lib'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
   $: ({ chapters, page } = data)
 </script>
 

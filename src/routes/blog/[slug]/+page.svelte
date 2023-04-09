@@ -1,9 +1,8 @@
 <script lang="ts">
   import { Img, ToolTip } from '$lib'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
 
   $: ({ title, body, cover, date } = data.post)
   $: ({ bio, fieldOfStudy, name, photo } = data.post.author)
