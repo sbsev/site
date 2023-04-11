@@ -21,8 +21,6 @@
   <meta name="author" content={$microcopy?.meta?.name} />
   <meta name="description" content={$microcopy?.meta?.description} />
   <!-- see netlify.toml file for where this script originates -->
-  <!-- see netlify.toml file for where this script originates -->
-  <!-- see netlify.toml file for where this script originates -->
   <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
 
   <meta name="color-scheme" content={$colorMode} />
