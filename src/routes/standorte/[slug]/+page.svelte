@@ -78,8 +78,7 @@
         </li>
         <li>
           <a
-            href="mailto::{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location
-              ?.url}"
+            href="mailto:{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             title="{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             class="btn green"
           >
