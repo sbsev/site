@@ -36,7 +36,7 @@
   <div style="background: var(--light-blue);">
     <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
-      <Icon inline icon="fa-solid:child" {style} />
+      <Icon inline icon="ic:place" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
@@ -50,7 +50,7 @@
   <div style="background: var(--orange);">
     <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
     <strong>
-      <Icon inline icon="ic:place" {style} />
+      <Icon inline icon="fa-solid:child" {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
