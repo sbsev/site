@@ -7,15 +7,14 @@
   let no_reader = 0
 
   onMount(() => {
-    let api_url =
-      'https://plausible.io/api/v1/stats/aggregate?site_id=studenten-bilden-schueler.de&period=6mo&filters=event:page==' +
-      data.post.slug
-    let api_key = import.meta.env.VITE_PLAUSIBLE_API_KEY
-    fetch(api_url, {
-      headers: {
-        Authorization: 'Bearer ' + api_key,
-      },
-    })
+    fetch(
+      `https://plausible.io/api/v1/stats/aggregate?site_id=studenten-bilden-schueler.de&period=6mo&filters=event:page==${data.post.slug}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + import.meta.env.VITE_PLAUSIBLE_API_KEY,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         no_reader = data['results']['visitors']['value']
@@ -64,7 +63,8 @@
       <strong>{new Date(date).toLocaleDateString(`de`)}</strong>
     </span>
     <span>
-      Reader: {no_reader}
+      <Icon icon="ic:round-remove-red-eye" />
+      {no_reader}
     </span>
   </section>
   {@html body}
