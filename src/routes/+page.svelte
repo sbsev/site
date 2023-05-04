@@ -61,6 +61,13 @@
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
+  <div style="background: var(--green);">
+    <span>{$microcopy?.indexPage?.boxes?.organizationMemberName}</span>
+    <strong>
+      <Icon inline icon="codicon:organization" {style} />
+      {@html $microcopy?.indexPage?.boxes?.organizationMemberNumber}
+    </strong>
+  </div>
 </section>
 
 <h2>
