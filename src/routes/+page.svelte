@@ -64,7 +64,7 @@
   <div style="background: var(--green);">
     <span>{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
     <strong>
-      <Icon inline icon="codicon:organization" {style} />
+      <Icon inline icon="fa6-solid:user-group" {style} />
       {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
     </strong>
   </div>
