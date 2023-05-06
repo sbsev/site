@@ -11,3 +11,6 @@ build
 # secrets
 .env
 googleTranslateApiKey.json
+
+# pnpm generated
+pnpm-lock.y[a]ml
