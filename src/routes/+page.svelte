@@ -54,14 +54,14 @@
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
-  <div style="background: var(--light-blue);">
+  <div style="background: var(--green);">
     <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
-  <div style="background: var(--green);">
+  <div style="background: var(--light-blue);">
     <span>{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
     <strong>
       <Icon inline icon="fa6-solid:user-group" {style} />
