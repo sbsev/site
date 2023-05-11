@@ -4,21 +4,24 @@
   import { onMount } from 'svelte'
 
   export let data
-  let no_reader = 0
+  let n_readers: number = 0
 
-  onMount(() => {
-    fetch(
+  onMount(async () => {
+    const response = await fetch(
       `https://plausible.io/api/v1/stats/aggregate?site_id=studenten-bilden-schueler.de&period=6mo&filters=event:page==${data.post.slug}`,
       {
         headers: {
-          Authorization: 'Bearer ' + import.meta.env.VITE_PLAUSIBLE_API_KEY,
+          Authorization: `Bearer ${import.meta.env.VITE_PLAUSIBLE_API_KEY}`,
         },
       }
     )
-      .then((res) => res.json())
-      .then((data) => {
-        no_reader = data['results']['visitors']['value']
-      })
+
+    if (!response.ok) {
+      throw new Error('HTTP error ' + response.status)
+    }
+
+    const { results } = await response.json()
+    n_readers = results.visitors.value
   })
 
   $: ({ title, body, cover, date } = data.post)
@@ -64,7 +67,7 @@
     </span>
     <span>
       <Icon icon="ic:round-remove-red-eye" />
-      {no_reader}
+      {n_readers}
     </span>
   </section>
   {@html body}
