@@ -1,7 +1,7 @@
 import { fetch_chapters, fetch_page } from '$lib/fetch'
 import type { PageServerLoad } from './$types'
 
-export const load: PageServerLoad = async () => {
+export const load = async () => {
   return {
     page: fetch_page(`/`),
     chapters: fetch_chapters(),

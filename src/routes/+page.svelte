@@ -2,9 +2,8 @@
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
 
   const style = `margin-right: 5pt;`
 </script>
@@ -37,7 +36,7 @@
   <div style="background: var(--light-blue);">
     <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
-      <Icon inline icon="fa-solid:child" {style} />
+      <Icon inline icon="ic:place" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
@@ -51,15 +50,22 @@
   <div style="background: var(--orange);">
     <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
     <strong>
-      <Icon inline icon="ic:place" {style} />
+      <Icon inline icon="fa-solid:child" {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
-  <div style="background: var(--light-blue);">
+  <div style="background: var(--green);">
     <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
+    </strong>
+  </div>
+  <div style="background: var(--light-blue);">
+    <span>{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+    <strong>
+      <Icon inline icon="fa6-solid:user-group" {style} />
+      {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
     </strong>
   </div>
 </section>

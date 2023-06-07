@@ -4,9 +4,8 @@
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
   $: ({ chapters, form } = data)
 
   let success = false

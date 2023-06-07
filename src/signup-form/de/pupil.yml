@@ -44,6 +44,7 @@ fields:
       In welchem Fach möchtest du Nachhilfe erhalten? Für nicht aufgeführte Fächer oder sonstige Hinweise, bitte das Fach "Anderes" wählen und im Kommentarfeld unten beschreiben.
     type: select
     required: true
+    maxSelect: 3
 
   - id: schoolTypes
     title: Schulform
