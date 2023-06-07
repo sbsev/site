@@ -21,7 +21,7 @@
       ...chap.coords, // contains { lng, lat }
       classes: [
         `chapter`,
-        chap.acceptsSignups ? `active` : chap.partnerAssociation ? `partner` : `starting`,
+        chap.status,
       ],
       title: chap.token,
       url: chap.slug,

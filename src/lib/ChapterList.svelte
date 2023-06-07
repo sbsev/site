@@ -6,10 +6,8 @@
   export let chapters: Chapter[]
 
   const openChapters = chapters.filter((ch) => ch.acceptsSignups)
-  const startingChapters = chapters.filter(
-    (ch) => !ch.acceptsSignups && !ch.partnerAssociation
-  )
-  const partnerChapters = chapters.filter((ch) => ch.partnerAssociation)
+  const startingChapters = chapters.filter((ch) => ch.status == 'starting')
+  const partnerChapters = chapters.filter((ch) => ch.status == 'partner')
 </script>
 
 <h1>

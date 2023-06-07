@@ -7,7 +7,7 @@ export type Chapter = {
   }
   baseId: string
   acceptsSignups: boolean
-  partnerAssociation: boolean
+  status: 'active' | 'starting' | 'partner' | null
   token: string
 }
 

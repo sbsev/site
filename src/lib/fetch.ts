@@ -68,7 +68,7 @@ const chapters_query = `{
       }
       baseId
       acceptsSignups
-      partnerAssociation
+      status
       token
     }
   }
