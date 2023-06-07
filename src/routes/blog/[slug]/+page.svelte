@@ -4,7 +4,7 @@
   import { onMount } from 'svelte'
 
   export let data
-  let n_readers: number = 0
+  let n_readers = 0
 
   onMount(async () => {
     const response = await fetch(
@@ -17,7 +17,7 @@
     )
 
     if (!response.ok) {
-      throw new Error('HTTP error ' + response.status)
+      throw new Error(`HTTP error ` + response.status)
     }
 
     const { results } = await response.json()

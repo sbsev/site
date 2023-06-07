@@ -19,7 +19,7 @@
 
 <ul>
   {#each filtered_posts as post (post.slug)}
-    <li animate:flip={{ duration: 200 }} transition:scale|local style="display: flex;">
+    <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
       <PostPreview {post} />
     </li>
   {/each}
