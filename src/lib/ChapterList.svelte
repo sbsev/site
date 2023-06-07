@@ -6,8 +6,8 @@
   export let chapters: Chapter[]
 
   const openChapters = chapters.filter((ch) => ch.acceptsSignups)
-  const startingChapters = chapters.filter((ch) => ch.status == 'starting')
-  const partnerChapters = chapters.filter((ch) => ch.status == 'partner')
+  const startingChapters = chapters.filter((ch) => ch.status == `starting`)
+  const partnerChapters = chapters.filter((ch) => ch.status == `partner`)
 </script>
 
 <h1>

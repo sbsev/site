@@ -19,10 +19,7 @@
   <Map
     markers={chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
-      classes: [
-        `chapter`,
-        chap.status,
-      ],
+      classes: [`chapter`, chap.status],
       title: chap.token,
       url: chap.slug,
     }))}
