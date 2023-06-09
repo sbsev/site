@@ -11,7 +11,7 @@
 <BasePage {page}>
   <!-- Buttons at the end of the chapter pages to contact the different chapter manager by mail
   when selectedChapter is not defined show all buttons as default -->
-  {#if !selectedChapter?.signup || selectedChapter?.signup == 'everyone'}
+  {#if !selectedChapter?.signup || selectedChapter?.signup == `everyone`}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
@@ -56,7 +56,7 @@
         >
       </span>
     </section>
-  {:else if selectedChapter?.signup == 'onlyStudents'}
+  {:else if selectedChapter?.signup == `onlyStudents`}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
@@ -107,7 +107,7 @@
   {/if}
 
   <svelte:fragment slot="afterBody">
-    {#if selectedChapter?.signup !== 'nobody'}
+    {#if selectedChapter?.signup !== `nobody`}
       <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
       <p>{$microcopy?.location?.questions}</p>
       <ul class="contact">

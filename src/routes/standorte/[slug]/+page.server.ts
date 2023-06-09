@@ -2,7 +2,6 @@ import { fetch_page } from '$lib/fetch'
 import { error } from '@sveltejs/kit'
 import { fetch_chapters } from '$lib/fetch'
 
-
 export const load = async ({ params }) => {
   const { slug } = params
 
@@ -14,5 +13,5 @@ export const load = async ({ params }) => {
 
   if (!page) throw error(404)
 
-  return { page, slug , selectedChapter }
+  return { page, slug, selectedChapter }
 }

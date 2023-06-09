@@ -6,7 +6,9 @@ import raw_form from '../../signup-form/de/student.yml'
 
 export const load = async () => {
   let chapters = await fetch_chapters()
-  chapters = chapters.filter((chap) => chap.signup ==  'everyone' || chap.signup == 'onlyStudents')
+  chapters = chapters.filter(
+    (chap) => chap.signup == `everyone` || chap.signup == `onlyStudents`
+  )
 
   const form = parse_form_data({ ...raw_form, ...messages })
 

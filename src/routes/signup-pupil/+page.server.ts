@@ -8,7 +8,7 @@ import raw_form from '../../signup-form/de/pupil.yml'
 
 export const load = async () => {
   let chapters = await fetch_chapters()
-  chapters = chapters.filter((chap) => chap.signup == 'everyone')
+  chapters = chapters.filter((chap) => chap.signup == `everyone`)
 
   const form = parse_form_data({ ...raw_form, ...messages })
 
