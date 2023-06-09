@@ -5,7 +5,6 @@
 
   export let chapters: Chapter[]
 
-  // const openChapters = chapters.filter((ch) => ch.acceptsSignups)
   const openChapters = chapters.filter((ch) => ch.status == `active`)
   const startingChapters = chapters.filter((ch) => ch.status == `starting`)
   const partnerChapters = chapters.filter((ch) => ch.status == `partner`)
