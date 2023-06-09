@@ -52,11 +52,10 @@ map:
     inSetup: 'in Gründung'
     partner: 'Partner'
 
-
 chapterList:
   locations: 'Unsere Standorte'
   inSetup: 'Standorte in Gründung'
-  partner: "Partner Standorte"
+  partner: 'Partner Standorte'
 
 location:
   register: 'Anmeldungen'
