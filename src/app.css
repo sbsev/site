@@ -34,7 +34,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif;
   line-height: 1.5;
   /* https://modern-fluid-typography.vercel.app */
-  font-size: clamp(1rem, 0.5vw + 1rem, 1.4rem);
+  font-size: clamp(1rem, 0.5vw + 1rem, 1.2rem);
   transition: 0.3s;
   background: var(--body-bg);
   color: var(--text-color);

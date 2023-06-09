@@ -6,7 +6,10 @@ export const load = async () => {
   const nav = await fetch_yaml(`Nav`)
   const footer = await fetch_yaml(`Footer`)
   const social = await fetch_yaml(`Social`)
-  const chapters = await fetch_chapters()
+  // don't show partner orgs in nav
+  const chapters = (await fetch_chapters()).filter(
+    (chap) => chap.status != `partner`
+  )
   const smallTexts = await fetch_yaml(`smallTexts`)
   microcopy.set(smallTexts)
 
