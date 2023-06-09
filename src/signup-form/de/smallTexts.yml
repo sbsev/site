@@ -13,16 +13,18 @@ indexPage:
   boxes:
     locationsName: Standorte
     studentsName: Studierende
-    studentsNumber: 2872
+    studentsNumber: 3228
     pupilsName: Schüler:innen
-    pupilsNumber: 3186
+    pupilsNumber: 3231
     scholarshipName: '<a style="color: white;" href="/stipendium">Stipendien</a>'
-    scholarshipNumber: 9
+    scholarshipNumber: 12
+    organizationMemberName: Vereinsmitglieder
+    organizationMemberNumber: 350
 
 footer:
-  name: 'Studenten bilden Schüler e.V.'
-  site: 'Diese Seite ist'
-  uses: 'und verwendet keine'
+  name: "Studenten bilden Schüler e.V."
+  site: "Diese Seite ist"
+  uses: "und verwendet keine"
 
 map:
   location:
@@ -32,45 +34,152 @@ map:
     minZoom: 4
     maxZoom: 10
   text:
-    active: 'aktiver Standort'
-    inSetup: 'in Gründung'
+    active: "aktiver Standort"
+    inSetup: "in Gründung"
+    partner: "Partner"
 
 chapterList:
-  locations: 'Unsere Standorte'
-  inSetup: 'Standorte in Gründung'
+  locations: "Unsere Standorte"
+  inSetup: "Standorte in Gründung"
+  partner: "Partner Standorte"
 
 location:
-  register: 'Anmeldungen'
-  joinStudent: 'Willst du bei uns mitmachen?'
-  registerStudent: 'Als Student:in anmelden'
-  linkStudentInfo: '/mitmachen/nachhilfelehrer'
-  infoStudentButton: 'Infos für Studierende'
-  joinPupil: 'Suchst du Nachhilfe?'
-  declinePupil: 'Leider ist die Warteliste voll'
-  registerPupil: 'Als Schüler:in anmelden'
-  linkPupilInfo: '/mitmachen/schueler'
-  infoPupilButton: 'Infos für Schüler:innen'
-  locationManagement: 'Interesse an Standortleitung?'
-  mailTo: '@studenten-bilden-schueler.de?subject=Interesse an Standortleitung in'
-  writeMailButton: 'Schreib uns'
-  linkLeadingInfo: '/mitmachen/standortleiter'
-  infoLeadingButton: 'Infos für Standortleitende'
-  contact: 'Kontakt'
-  questions: 'Noch Fragen? Schreib uns eine Mail!'
-  url: 'studenten-bilden-schueler.de'
-  student: 'studenten'
-  forStudents: 'für Studierende'
-  pupil: 'schueler'
-  info: 'info'
-  forPartner: 'für Soziale Einrichtungen und Nachhilfeanfragen'
-  generalRequests: 'für Allgemeine Anfragen'
+  register: "Anmeldungen"
+  joinStudent: "Willst du bei uns mitmachen?"
+  registerStudent: "Als Student:in anmelden"
+  linkStudentInfo: "/mitmachen/nachhilfelehrer"
+  infoStudentButton: "Infos für Studierende"
+  joinPupil: "Suchst du Nachhilfe?"
+  declinePupil: "Warteliste voll :("
+  registerPupil: "Als Schüler:in anmelden"
+  linkPupilInfo: "/mitmachen/schueler"
+  infoPupilButton: "Infos für Schüler:innen"
+  locationManagement: "Interesse an Standortleitung?"
+  mailTo: "@studenten-bilden-schueler.de?subject=Interesse an Standortleitung in"
+  writeMailButton: "Schreib uns"
+  linkLeadingInfo: "/mitmachen/standortleiter"
+  infoLeadingButton: "Infos für Standortleitende"
+  contact: "Kontakt"
+  questions: "Noch Fragen? Schreib uns eine Mail!"
+  url: "studenten-bilden-schueler.de"
+  student: "studenten"
+  forStudents: "für Studierende"
+  pupil: "schueler"
+  info: "info"
+  forPartner: "für Soziale Einrichtungen und Nachhilfeanfragen"
+  generalRequests: "für Allgemeine Anfragen"
 
 basepage:
-  lastUpdated: 'Zuletzt bearbeitet:'
-  feedback: 'Feedback zu dieser Seite?'
-  email: 'it@studenten-bilden-schueler.de?subject=Feedback zu Seite:'
+  lastUpdated: "Zuletzt bearbeitet:"
+  feedback: "Feedback zu dieser Seite?"
+  email: "it@studenten-bilden-schueler.de?subject=Feedback zu Seite:"
 
 meta:
-  name: 'Studenten bilden Schüler e.V.'
-  description: 'Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen in deutschlandweit über 50 Unistädten.'
+  name: "Studenten bilden Schüler e.V."
+  description: "Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen in deutschlandweit über 50 Unistädten."
   url: studenten-bilden-schueler.de
+
+icons:
+  global:
+    award: &AWARD "fa-solid:award"
+    calendar: &CALENDAR "oction:calendar"
+    child: &CHILD "fa-solid:child"
+    close: &CLOSE "ic:round-close"
+    currency: &CURRENCY "ic:round-euro"
+    email: &EMAIL "ic:email"
+    expand: &EXPAND "bi:chevron-expand"
+    graduate: &GRADUATE "fa-solid:user-graduate"
+    graduationCap: &GRADUATION_CAP "fa-solid:graduation-cap"
+    group: &GROUP "fa6-solid:user-group"
+    hands: &HANDS_HELPING "fa-solid:hands-helping"
+    information: &INFORMATION "bi:info-circle-fill"
+    link: &LINK "bx:link"
+    newspaper: &NEWSPAPER "ion:newspaper"
+    place: &PLACE "ic:place"
+    plant: &PLANT "ri:plant-fill"
+    selectAll: &SELECT_ALL "ic:select-all"
+    socials:
+      facebook: &FACEBOOK "fa-brands:facebook"
+      instagram: &INSTAGRAM "fa-brands:instagram"
+      linkedin: &LINKEDIN "fa-brands:linkedin"
+      twitter: &TWITTER "fa-brands:twitter"
+      youtube: &YOUTUBE "fa-brands:youtube"
+    tags: &TAGS "fa-solid:tags"
+    teacher: &TEACHER "fa-solid:chalkboard-teacher"
+    theme:
+      dark: &THEME_DARK "octicon:moon-16"
+      light: &THEME_LIGHT "ic:round-wb-sunny"
+      system: &THEME_SYSTEM "bi:laptop"
+
+  pages:
+    article:
+      history: "ic:round-history-edu"
+      person: "bi:person-circle"
+    blog:
+      eye: "ic:round-remove-red-eye"
+    chapterList:
+      construction: "ic:round-construction"
+    footer:
+      Datenschutz: "ic:round-privacy-tip"
+      Impressum: "octicon:law"
+      Satzung: "ion:document-text"
+      Spenden: *CURRENCY
+      cookie: "bxs:cookie"
+      opensource: "ri:open-source-fill"
+    index:
+      update: "ic:update"
+    nav:
+      Anmeldung: "ic:round-assignment-ind"
+      Blog: "fa-solid:rss-square"
+      Internes: *HANDS_HELPING
+      Kontakt: "ic:round-alternate-email"
+      Mitmachen: "ion:people-circle"
+      Standorte: *PLACE
+      expand: *EXPAND
+      menu: "heroicons-solid:menu"
+      Über Uns: *PLANT
+    placeSelect:
+      delete: "ic:delete"
+
+  tags:
+    blog:
+      Alle: *SELECT_ALL
+      Auszeichnung: *AWARD
+      Bundesvorstand: "ion:stats-chart"
+      Erfahrungsberichte: "ic:rate-review"
+      Events: "ic:event-available"
+      Freizeit: "ic:beach-access"
+      IT: "bx:git-branch"
+      Interview: "ic:question-answer"
+      Mentoring: *TEACHER
+      Nachhilfelehrer: *TEACHER
+      Sonstiges: "fa6-solid:earth-europe"
+      "Soziale Partner": "fa-solid:handshake"
+      Spenden: *CURRENCY
+      Standorte: "fa6-solid:map-location-dot"
+      Standortleiter: *GRADUATION_CAP
+      Stipendium: "fa-solid:donate"
+      Werbung: "ic:public"
+    faq:
+      Alle: *SELECT_ALL
+      Datenschutz: "ic:round-privacy-tip"
+      Führungszeugnis: "ic:round-assignment-ind"
+      Mitgliederversammlung: "ic:round-group"
+      Nachhilfe: *TEACHER
+      Rahmenbedingungen: "ic:filter-frames"
+      "Rund ums Engagement": *HANDS_HELPING
+      Sonstiges: "ic:round-miscellaneous-services"
+      "Tipps für Standorte": "ic:round-storefront"
+      Vereinsaustritt: "ic:exit-to-app"
+      Vermittlung: "ic:round-support-agent"
+      Versicherung: "map:insurance-agency"
+    learningMaterial:
+      Alle: *SELECT_ALL
+      "Deutsche Sprache": "ic:language"
+      Deutschunterricht: "simple-icons:disqus"
+      Englisch: "fa-brands:erlang"
+      "Lernen mit Karteikarten": "bi:card-text"
+      Mathe: "ic:functions"
+      Physik: "simple-icons:atom"
+      "Viele Fächer": "ic:group-work"
+      Wissenschaft: "ic:round-science"

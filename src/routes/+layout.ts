@@ -18,8 +18,8 @@ export const load = async () => {
 
   // create { title, url } array containing all chapters
   const chapterLinks = chapters.map((chapter: Chapter) => {
-    const { title, slug, acceptsSignups } = chapter
-    return { title, url: slug, lightFont: !acceptsSignups }
+    const { title, slug, status } = chapter
+    return { title, url: slug, lightFont: status == `starting` }
   })
 
   // prepend chapter links into chapter subnav
