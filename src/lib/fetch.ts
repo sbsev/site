@@ -70,6 +70,7 @@ const chapters_query = `{
       acceptsSignups
       deactivatePupils
       status
+      signup
       token
     }
   }

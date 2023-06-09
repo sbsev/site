@@ -8,6 +8,4 @@
 <ChapterMap {chapters} />
 <ChapterList {chapters} />
 
-<BasePage {page}>
-  <h2 slot="title">🤗 Wir brauchen dich! 🤗</h2>
-</BasePage>
+<BasePage {page} />

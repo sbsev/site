@@ -4,15 +4,14 @@
   import Icon from '@iconify/svelte'
 
   export let data
-  $: ({ page, slug } = data)
-
+  $: ({ page, slug, selectedChapter } = data)
   const style = `margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
   <!-- Buttons at the end of the chapter pages to contact the different chapter manager by mail
-  showSignupButtons should be set false when chapter is still in setup -->
-  {#if page?.yaml?.showSignupButtons !== false && page?.yaml?.allowPupils !== false}
+  when selectedChapter is not defined show all buttons as default -->
+  {#if !selectedChapter?.signup || selectedChapter?.signup == 'everyone'}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
@@ -57,7 +56,7 @@
         >
       </span>
     </section>
-  {:else if page?.yaml?.allowPupils == false}
+  {:else if selectedChapter?.signup == 'onlyStudents'}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
@@ -108,7 +107,7 @@
   {/if}
 
   <svelte:fragment slot="afterBody">
-    {#if page?.yaml?.showSignupButtons !== false}
+    {#if selectedChapter?.signup !== 'nobody'}
       <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
       <p>{$microcopy?.location?.questions}</p>
       <ul class="contact">

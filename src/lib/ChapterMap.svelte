@@ -5,6 +5,7 @@
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
+  // why do we fetch chapters here? They were already passed to the function
   export const load: Load = () => {
     return { props: { chapters: fetch_chapters() } }
   }
