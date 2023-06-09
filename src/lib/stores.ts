@@ -1,38 +1,22 @@
+import { session_store } from 'svelte-zoo/stores'
 import { writable } from 'svelte/store'
 import type { SignupStore } from './types'
 
-const hasSessionStore = typeof sessionStorage !== `undefined`
-const hasLocalStore = typeof localStorage !== `undefined`
+const has_local_store = typeof localStorage !== `undefined`
 
 export const colorModeKey = `color-mode`
 
 type ColorMode = `light` | `dark` | `system`
 
 export const colorMode = writable<ColorMode>(
-  (hasLocalStore && localStorage[colorModeKey]) || `system`
+  (has_local_store && localStorage[colorModeKey]) || `system`
 )
 
 colorMode.subscribe(
-  (val: ColorMode) => hasLocalStore && (localStorage[colorModeKey] = val)
+  (val: ColorMode) => has_local_store && (localStorage[colorModeKey] = val)
 )
 
-function sessionStore<T>(name: string, initialValue: T) {
-  if (hasSessionStore && localStorage[name]) {
-    initialValue = JSON.parse(localStorage[name])
-  }
-
-  const { subscribe, set } = writable(initialValue)
-
-  return {
-    subscribe,
-    set: (val: T) => {
-      if (hasSessionStore) localStorage[name] = JSON.stringify(val)
-      set(val)
-    },
-  }
-}
-
-export const signupStore = sessionStore<SignupStore>(
+export const signupStore = session_store<SignupStore>(
   `SignupStore`,
   {} as SignupStore
 )

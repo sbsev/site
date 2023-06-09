@@ -3,9 +3,8 @@
   import type { BlogTag } from '$lib/types'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
 
   let active_tag: BlogTag
 
@@ -20,7 +19,7 @@
 
 <ul>
   {#each filtered_posts as post (post.slug)}
-    <li animate:flip={{ duration: 200 }} transition:scale|local style="display: flex;">
+    <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
       <PostPreview {post} />
     </li>
   {/each}

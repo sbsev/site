@@ -2,16 +2,15 @@
   import { BasePage } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
 
-  export let data: PageData
+  export let data
   $: ({ page, slug } = data)
 
   const style = `margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
-  <!-- Buttons at the end of the chapter pages to contact the dfferent chapter manager by mail
+  <!-- Buttons at the end of the chapter pages to contact the different chapter manager by mail
   showSignupButtons should be set false when chapter is still in setup -->
   {#if page?.yaml?.showSignupButtons !== false && page?.yaml?.allowPupils !== false}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
@@ -46,10 +45,7 @@
       </span>
       <span>
         {$microcopy?.location?.locationManagement}
-        <a
-          href="mailto:info.{slug}{$microcopy?.location?.mailTo} {page.title}"
-          class="btn orange"
-        >
+        <a href="mailto:info.{slug}{$microcopy?.location?.mailTo}" class="btn orange">
           <Icon inline icon="ic:email" {style} />{$microcopy?.location?.writeMailButton}
         </a>
         <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
@@ -130,8 +126,7 @@
         </li>
         <li>
           <a
-            href="mailto::{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location
-              ?.url}"
+            href="mailto:{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             title="{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             class="btn green"
           >

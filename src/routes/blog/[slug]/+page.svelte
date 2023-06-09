@@ -1,9 +1,28 @@
 <script lang="ts">
   import { Img, ToolTip } from '$lib'
   import Icon from '@iconify/svelte'
-  import type { PageData } from './$types'
+  import { onMount } from 'svelte'
 
-  export let data: PageData
+  export let data
+  let n_readers = 0
+
+  onMount(async () => {
+    const response = await fetch(
+      `https://plausible.io/api/v1/stats/aggregate?site_id=studenten-bilden-schueler.de&period=6mo&filters=event:page==${data.post.slug}`,
+      {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_PLAUSIBLE_API_KEY}`,
+        },
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`HTTP error ` + response.status)
+    }
+
+    const { results } = await response.json()
+    n_readers = results.visitors.value
+  })
 
   $: ({ title, body, cover, date } = data.post)
   $: ({ bio, fieldOfStudy, name, photo } = data.post.author)
@@ -45,6 +64,10 @@
       am
       <Icon inline icon="octicon:calendar" {style} />
       <strong>{new Date(date).toLocaleDateString(`de`)}</strong>
+    </span>
+    <span>
+      <Icon icon="ic:round-remove-red-eye" />
+      {n_readers}
     </span>
   </section>
   {@html body}

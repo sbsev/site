@@ -1,13 +1,12 @@
 import { dev } from '$app/environment'
 import { fetch_chapters, parse_form_data } from '$lib/fetch'
-import type { PageServerLoad } from './$types'
 // to make the signup form i18n-compatible,
 // these 3 files need to be imported adaptively (same in the student form)
 import messages from '../../signup-form/de/messages.yml'
 import options from '../../signup-form/de/options.yml'
 import raw_form from '../../signup-form/de/pupil.yml'
 
-export const load: PageServerLoad = async () => {
+export const load = async () => {
   let chapters = await fetch_chapters()
   chapters = chapters.filter((chap) => chap.acceptsSignups)
   chapters = chapters.filter((chap) => !chap.deactivatePupils)

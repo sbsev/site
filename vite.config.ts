@@ -1,9 +1,9 @@
-import rollupYaml from '@rollup/plugin-yaml'
+import yaml from '@rollup/plugin-yaml'
 import { sveltekit } from '@sveltejs/kit/vite'
 import type { UserConfig } from 'vite'
 
-const vite_config: UserConfig = {
-  plugins: [sveltekit(), rollupYaml()],
+export default {
+  plugins: [sveltekit(), yaml()],
 
   server: {
     port: 3000,
@@ -15,6 +15,4 @@ const vite_config: UserConfig = {
   preview: {
     port: 3000,
   },
-}
-
-export default vite_config
+} satisfies UserConfig
