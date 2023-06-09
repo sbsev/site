@@ -34,7 +34,7 @@
 
 <section style="white-space: nowrap;">
   <div style="background: var(--light-blue);">
-    <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+    <span>{data.chapters.filter((ch) => ch.status == `active`).length}</span>
     <strong>
       <Icon inline icon="ic:place" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
