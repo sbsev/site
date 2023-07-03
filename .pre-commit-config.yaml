@@ -28,7 +28,7 @@ repos:
           - svelte
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.4
+    rev: v2.2.5
     hooks:
       - id: codespell
         stages: [commit, commit-msg]
@@ -36,7 +36,7 @@ repos:
         args: [--ignore-words-list, 'adresse,afterall']
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v8.42.0
+    rev: v8.44.0
     hooks:
       - id: eslint
         types: [file]
