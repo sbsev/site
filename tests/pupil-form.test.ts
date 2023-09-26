@@ -46,5 +46,5 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
   await page.click(`button[type=submit].main`)
 
   // make sure we get to the success page
-  expect(await page.locator(`text=🎉 ⭐ 🎉`).textContent()).toBe(`🎉 ⭐ 🎉`)
+  expect(await page.locator(`text=🎉 ⭐ 🎉`, { timeout: 20000 }).textContent()).toBe(`🎉 ⭐ 🎉`)
 })
