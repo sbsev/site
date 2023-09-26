@@ -44,5 +44,5 @@ test(`student signup form can be submitted after filling all required fields`, a
 })
 
 test.run({
-  timeout: 45000
+  timeout: 45000,
 })

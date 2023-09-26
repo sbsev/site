@@ -55,7 +55,6 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
   ).toBe(`🎉 ⭐ 🎉`)
 })
 
-
 test.run({
-  timeout: 45000
+  timeout: 45000,
 })
