@@ -11,7 +11,7 @@ const prefixSlug = (prefix: string) => (obj: Page | Post) => {
 
 export async function airtable_fetch(
   query: string,
-  options = {}
+  options = {},
 ): Promise<Record<string, unknown>> {
   const apiKey = import.meta.env.VITE_AIRTABLE_CHAPTER_BASE_APP_ID
 
@@ -24,7 +24,7 @@ export async function airtable_fetch(
       headers: { 'Content-Type': `application/json` },
       body: JSON.stringify({ query }),
       ...options,
-    }
+    },
   )
 
   const { data, error } = await response.json()
@@ -81,7 +81,7 @@ export async function fetch_chapters(): Promise<Chapter[]> {
 
 export async function base64_thumbnail(
   url: string,
-  options?: { type?: string; w?: number; h?: number }
+  options?: { type?: string; w?: number; h?: number },
 ): Promise<string> {
   const { type = `jpg`, w = 10, h = 10 } = options ?? {}
 
@@ -262,7 +262,7 @@ function title_to_slug(itm: Record<string, unknown> & { title: string }) {
 
 export async function fetch_yaml_list(
   title: string,
-  slugPrefix: string
+  slugPrefix: string,
 ): Promise<Record<string, unknown>[]> {
   const list = await fetch_yaml(title)
   return list.map(parse_body).map(title_to_slug).map(prefixSlug(slugPrefix))
