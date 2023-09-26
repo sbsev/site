@@ -45,12 +45,12 @@ export async function search_string_in_content_type(args) {
     const env = await space.getEnvironment(`master`)
     let { items } = await env.getEntries({ content_type: contentType })
     items = items.filter((item) =>
-      item?.fields[field][locale]?.includes(searchTerm)
+      item?.fields[field][locale]?.includes(searchTerm),
     )
     items = items.map((item) => item.fields.slug[locale])
     console.log(
       `'${contentType}' entries containing '${searchTerm}' in field '${field}.${locale}':`,
-      items
+      items,
     )
   } catch (error) {
     console.error(error)
@@ -103,16 +103,16 @@ export async function replace_string_in_content_type(args) {
 
       itm.fields[field][locale] = itm?.fields[field][locale]?.replaceAll(
         searchTerm,
-        replaceTerm
+        replaceTerm,
       )
       if (dryRun) {
         console.log(
-          `new ${field}.${locale} of ${contentType} ${itm?.fields?.title.de} after replacement: ${itm.fields[field][locale]}`
+          `new ${field}.${locale} of ${contentType} ${itm?.fields?.title.de} after replacement: ${itm.fields[field][locale]}`,
         )
       } else {
         await itm.update()
         console.log(
-          `performed replacement in ${contentType} ${itm?.fields?.title.de}`
+          `performed replacement in ${contentType} ${itm?.fields?.title.de}`,
         )
         // await itm.publish()
       }
