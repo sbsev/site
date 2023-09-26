@@ -31,8 +31,12 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await page.click(`#dataProtection`)
 
-  await page.click(`button[type=submit].main`)
+  await page.click(`button[type=submit].main`, {
+    timeout: 10000
+  })
+
+  await page.waitForNavigation()
 
   // make sure we get to the success page
-  expect(await page.locator(`text=🎉 ⭐ 🎉`, { timeout: 20000 }).textContent()).toBe(`🎉 ⭐ 🎉`)
+  expect(await page.locator(`text=🎉 ⭐ 🎉`, { timeout: 10000 }).textContent()).toBe(`🎉 ⭐ 🎉`)
 })
