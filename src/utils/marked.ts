@@ -52,7 +52,7 @@ const renderer = {
     if (code.startsWith(`youtube:`) || code.startsWith(`vimeo:`)) {
       const [platform, id] = code.split(/:\s?/)
       const embed = {
-        youtube: (id: string) => `https://youtube-nocookie.com/embed/${id}`,
+        youtube: (id: string) => `https://www.youtube-nocookie.com/embed/${id}`,
         vimeo: (id: string) => `https://player.vimeo.com/video/${id}`,
       }
       // padding-top: 56.25%; corresponds to 16/9 = most common video aspect ratio

@@ -13,7 +13,7 @@ const to_str = (str: unknown) => (str ? String(str) : undefined)
 async function azure_post_new_records(
   base_id: string,
   table_id: string,
-  data: { [key: string]: unknown }
+  data: { [key: string]: unknown },
 ) {
   const response = await fetch(azure_url(base_id, table_id), {
     method: `POST`,
@@ -29,7 +29,7 @@ async function azure_post_new_records(
 export async function prepare_signup_data_for_azure(
   data: SignupStore,
   chapter_base_id: string,
-  test = false
+  test = false,
 ): Promise<Response> {
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
@@ -109,7 +109,7 @@ export async function prepare_signup_data_for_azure(
 export async function signup_form_submit_handler(
   fields_to_validate: (keyof SignupStore)[],
   chapters: Chapter[],
-  err_msg: Record<string, string>
+  err_msg: Record<string, string>,
 ): Promise<{ error?: Error; success?: boolean }> {
   // handles form validation and Plausible event reporting
   const signup_data = get(signup_store)

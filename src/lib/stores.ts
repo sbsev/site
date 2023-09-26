@@ -9,16 +9,16 @@ export const colorModeKey = `color-mode`
 type ColorMode = `light` | `dark` | `system`
 
 export const colorMode = writable<ColorMode>(
-  (has_local_store && localStorage[colorModeKey]) || `system`
+  (has_local_store && localStorage[colorModeKey]) || `system`,
 )
 
 colorMode.subscribe(
-  (val: ColorMode) => has_local_store && (localStorage[colorModeKey] = val)
+  (val: ColorMode) => has_local_store && (localStorage[colorModeKey] = val),
 )
 
 export const signupStore = session_store<SignupStore>(
   `SignupStore`,
-  {} as SignupStore
+  {} as SignupStore,
 )
 
 export const microcopy = writable({})
