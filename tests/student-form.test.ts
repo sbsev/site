@@ -6,6 +6,8 @@ test(`student signup form can be submitted after filling all required fields`, a
 }) => {
   await page.goto(`/signup-student`, { waitUntil: `networkidle` })
 
+  console.log(page.$eval(`h1`, (el) => el.textContent))
+
   await fill_select(page, `#chapter`, [`Test`])
 
   await fill_select(page, `#gender`, [`Weiblich`])
