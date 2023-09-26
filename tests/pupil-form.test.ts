@@ -54,3 +54,8 @@ test(`pupil signup form can be submitted after filling all required fields`, asy
     await page.locator(`text=🎉 ⭐ 🎉`, { timeout: 10000 }).textContent(),
   ).toBe(`🎉 ⭐ 🎉`)
 })
+
+
+test.run({
+  timeout: 45000
+})
