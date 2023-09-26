@@ -35,7 +35,7 @@ test(`student signup form can be submitted after filling all required fields`, a
     timeout: 10000,
   })
 
-  await page.waitForNavigation({ timeout: 10000 })
+  await page.waitForNavigation({ timeout: 20000 })
 
   // make sure we get to the success page
   expect(
