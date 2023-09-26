@@ -3,7 +3,7 @@ import type { Page } from '@playwright/test'
 export async function fill_select(
   page: Page,
   selector: string,
-  values: string[]
+  values: string[],
 ) {
   for (const value of values) {
     await page.fill(selector, value)
