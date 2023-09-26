@@ -49,7 +49,7 @@ async function translateContentfulEntries() {
       const title = itm.fields.title[sourceLocale]
       // eslint-disable-next-line no-console
       console.log(
-        `successfully translated ${contentType} '${title}' to ${targetLocale}`
+        `successfully translated ${contentType} '${title}' to ${targetLocale}`,
       )
     }
   } catch (error) {
