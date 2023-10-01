@@ -69,6 +69,11 @@ const renderer = {
     }
     return false // delegate to default marked codespan renderer
   },
+
+  // Mangle and headerIds are deprecated since > 5.0.0
+  // https://github.com/markedjs/marked/discussions/2825
+  headerIds: false,
+  mangle: false
 }
 
 marked.use({ renderer })
