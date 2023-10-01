@@ -9,7 +9,7 @@ on:
 jobs:
   playwright:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 7
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
@@ -37,8 +37,5 @@ jobs:
           # needed to fetch website content
           VITE_CONTENTFUL_SPACE_ID: ${{ secrets.VITE_CONTENTFUL_SPACE_ID }}
           VITE_CONTENTFUL_ACCESS_TOKEN: ${{ secrets.VITE_CONTENTFUL_ACCESS_TOKEN }}
-          # needed to simulate form submission to Airtable test base
-          VITE_AIRTABLE_CHAPTER_BASE_APP_ID: ${{ secrets.VITE_AIRTABLE_CHAPTER_BASE_APP_ID }}
-          VITE_AIRTABLE_API_KEY: ${{ secrets.VITE_AIRTABLE_API_KEY }}
           # needed to auto-complete and geocode addresses
           VITE_MAPBOX_PUBLIC_KEY: ${{ secrets.VITE_MAPBOX_PUBLIC_KEY }}
