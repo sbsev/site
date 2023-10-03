@@ -77,5 +77,9 @@ const renderer = {
 }
 
 marked.use({ renderer })
+marked.setOptions({
+  mangle: false,
+  headerIds: false
+})
 
 export default marked
