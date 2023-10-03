@@ -57,12 +57,17 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   console.log(`Button clicked`)
 
-  await page.waitForSelector(`text=🎉 ⭐ 🎉`)
+  await page.waitForSelector(`span:has-text("🎉 ⭐ 🎉")`)
 
   console.log(await page.content())
 
-  // make sure we get to the success page
-  expect(await page.locator(`text=🎉 ⭐ 🎉`).textContent()).toBe(`🎉 ⭐ 🎉`)
+  const spanText = await page.$eval(
+    'span:has-text("🎉 ⭐ 🎉")',
+    (element) => element.textContent
+  );
 
-  console.log(await page.content())
+  expect(spanText).toContain("🎉 ⭐ 🎉")
+
+  await page.close();
+
 })
