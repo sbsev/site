@@ -32,6 +32,7 @@
 </script>
 
 <!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <label
   for={id}
   class:required

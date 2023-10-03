@@ -63,7 +63,7 @@
       {#if isSubmitting}
         <CircleSpinner color="white" />
       {:else}
-        Anmeldung Abschicken
+        Anmeldung abschicken
       {/if}
     </button>
   </form>
@@ -73,7 +73,7 @@
         <span>{form.submitError.title}</span>
         <p>{@html form.submitError.note}</p>
 
-        <!-- <pre><code>
+        <!-- <pre style="overflow-x: auto;"><code>
           {JSON.stringify(error, null, 2)}
         </code></pre>
         <pre><code>
@@ -123,8 +123,5 @@
     display: block;
     font-size: 2em;
     padding: 1em;
-  }
-  pre {
-    overflow-x: auto;
   }
 </style>

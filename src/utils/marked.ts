@@ -23,8 +23,8 @@ const renderer = {
   },
 
   // adapted from https://marked.js.org/using_pro
-  heading(text: string, level: string, raw: string, slugger: unknown) {
-    const id = slugger.slug(raw)
+  heading(text: string, level: string) {
+    const id = text.toLowerCase().replace(/[^\wäöü]+/g, `-`)
 
     // heading links are styled in static/global.css
     return `

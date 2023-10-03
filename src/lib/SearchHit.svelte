@@ -6,7 +6,7 @@
 
   export let hit: Post
   const dispatch = createEventDispatcher()
-  const close = () => dispatch('close')
+  const close = () => dispatch(`close`)
 
   $: ({ title, slug, body, cover, date, author } = hit)
 </script>
