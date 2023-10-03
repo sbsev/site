@@ -22,7 +22,6 @@ test(`student signup form can be submitted after filling all required fields`, a
   await fill_place(page, `#places input`, `Hamburg`)
   await page.waitForSelector(`input[data-place='1']`)
 
-
   await fill_select(page, `#discovery`, [`Freunde`])
 
   await page.click(`#agreement`)
@@ -39,7 +38,7 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await page.waitForSelector(`span:has-text("🎉 ⭐ 🎉")`)
 
-  console.log("has txt")
+  console.log(`has txt`)
 
   // const spanText = await page.$eval(
   //   `span:has-text("🎉 ⭐ 🎉")`,
