@@ -77,6 +77,8 @@ const renderer = {
 }
 
 marked.use({ renderer })
+
+// Disable deprecated options
 marked.setOptions({
   mangle: false,
   headerIds: false
