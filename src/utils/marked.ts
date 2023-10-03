@@ -81,7 +81,7 @@ marked.use({ renderer })
 // Disable deprecated options
 marked.setOptions({
   mangle: false,
-  headerIds: false
+  headerIds: false,
 })
 
 export default marked
