@@ -62,12 +62,11 @@ test(`student signup form can be submitted after filling all required fields`, a
   console.log(await page.content())
 
   const spanText = await page.$eval(
-    'span:has-text("🎉 ⭐ 🎉")',
-    (element) => element.textContent
-  );
+    `span:has-text("🎉 ⭐ 🎉")`,
+    (element) => element.textContent,
+  )
 
-  expect(spanText).toContain("🎉 ⭐ 🎉")
+  expect(spanText).toContain(`🎉 ⭐ 🎉`)
 
-  await page.close();
-
+  await page.close()
 })
