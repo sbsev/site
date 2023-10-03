@@ -98,7 +98,6 @@ export async function prepare_signup_data_for_azure(
     Spur: window.visitedPages.join(`, \n`),
   }
 
-
   if (test) {
     console.log(`fields: `, fields) // eslint-disable-line no-console
     chapter_base_id = `appe3hVONuwBkuQv1`
