@@ -44,7 +44,7 @@
   const deletePlace = (idx: number) => () => {
     // remove place from list
     value.splice(idx, 1)
-    value = value // reassign to trigger rerender
+    value = [...value] // reassign to trigger rerender
     // remove marker from map
     markers[idx].remove()
 
