@@ -48,11 +48,16 @@
 
 <svelte:window on:keydown={handle_keydown} />
 
-<div class="modal-background" on:click|self={close} on:keyup|self={close}>
+<div
+  class="modal-background"
+  on:click|self={close}
+  on:keyup|self={close}
+  role="presentation"
+>
   <div
     use:preventOverScroll
     class="modal"
-    role="dialog"
+    role="alertdialog"
     aria-modal="true"
     bind:this={modal}
     {style}

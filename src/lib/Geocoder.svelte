@@ -45,7 +45,15 @@
 </script>
 
 <!-- has to be <div/>, <input/> won't work -->
-<div {id} {placeholder} {required} bind:this={div} on:keydown={ignoreUpDownArrows} />
+<div
+  {id}
+  {placeholder}
+  {required}
+  bind:this={div}
+  on:keydown={ignoreUpDownArrows}
+  role="textbox"
+  tabindex="0"
+/>
 
 <style>
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {
