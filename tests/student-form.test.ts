@@ -31,21 +31,13 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await page.click(`button[type=submit].main`)
 
-<<<<<<< HEAD
-=======
   console.log(`Button clicked`)
 
->>>>>>> ccd05ebbbdf6966a23c5acafce5f125c1d2bd394
   await page.screenshot({ path: `screenshot.png` })
 
   // console.log(await page.content())
 
-<<<<<<< HEAD
-
   await page.waitForSelector(`span:has-text("🎉 ⭐ 🎉")`)
-=======
-  // await page.waitForSelector(`span:has-text("🎉 ⭐ 🎉")`)
->>>>>>> ccd05ebbbdf6966a23c5acafce5f125c1d2bd394
 
   console.log("has txt")
 
