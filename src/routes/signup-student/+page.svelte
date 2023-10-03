@@ -62,7 +62,7 @@
       {#if isSubmitting}
         <CircleSpinner color="white" />
       {:else}
-        Anmeldung Abschicken
+        Anmeldung abschicken
       {/if}
     </button>
   </form>

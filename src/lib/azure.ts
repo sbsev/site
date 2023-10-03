@@ -31,6 +31,7 @@ export async function prepare_signup_data_for_azure(
   chapter_base_id: string,
   test = false,
 ): Promise<Response> {
+  console.log(`preparing signup data`)
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
   // common fields for both students and pupils
@@ -40,8 +41,8 @@ export async function prepare_signup_data_for_azure(
       .map((place) => place.address)
       .join(`\n`),
     Koordinaten: Object.values(data.places?.value ?? [])
-      .map(({ lat, lng }) => `lat=${lat},lng=${lng}`)
-      .join(`;`),
+      .map(({ lat, lng }) => `lat = ${lat}, lng = ${lng}`)
+      .join(`; `),
 
     // Manual conversion of date string into iso format (yyyy-mm-dd). Only necessary
     // in Safari. Should do nothing in other browsers.
@@ -50,14 +51,14 @@ export async function prepare_signup_data_for_azure(
     Geschlecht: data.gender.value,
     Bemerkung: to_str(data.remarks.value),
     Datenschutz: data.dataProtection.value,
-    Quelle: `landing: ${location.origin}${window.visitedPages[1]}, prev: ${window.visitedPages[0]}`, // analytics
+    Quelle: `landing: ${location.origin}${window.visitedPages[1]}, prev: ${window.visitedPages[0]} `, // analytics
   }
 
   if (data.type.value === `student`) {
     const student_fields = {
       'Vor- und Nachname': data.fullName.value,
       Telefon: to_str(data.phone.value),
-      Klassenstufen: to_str(data.levels.value) || `1-13`,
+      Klassenstufen: to_str(data.levels.value) || `1 - 13`,
       Schulform: data.schoolTypes.value,
       // pass undefined in case Number(data.semester.value) is NaN (which Airtable can't handle)
       'Semester Anmeldung': Number(data.semester.value) || undefined,
@@ -87,22 +88,22 @@ export async function prepare_signup_data_for_azure(
     }
     fields = { ...fields, ...pupil_fields }
   } else {
-    console.error(`unknown signup type: ${data.type.value}`)
+    console.error(`unknown signup type: ${data.type.value} `)
   }
 
   // fields not present in local chapter tables
   const globalFields = {
     ...fields,
     Standort: data.chapter.value,
-    Spur: window.visitedPages.join(`,\n`),
+    Spur: window.visitedPages.join(`, \n`),
   }
 
-  const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
-    console.log(`fields:`, fields) // eslint-disable-line no-console
-    return await azure_post_new_records(test_base_id, table, fields)
+    console.log(`fields: `, fields) // eslint-disable-line no-console
+    chapter_base_id = `appe3hVONuwBkuQv1`
   }
+
   return await azure_post_new_records(chapter_base_id, table, globalFields)
 }
 
@@ -113,7 +114,7 @@ export async function signup_form_submit_handler(
 ): Promise<{ error?: Error; success?: boolean }> {
   // handles form validation and Plausible event reporting
   const signup_data = get(signup_store)
-
+  console.log(`signupformsubmithablder`)
   // form validation
   for (const name of fields_to_validate) {
     const field = signup_data[name]
@@ -125,7 +126,7 @@ export async function signup_form_submit_handler(
         field.node?.focus()
         field.node?.scrollIntoView()
       } catch (error) {
-        console.error(`error in validating field ${name}:`, error)
+        console.error(`error in validating field ${name}: `, error)
       }
       return {} // abort submission
     }
@@ -149,7 +150,7 @@ export async function signup_form_submit_handler(
     if (response.StatusCode !== 200) throw response.StatusCode
 
     window.plausible(`Signup`, {
-      props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
+      props: { chapter, type, 'chapter+type': `${type} aus ${chapter} ` },
     })
     window.scrollTo({ top: 0, behavior: `smooth` })
 
