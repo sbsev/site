@@ -57,6 +57,8 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   console.log(`Button clicked`)
 
+  await page.waitForSelector('text=🎉 ⭐ 🎉');
+
   console.log(await page.content())
 
   // make sure we get to the success page
