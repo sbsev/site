@@ -57,10 +57,9 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   console.log(`Button clicked`)
 
-  await page.screenshot({ path: 'screenshot.png' });
+  await page.screenshot({ path: `screenshot.png` })
 
   // console.log(await page.content())
-
 
   // await page.waitForSelector(`span:has-text("🎉 ⭐ 🎉")`)
 
