@@ -57,6 +57,9 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   console.log(`Button clicked`)
 
+  console.log(await page.content())
+
+
   await page.waitForSelector(`span:has-text("🎉 ⭐ 🎉")`)
 
   console.log(await page.content())
