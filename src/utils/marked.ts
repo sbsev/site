@@ -76,7 +76,7 @@ marked.use({ renderer })
 // Disable deprecated properties
 marked.useOptions({
   headerIds: false,
-  mangle: false
+  mangle: false,
 })
 
 export default marked
