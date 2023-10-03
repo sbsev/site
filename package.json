@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
     "eslint": "^8.42.0",
-    "eslint-plugin-svelte3": "^4.0.0",
+    "eslint-plugin-svelte": "^2.33.2",
     "js-yaml": "^4.1.0",
     "mapbox-gl": "^2.15.0",
     "marked": "^5.0.5",
