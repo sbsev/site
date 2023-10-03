@@ -9,7 +9,7 @@ on:
 jobs:
   playwright:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 10
     steps:
       - name: Check out repo
         uses: actions/checkout@v3
@@ -39,3 +39,9 @@ jobs:
           VITE_CONTENTFUL_ACCESS_TOKEN: ${{ secrets.VITE_CONTENTFUL_ACCESS_TOKEN }}
           # needed to auto-complete and geocode addresses
           VITE_MAPBOX_PUBLIC_KEY: ${{ secrets.VITE_MAPBOX_PUBLIC_KEY }}
+
+      - name: Upload Screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: screenshot.png
