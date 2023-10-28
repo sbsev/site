@@ -10,10 +10,6 @@ force = true
 from = "https://sbsev.netlify.com/*"
 to = "https://studytutors.de/:splat"
 
-[[redirects]]
-force = true
-from = "https://studenten-bilden-schueler.at/*"
-to = "https://studytutors.at/:splat"
 
 # proxy plausible script to avoid being falsely blocked
 # https://plausible.io/docs/proxy/introduction
