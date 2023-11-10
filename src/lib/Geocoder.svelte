@@ -6,6 +6,7 @@
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
+  import { microcopy } from './stores'
 
   // required pnpm add -D events @types/events
   // https://github.com/mapbox/mapbox-gl-geocoder/issues/441
@@ -30,8 +31,8 @@
 
     let geocoder = new MapboxGeocoder({
       accessToken: mapboxKey,
-      countries: `de`,
-      language: `de-DE`,
+      countries: $microcopy?.country,
+      language: $microcopy?.locale,
       types: `address,locality,neighborhood,poi`,
     })
 
