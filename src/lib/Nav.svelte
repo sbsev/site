@@ -4,19 +4,12 @@
   import Icon from '@iconify/svelte'
   import { slide } from 'svelte/transition'
   import type { NavLink } from './types'
+  import { microcopy } from './stores'
 
   export let nav: NavLink[]
   export let mobile: boolean
 
-  const icon_map: Record<string, string> = {
-    'Über Uns': `ri:plant-fill`,
-    Standorte: `ic:place`,
-    Mitmachen: `ion:people-circle`,
-    Blog: `fa-solid:rss-square`,
-    Kontakt: `ic:round-alternate-email`,
-    Internes: `fa-solid:hands-helping`,
-    Anmeldung: `ic:round-assignment-ind`,
-  }
+  const icon_map: Record<string, string> = $microcopy?.icons?.pages?.nav
 
   let isOpen = false
   let activeSubNav = -1
@@ -64,7 +57,7 @@
     aria-label="Navigationsmenü öffnen"
     style="grid-area: nav;"
   >
-    <Icon icon="heroicons-solid:menu" />
+    <Icon icon={icon_map['menu']} />
   </button>
 {/if}
 
@@ -94,7 +87,7 @@
               on:click={setActiveSubNav(idx, false)}
               aria-label="Untermenü {title} öffnen"
             >
-              <Icon icon="bi:chevron-expand" />
+              <Icon icon={icon_map['expand']} />
             </button>
           {/if}
         </span>

@@ -1,12 +1,11 @@
 <script lang="ts">
   import { PostPreview, Social, TagList } from '$lib'
-  import type { BlogTag } from '$lib/types'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
   export let data
 
-  let active_tag: BlogTag
+  let active_tag: string
 
   $: filtered_posts = data.posts.filter(
     (post) => active_tag === `Alle` || post.tags.includes(active_tag)

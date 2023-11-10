@@ -43,32 +43,11 @@ export type Author = {
   fieldOfStudy: string
 }
 
-export const BlogTags = [
-  `Alle`,
-  `Bundesvorstand`,
-  `Erfahrungsberichte`,
-  `Events`,
-  `Freizeit`,
-  `Interview`,
-  `IT`,
-  `Nachhilfelehrer`,
-  `Sonstiges`,
-  `Soziale Partner`,
-  `Spenden`,
-  `Standorte`,
-  `Standortleiter`,
-  `Stipendium`,
-  `Werbung`,
-  `Mentoring`,
-  `Auszeichnung`,
-] as const // use const assertion to turn BlogTags into readonly tuple
-
-export type BlogTag = (typeof BlogTags)[number]
 
 export type Post = Page & {
   author: Author
   date: Date
-  tags: BlogTag[]
+  tags: string[]
   plainBody: string
 }
 
@@ -83,12 +62,12 @@ export type Image = {
 
 export type Yaml = {
   [key: string]:
-    | string
-    | number
-    | Date
-    | boolean
-    | (string | number | Date | boolean)[]
-    | Yaml
+  | string
+  | number
+  | Date
+  | boolean
+  | (string | number | Date | boolean)[]
+  | Yaml
 }
 
 export type PressItem = {

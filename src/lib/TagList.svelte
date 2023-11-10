@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
   import { fade, slide } from 'svelte/transition'
-  import type { BlogTag, Post } from './types'
+  import { microcopy } from './stores'
 
   export let posts: Post[]
   export let active_tag = `Alle`
@@ -15,28 +15,9 @@
     }
   }
 
-  const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][]
+  const tagOccurrences = Object.entries(tagCounter) as [string, number][]
 
-  const icons: Record<BlogTag, string> = {
-    Alle: `ic:select-all`,
-    Spenden: `ic:round-euro`,
-    Werbung: `ic:public`,
-    Standortleiter: `fa-solid:graduation-cap`,
-    Erfahrungsberichte: `ic:rate-review`,
-    Nachhilfelehrer: `fa-solid:chalkboard-teacher`,
-    Interview: `ic:question-answer`,
-    'Soziale Partner': `fa-solid:handshake`,
-    Events: `ic:event-available`,
-    Freizeit: `ic:beach-access`,
-    IT: `bx:git-branch`,
-    Bundesvorstand: `ion:stats-chart`,
-    Stipendium: `fa-solid:donate`,
-    Mentoring: `fa-solid:chalkboard-teacher`,
-    Auszeichnung: `fa-solid:award`,
-    Sonstiges: `fa6-solid:earth-europe`,
-    Standorte: `fa6-solid:map-location-dot`,
-  }
-
+  const icons: Record<string, string> = $microcopy?.icons?.tags?.blog
   let open = false
   let viewWidth: number
   const style = `height: 18pt; margin-right: 5pt;`
@@ -45,13 +26,13 @@
 <svelte:window bind:innerWidth={viewWidth} />
 
 <h2>
-  <Icon icon="fa-solid:tags" style="height: 18pt;" />Tags
+  <Icon icon={$microcopy?.icons?.global?.tags} style="height: 18pt;" />Tags
   {#if viewWidth < 750}
     <button on:click={() => (open = !open)} aria-label="Blog Tags öffnen">
       {#if open}
-        <Icon inline icon="ic:round-close" {style} />
+        <Icon inline icon={$microcopy?.icons?.global?.close} {style} />
       {:else}
-        <Icon inline icon="bi:chevron-expand" {style} />
+        <Icon inline icon={$microcopy?.icons?.global?.expand} {style} />
       {/if}
     </button>
   {/if}

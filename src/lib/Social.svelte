@@ -1,17 +1,19 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
+  import { microcopy } from './stores'
 
   export let social: Record<string, string>
   export let style = ``
   export let vertical = false
   export let fixed = false
-  export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
+  export let social_icons: Record<string, string> =
+    $microcopy?.icons?.global?.socials ?? {}
 </script>
 
 <div {style} class:vertical class:fixed>
-  {#each include as key}
+  {#each Object.entries(social_icons) as [key, value]}
     <a href={social[key]} aria-label={key}>
-      <Icon icon="fa-brands:{key.toLowerCase()}" />
+      <Icon icon={value} />
     </a>
   {/each}
 </div>

@@ -3,6 +3,7 @@
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
+  import { microcopy } from '$lib/stores'
 
   export let data
   $: ({ chapters, form } = data)
@@ -42,7 +43,7 @@
     <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
     <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
-      <Icon icon="ri:plant-fill" inline />
+      <Icon icon={$microcopy?.icons?.global?.plant} inline />
       {@html form.header.title}
     </h1>
 

@@ -51,7 +51,7 @@
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
     <Icon
-      icon="ic:update"
+      icon={$microcopy?.icons?.pages?.index?.update}
       width="1.3em"
       style="padding: 0 4pt; vertical-align: middle;"
     />

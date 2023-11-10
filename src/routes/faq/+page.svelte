@@ -3,26 +3,14 @@
   import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
+  import { microcopy } from '$root/src/lib/stores.js'
 
   export let data
 
-  const icons: Record<string, string> = {
-    'Rund ums Engagement': `fa-solid:hands-helping`,
-    Nachhilfe: `fa-solid:chalkboard-teacher`,
-    Vermittlung: `ic:round-support-agent`,
-    Alle: `ic:select-all`,
-    Rahmenbedingungen: `ic:filter-frames`,
-    Vereinsaustritt: `ic:exit-to-app`,
-    Sonstiges: `ic:round-miscellaneous-services`,
-    Datenschutz: `ic:round-privacy-tip`,
-    'Tipps für Standorte': `ic:round-storefront`,
-    Versicherung: `map:insurance-agency`,
-    Mitgliederversammlung: `ic:round-group`,
-    Führungszeugnis: `ic:round-assignment-ind`,
-  }
+  const icons: Record<string, string> = $microcopy?.icons?.tags?.faq
 
   let active_tag = `Alle`
-  const email = `info@studenten-bilden-schueler.de`
+  const email = `info@${$microcopy?.location?.url}`
   let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
   $: filteredFaqs = data.faqs.filter(
@@ -59,7 +47,11 @@
       <Collapsible {id} active={id === hash}>
         <span slot="title">
           {title}
-          <Icon icon="fa-solid:tags" width="16pt" style="margin: 0 3pt 0 10pt;" />
+          <Icon
+            icon={$microcopy?.icons?.global?.tags}
+            width="16pt"
+            style="margin: 0 3pt 0 10pt;"
+          />
           <small>{tags.join(`, `)}</small>
         </span>
         {@html body}

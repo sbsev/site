@@ -36,35 +36,35 @@
   <div style="background: var(--light-blue);">
     <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
-      <Icon inline icon="ic:place" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.place} {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
   <div style="background: var(--green);">
     <span>{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
     <strong>
-      <Icon inline icon="fa-solid:user-graduate" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.graduate} {style} />
       {$microcopy?.indexPage?.boxes?.studentsName}</strong
     >
   </div>
   <div style="background: var(--orange);">
     <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
     <strong>
-      <Icon inline icon="fa-solid:child" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.child} {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
   <div style="background: var(--green);">
     <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
-      <Icon inline icon="fa-solid:user-graduate" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.graduate} {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
   <div style="background: var(--light-blue);">
     <span>{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
     <strong>
-      <Icon inline icon="fa6-solid:user-group" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.group} {style} />
       {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
     </strong>
   </div>

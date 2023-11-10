@@ -22,11 +22,11 @@
         <h3 {id}><a href={url}>{title}</a></h3>
         <div>
           <span>
-            <Icon inline icon="octicon:calendar" {style} />
+            <Icon inline icon={$microcopy?.icons?.global?.calendar} {style} />
             {date}
           </span>
           <span>
-            <Icon inline icon="fa-solid:award" {style} />
+            <Icon inline icon={$microcopy?.icons?.global?.award} {style} />
             {prize}
           </span>
         </div>
