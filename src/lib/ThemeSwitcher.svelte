@@ -4,9 +4,9 @@
 
   // TODO: i18n the color mode titles
   const next_color_mode = {
-    light: 'system',
-    dark: 'light',
-    system: 'dark',
+    light: `system`,
+    dark: `light`,
+    system: `dark`,
   } as const
 
   const color_mode_icons = $microcopy?.icons?.global?.theme

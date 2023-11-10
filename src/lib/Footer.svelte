@@ -25,10 +25,10 @@
   <span>
     {@html $microcopy?.footer?.site}
     <a href={repository}>
-      <Icon inline icon={icon_map['opensource']} style="padding-right: 3pt;" />open source
+      <Icon inline icon={icon_map[`opensource`]} style="padding-right: 3pt;" />open source
     </a>
     {@html $microcopy?.footer?.uses}
-    <Icon inline icon={icon_map['cookie']} />
+    <Icon inline icon={icon_map[`cookie`]} />
     Cookies.
   </span>
   {#if $microcopy?.country == `de`}

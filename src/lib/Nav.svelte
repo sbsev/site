@@ -57,7 +57,7 @@
     aria-label="Navigationsmenü öffnen"
     style="grid-area: nav;"
   >
-    <Icon icon={icon_map['menu']} />
+    <Icon icon={icon_map[`menu`]} />
   </button>
 {/if}
 
@@ -87,7 +87,7 @@
               on:click={setActiveSubNav(idx, false)}
               aria-label="Untermenü {title} öffnen"
             >
-              <Icon icon={icon_map['expand']} />
+              <Icon icon={icon_map[`expand`]} />
             </button>
           {/if}
         </span>

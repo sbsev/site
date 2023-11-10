@@ -43,7 +43,6 @@ export type Author = {
   fieldOfStudy: string
 }
 
-
 export type Post = Page & {
   author: Author
   date: Date
@@ -62,12 +61,12 @@ export type Image = {
 
 export type Yaml = {
   [key: string]:
-  | string
-  | number
-  | Date
-  | boolean
-  | (string | number | Date | boolean)[]
-  | Yaml
+    | string
+    | number
+    | Date
+    | boolean
+    | (string | number | Date | boolean)[]
+    | Yaml
 }
 
 export type PressItem = {
