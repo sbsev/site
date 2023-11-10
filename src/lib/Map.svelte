@@ -2,16 +2,13 @@
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
+  import { microcopy } from './stores';
 
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 
   export let map: mapboxgl.Map | null = null
   export let markers: MapMarker[] = []
-  export let lng = 10
-  export let lat = 51.3
-  export let zoom = 5.05
-  export let minZoom = 4
-  export let maxZoom = 10
+  export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? [10, 51.3, 5.05, 4, 10]
   export let css = ``
 
   let map_div: HTMLDivElement
