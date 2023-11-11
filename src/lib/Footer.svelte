@@ -5,7 +5,7 @@
   import { microcopy } from './stores'
   import type { Link } from './types'
 
-  const icon_map: Record<string, string> = $microcopy?.icons?.pages?.footer
+  const icon_map: Record<string, string> = $microcopy?.icons?.pages?.footer ?? []
 
   export let links: Link[]
   export let social: Record<keyof typeof icon_map, string>

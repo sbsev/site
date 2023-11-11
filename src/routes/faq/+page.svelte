@@ -7,7 +7,7 @@
 
   export let data
 
-  const icons: Record<string, string> = $microcopy?.icons?.tags?.faq
+  const icons: Record<string, string> = $microcopy?.icons?.tags?.faq ?? {}
 
   let active_tag = `Alle`
   const email = `info@${$microcopy?.location?.url}`

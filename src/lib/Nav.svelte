@@ -9,7 +9,7 @@
   export let nav: NavLink[]
   export let mobile: boolean
 
-  const icon_map: Record<string, string> = $microcopy?.icons?.pages?.nav
+  const icon_map: Record<string, string> = $microcopy?.icons?.pages?.nav ?? {}
 
   let isOpen = false
   let activeSubNav = -1

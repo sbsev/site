@@ -9,7 +9,7 @@
     system: `dark`,
   } as const
 
-  const color_mode_icons = $microcopy?.icons?.global?.theme
+  const color_mode_icons = $microcopy?.icons?.global?.theme ?? {}
 
   function set_color_mode() {
     const next = next_color_mode[$colorMode]

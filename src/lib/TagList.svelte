@@ -17,7 +17,7 @@
 
   const tagOccurrences = Object.entries(tagCounter) as [string, number][]
 
-  const icons: Record<string, string> = $microcopy?.icons?.tags?.blog
+  const icons: Record<string, string> = $microcopy?.icons?.tags?.blog ?? {}
   let open = false
   let viewWidth: number
   const style = `height: 18pt; margin-right: 5pt;`
