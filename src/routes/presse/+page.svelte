@@ -1,6 +1,7 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
   import Icon from '@iconify/svelte'
+  import { microcopy } from '$root/src/lib/stores.js'
 
   export let data
 
