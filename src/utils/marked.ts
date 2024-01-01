@@ -74,7 +74,7 @@ const renderer = {
 marked.use({
   renderer,
   mangle: false,
-  headerIds: false
+  headerIds: false,
 })
 
 export default marked
