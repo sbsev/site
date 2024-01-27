@@ -7,7 +7,9 @@ export type Chapter = {
   }
   baseId: string
   acceptsSignups: boolean
+  deactivatePupils: boolean
   status: 'active' | 'starting' | 'partner' | null
+  signup: 'everyone' | 'onlyStudents' | 'nobody' | null
   token: string
 }
 
