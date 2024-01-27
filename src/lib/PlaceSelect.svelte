@@ -5,6 +5,7 @@
   import mapbox from 'mapbox-gl'
   import { Geocoder, Map } from '.'
   import type { Place } from './types'
+  import { microcopy } from './stores'
 
   export let value: Place[] = [] // currently selected places
   export let placeholder = ``
@@ -63,7 +64,11 @@
         disabled
       />
       <button on:click={deletePlace(idx)} type="button">
-        <Icon icon="ic:delete" style="width: 3ex;" inline />
+        <Icon
+          icon={$microcopy?.icons?.pages?.placeSelect?.delete}
+          style="width: 3ex;"
+          inline
+        />
       </button>
     </li>
   {/each}

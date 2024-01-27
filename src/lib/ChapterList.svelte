@@ -11,7 +11,7 @@
 </script>
 
 <h1>
-  <Icon icon="ic:place" inline />
+  <Icon icon={$microcopy?.icons?.global?.place} inline />
   {$microcopy?.chapterList?.locations}
 </h1>
 <ol>
@@ -21,7 +21,7 @@
 </ol>
 {#if startingChapters.length > 2}
   <h1>
-    <Icon icon="ic:round-construction" inline />
+    <Icon icon={$microcopy?.icons?.pages?.chapterList?.construction} inline />
     {$microcopy?.chapterList?.inSetup}
   </h1>
   <ol>
@@ -32,7 +32,7 @@
 {/if}
 {#if partnerChapters.length > 2}
   <h1>
-    <Icon icon="ic:place" inline />
+    <Icon icon={$microcopy?.icons?.global?.place} inline />
     {$microcopy?.chapterList?.partner}
   </h1>
   <ol>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
   import Icon from '@iconify/svelte'
+  import { microcopy } from '$root/src/lib/stores.js'
 
   export let data
 
@@ -27,15 +28,15 @@
             </h3>
             <div>
               <span>
-                <Icon inline icon="ion:newspaper" {style} />
+                <Icon inline icon={$microcopy?.icons?.global?.newspaper} {style} />
                 {source}
               </span>
               <span>
-                <Icon inline icon="octicon:calendar" {style} />
+                <Icon inline icon={$microcopy?.icons?.global?.calendar} {style} />
                 {new Date(date).toLocaleDateString(`de`)}
               </span>
               <span>
-                <Icon inline icon="ic:place" {style} />
+                <Icon inline icon={$microcopy?.icons?.global?.place} {style} />
                 Standort {chapter}
               </span>
             </div>

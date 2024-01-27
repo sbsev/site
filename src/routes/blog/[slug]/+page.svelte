@@ -2,6 +2,7 @@
   import { Img, ToolTip } from '$lib'
   import Icon from '@iconify/svelte'
   import { onMount } from 'svelte'
+  import { microcopy } from '$root/src/lib/stores.js'
 
   export let data
   let n_readers = 0
@@ -43,30 +44,30 @@
       von
       {#if bio || fieldOfStudy}
         <ToolTip minWidth="18em">
-          <Icon inline icon="bi:person-circle" {style} />
+          <Icon inline icon={$microcopy?.icons?.pages?.article?.person} {style} />
           <strong>{name}</strong>
           <span slot="tip">
-            <Icon inline icon="ic:round-history-edu" {style} />
+            <Icon inline icon={$microcopy?.icons?.pages?.article?.history} {style} />
             Bio:
             {bio}
             {#if fieldOfStudy}
               <br />
-              <Icon inline icon="fa-solid:graduation-cap" {style} />
+              <Icon inline icon={$microcopy?.icons?.global?.graduationCap} {style} />
               Studiert:
               {fieldOfStudy}
             {/if}
           </span>
         </ToolTip>
       {:else}
-        <Icon inline icon="bi:person-circle" {style} />
+        <Icon inline icon={$microcopy?.icons?.pages?.article?.person} {style} />
         <strong>{name}</strong>
       {/if}
       am
-      <Icon inline icon="octicon:calendar" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.calendar} {style} />
       <strong>{new Date(date).toLocaleDateString(`de`)}</strong>
     </span>
     <span>
-      <Icon icon="ic:round-remove-red-eye" />
+      <Icon icon={$microcopy?.icons?.pages?.blog?.eye} />
       {n_readers}
     </span>
   </section>

@@ -3,23 +3,14 @@
   import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
+  import { microcopy } from '$root/src/lib/stores.js'
 
   export let data
 
-  const icon_map: Record<string, string> = {
-    Alle: `ic:select-all`,
-    Mathe: `ic:functions`,
-    Wissenschaft: `ic:round-science`,
-    'Lernen mit Karteikarten': `bi:card-text`,
-    'Viele Fächer': `ic:group-work`,
-    'Deutsche Sprache': `ic:language`,
-    Englisch: `fa-brands:erlang`,
-    Deutschunterricht: `simple-icons:disqus`,
-    Physik: `simple-icons:atom`,
-  }
+  const icon_map: Record<string, string> = $microcopy?.icons?.tags?.faq ?? {}
 
   let active_tag = `Alle`
-  const email = `it@studenten-bilden-schueler.de`
+  const email = `it@${$microcopy?.location?.url}`
   let hash: string
 
   $: filtered = data.studyPlatforms?.filter(
@@ -68,7 +59,10 @@
           <h3 {id} active={id === hash}>
             <a href={url}>{title}</a>
           </h3>
-          <span><Icon icon="fa-solid:tags" inline /> {tags.join(`, `)}</span>
+          <span
+            ><Icon icon={$microcopy?.icons?.global?.tags} inline />
+            {tags.join(`, `)}</span
+          >
           {@html body}
         </li>
       {/each}

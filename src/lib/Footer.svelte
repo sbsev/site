@@ -5,12 +5,7 @@
   import { microcopy } from './stores'
   import type { Link } from './types'
 
-  const icon_map: Record<string, string> = {
-    Impressum: `octicon:law`,
-    Datenschutz: `ic:round-privacy-tip`,
-    Spenden: `ic:round-euro`,
-    Satzung: `ion:document-text`,
-  }
+  const icon_map: Record<string, string> = $microcopy?.icons?.pages?.footer ?? []
 
   export let links: Link[]
   export let social: Record<keyof typeof icon_map, string>
@@ -30,10 +25,10 @@
   <span>
     {@html $microcopy?.footer?.site}
     <a href={repository}>
-      <Icon inline icon="ri:open-source-fill" style="padding-right: 3pt;" />open source
+      <Icon inline icon={icon_map[`opensource`]} style="padding-right: 3pt;" />open source
     </a>
     {@html $microcopy?.footer?.uses}
-    <Icon inline icon="bxs:cookie" />
+    <Icon inline icon={icon_map[`cookie`]} />
     Cookies.
   </span>
   {#if $microcopy?.country == `de`}

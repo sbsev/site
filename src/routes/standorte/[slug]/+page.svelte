@@ -18,13 +18,16 @@
       <span>
         {$microcopy?.location?.joinStudent}
         <a href="/signup-student?chapter={page.title}" class="btn blue">
-          <Icon inline icon="fa-solid:graduation-cap" {style} />{$microcopy?.location
-            ?.registerStudent}
+          <Icon
+            inline
+            icon={$microcopy?.icons?.global?.graduationCap}
+            {style}
+          />{$microcopy?.location?.registerStudent}
         </a>
         <a href={$microcopy?.location?.linkStudentInfo} class="btn blue stroke">
           <Icon
             inline
-            icon="bi:info-circle-fill"
+            icon={$microcopy?.icons?.global?.information}
             style={style + `margin-right: 6pt;`}
           />{$microcopy?.location?.infoStudentButton}
         </a>
@@ -32,13 +35,13 @@
       <span>
         {$microcopy?.location?.joinPupil}
         <a href="/signup-pupil?chapter={page.title}" class="btn green">
-          <Icon inline icon="fa-solid:child" {style} />{$microcopy?.location
-            ?.registerPupil}
+          <Icon inline icon={$microcopy?.icons?.global?.child} {style} />{$microcopy
+            ?.location?.registerPupil}
         </a>
         <a href={$microcopy?.location?.linkPupilInfo} class="btn green stroke">
           <Icon
             inline
-            icon="bi:info-circle-fill"
+            icon={$microcopy?.icons?.global?.information}
             style={style + `margin-right: 6pt;`}
           />{$microcopy?.location?.infoPupilButton}</a
         >
@@ -46,12 +49,13 @@
       <span>
         {$microcopy?.location?.locationManagement}
         <a href="mailto:info.{slug}{$microcopy?.location?.mailTo}" class="btn orange">
-          <Icon inline icon="ic:email" {style} />{$microcopy?.location?.writeMailButton}
+          <Icon inline icon={$microcopy?.icons?.global?.email} {style} />{$microcopy
+            ?.location?.writeMailButton}
         </a>
         <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
           <Icon
             inline
-            icon="bi:info-circle-fill"
+            icon={$microcopy?.icons?.global?.information}
             style={style + `margin-right: 6pt;`}
           />{$microcopy?.location?.infoLeadingButton}</a
         >
@@ -71,7 +75,11 @@
             title="{$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}"
             class="btn blue"
           >
-            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
+            <Icon
+              icon={$microcopy?.icons?.global?.email}
+              inline
+              style="margin: 0 3pt 0 0;"
+            />
             {$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.forStudents}
@@ -82,7 +90,11 @@
             title="{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             class="btn green"
           >
-            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
+            <Icon
+              icon={$microcopy?.icons?.global?.email}
+              inline
+              style="margin: 0 3pt 0 0;"
+            />
             {$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.forPartner}
@@ -93,7 +105,11 @@
             title="{$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}"
             class="btn orange"
           >
-            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
+            <Icon
+              icon$microcopy?.icons?.global?.email
+              inline
+              style="margin: 0 3pt 0 0;"
+            />
             {$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.generalRequests}

@@ -8,6 +8,7 @@
 
   export let map: mapboxgl.Map | null = null
   export let markers: MapMarker[] = []
+  // Default values are the german options
   export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? [
     10, 51.3, 5.05, 4, 10,
   ]

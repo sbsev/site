@@ -2,6 +2,7 @@
   import Icon from '@iconify/svelte'
   import { Img, ToolTip } from '.'
   import type { Post } from './types'
+  import { microcopy } from './stores'
 
   export let post: Post
 
@@ -31,28 +32,32 @@
       <address slot="tip">
         {#if author.url}
           <a href={author.url}>
-            <Icon inline icon="bx:link" {style} />{author.url}
+            <Icon inline icon={$microcopy?.icons?.global?.link} {style} />{author.url}
           </a>
           <br />
         {/if}
         {#if author.email}
           <a href="mailto:{author.email}">
-            <Icon inline icon="ic:email" {style} />
+            <Icon inline icon={$microcopy?.icons?.global?.email} {style} />
             {author.email}
           </a>
           <br />
         {/if}
         {#if author.fieldOfStudy}
-          <Icon inline icon="fa-solid:graduation-cap" {style} />{author.fieldOfStudy}
+          <Icon
+            inline
+            icon={$microcopy?.icons?.global?.graduationCap}
+            {style}
+          />{author.fieldOfStudy}
         {/if}
       </address>
     </ToolTip>
     <span>
-      <Icon inline icon="octicon:calendar" {style} />
+      <Icon inline icon={$microcopy?.icons?.global?.calendar} {style} />
       {new Date(date).toLocaleDateString(`de`)}
     </span>
     <span>
-      <Icon inline icon="fa-solid:tags" {style} />{tags.join(`, `)}
+      <Icon inline icon={$microcopy?.icons?.global?.tags} {style} />{tags.join(`, `)}
     </span>
   </div>
   <p>
