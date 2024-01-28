@@ -4,7 +4,7 @@ country: de
 locale: de-DE
 
 indexPage:
-  title: Studenten bilden Schüler
+  title: studyTutors
   theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
   chooseLocation: 'Wähle deinen <a href="/standorte"><strong>Standort</strong></a> auf der Karte!'
 
@@ -23,7 +23,7 @@ indexPage:
     organizationMemberNumber: 319
 
 footer:
-  name: 'Studenten bilden Schüler e.V.'
+  name: 'studyTutors e.V.'
   site: 'Diese Seite ist'
   uses: 'und verwendet keine'
 
@@ -56,14 +56,14 @@ location:
   linkPupilInfo: '/mitmachen/schueler'
   infoPupilButton: 'Infos für Schüler:innen'
   locationManagement: 'Interesse an Standortleitung?'
-  mailTo: '@studenten-bilden-schueler.de?subject=Interesse an Standortleitung in'
+  mailTo: '@studytutors.de?subject=Interesse an Standortleitung in'
   writeMailButton: 'Schreib uns'
   linkLeadingInfo: '/mitmachen/standortleiter'
   infoLeadingButton: 'Infos für Standortleitende'
   contact: 'Kontakt'
   questions: 'Noch Fragen? Schreib uns eine Mail!'
-  url: 'studenten-bilden-schueler.de'
-  student: 'studenten'
+  url: 'studytutors.de'
+  student: 'studierende'
   forStudents: 'für Studierende'
   pupil: 'schueler'
   info: 'info'
@@ -73,12 +73,12 @@ location:
 basepage:
   lastUpdated: 'Zuletzt bearbeitet:'
   feedback: 'Feedback zu dieser Seite?'
-  email: 'it@studenten-bilden-schueler.de?subject=Feedback zu Seite:'
+  email: 'it@studytutors.de?subject=Feedback zu Seite:'
 
 meta:
-  name: 'Studenten bilden Schüler e.V.'
+  name: 'studyTutors e.V.'
   description: 'Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen in deutschlandweit über 50 Unistädten.'
-  url: studenten-bilden-schueler.de
+  url: studytutors.de
 
 icons:
   global:
