@@ -9,12 +9,12 @@
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
-{#if $microcopy?.country == `de`}
+{#if $microcopy?.country == `de` || $microcopy?.country == `at`}
   <h1>
     <img
-      src="/logo-name.svg"
+      src="/logo-name-de.svg"
       alt="StudyTutors"
-      width="1924px"
+      width="1612px"
       height="163px"
     />
   </h1>
