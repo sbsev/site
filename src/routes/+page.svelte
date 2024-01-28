@@ -29,7 +29,7 @@
 </svelte:head>
 
 <h2>
-  {$microcopy?.indexPage?.theme}
+  {@html $microcopy?.indexPage?.theme}
 </h2>
 
 <section style="white-space: nowrap;">
