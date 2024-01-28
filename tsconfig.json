@@ -15,6 +15,6 @@
     "sourceMap": true,
 
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+  },
 }
