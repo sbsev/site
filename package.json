@@ -1,11 +1,11 @@
 {
   "private": true,
-  "name": "studenten-bilden-schueler.de",
-  "title": "Studenten bilden Schüler",
-  "description": "SvelteKit + Contentful-powered homepage of the German student-run non-profit Studenten bilden Schüler",
-  "homepage": "https://studenten-bilden-schueler.de",
+  "name": "studytutors.de",
+  "title": "studyTutors",
+  "description": "SvelteKit + Contentful-powered homepage of the German student-run non-profit studyTutors",
+  "homepage": "https://studytutors.de",
   "version": "1.0.0",
-  "author": "Janosh Riebesell <janosh.riebesell@studenten-bilden-schueler.de>",
+  "author": "Janosh Riebesell <it@studytutors.de>",
   "repository": "https://github.com/sbsev/site",
   "type": "module",
   "scripts": {

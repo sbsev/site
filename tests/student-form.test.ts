@@ -12,7 +12,7 @@ test(`student signup form can be submitted after filling all required fields`, a
 
   await page.fill(`#fullName`, `Foo Bar`)
 
-  await page.fill(`#email`, `florian.kleinicke@studenten-bilden-schueler.de`)
+  await page.fill(`#email`, `florian.kleinicke@studytutors.de`)
 
   await fill_select(page, `input#subjects`, [`Mathe`, `Physik`])
 

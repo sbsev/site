@@ -1,6 +1,7 @@
 comment: This yaml is both on github and on contentful for versioning and checking of correctness. Only the version on contentful is actually used!
 
 country: de
+locale: de-DE
 
 indexPage:
   title: Studenten bilden Schüler
@@ -13,11 +14,13 @@ indexPage:
   boxes:
     locationsName: Standorte
     studentsName: Studierende
-    studentsNumber: 2872
+    studentsNumber: 3228
     pupilsName: Schüler:innen
-    pupilsNumber: 3186
+    pupilsNumber: 3531
     scholarshipName: '<a style="color: white;" href="/stipendium">Stipendien</a>'
-    scholarshipNumber: 9
+    scholarshipNumber: 23
+    organizationMemberName: Vereinsmitglieder
+    organizationMemberNumber: 319
 
 footer:
   name: 'Studenten bilden Schüler e.V.'
@@ -34,10 +37,12 @@ map:
   text:
     active: 'aktiver Standort'
     inSetup: 'in Gründung'
+    partner: 'Partner'
 
 chapterList:
   locations: 'Unsere Standorte'
   inSetup: 'Standorte in Gründung'
+  partner: 'Partner Standorte'
 
 location:
   register: 'Anmeldungen'
@@ -46,7 +51,7 @@ location:
   linkStudentInfo: '/mitmachen/nachhilfelehrer'
   infoStudentButton: 'Infos für Studierende'
   joinPupil: 'Suchst du Nachhilfe?'
-  declinePupil: 'Leider ist die Warteliste voll'
+  declinePupil: 'Warteliste voll :('
   registerPupil: 'Als Schüler:in anmelden'
   linkPupilInfo: '/mitmachen/schueler'
   infoPupilButton: 'Infos für Schüler:innen'
@@ -74,3 +79,108 @@ meta:
   name: 'Studenten bilden Schüler e.V.'
   description: 'Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen in deutschlandweit über 50 Unistädten.'
   url: studenten-bilden-schueler.de
+
+icons:
+  global:
+    award: &AWARD 'fa-solid:award'
+    calendar: &CALENDAR 'oction:calendar'
+    child: &CHILD 'fa-solid:child'
+    close: &CLOSE 'ic:round-close'
+    currency: &CURRENCY 'ic:round-euro'
+    email: &EMAIL 'ic:email'
+    expand: &EXPAND 'bi:chevron-expand'
+    graduate: &GRADUATE 'fa-solid:user-graduate'
+    graduationCap: &GRADUATION_CAP 'fa-solid:graduation-cap'
+    group: &GROUP 'fa6-solid:user-group'
+    hands: &HANDS_HELPING 'fa-solid:hands-helping'
+    information: &INFORMATION 'bi:info-circle-fill'
+    link: &LINK 'bx:link'
+    newspaper: &NEWSPAPER 'ion:newspaper'
+    place: &PLACE 'ic:place'
+    plant: &PLANT 'ri:plant-fill'
+    selectAll: &SELECT_ALL 'ic:select-all'
+    socials:
+      Facebook: &FACEBOOK 'fa-brands:facebook'
+      Instagram: &INSTAGRAM 'fa-brands:instagram'
+      Linkedin: &LINKEDIN 'fa-brands:linkedin'
+      Twitter: &TWITTER 'fa-brands:twitter'
+      Youtube: &YOUTUBE 'fa-brands:youtube'
+    tags: &TAGS 'fa-solid:tags'
+    teacher: &TEACHER 'fa-solid:chalkboard-teacher'
+    theme:
+      dark: &THEME_DARK 'octicon:moon-16'
+      light: &THEME_LIGHT 'ic:round-wb-sunny'
+      system: &THEME_SYSTEM 'bi:laptop'
+
+  pages:
+    article:
+      history: 'ic:round-history-edu'
+      person: 'bi:person-circle'
+    blog:
+      eye: 'ic:round-remove-red-eye'
+    chapterList:
+      construction: 'ic:round-construction'
+    footer:
+      Datenschutz: 'ic:round-privacy-tip'
+      Impressum: 'octicon:law'
+      Satzung: 'ion:document-text'
+      Spenden: *CURRENCY
+      cookie: 'bxs:cookie'
+      opensource: 'ri:open-source-fill'
+    index:
+      update: 'ic:update'
+    nav:
+      Anmeldung: 'ic:round-assignment-ind'
+      Blog: 'fa-solid:rss-square'
+      Internes: *HANDS_HELPING
+      Kontakt: 'ic:round-alternate-email'
+      Mitmachen: 'ion:people-circle'
+      Standorte: *PLACE
+      expand: *EXPAND
+      menu: 'heroicons-solid:menu'
+      'Über Uns': *PLANT
+    placeSelect:
+      delete: 'ic:delete'
+
+  tags:
+    blog:
+      Alle: *SELECT_ALL
+      Auszeichnung: *AWARD
+      Bundesvorstand: 'ion:stats-chart'
+      Erfahrungsberichte: 'ic:rate-review'
+      Events: 'ic:event-available'
+      Freizeit: 'ic:beach-access'
+      IT: 'bx:git-branch'
+      Interview: 'ic:question-answer'
+      Mentoring: *TEACHER
+      Nachhilfelehrer: *TEACHER
+      Sonstiges: 'fa6-solid:earth-europe'
+      'Soziale Partner': 'fa-solid:handshake'
+      Spenden: *CURRENCY
+      Standorte: 'fa6-solid:map-location-dot'
+      Standortleiter: *GRADUATION_CAP
+      Stipendium: 'fa-solid:donate'
+      Werbung: 'ic:public'
+    faq:
+      Alle: *SELECT_ALL
+      Datenschutz: 'ic:round-privacy-tip'
+      Führungszeugnis: 'ic:round-assignment-ind'
+      Mitgliederversammlung: 'ic:round-group'
+      Nachhilfe: *TEACHER
+      Rahmenbedingungen: 'ic:filter-frames'
+      'Rund ums Engagement': *HANDS_HELPING
+      Sonstiges: 'ic:round-miscellaneous-services'
+      'Tipps für Standorte': 'ic:round-storefront'
+      Vereinsaustritt: 'ic:exit-to-app'
+      Vermittlung: 'ic:round-support-agent'
+      Versicherung: 'map:insurance-agency'
+    learningMaterial:
+      Alle: *SELECT_ALL
+      'Deutsche Sprache': 'ic:language'
+      Deutschunterricht: 'simple-icons:disqus'
+      Englisch: 'fa-brands:erlang'
+      'Lernen mit Karteikarten': 'bi:card-text'
+      Mathe: 'ic:functions'
+      Physik: 'simple-icons:atom'
+      'Viele Fächer': 'ic:group-work'
+      Wissenschaft: 'ic:round-science'

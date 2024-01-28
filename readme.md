@@ -1,9 +1,9 @@
 <p align="center">
-  <a href="https://studenten-bilden-schueler.de"><img src="static/favicon.svg" alt="Favicon" width=150></a>
+  <a href="https://studytutors.de"><img src="static/favicon.svg" alt="Favicon" width=150></a>
 </p>
 
 <h1 align="center">
-  <a href="https://studenten-bilden-schueler.de">Studenten bilden Schüler</a>
+  <a href="https://studytutors.de">studyTutors</a>
 </h1>
 
 <h3 align="center">
@@ -16,7 +16,7 @@
 
 </h3>
 
-Studenten bilden Schüler e.V. is a student-run nonprofit initiative with chapters located in university towns all over Germany. Our mission is to provide free tutoring to refugees and children from underprivileged families.
+studyTutors e.V. is a student-run nonprofit initiative with chapters located in university towns all over Germany. Our mission is to provide free tutoring to refugees and children from underprivileged families.
 
 This site is built with [Svelte](https://github.com/sveltejs/svelte) and [Contentful](https://contentful.com).
 
