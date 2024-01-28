@@ -4,7 +4,7 @@ country: de
 locale: de-DE
 
 indexPage:
-  title: studyTutors
+  title: StudyTutors
   theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
   chooseLocation: 'Wähle deinen <a href="/standorte"><strong>Standort</strong></a> auf der Karte!'
 
@@ -23,7 +23,7 @@ indexPage:
     organizationMemberNumber: 319
 
 footer:
-  name: 'studyTutors e.V.'
+  name: 'StudyTutors e.V.'
   site: 'Diese Seite ist'
   uses: 'und verwendet keine'
 
@@ -76,7 +76,7 @@ basepage:
   email: 'it@studytutors.de?subject=Feedback zu Seite:'
 
 meta:
-  name: 'studyTutors e.V.'
+  name: 'StudyTutors e.V.'
   description: 'Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen in deutschlandweit über 50 Unistädten.'
   url: studytutors.de
 

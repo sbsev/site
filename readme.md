@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-  <a href="https://studytutors.de">studyTutors</a>
+  <a href="https://studytutors.de">StudyTutors</a>
 </h1>
 
 <h3 align="center">
@@ -16,7 +16,7 @@
 
 </h3>
 
-studyTutors e.V. is a student-run nonprofit initiative with chapters located in university towns all over Germany. Our mission is to provide free tutoring to refugees and children from underprivileged families.
+StudyTutors e.V. is a student-run nonprofit initiative with chapters located in university towns all over Germany. Our mission is to provide free tutoring to refugees and children from underprivileged families.
 
 This site is built with [Svelte](https://github.com/sveltejs/svelte) and [Contentful](https://contentful.com).
 

@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "studytutors.de",
-  "title": "studyTutors",
-  "description": "SvelteKit + Contentful-powered homepage of the German student-run non-profit studyTutors",
+  "title": "StudyTutors",
+  "description": "SvelteKit + Contentful-powered homepage of the German student-run non-profit organization StudyTutors",
   "homepage": "https://studytutors.de",
   "version": "1.0.0",
   "author": "Janosh Riebesell <it@studytutors.de>",

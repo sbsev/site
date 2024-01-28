@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-  <title>Fehler {$page.status} - studyTutors e.V.</title>
+  <title>Fehler {$page.status} - StudyTutors e.V.</title>
 </svelte:head>
 
 <div>
