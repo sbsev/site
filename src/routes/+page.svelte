@@ -13,7 +13,7 @@
   <h1>
     <img
       src="/logo-name.svg"
-      alt="Studenten bilden Schüler"
+      alt="StudyTutors"
       width="1924px"
       height="163px"
     />

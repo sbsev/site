@@ -19,7 +19,7 @@
   }
 
   let active_tag = `Alle`
-  const email = `it@studenten-bilden-schueler.de`
+  const email = `it@studytutors.de`
   let hash: string
 
   $: filtered = data.studyPlatforms?.filter(

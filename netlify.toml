@@ -15,6 +15,11 @@ force = true
 from = "https://studenten-bilden-schueler.at/*"
 to = "https://studytutors.at/:splat"
 
+[[redirects]]
+force = true
+from = "https://studenten-bilden-schueler.de/*"
+to = "https://studytutors.de/:splat"
+
 # proxy plausible script to avoid being falsely blocked
 # https://plausible.io/docs/proxy/introduction
 # https://plausible.io/docs/proxy/guides/netlify
