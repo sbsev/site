@@ -13,7 +13,6 @@
 
 #### Removed
 
-
 ## Additional information
 
 <!-- If there is something to mention, here is the place! -->
