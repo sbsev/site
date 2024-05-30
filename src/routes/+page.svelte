@@ -2,42 +2,10 @@
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
-    import { onMount } from 'svelte'
-
   export let data
 
   const style = `margin-right: 5pt;`
 
-  onMount(() => {
-    let numChapters = data.chapters.filter((ch) => ch.acceptsSignups).length
-    let numStudents = $microcopy?.indexPage?.boxes?.studentsNumber
-    let numPupils = $microcopy?.indexPage?.boxes?.pupilsNumber
-    let numScholarships = $microcopy?.indexPage?.boxes?.scholarshipNumber
-    let numOrganizationMembers = $microcopy?.indexPage?.boxes?.organizationMemberNumber
-
-    let boxes = [
-      { id: 'chapterNumber', number: numChapters },
-      { id: 'studentNumber', number: numStudents },
-      { id: 'pupilNumber', number: numPupils },
-      { id: 'scholarshipNumber', number: numScholarships },
-      { id: 'organizationMemberNumber', number: numOrganizationMembers },
-    ]
-
-    function updateBox(id) {
-      let increment = boxes.find((box) => box.id === id)?.number / 100
-      let currentNum = parseInt(document.getElementById(id).innerText)
-      if (currentNum < boxes.find((box) => box.id === id)?.number) {
-        document.getElementById(id).innerText = Math.ceil(currentNum + increment)
-        setTimeout(() => updateBox(id), 10)
-      } else {
-        document.getElementById(id).innerText = boxes.find((box) => box.id === id)?.number
-      }
-    }
-
-    boxes.forEach((b) => {
-      updateBox(b.id)
-    })
-  })
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
