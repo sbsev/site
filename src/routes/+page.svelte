@@ -29,35 +29,35 @@
 
 <section style="white-space: nowrap;">
   <div style="background: var(--light-blue);">
-    <span id="chapterNumber"> 0 </span>
+    <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
       <Icon inline icon="ic:place" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
   <div style="background: var(--green);">
-    <span id="studentNumber"> 0 </span>
+    <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {$microcopy?.indexPage?.boxes?.studentsName}</strong
     >
   </div>
   <div style="background: var(--orange);">
-    <span id="pupilNumber"> 0 </span>
+    <span id="pupilNumber">{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:child" {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
   <div style="background: var(--green);">
-    <span id="scholarshipNumber"> 0 </span>
+    <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
   <div style="background: var(--light-blue);">
-    <span id="organizationMemberNumber">0</span>
+    <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
     <strong>
       <Icon inline icon="fa6-solid:user-group" {style} />
       {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
