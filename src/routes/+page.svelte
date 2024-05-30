@@ -2,21 +2,48 @@
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
+    import { onMount } from 'svelte'
 
   export let data
 
   const style = `margin-right: 5pt;`
+
+  onMount(() => {
+    let numChapters = data.chapters.filter((ch) => ch.acceptsSignups).length
+    let numStudents = $microcopy?.indexPage?.boxes?.studentsNumber
+    let numPupils = $microcopy?.indexPage?.boxes?.pupilsNumber
+    let numScholarships = $microcopy?.indexPage?.boxes?.scholarshipNumber
+    let numOrganizationMembers = $microcopy?.indexPage?.boxes?.organizationMemberNumber
+
+    let boxes = [
+      { id: 'chapterNumber', number: numChapters },
+      { id: 'studentNumber', number: numStudents },
+      { id: 'pupilNumber', number: numPupils },
+      { id: 'scholarshipNumber', number: numScholarships },
+      { id: 'organizationMemberNumber', number: numOrganizationMembers },
+    ]
+
+    function updateBox(id) {
+      let increment = boxes.find((box) => box.id === id)?.number / 100
+      let currentNum = parseInt(document.getElementById(id).innerText)
+      if (currentNum < boxes.find((box) => box.id === id)?.number) {
+        document.getElementById(id).innerText = Math.ceil(currentNum + increment)
+        setTimeout(() => updateBox(id), 10)
+      } else {
+        document.getElementById(id).innerText = boxes.find((box) => box.id === id)?.number
+      }
+    }
+
+    boxes.forEach((b) => {
+      updateBox(b.id)
+    })
+  })
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
 {#if $microcopy?.country == `de` || $microcopy?.country == `at`}
   <h1>
-    <img
-      src="/logo-name-de.svg"
-      alt="StudyTutors"
-      width="1612px"
-      height="163px"
-    />
+    <img src="/logo-name-de.svg" alt="StudyTutors" width="1612px" height="163px" />
   </h1>
 {:else}
   <h1>
@@ -34,35 +61,35 @@
 
 <section style="white-space: nowrap;">
   <div style="background: var(--light-blue);">
-    <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+    <span id="chapterNumber"> 0 </span>
     <strong>
       <Icon inline icon="ic:place" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
   <div style="background: var(--green);">
-    <span>{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
+    <span id="studentNumber"> 0 </span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {$microcopy?.indexPage?.boxes?.studentsName}</strong
     >
   </div>
   <div style="background: var(--orange);">
-    <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
+    <span id="pupilNumber"> 0 </span>
     <strong>
       <Icon inline icon="fa-solid:child" {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
   <div style="background: var(--green);">
-    <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
+    <span id="scholarshipNumber"> 0 </span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
   <div style="background: var(--light-blue);">
-    <span>{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+    <span id="organizationMemberNumber">0</span>
     <strong>
       <Icon inline icon="fa6-solid:user-group" {style} />
       {@html $microcopy?.indexPage?.boxes?.organizationMemberName}

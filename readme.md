@@ -27,7 +27,7 @@ Running this site locally requires [`git`](https://git-scm.com) and [`pnpm`](htt
 1. Clone the repo and change into its directory.
 
    ```sh
-   git clone https://github.com/sbsev/site sbs-site && cd sbs-site
+   git clone https://github.com/sbsev/site st-site && cd st-site
    ```
 
 2. (optional) Setup [`pre-commit` hooks](https://pre-commit.com).

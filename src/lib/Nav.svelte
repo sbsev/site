@@ -69,7 +69,7 @@
 {/if}
 
 <a on:click={close} class="logo" href="/" aria-current={isCurrent(`/`)}>
-  <img src="/favicon.svg" alt="SbS Logo" height="50" width="50" />
+  <img src="/favicon.svg" alt="ST Logo" height="50" width="50" />
 </a>
 
 <nav class:isOpen class={mobile ? `mobile` : `desktop`} bind:this={node}>

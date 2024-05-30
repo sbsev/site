@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-  <title>{title ? `${title} - SbS` : `SbS`}</title>
+  <title>{title ? `${title} - ST` : `ST`}</title>
   <meta name="date" content={date} />
 </svelte:head>
 
