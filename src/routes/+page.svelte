@@ -89,7 +89,10 @@
   {@html data.page.body}
 </article>
 
-<Carousel/>
+<!-- TODO:CS: Kann man das Carousel eleganter auf content Breite bringen als mit "article" zu verpacken? -->
+<article>
+  <Carousel/>
+</article>
 
 <style>
   h1 img {
