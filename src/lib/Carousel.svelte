@@ -3,7 +3,6 @@
     import { fetch_posts } from '$lib/fetch'
 
     // Package source: https://www.npmjs.com/package/svelte-carousel
-    // Alt with beautiful animations: https://splidejs.com/integration/svelte-splide/
     import Carousel from 'svelte-carousel';
 
     let carousel; // for calling methods of the carousel instance
@@ -18,6 +17,10 @@
     async function get_posts() {
         posts = await fetch_posts()
     }
+
+    // Alternative carousel with beautiful animations: https://splidejs.com/integration/svelte-splide/
+    import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+    import '@splidejs/svelte-splide/css';
 </script>
 
 {#await get_posts() then _ }
@@ -33,4 +36,19 @@
             </div>
         {/each}
     </Carousel>
+
+    <!-- TODO:CS: Dauert etwas lange zu rendern... -->
+    <!-- <Splide options={ { rewind: true } } aria-label="Svelte Splide Example"> -->
+    <Splide options={{ 
+        type: 'loop', 
+        padding:'5rem',
+        gap: '2rem', 
+        autoplay: true
+    }} aria-label="Svelte Splide Example">
+        {#each posts as post}
+            <SplideSlide>
+                <PostPreview {post} />
+            </SplideSlide>
+        {/each}
+    </Splide>
 {/await}
