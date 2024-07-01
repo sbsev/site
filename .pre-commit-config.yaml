@@ -7,7 +7,7 @@ default_install_hook_types: [pre-commit, commit-msg]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: check-case-conflict
       - id: check-symlinks
@@ -28,7 +28,7 @@ repos:
           - svelte
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
+    rev: v2.3.0
     hooks:
       - id: codespell
         stages: [commit, commit-msg]
@@ -36,7 +36,7 @@ repos:
         args: [--ignore-words-list, 'adresse,afterall,presse,ue,alle']
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.0.0-alpha.0
+    rev: v9.6.0
     hooks:
       - id: eslint
         types: [file]
