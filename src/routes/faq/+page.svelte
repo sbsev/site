@@ -22,7 +22,7 @@
   }
 
   let active_tag = `Alle`
-  const email = `info@studenten-bilden-schueler.de`
+  const email = `info@studytutors.de`
   let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
   $: filteredFaqs = data.faqs.filter(

@@ -4,11 +4,11 @@ submitSuccess:
 
 submitError:
   title: 😢
-  note: Ein Fehler ist aufgetreten. Deine Anmeldung konnte nicht erfolgreich übermittelt werden. Bitte klicke erneut auf Absenden oder wende dich mit deinem Standort und Namen an [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular).
+  note: Ein Fehler ist aufgetreten. Deine Anmeldung konnte nicht erfolgreich übermittelt werden. Bitte klicke erneut auf Absenden oder wende dich mit deinem Standort und Namen an [it@studytutors.de](mailto:it@studytutors.de?subject=Problem%20mit%20Anmeldeformular).
 
 submit:
   title: Anmeldung abschicken
-  note: Du bekommst innerhalb einer Minute eine Bestätigungs-Email von uns. Wenn nicht, war vielleicht etwas mit deiner Mailadresse nicht in Ordnung. In dem Fall schicke uns bitte eine kurze Mail an <it@studenten-bilden-schueler.de> und wir korrigieren deine Anmeldung.
+  note: Du bekommst innerhalb einer Minute eine Bestätigungs-Email von uns. Wenn nicht, war vielleicht etwas mit deiner Mailadresse nicht in Ordnung. In dem Fall schicke uns bitte eine kurze Mail an <it@studytutors.de> und wir korrigieren deine Anmeldung.
 
 errMsg:
   required: Dieses Feld ist erforderlich

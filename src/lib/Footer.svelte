@@ -17,7 +17,7 @@
 </script>
 
 <footer>
-  <img src="/favicon.svg" alt="SbS Logo" height="60" />
+  <img src="/favicon.svg" alt="ST Logo" height="60" />
   <span>© {new Date().getFullYear()} {$microcopy?.footer?.name}</span>
   <div>
     {#each links as { title, url }}

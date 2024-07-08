@@ -4,11 +4,11 @@ submitSuccess:
 
 submitError:
   title: 😢
-  note: An error has occurred. Your registration could not be sent successfully. Please click on Submit again or contact [it@studenten-bilden-schueler.de](mailto:it@studenten-bilden-schueler.de?subject=Problem%20mit%20Anmeldeformular) with your name and your chapter.
+  note: An error has occurred. Your registration could not be sent successfully. Please click on Submit again or contact [it@studytutors.de](mailto:it@studytutors.de?subject=Problem%20mit%20Anmeldeformular) with your name and your chapter.
 
 submit:
   title: Submit registration
-  note: You will receive a confirmation email from us within a minute. If not, maybe something was wrong with your email address. In this case, please send us a short email to <it@studenten-bilden-schueler.de> and we will correct your registration.
+  note: You will receive a confirmation email from us within a minute. If not, maybe something was wrong with your email address. In this case, please send us a short email to <it@studytutors.de> and we will correct your registration.
 
 errMsg:
   required: This field is required

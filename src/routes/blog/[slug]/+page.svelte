@@ -8,7 +8,7 @@
 
   onMount(async () => {
     const response = await fetch(
-      `https://plausible.io/api/v1/stats/aggregate?site_id=studenten-bilden-schueler.de&period=6mo&filters=event:page==${data.post.slug}`,
+      `https://plausible.io/api/v1/stats/aggregate?site_id=studytutors.de&period=6mo&filters=event:page==${data.post.slug}`,
       {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_PLAUSIBLE_API_KEY}`,

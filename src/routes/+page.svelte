@@ -12,14 +12,9 @@
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
-{#if $microcopy?.country == `de`}
+{#if $microcopy?.country == `de` || $microcopy?.country == `at`}
   <h1>
-    <img
-      src="/logo-name.svg"
-      alt="Studenten bilden Schüler"
-      width="1924px"
-      height="163px"
-    />
+    <img src="/logo-name-de.svg" alt="StudyTutors" width="1612px" height="163px" />
   </h1>
 {:else}
   <h1>
@@ -32,40 +27,40 @@
 </svelte:head>
 
 <h2>
-  {$microcopy?.indexPage?.theme}
+  {@html $microcopy?.indexPage?.theme}
 </h2>
 
 <section style="white-space: nowrap;">
   <div style="background: var(--light-blue);">
-    <span>{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+    <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
       <Icon inline icon="ic:place" {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
   <div style="background: var(--green);">
-    <span>{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
+    <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {$microcopy?.indexPage?.boxes?.studentsName}</strong
     >
   </div>
   <div style="background: var(--orange);">
-    <span>{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
+    <span id="pupilNumber">{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:child" {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
   <div style="background: var(--green);">
-    <span>{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
+    <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
       <Icon inline icon="fa-solid:user-graduate" {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
   <div style="background: var(--light-blue);">
-    <span>{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+    <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
     <strong>
       <Icon inline icon="fa6-solid:user-group" {style} />
       {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
