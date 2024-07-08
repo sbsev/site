@@ -19,8 +19,8 @@
     }
 
     // Alternative carousel with beautiful animations: https://splidejs.com/integration/svelte-splide/
-    import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-    import '@splidejs/svelte-splide/css';
+    // import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+    // import '@splidejs/svelte-splide/css';
 </script>
 
 {#await get_posts() then _ }
@@ -39,7 +39,7 @@
 
     <!-- TODO:CS: Dauert etwas lange zu rendern... -->
     <!-- <Splide options={ { rewind: true } } aria-label="Svelte Splide Example"> -->
-    <Splide options={{ 
+    <!-- <Splide options={{ 
         type: 'loop', 
         padding:'5rem',
         gap: '2rem', 
@@ -50,5 +50,25 @@
                 <PostPreview {post} />
             </SplideSlide>
         {/each}
-    </Splide>
+    </Splide> -->
+    <!-- <ul>
+        {#each posts as post (post.slug)}
+            <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
+                <PostPreview {post} />
+            </li>
+        {/each}
+    </ul> -->
 {/await}
+
+<style>
+    ul {
+      list-style: none;
+      max-width: 56em;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+      grid-gap: 1em;
+      margin: auto;
+      padding: 2em 1em;
+    }
+  </style>
+  
