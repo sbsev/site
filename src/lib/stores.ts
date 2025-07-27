@@ -21,4 +21,4 @@ export const signupStore = session_store<SignupStore>(
   {} as SignupStore,
 )
 
-export const microcopy = writable({})
+export const microcopy = writable<Record<string, any>>({})

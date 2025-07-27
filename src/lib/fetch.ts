@@ -264,7 +264,7 @@ export async function fetch_yaml_list(
   title: string,
   slugPrefix: string,
 ): Promise<Record<string, unknown>[]> {
-  const list = await fetch_yaml(title)
+  const list = (await fetch_yaml(title)) as Record<string, unknown>[]
   return list.map(parse_body).map(title_to_slug).map(prefixSlug(slugPrefix))
 }
 
@@ -281,11 +281,16 @@ export function parse_form_data(obj: Form): Form {
 
   for (const [key, itm] of Object.entries(obj)) {
     if ([`title`, `note`].includes(key)) {
-      // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
-      // https://github.com/markedjs/marked/issues/1696
-      const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-      obj[key] = strip_outer_par_tag(marked(markdown))
-    } else if (typeof itm === `object` && itm !== null) parse_form_data(itm)
+      if (typeof itm === 'string') {
+        // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
+        // https://github.com/markedjs/marked/issues/1696
+        const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+        ;(obj as any)[key] = strip_outer_par_tag(marked(markdown))
+      }
+    } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
+      // Recursively process nested objects (like header, submit, etc.)
+      parse_form_data(itm as any)
+    }
   }
   return obj
 }

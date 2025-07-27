@@ -218,4 +218,5 @@ export type FormMessages = {
 export type Form = {
   fields: FormFieldProps[]
   page: Record<'title' | 'note', string>
+  header: Record<'title' | 'note', string>
 } & FormMessages
