@@ -25,8 +25,8 @@
     "@playwright/test": "1.54.1",
     "@rollup/plugin-yaml": "4.1.2",
     "@sveltejs/adapter-static": "2.0.3",
-    "@sveltejs/kit": "1.25.1",
-    "@sveltejs/vite-plugin-svelte": "2.4.6",
+    "@sveltejs/kit": "1.27.7",
+    "@sveltejs/vite-plugin-svelte": "2.5.3",
     "@types/events": "3.0.3",
     "@types/js-yaml": "^4.0.9",
     "@types/mapbox-gl": "3.4.1",
@@ -49,6 +49,6 @@
     "svelte-zoo": "0.4.9",
     "svelte2tsx": "0.7.41",
     "typescript": "5.2.2",
-    "vite": "4.4.9"
+    "vite": "4.5.5"
   }
 }

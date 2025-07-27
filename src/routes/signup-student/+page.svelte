@@ -38,7 +38,7 @@
     <p>{@html form.submitSuccess.note}</p>
   </section>
 {:else}
-  <form onsubmit="return false;" on:submit|preventDefault={submit}>
+  <form on:submit|preventDefault={submit}>
     <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
     <button type="submit" disabled style="display: none" aria-hidden="true" />
     <h1>
