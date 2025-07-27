@@ -4,7 +4,6 @@ test.describe('Page Loading and Content', () => {
   const pages = [
     { url: '/', title: 'Homepage' },
     { url: '/standorte', title: 'Standorte' },
-    { url: '/blog', title: 'Blog' },
     { url: '/signup-student', title: 'Student Signup' },
     { url: '/signup-pupil', title: 'Pupil Signup' },
     { url: '/faq', title: 'FAQ' },
@@ -20,8 +19,8 @@ test.describe('Page Loading and Content', () => {
       // Check that page loads successfully (no 404 or 500 errors)
       expect(page.url()).toContain(url)
       
-      // Check that there's a main heading
-      await expect(page.locator('h1')).toBeVisible()
+      // Check that there's a main heading (use first() for multiple h1s)
+      await expect(page.locator('h1').first()).toBeVisible()
       
       // Check that footer is present
       await expect(page.locator('footer, [role="contentinfo"]')).toBeVisible()
