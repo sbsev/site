@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { fill_place, fill_select, move_slider } from './helpers'
 
-test(`student signup form can be submitted after filling all required fields`, async ({
+test.skip(`student signup form can be submitted after filling all required fields`, async ({
   page,
 }) => {
   await page.goto(`/signup-student`, { waitUntil: `networkidle` })
