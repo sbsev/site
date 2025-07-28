@@ -34,10 +34,10 @@ export const load = async () => {
   } catch (error) {
     console.error('Error loading layout data:', error)
     // Return minimal fallback data so the page can still load
-    return { 
-      nav: [], 
-      footer: { links: [] }, 
-      social: [] 
+    return {
+      nav: [],
+      footer: { links: [] },
+      social: [],
     }
   }
 }

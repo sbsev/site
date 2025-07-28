@@ -7,8 +7,8 @@
 
   export let data
   $: ({ chapters, form } = data)
-  
-  // Add debugging and fallback  
+
+  // Add debugging and fallback
   $: console.log('Client-side data received:', { data, form: !!form, chapters: !!chapters })
   $: console.log('Form structure:', { form })
   $: console.log('Form header check:', { hasForm: !!form, hasHeader: !!(form && form.header) })

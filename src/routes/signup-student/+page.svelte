@@ -6,7 +6,7 @@
 
   export let data
   $: ({ chapters, form } = data)
-  
+
   // Add debugging and fallback
   $: if (!form || !form.header) {
     console.error('Form data is missing or incomplete:', { data, form })

@@ -21,7 +21,7 @@
 
   // Initialize value with appropriate defaults based on type to fix Svelte 5 binding issue
   let value: string | number | boolean | (string | number)[] | undefined
-  
+
   // Set default values based on field type to prevent Svelte 5 bind:value={undefined} error
   $: if (value === undefined) {
     if (type === 'select' || type === 'placeSelect') {
