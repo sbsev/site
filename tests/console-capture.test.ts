@@ -1,0 +1,180 @@
+import { expect, test } from '@playwright/test'
+
+// Test to capture the specific console logs mentioned by the user
+test('capture specific console logs for debugging form loading', async ({ page }) => {
+  const capturedLogs: string[] = []
+  const layoutLogs: string[] = []
+  const clientDataLogs: string[] = []
+  const formStructureLogs: string[] = []
+  const formHeaderLogs: string[] = []
+
+  // Listen to console logs and categorize them
+  page.on('console', (msg) => {
+    const logMessage = msg.text()
+    const logType = msg.type()
+    const timestamp = new Date().toISOString()
+    
+    const logEntry = `[${timestamp}] [${logType}] ${logMessage}`
+    capturedLogs.push(logEntry)
+    
+    // Categorize specific logs we're looking for
+    if (logMessage.includes('Layout data loaded successfully')) {
+      layoutLogs.push(logEntry)
+    }
+    if (logMessage.includes('Client-side data received:')) {
+      clientDataLogs.push(logEntry)
+    }
+    if (logMessage.includes('Form structure:')) {
+      formStructureLogs.push(logEntry)
+    }
+    if (logMessage.includes('Form header check:')) {
+      formHeaderLogs.push(logEntry)
+    }
+  })
+
+  // Navigate to the pupil form
+  await page.goto('/signup-pupil', { waitUntil: 'networkidle' })
+
+  // Wait for dynamic content and any delayed console logs
+  await page.waitForTimeout(5000)
+
+  // Log the captured information in the exact format you mentioned
+  console.log('\n=== CAPTURED CONSOLE LOGS ===')
+  
+  if (layoutLogs.length > 0) {
+    console.log('\nLayout Logs:')
+    layoutLogs.forEach(log => console.log(log))
+  }
+  
+  if (clientDataLogs.length > 0) {
+    console.log('\nClient-side Data Logs:')
+    clientDataLogs.forEach(log => console.log(log))
+  }
+  
+  if (formStructureLogs.length > 0) {
+    console.log('\nForm Structure Logs:')
+    formStructureLogs.forEach(log => console.log(log))
+  }
+  
+  if (formHeaderLogs.length > 0) {
+    console.log('\nForm Header Check Logs:')
+    formHeaderLogs.forEach(log => console.log(log))
+  }
+
+  // Also log all captured logs for completeness
+  console.log('\nAll Captured Logs:')
+  capturedLogs.forEach(log => console.log(log))
+
+  // Create a summary object that can be easily analyzed
+  const logSummary = {
+    totalLogs: capturedLogs.length,
+    layoutLogs: layoutLogs.length,
+    clientDataLogs: clientDataLogs.length,
+    formStructureLogs: formStructureLogs.length,
+    formHeaderLogs: formHeaderLogs.length,
+    allLogs: capturedLogs,
+    timestamp: new Date().toISOString()
+  }
+
+  console.log('\n=== LOG SUMMARY ===')
+  console.log(JSON.stringify(logSummary, null, 2))
+
+  // Basic assertions to ensure the test is working
+  expect(capturedLogs.length).toBeGreaterThan(0)
+  
+  // If we're in development mode, we should see some of these logs
+  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+    // These logs might not always be present, so we don't fail the test if they're missing
+    console.log('\nNote: Some expected logs might not appear in production builds')
+  }
+})
+
+// Test to capture the exact Object structure you mentioned
+test('capture form data object structure', async ({ page }) => {
+  const objectLogs: string[] = []
+
+  // Listen to console logs and look for Object structures
+  page.on('console', (msg) => {
+    const logMessage = msg.text()
+    
+    // Look for logs that contain Object structures
+    if (logMessage.includes('Object') && 
+        (logMessage.includes('chapters:') || logMessage.includes('form:'))) {
+      objectLogs.push(logMessage)
+    }
+  })
+
+  // Navigate to the pupil form
+  await page.goto('/signup-pupil', { waitUntil: 'networkidle' })
+  await page.waitForTimeout(3000)
+
+  // Try to extract the actual data structure from the page
+  const pageData = await page.evaluate(() => {
+    // Try to access the SvelteKit data
+    const svelteData = (window as any).__sveltekit_dev?.data
+    const pageData = svelteData?.[1]?.data?.data // Navigate through the data structure
+    
+    return {
+      hasData: !!pageData,
+      chapters: pageData?.chapters,
+      form: pageData?.form,
+      fullData: pageData
+    }
+  })
+
+  console.log('\n=== FORM DATA OBJECT STRUCTURE ===')
+  console.log('Object Logs from Console:')
+  objectLogs.forEach(log => console.log(`  ${log}`))
+  
+  console.log('\nExtracted Page Data:')
+  console.log(JSON.stringify(pageData, null, 2))
+
+  // Check if we have the expected data structure
+  expect(pageData.hasData).toBe(true)
+  expect(pageData.chapters).toBeDefined()
+  expect(pageData.form).toBeDefined()
+})
+
+// Test to compare pupil vs student form data loading
+test('compare pupil and student form data loading', async ({ page }) => {
+  const pupilLogs: string[] = []
+  const studentLogs: string[] = []
+
+  // Function to capture logs for a specific form
+  const captureFormLogs = async (url: string, logArray: string[]) => {
+    const logs: string[] = []
+    
+    page.on('console', (msg) => {
+      const logMessage = msg.text()
+      if (logMessage.includes('Client-side data received:') || 
+          logMessage.includes('Form structure:') || 
+          logMessage.includes('Form header check:')) {
+        logs.push(logMessage)
+      }
+    })
+
+    await page.goto(url, { waitUntil: 'networkidle' })
+    await page.waitForTimeout(3000)
+    
+    logArray.push(...logs)
+  }
+
+  // Capture logs for both forms
+  await captureFormLogs('/signup-pupil', pupilLogs)
+  await captureFormLogs('/signup-student', studentLogs)
+
+  console.log('\n=== FORM COMPARISON ===')
+  console.log('Pupil Form Logs:')
+  pupilLogs.forEach(log => console.log(`  ${log}`))
+  
+  console.log('\nStudent Form Logs:')
+  studentLogs.forEach(log => console.log(`  ${log}`))
+
+  // Compare the number of logs
+  console.log(`\nPupil form logs: ${pupilLogs.length}`)
+  console.log(`Student form logs: ${studentLogs.length}`)
+
+  // Basic assertions
+  expect(pupilLogs.length).toBeGreaterThan(0)
+  expect(studentLogs.length).toBeGreaterThan(0)
+}) 
