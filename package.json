@@ -25,7 +25,7 @@
     "@playwright/test": "1.54.1",
     "@rollup/plugin-yaml": "4.1.2",
     "@sveltejs/adapter-static": "3.0.8",
-    "@sveltejs/kit": "2.26.1",
+    "@sveltejs/kit": "2.25.0",
     "@sveltejs/vite-plugin-svelte": "6.1.0",
     "@types/events": "3.0.3",
     "@types/js-yaml": "^4.0.9",
