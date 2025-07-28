@@ -38,7 +38,7 @@
   $: style = base64 ? `background-image: url('${base64}');${img_style}` : img_style
 </script>
 
-{#if src.endsWith(`.svg`)}
+{#if src?.endsWith(`.svg`)}
   <img {src} {alt} {title} {width} {height} style={img_style} />
 {:else}
   <picture style={picture_style}>

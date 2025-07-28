@@ -1,7 +1,8 @@
 <script lang="ts">
   // This component uses the Mapbox JS API to turn user text input into a
   // formatted address and lat/lng coordinates.
-  import MapboxGeocoder, { Result } from '@mapbox/mapbox-gl-geocoder'
+  import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+  import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
@@ -54,7 +55,7 @@
   on:keydown={ignoreUpDownArrows}
   role="textbox"
   tabindex="0"
-/>
+></div>
 
 <style>
   :global(.mapboxgl-ctrl-geocoder.mapboxgl-ctrl) {

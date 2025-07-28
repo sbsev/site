@@ -8,14 +8,14 @@
 
   let active_tag: BlogTag
 
-  $: filtered_posts = data.posts.filter(
-    (post) => active_tag === `Alle` || post.tags.includes(active_tag)
-  )
+  $: filtered_posts = Array.isArray(data.posts) 
+    ? data.posts.filter((post) => active_tag === `Alle` || post.tags.includes(active_tag))
+    : []
 </script>
 
 <Social social={data.social} fixed vertical />
 
-<TagList posts={data.posts} bind:active_tag />
+<TagList posts={Array.isArray(data.posts) ? data.posts : []} bind:active_tag />
 
 <ul>
   {#each filtered_posts as post (post.slug)}

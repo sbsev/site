@@ -25,17 +25,20 @@
   const email = `info@studytutors.de`
   let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
-  $: filteredFaqs = data.faqs.filter(
-    (faq) => active_tag === `Alle` || faq.tags.includes(active_tag)
-  )
+  $: filteredFaqs = Array.isArray(data.faqs) 
+    ? data.faqs.filter((faq) => active_tag === `Alle` || faq.tags.includes(active_tag))
+    : []
+  
   // count tag occurrences
-  const tags = data.faqs?.reduce(
-    (obj, faq) => {
-      faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
-      return obj
-    },
-    { Alle: data.faqs?.length }
-  )
+  $: tags = Array.isArray(data.faqs) 
+    ? data.faqs.reduce(
+        (obj, faq) => {
+          faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
+          return obj
+        },
+        { Alle: data.faqs.length }
+      )
+    : { Alle: 0 }
 </script>
 
 <!-- used to briefly flash an FAQ as active when it's hash is found in the URL -->

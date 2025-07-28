@@ -10,7 +10,7 @@
   {color}"
   style:width={size}
   style:height={size}
-/>
+></div>
 
 <style>
   div {

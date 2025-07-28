@@ -50,7 +50,7 @@
   })
 </script>
 
-<div bind:this={map_div} style={css} />
+<div bind:this={map_div} style={css}></div>
 
 <style>
   div {

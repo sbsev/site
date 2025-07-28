@@ -40,7 +40,7 @@
 {:else}
   <form on:submit|preventDefault={submit}>
     <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
-    <button type="submit" disabled style="display: none" aria-hidden="true" />
+    <button type="submit" disabled style="display: none" aria-hidden="true"></button>
     <h1>
       <Icon icon="ri:plant-fill" inline />
       {@html form.header.title}
