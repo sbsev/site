@@ -25,12 +25,12 @@
   const email = `info@studytutors.de`
   let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
 
-  $: filteredFaqs = Array.isArray(data.faqs) 
+  $: filteredFaqs = Array.isArray(data.faqs)
     ? data.faqs.filter((faq) => active_tag === `Alle` || faq.tags.includes(active_tag))
     : []
-  
+
   // count tag occurrences
-  $: tags = Array.isArray(data.faqs) 
+  $: tags = Array.isArray(data.faqs)
     ? data.faqs.reduce(
         (obj, faq) => {
           faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))

@@ -9,7 +9,7 @@ export const load = async () => {
     acc[year].push(itm)
     return acc
   }, {})
-  
+
   return {
     page: await fetch_page(`presse`),
     pressItems: itemsByYear,

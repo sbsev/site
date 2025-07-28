@@ -25,11 +25,11 @@
   $: filtered = Array.isArray(data.studyPlatforms)
     ? data.studyPlatforms.filter((itm) => active_tag === `Alle` || itm.tags.includes(active_tag))
     : []
-  
+
   // count tag occurrences
   $: tags = (() => {
     if (!Array.isArray(data.studyPlatforms)) return { Alle: 0 }
-    
+
     const tagCounts = { Alle: data.studyPlatforms.length } as Record<string, number>
     for (const itm of data.studyPlatforms) {
       for (const tag of itm.tags) {

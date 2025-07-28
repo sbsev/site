@@ -8,7 +8,7 @@
 
   let active_tag: BlogTag
 
-  $: filtered_posts = Array.isArray(data.posts) 
+  $: filtered_posts = Array.isArray(data.posts)
     ? data.posts.filter((post) => active_tag === `Alle` || post.tags.includes(active_tag))
     : []
 </script>
