@@ -46,11 +46,11 @@ test('capture console logs and errors for pupil form', async ({ page }) => {
   console.log(`Form Visible: ${formVisible}`)
   console.log(`H1 Text: ${h1Text}`)
   console.log(`\nConsole Logs (${consoleLogs.length}):`)
-  consoleLogs.forEach(log => console.log(`  ${log}`))
+  consoleLogs.forEach((log) => console.log(`  ${log}`))
   console.log(`\nConsole Errors (${consoleErrors.length}):`)
-  consoleErrors.forEach(error => console.log(`  ${error}`))
+  consoleErrors.forEach((error) => console.log(`  ${error}`))
   console.log(`\nNetwork Errors (${networkErrors.length}):`)
-  networkErrors.forEach(error => console.log(`  ${error}`))
+  networkErrors.forEach((error) => console.log(`  ${error}`))
 
   // Basic assertions to ensure the test provides value
   expect(currentUrl).toContain('/signup-pupil')
@@ -66,7 +66,7 @@ test('capture console logs and errors for pupil form', async ({ page }) => {
     consoleLogs,
     consoleErrors,
     networkErrors,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   }
 
   // You could save this to a file or use it for further analysis
@@ -83,11 +83,13 @@ test('capture form data loading state and structure', async ({ page }) => {
   page.on('console', (msg) => {
     const logMessage = msg.text()
     consoleLogs.push(logMessage)
-    
+
     // Look for specific form-related logs
-    if (logMessage.includes('Client-side data received:') || 
-        logMessage.includes('Form structure:') || 
-        logMessage.includes('Form header check:')) {
+    if (
+      logMessage.includes('Client-side data received:') ||
+      logMessage.includes('Form structure:') ||
+      logMessage.includes('Form header check:')
+    ) {
       formDataLogs.push(logMessage)
     }
   })
@@ -109,14 +111,14 @@ test('capture form data loading state and structure', async ({ page }) => {
       stores: {
         signupStore: (window as any).signupStore,
         // Add other potential stores
-      }
+      },
     }
   })
 
   // Log the captured information
   console.log('\n=== FORM DATA LOADING DEBUG ===')
   console.log(`Form Data Logs (${formDataLogs.length}):`)
-  formDataLogs.forEach(log => console.log(`  ${log}`))
+  formDataLogs.forEach((log) => console.log(`  ${log}`))
   console.log(`\nForm Data Object:`)
   console.log(JSON.stringify(formData, null, 2))
 
@@ -134,7 +136,9 @@ test('capture form data loading state and structure', async ({ page }) => {
 })
 
 // Test to capture student form for comparison
-test('capture student form data loading state for comparison', async ({ page }) => {
+test('capture student form data loading state for comparison', async ({
+  page,
+}) => {
   const consoleLogs: string[] = []
   const formDataLogs: any[] = []
 
@@ -142,11 +146,13 @@ test('capture student form data loading state for comparison', async ({ page }) 
   page.on('console', (msg) => {
     const logMessage = msg.text()
     consoleLogs.push(logMessage)
-    
+
     // Look for specific form-related logs
-    if (logMessage.includes('Client-side data received:') || 
-        logMessage.includes('Form structure:') || 
-        logMessage.includes('Form header check:')) {
+    if (
+      logMessage.includes('Client-side data received:') ||
+      logMessage.includes('Form structure:') ||
+      logMessage.includes('Form header check:')
+    ) {
       formDataLogs.push(logMessage)
     }
   })
@@ -160,7 +166,7 @@ test('capture student form data loading state for comparison', async ({ page }) 
   // Log the captured information
   console.log('\n=== STUDENT FORM DATA LOADING DEBUG ===')
   console.log(`Form Data Logs (${formDataLogs.length}):`)
-  formDataLogs.forEach(log => console.log(`  ${log}`))
+  formDataLogs.forEach((log) => console.log(`  ${log}`))
 
   // Check form structure
   const formFields = await page.locator('form label').count()
@@ -182,7 +188,9 @@ test('capture markdown rendering state', async ({ page }) => {
   // Check for raw markdown that should have been converted
   const rawMarkdownElements = await page.locator('text=####').count()
   const htmlEntities = await page.locator('text=&#39;').count()
-  const unprocessedLinks = await page.locator('text=[Datenschutz](/datenschutz)').count()
+  const unprocessedLinks = await page
+    .locator('text=[Datenschutz](/datenschutz)')
+    .count()
 
   console.log('\n=== MARKDOWN RENDERING DEBUG ===')
   console.log(`Raw markdown headers (####): ${rawMarkdownElements}`)
@@ -200,7 +208,7 @@ test('capture markdown rendering state', async ({ page }) => {
   expect(rawMarkdownElements).toBe(0)
   expect(htmlEntities).toBe(0)
   expect(unprocessedLinks).toBe(0)
-  
+
   // These should be greater than 0 if markdown is working correctly
   expect(renderedHeaders).toBeGreaterThan(0)
   expect(renderedLinks).toBeGreaterThan(0)
@@ -215,11 +223,13 @@ test('capture Svelte 5 binding errors', async ({ page }) => {
   page.on('pageerror', (error) => {
     const errorMessage = error.message
     consoleErrors.push(errorMessage)
-    
+
     // Look for Svelte-specific errors
-    if (errorMessage.includes('props_invalid_value') || 
-        errorMessage.includes('bind:value') ||
-        errorMessage.includes('Svelte error')) {
+    if (
+      errorMessage.includes('props_invalid_value') ||
+      errorMessage.includes('bind:value') ||
+      errorMessage.includes('Svelte error')
+    ) {
       svelteErrors.push(errorMessage)
     }
   })
@@ -227,19 +237,19 @@ test('capture Svelte 5 binding errors', async ({ page }) => {
   // Navigate to both forms to check for binding errors
   await page.goto('/signup-pupil', { waitUntil: 'networkidle' })
   await page.waitForTimeout(2000)
-  
+
   await page.goto('/signup-student', { waitUntil: 'networkidle' })
   await page.waitForTimeout(2000)
 
   console.log('\n=== SVELTE 5 BINDING ERROR DEBUG ===')
   console.log(`Total Console Errors: ${consoleErrors.length}`)
   console.log(`Svelte-specific Errors: ${svelteErrors.length}`)
-  
+
   if (svelteErrors.length > 0) {
     console.log('\nSvelte Errors:')
-    svelteErrors.forEach(error => console.log(`  ${error}`))
+    svelteErrors.forEach((error) => console.log(`  ${error}`))
   }
 
   // Assertions - there should be no Svelte binding errors
   expect(svelteErrors.length).toBe(0)
-}) 
+})

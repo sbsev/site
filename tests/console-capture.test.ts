@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test'
 
 // Test to capture the specific console logs mentioned by the user
-test('capture specific console logs for debugging form loading', async ({ page }) => {
+test('capture specific console logs for debugging form loading', async ({
+  page,
+}) => {
   const capturedLogs: string[] = []
   const layoutLogs: string[] = []
   const clientDataLogs: string[] = []
@@ -13,10 +15,10 @@ test('capture specific console logs for debugging form loading', async ({ page }
     const logMessage = msg.text()
     const logType = msg.type()
     const timestamp = new Date().toISOString()
-    
+
     const logEntry = `[${timestamp}] [${logType}] ${logMessage}`
     capturedLogs.push(logEntry)
-    
+
     // Categorize specific logs we're looking for
     if (logMessage.includes('Layout data loaded successfully')) {
       layoutLogs.push(logEntry)
@@ -40,30 +42,30 @@ test('capture specific console logs for debugging form loading', async ({ page }
 
   // Log the captured information in the exact format you mentioned
   console.log('\n=== CAPTURED CONSOLE LOGS ===')
-  
+
   if (layoutLogs.length > 0) {
     console.log('\nLayout Logs:')
-    layoutLogs.forEach(log => console.log(log))
+    layoutLogs.forEach((log) => console.log(log))
   }
-  
+
   if (clientDataLogs.length > 0) {
     console.log('\nClient-side Data Logs:')
-    clientDataLogs.forEach(log => console.log(log))
+    clientDataLogs.forEach((log) => console.log(log))
   }
-  
+
   if (formStructureLogs.length > 0) {
     console.log('\nForm Structure Logs:')
-    formStructureLogs.forEach(log => console.log(log))
+    formStructureLogs.forEach((log) => console.log(log))
   }
-  
+
   if (formHeaderLogs.length > 0) {
     console.log('\nForm Header Check Logs:')
-    formHeaderLogs.forEach(log => console.log(log))
+    formHeaderLogs.forEach((log) => console.log(log))
   }
 
   // Also log all captured logs for completeness
   console.log('\nAll Captured Logs:')
-  capturedLogs.forEach(log => console.log(log))
+  capturedLogs.forEach((log) => console.log(log))
 
   // Create a summary object that can be easily analyzed
   const logSummary = {
@@ -73,7 +75,7 @@ test('capture specific console logs for debugging form loading', async ({ page }
     formStructureLogs: formStructureLogs.length,
     formHeaderLogs: formHeaderLogs.length,
     allLogs: capturedLogs,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   }
 
   console.log('\n=== LOG SUMMARY ===')
@@ -81,11 +83,16 @@ test('capture specific console logs for debugging form loading', async ({ page }
 
   // Basic assertions to ensure the test is working
   expect(capturedLogs.length).toBeGreaterThan(0)
-  
+
   // If we're in development mode, we should see some of these logs
-  if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NODE_ENV === 'test'
+  ) {
     // These logs might not always be present, so we don't fail the test if they're missing
-    console.log('\nNote: Some expected logs might not appear in production builds')
+    console.log(
+      '\nNote: Some expected logs might not appear in production builds',
+    )
   }
 })
 
@@ -96,10 +103,12 @@ test('capture form data object structure', async ({ page }) => {
   // Listen to console logs and look for Object structures
   page.on('console', (msg) => {
     const logMessage = msg.text()
-    
+
     // Look for logs that contain Object structures
-    if (logMessage.includes('Object') && 
-        (logMessage.includes('chapters:') || logMessage.includes('form:'))) {
+    if (
+      logMessage.includes('Object') &&
+      (logMessage.includes('chapters:') || logMessage.includes('form:'))
+    ) {
       objectLogs.push(logMessage)
     }
   })
@@ -113,19 +122,19 @@ test('capture form data object structure', async ({ page }) => {
     // Try to access the SvelteKit data
     const svelteData = (window as any).__sveltekit_dev?.data
     const pageData = svelteData?.[1]?.data?.data // Navigate through the data structure
-    
+
     return {
       hasData: !!pageData,
       chapters: pageData?.chapters,
       form: pageData?.form,
-      fullData: pageData
+      fullData: pageData,
     }
   })
 
   console.log('\n=== FORM DATA OBJECT STRUCTURE ===')
   console.log('Object Logs from Console:')
-  objectLogs.forEach(log => console.log(`  ${log}`))
-  
+  objectLogs.forEach((log) => console.log(`  ${log}`))
+
   console.log('\nExtracted Page Data:')
   console.log(JSON.stringify(pageData, null, 2))
 
@@ -143,19 +152,21 @@ test('compare pupil and student form data loading', async ({ page }) => {
   // Function to capture logs for a specific form
   const captureFormLogs = async (url: string, logArray: string[]) => {
     const logs: string[] = []
-    
+
     page.on('console', (msg) => {
       const logMessage = msg.text()
-      if (logMessage.includes('Client-side data received:') || 
-          logMessage.includes('Form structure:') || 
-          logMessage.includes('Form header check:')) {
+      if (
+        logMessage.includes('Client-side data received:') ||
+        logMessage.includes('Form structure:') ||
+        logMessage.includes('Form header check:')
+      ) {
         logs.push(logMessage)
       }
     })
 
     await page.goto(url, { waitUntil: 'networkidle' })
     await page.waitForTimeout(3000)
-    
+
     logArray.push(...logs)
   }
 
@@ -165,10 +176,10 @@ test('compare pupil and student form data loading', async ({ page }) => {
 
   console.log('\n=== FORM COMPARISON ===')
   console.log('Pupil Form Logs:')
-  pupilLogs.forEach(log => console.log(`  ${log}`))
-  
+  pupilLogs.forEach((log) => console.log(`  ${log}`))
+
   console.log('\nStudent Form Logs:')
-  studentLogs.forEach(log => console.log(`  ${log}`))
+  studentLogs.forEach((log) => console.log(`  ${log}`))
 
   // Compare the number of logs
   console.log(`\nPupil form logs: ${pupilLogs.length}`)
@@ -177,4 +188,4 @@ test('compare pupil and student form data loading', async ({ page }) => {
   // Basic assertions
   expect(pupilLogs.length).toBeGreaterThan(0)
   expect(studentLogs.length).toBeGreaterThan(0)
-}) 
+})
