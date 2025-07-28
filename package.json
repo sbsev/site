@@ -50,5 +50,8 @@
     "svelte2tsx": "0.7.41",
     "typescript": "5.8.3",
     "vite": "7.0.6"
+  },
+  "dependencies": {
+    "yaml": "^2.8.0"
   }
 }

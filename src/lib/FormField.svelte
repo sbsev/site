@@ -19,7 +19,23 @@
   let label: HTMLLabelElement
   let slider: HTMLDivElement
 
+  // Initialize value with appropriate defaults based on type to fix Svelte 5 binding issue
   let value: string | number | boolean | (string | number)[] | undefined
+  
+  // Set default values based on field type to prevent Svelte 5 bind:value={undefined} error
+  $: if (value === undefined) {
+    if (type === 'select' || type === 'placeSelect') {
+      value = maxSelect === 1 ? '' : []
+    } else if (type === 'toggle' || type === 'checkbox') {
+      value = false
+    } else if (type === 'number' || type === 'singleRange') {
+      value = min || 0
+    } else if (type === 'doubleRange') {
+      value = [min || 0, max || 100]
+    } else {
+      value = ''
+    }
+  }
 
   $: $signupStore[id] = { required, node: label }
   $: $signupStore[id].value = value

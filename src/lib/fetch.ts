@@ -75,8 +75,13 @@ const chapters_query = `{
 }`
 
 export async function fetch_chapters(): Promise<Chapter[]> {
-  const { chapters } = await contentful_fetch(chapters_query)
-  return chapters?.items?.map(prefixSlug(`/standorte/`))
+  try {
+    const { chapters } = await contentful_fetch(chapters_query)
+    return chapters?.items?.map(prefixSlug(`/standorte/`)) || []
+  } catch (error) {
+    console.error('Error fetching chapters:', error)
+    return []
+  }
 }
 
 export async function base64_thumbnail(
@@ -279,17 +284,24 @@ export function parse_form_data(obj: Form): Form {
     `<a target="_blank" href="${href}">${text}</a>`
   marked.use({ renderer })
 
+  // Process all string fields that might contain markdown
   for (const [key, itm] of Object.entries(obj)) {
-    if ([`title`, `note`].includes(key)) {
-      if (typeof itm === 'string') {
-        // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
-        // https://github.com/markedjs/marked/issues/1696
-        const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-        ;(obj as any)[key] = strip_outer_par_tag(marked(markdown))
-      }
+    if (typeof itm === 'string') {
+      // Process any string field that might contain markdown (title, note, etc.)
+      // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
+      // https://github.com/markedjs/marked/issues/1696
+      const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+      ;(obj as any)[key] = strip_outer_par_tag(marked(markdown))
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)
       parse_form_data(itm as any)
+    } else if (Array.isArray(itm)) {
+      // Process arrays of objects (like fields array)
+      itm.forEach((item) => {
+        if (typeof item === 'object' && item !== null) {
+          parse_form_data(item as any)
+        }
+      })
     }
   }
   return obj

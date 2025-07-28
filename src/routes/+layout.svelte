@@ -22,8 +22,8 @@
   <meta name="description" content={$microcopy?.meta?.description} />
   <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
 
-  <meta name="color-scheme" content={$colorMode} />
-  <link rel="stylesheet" href="/{$colorMode}-theme.css" />
+  <meta name="color-scheme" content={$colorMode || 'system'} />
+  <link rel="stylesheet" href="/{$colorMode || 'system'}-theme.css" />
 </svelte:head>
 
 <Header {nav} />
