@@ -19,9 +19,9 @@ colorMode.subscribe(
 // Custom session store implementation to replace svelte-zoo
 function createSessionStore<T>(key: string, initialValue: T) {
   const store = writable<T>(
-    has_session_store && sessionStorage[key] 
-      ? JSON.parse(sessionStorage[key]) 
-      : initialValue
+    has_session_store && sessionStorage[key]
+      ? JSON.parse(sessionStorage[key])
+      : initialValue,
   )
 
   store.subscribe((val: T) => {
