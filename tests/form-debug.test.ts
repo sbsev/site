@@ -9,8 +9,12 @@ test('capture console logs and errors for pupil form', async ({ page }) => {
   // Listen to console logs
   page.on('console', (msg) => {
     const logMessage = `[${msg.type()}] ${msg.text()}`
-    consoleLogs.push(logMessage)
-    console.log(`Browser Console: ${logMessage}`)
+    // Filter out expected warnings that are noise
+    if (!logMessage.includes("'value' prop should be a Number") && 
+        !logMessage.includes("'values' prop should be an Array")) {
+      consoleLogs.push(logMessage)
+      console.log(`Browser Console: ${logMessage}`)
+    }
   })
 
   // Listen to console errors
@@ -82,7 +86,11 @@ test('capture form data loading state and structure', async ({ page }) => {
   // Listen to console logs
   page.on('console', (msg) => {
     const logMessage = msg.text()
-    consoleLogs.push(logMessage)
+    // Filter out expected warnings that are noise
+    if (!logMessage.includes("'value' prop should be a Number") && 
+        !logMessage.includes("'values' prop should be an Array")) {
+      consoleLogs.push(logMessage)
+    }
 
     // Look for specific form-related logs
     if (
@@ -124,7 +132,7 @@ test('capture form data loading state and structure', async ({ page }) => {
 
   // Check if we have the expected form structure
   const formFields = await page.locator('form label').count()
-  const submitButton = await page.locator('button[type="submit"]').isVisible()
+  const submitButton = await page.locator('button[type="submit"]:not([disabled]):not([aria-hidden="true"])').isVisible()
 
   console.log(`\nForm Structure:`)
   console.log(`  - Number of form fields: ${formFields}`)
@@ -145,7 +153,11 @@ test('capture student form data loading state for comparison', async ({
   // Listen to console logs
   page.on('console', (msg) => {
     const logMessage = msg.text()
-    consoleLogs.push(logMessage)
+    // Filter out expected warnings that are noise
+    if (!logMessage.includes("'value' prop should be a Number") && 
+        !logMessage.includes("'values' prop should be an Array")) {
+      consoleLogs.push(logMessage)
+    }
 
     // Look for specific form-related logs
     if (
@@ -170,7 +182,7 @@ test('capture student form data loading state for comparison', async ({
 
   // Check form structure
   const formFields = await page.locator('form label').count()
-  const submitButton = await page.locator('button[type="submit"]').isVisible()
+  const submitButton = await page.locator('button[type="submit"]:not([disabled]):not([aria-hidden="true"])').isVisible()
 
   console.log(`\nStudent Form Structure:`)
   console.log(`  - Number of form fields: ${formFields}`)
