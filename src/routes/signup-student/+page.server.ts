@@ -81,7 +81,7 @@ export const load = async () => {
     }
   } catch (error) {
     console.error('Error loading student signup form:', error)
-    console.error('Error stack:', error.stack)
+    console.error('Error stack:', (error as Error).stack)
 
     // Return fallback form structure
     const basicForm = {

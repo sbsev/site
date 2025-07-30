@@ -270,7 +270,7 @@ export async function fetch_yaml_list(
   slugPrefix: string,
 ): Promise<Record<string, unknown>[]> {
   const list = (await fetch_yaml(title)) as Record<string, unknown>[]
-  return list.map(parse_body).map(title_to_slug).map(prefixSlug(slugPrefix))
+  return list.map((item) => parse_body(item as any)).map((item) => title_to_slug(item as any)).map((item) => prefixSlug(slugPrefix)(item as any))
 }
 
 // remove outer-most paragraph tags (if any)
@@ -290,7 +290,7 @@ export function parse_form_data(obj: Form): Form {
       // Process any string field that might contain markdown (title, note, etc.)
       // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
-      const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+      const markdown = (itm as string).replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
       ;(obj as any)[key] = strip_outer_par_tag(marked(markdown))
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)

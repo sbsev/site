@@ -5,7 +5,7 @@ import type { Chapter, NavLink } from '$lib/types'
 export const load = async () => {
   try {
     console.log('Loading layout data...')
-    const nav = await fetch_yaml(`Nav`)
+    const nav = (await fetch_yaml(`Nav`)) as NavLink[]
     const footer = await fetch_yaml(`Footer`)
     const social = await fetch_yaml(`Social`)
     // don't show partner orgs in nav
@@ -13,10 +13,13 @@ export const load = async () => {
       (chap) => chap.status != `partner`,
     )
     const smallTexts = await fetch_yaml(`smallTexts`)
-    microcopy.set(smallTexts)
+    microcopy.set(smallTexts as any)
 
     // ensure the non-chapter link spans all chapter subnav columns
-    nav.find((el: NavLink) => el.url === `/standorte`).subNav[0].spanCols = true
+    const standorteNav = nav.find((el: NavLink) => el.url === `/standorte`)
+    if (standorteNav?.subNav?.[0]) {
+      standorteNav.subNav[0].spanCols = true
+    }
 
     // create { title, url } array containing all chapters
     const chapterLinks = chapters.map((chapter: Chapter) => {
@@ -25,9 +28,10 @@ export const load = async () => {
     })
 
     // prepend chapter links into chapter subnav
-    nav
-      .find((el: NavLink) => el.url === `/standorte`)
-      .subNav.unshift(...chapterLinks)
+    const standorteNavForChapters = nav.find((el: NavLink) => el.url === `/standorte`)
+    if (standorteNavForChapters?.subNav) {
+      standorteNavForChapters.subNav.unshift(...chapterLinks)
+    }
 
     console.log('Layout data loaded successfully')
     return { nav, footer, social }

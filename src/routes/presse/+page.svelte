@@ -7,36 +7,43 @@
   const style = `margin: 0 5pt 0 0;`
 </script>
 
+{#if data.page}
 <BasePage page={data.page}>
   <svelte:fragment slot="afterArticle">
     {#each Object.entries(data.pressItems).reverse() as [year, pressArr] (year)}
       <h2>{year}</h2>
       <ul class="items">
         {#each pressArr as { title, id, img, url, date, chapter, source } (id)}
+          {@const titleStr = title as string}
+          {@const imgStr = img as string}
+          {@const urlStr = url as string}
+          {@const dateObj = date as Date}
+          {@const chapterStr = chapter as string}
+          {@const sourceStr = source as string}
           <li>
-            <a href={url}>
+            <a href={urlStr}>
               <Img
-                src={img}
-                alt={title}
+                src={imgStr}
+                alt={titleStr}
                 sizes={[{ w: 175 }]}
                 img_style="width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;"
               />
             </a>
             <h3 {id}>
-              <a href={url}>{title}</a>
+              <a href={urlStr}>{titleStr}</a>
             </h3>
             <div>
               <span>
                 <Icon inline icon="ion:newspaper" {style} />
-                {source}
+                {sourceStr}
               </span>
               <span>
                 <Icon inline icon="octicon:calendar" {style} />
-                {new Date(date).toLocaleDateString(`de`)}
+                {dateObj.toLocaleDateString(`de`)}
               </span>
               <span>
                 <Icon inline icon="ic:place" {style} />
-                Standort {chapter}
+                Standort {chapterStr}
               </span>
             </div>
           </li>
@@ -45,6 +52,7 @@
     {/each}
   </svelte:fragment>
 </BasePage>
+{/if}
 
 <style>
   h2 {

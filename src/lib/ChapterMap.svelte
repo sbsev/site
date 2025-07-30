@@ -19,7 +19,7 @@
   <Map
     markers={Array.isArray(chapters) ? chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
-      classes: [`chapter`, chap.status],
+      classes: [`chapter`, chap.status].filter((item): item is string => Boolean(item)),
       title: chap.token,
       url: chap.slug,
     })) : []}
