@@ -25,15 +25,26 @@
     isSubmitting = true
     try {
       $signupStore.type = { value: `pupil` }
+      
+      // Ensure form fields exist before mapping
+      if (!form || !form.fields) {
+        console.error('Form fields not available:', { form })
+        error = new Error('Form configuration is missing')
+        return
+      }
+      
       const field_ids_to_validate = form.fields.map((field) => field.id) // list of form fields to validate
 
       const response = await signup_form_submit_handler(
         field_ids_to_validate,
         chapters,
-        form.errMsg
+        form.errMsg || {}
       )
       if (response.success) success = true
       error = response.error
+    } catch (submitError) {
+      console.error('Submit error:', submitError)
+      error = submitError as Error
     } finally {
       isSubmitting = false
     }
