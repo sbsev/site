@@ -107,9 +107,9 @@ test('capture form data object structure', async ({ page }) => {
     // Look for logs that contain Object structures or form data
     if (
       (logMessage.includes('Object') &&
-       (logMessage.includes('chapters:') || logMessage.includes('form:'))) ||
-       logMessage.includes('Client-side data received:') ||
-       logMessage.includes('Form structure:')
+        (logMessage.includes('chapters:') || logMessage.includes('form:'))) ||
+      logMessage.includes('Client-side data received:') ||
+      logMessage.includes('Form structure:')
     ) {
       objectLogs.push(logMessage)
     }
@@ -143,7 +143,9 @@ test('capture form data object structure', async ({ page }) => {
   // Check if we have the expected data structure or logs
   // The data extraction might not work in all browsers, so we check for logs instead
   expect(objectLogs.length).toBeGreaterThan(0)
-  console.log(`Note: Page data extraction ${pageData.hasData ? 'succeeded' : 'failed'}, but console logs are available`)
+  console.log(
+    `Note: Page data extraction ${pageData.hasData ? 'succeeded' : 'failed'}, but console logs are available`,
+  )
 })
 
 // Test to compare pupil vs student form data loading
@@ -155,7 +157,7 @@ test('compare pupil and student form data loading', async ({ page }) => {
   page.on('console', (msg) => {
     const logMessage = msg.text()
     const currentUrl = page.url()
-    
+
     if (
       logMessage.includes('Client-side data received:') ||
       logMessage.includes('Form structure:') ||
@@ -172,7 +174,7 @@ test('compare pupil and student form data loading', async ({ page }) => {
   // Navigate to both forms
   await page.goto('/signup-pupil', { waitUntil: 'networkidle' })
   await page.waitForTimeout(3000)
-  
+
   await page.goto('/signup-student', { waitUntil: 'networkidle' })
   await page.waitForTimeout(3000)
 
@@ -190,5 +192,7 @@ test('compare pupil and student form data loading', async ({ page }) => {
   // Basic assertions - we expect at least pupil logs, student might not always have logs
   expect(pupilLogs.length).toBeGreaterThan(0)
   // Student logs might be 0 if the form doesn't emit the same console logs
-  console.log(`Note: Student form captured ${studentLogs.length} logs vs pupil form ${pupilLogs.length} logs`)
+  console.log(
+    `Note: Student form captured ${studentLogs.length} logs vs pupil form ${pupilLogs.length} logs`,
+  )
 })

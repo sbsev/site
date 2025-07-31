@@ -91,15 +91,15 @@
 {:else if type === `placeSelect`}
   <PlaceSelect {id} bind:value {placeholder} />
 {:else if type === `singleRange`}
-  <RangeSlider 
-    bind:slider 
-    float 
-    values={[value]} 
+  <RangeSlider
+    bind:slider
+    float
+    values={[value]}
     on:stop={(e) => (value = e.detail.values[0])}
-    {min} 
-    {max} 
-    pips 
-    all="label" 
+    {min}
+    {max}
+    pips
+    all="label"
   />
 {:else if type === `doubleRange`}
   <RangeSlider

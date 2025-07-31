@@ -10,8 +10,10 @@ test('capture console logs and errors for pupil form', async ({ page }) => {
   page.on('console', (msg) => {
     const logMessage = `[${msg.type()}] ${msg.text()}`
     // Filter out expected warnings that are noise
-    if (!logMessage.includes("'value' prop should be a Number") && 
-        !logMessage.includes("'values' prop should be an Array")) {
+    if (
+      !logMessage.includes("'value' prop should be a Number") &&
+      !logMessage.includes("'values' prop should be an Array")
+    ) {
       consoleLogs.push(logMessage)
       console.log(`Browser Console: ${logMessage}`)
     }
@@ -87,8 +89,10 @@ test('capture form data loading state and structure', async ({ page }) => {
   page.on('console', (msg) => {
     const logMessage = msg.text()
     // Filter out expected warnings that are noise
-    if (!logMessage.includes("'value' prop should be a Number") && 
-        !logMessage.includes("'values' prop should be an Array")) {
+    if (
+      !logMessage.includes("'value' prop should be a Number") &&
+      !logMessage.includes("'values' prop should be an Array")
+    ) {
       consoleLogs.push(logMessage)
     }
 
@@ -132,7 +136,9 @@ test('capture form data loading state and structure', async ({ page }) => {
 
   // Check if we have the expected form structure
   const formFields = await page.locator('form label').count()
-  const submitButton = await page.locator('button[type="submit"]:not([disabled]):not([aria-hidden="true"])').isVisible()
+  const submitButton = await page
+    .locator('button[type="submit"]:not([disabled]):not([aria-hidden="true"])')
+    .isVisible()
 
   console.log(`\nForm Structure:`)
   console.log(`  - Number of form fields: ${formFields}`)
@@ -154,8 +160,10 @@ test('capture student form data loading state for comparison', async ({
   page.on('console', (msg) => {
     const logMessage = msg.text()
     // Filter out expected warnings that are noise
-    if (!logMessage.includes("'value' prop should be a Number") && 
-        !logMessage.includes("'values' prop should be an Array")) {
+    if (
+      !logMessage.includes("'value' prop should be a Number") &&
+      !logMessage.includes("'values' prop should be an Array")
+    ) {
       consoleLogs.push(logMessage)
     }
 
@@ -182,7 +190,9 @@ test('capture student form data loading state for comparison', async ({
 
   // Check form structure
   const formFields = await page.locator('form label').count()
-  const submitButton = await page.locator('button[type="submit"]:not([disabled]):not([aria-hidden="true"])').isVisible()
+  const submitButton = await page
+    .locator('button[type="submit"]:not([disabled]):not([aria-hidden="true"])')
+    .isVisible()
 
   console.log(`\nStudent Form Structure:`)
   console.log(`  - Number of form fields: ${formFields}`)

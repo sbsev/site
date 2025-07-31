@@ -28,7 +28,9 @@ export const load = async () => {
     })
 
     // prepend chapter links into chapter subnav
-    const standorteNavForChapters = nav.find((el: NavLink) => el.url === `/standorte`)
+    const standorteNavForChapters = nav.find(
+      (el: NavLink) => el.url === `/standorte`,
+    )
     if (standorteNavForChapters?.subNav) {
       standorteNavForChapters.subNav.unshift(...chapterLinks)
     }

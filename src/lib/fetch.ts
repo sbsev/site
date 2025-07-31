@@ -270,7 +270,10 @@ export async function fetch_yaml_list(
   slugPrefix: string,
 ): Promise<Record<string, unknown>[]> {
   const list = (await fetch_yaml(title)) as Record<string, unknown>[]
-  return list.map((item) => parse_body(item as any)).map((item) => title_to_slug(item as any)).map((item) => prefixSlug(slugPrefix)(item as any))
+  return list
+    .map((item) => parse_body(item as any))
+    .map((item) => title_to_slug(item as any))
+    .map((item) => prefixSlug(slugPrefix)(item as any))
 }
 
 // remove outer-most paragraph tags (if any)

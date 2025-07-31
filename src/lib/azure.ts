@@ -22,12 +22,12 @@ async function azure_post_new_records(
     },
     body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
   })
-  
+
   // Return both the status and the JSON data
   const jsonData = await response.json()
   return {
     status: response.status,
-    data: jsonData
+    data: jsonData,
   }
 }
 
@@ -124,23 +124,27 @@ export async function signup_form_submit_handler(
   for (const name of fields_to_validate) {
     try {
       const field = signup_data[name]
-      
+
       // Skip if field doesn't exist or isn't properly initialized
       if (!field || typeof field !== 'object') {
         console.warn(`Field ${name} is not properly initialized`)
         continue
       }
-      
+
       // Skip if field is not required
       if (!field.required) {
         continue
       }
-      
+
       // Check if field value is empty
       const fieldValue = field.value
       let isEmpty = false
-      
-      if (fieldValue === undefined || fieldValue === null || fieldValue === '') {
+
+      if (
+        fieldValue === undefined ||
+        fieldValue === null ||
+        fieldValue === ''
+      ) {
         isEmpty = true
       } else if (Array.isArray(fieldValue) && fieldValue.length === 0) {
         isEmpty = true
@@ -148,13 +152,13 @@ export async function signup_form_submit_handler(
         // 0 is empty except for numeric fields like level and birthYear
         isEmpty = true
       }
-      
+
       if (isEmpty) {
         // Field is required but empty
         try {
           field.error = err_msg?.required || 'This field is required'
           signup_store.set(signup_data)
-          
+
           // Try to focus and scroll to the field
           if (field.node && typeof field.node.focus === 'function') {
             field.node.focus()
@@ -163,7 +167,7 @@ export async function signup_form_submit_handler(
         } catch (focusError) {
           console.error(`Error focusing field ${name}:`, focusError)
         }
-        
+
         return {} // abort submission
       }
     } catch (fieldError) {
@@ -176,13 +180,17 @@ export async function signup_form_submit_handler(
   const type = signup_data.type?.value
 
   if (!chapter || !type) {
-    const error = new Error(`Missing required form data: chapter=${chapter}, type=${type}`)
+    const error = new Error(
+      `Missing required form data: chapter=${chapter}, type=${type}`,
+    )
     return { error }
   }
 
   const baseId = chapters?.find(({ title }) => chapter?.includes(title))?.baseId
   if (!baseId) {
-    const error = new Error(`baseId could not be determined for chapter: ${chapter}`)
+    const error = new Error(
+      `baseId could not be determined for chapter: ${chapter}`,
+    )
     return { error }
   }
 
@@ -200,10 +208,12 @@ export async function signup_form_submit_handler(
     if (!response || typeof response !== 'object') {
       throw new Error('Invalid response from Azure')
     }
-    
+
     // Check if response has status property
     if (!response.hasOwnProperty('status') || response.status !== 200) {
-      throw new Error(`Azure request failed with status: ${response.status || 'unknown'}`)
+      throw new Error(
+        `Azure request failed with status: ${response.status || 'unknown'}`,
+      )
     }
 
     console.log('Calling plausible...')
@@ -217,7 +227,7 @@ export async function signup_form_submit_handler(
       console.error('Error calling plausible:', plausibleError)
       // Don't throw, just log - plausible errors shouldn't break submission
     }
-    
+
     console.log('Scrolling to top...')
     try {
       if (typeof window !== 'undefined') {
@@ -235,11 +245,11 @@ export async function signup_form_submit_handler(
       console.error('Error resetting store:', storeError)
       // Don't throw, just log
     }
-    
+
     return { success: true }
   } catch (err) {
     console.error('Caught error - type:', typeof err, 'value:', err)
-    
+
     // Safely serialize error for Plausible
     let errorInfo: string
     try {
@@ -251,7 +261,7 @@ export async function signup_form_submit_handler(
     } catch (serializationError) {
       errorInfo = `Serialization failed: ${String(err)}`
     }
-    
+
     if (typeof window !== 'undefined' && window.plausible) {
       window.plausible(`Signup Error`, {
         props: {
