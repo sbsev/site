@@ -14,50 +14,33 @@
     // TODO:CS: Style-Frage Dots ja/nein? Wenn ja nur ausgewaehlte Beitraege, da zu viele sonst?
     export let dots = false
     
+    let error: Error | undefined = undefined
+    
     async function get_posts() {
-        posts = await fetch_posts()
+        try {
+            posts = await fetch_posts()
+        } catch (err) {
+            error = err as Error
+            console.error('Failed to fetch posts:', err)
+        }
     }
-
-    // Alternative carousel with beautiful animations: https://splidejs.com/integration/svelte-splide/
-    // import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-    // import '@splidejs/svelte-splide/css';
 </script>
 
-{#await get_posts() then _ }
-    <Carousel
-        {autoplay}
-        {autoplayDuration}
-        {autoplayProgressVisible}
-        {dots}
-    >
-        {#each posts as post}
-            <div>
-                <PostPreview {post} />
-            </div>
-        {/each}
-    </Carousel>
-
-    <!-- TODO:CS: Dauert etwas lange zu rendern... -->
-    <!-- <Splide options={ { rewind: true } } aria-label="Svelte Splide Example"> -->
-    <!-- <Splide options={{ 
-        type: 'loop', 
-        padding:'5rem',
-        gap: '2rem', 
-        autoplay: true
-    }} aria-label="Svelte Splide Example">
-        {#each posts as post}
-            <SplideSlide>
-                <PostPreview {post} />
-            </SplideSlide>
-        {/each}
-    </Splide> -->
-    <!-- <ul>
-        {#each posts as post (post.slug)}
-            <li animate:flip={{ duration: 200 }} transition:scale style="display: flex;">
-                <PostPreview {post} />
-            </li>
-        {/each}
-    </ul> -->
+{#await get_posts() then _}
+    {#if !error && posts && posts.length > 0}
+        <Carousel
+            {autoplay}
+            {autoplayDuration}
+            {autoplayProgressVisible}
+            {dots}
+        >
+            {#each posts as post}
+                <div>
+                    <PostPreview {post} />
+                </div>
+            {/each}
+        </Carousel>
+    {/if}
 {/await}
 
 <style>
