@@ -6,16 +6,16 @@
     import Carousel from 'svelte-carousel';
 
     let carousel; // for calling methods of the carousel instance
-        
+
     export let posts;
     export let autoplay = true
     export let autoplayDuration = 3000
     export let autoplayProgressVisible = true
     // TODO:CS: Style-Frage Dots ja/nein? Wenn ja nur ausgewaehlte Beitraege, da zu viele sonst?
     export let dots = false
-    
+
     let error: Error | undefined = undefined
-    
+
     async function get_posts() {
         try {
             posts = await fetch_posts()
@@ -54,4 +54,4 @@
       padding: 2em 1em;
     }
   </style>
-  
+
