@@ -36,7 +36,7 @@ repos:
         args: [--ignore-words-list, 'adresse,afterall,presse,ue,alle']
 
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.0.0-alpha.0
+    rev: v9.32.0
     hooks:
       - id: eslint
         types: [file]
