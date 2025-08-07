@@ -87,6 +87,13 @@ module.exports = [
     },
   },
   {
-    ignores: [`build/`, `dist/`, `.svelte-kit/`],
+    files: [`tests/**/*`, `**/*.test.{js,ts}`],
+    rules: {
+      'no-console': `off`, // Allow console statements in test files
+      '@typescript-eslint/no-explicit-any': `warn`, // Relax any usage in tests
+    },
+  },
+  {
+    ignores: [`build/`, `dist/`, `.svelte-kit/`, `node_modules/`, `*.config.*`],
   },
 ]

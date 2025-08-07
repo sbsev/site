@@ -36,7 +36,7 @@ export async function prepare_signup_data_for_azure(
   data: SignupStore,
   chapter_base_id: string,
   test = false,
-): Promise<{ status: number; data: any }> {
+): Promise<{ status: number; data: unknown }> {
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
   // common fields for both students and pupils
@@ -106,7 +106,7 @@ export async function prepare_signup_data_for_azure(
   const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
-    console.log(`fields:`, fields) // eslint-disable-line no-console
+    console.warn(`fields:`, fields)
     return await azure_post_new_records(test_base_id, table, fields)
   }
   return await azure_post_new_records(chapter_base_id, table, globalFields)
@@ -195,7 +195,7 @@ export async function signup_form_submit_handler(
   }
 
   try {
-    console.log(`Preparing signup data for Azure...`)
+    console.warn(`Preparing signup data for Azure...`)
     let response
     try {
       response = await prepare_signup_data_for_azure(signup_data, baseId)
@@ -204,19 +204,19 @@ export async function signup_form_submit_handler(
       throw prepareError
     }
 
-    console.log(`Azure response:`, response)
+    console.warn(`Azure response:`, response)
     if (!response || typeof response !== `object`) {
       throw new Error(`Invalid response from Azure`)
     }
 
     // Check if response has status property
-    if (!response.hasOwnProperty(`status`) || response.status !== 200) {
+    if (!Object.prototype.hasOwnProperty.call(response, `status`) || response.status !== 200) {
       throw new Error(
         `Azure request failed with status: ${response.status || `unknown`}`,
       )
     }
 
-    console.log(`Calling plausible...`)
+    console.warn(`Calling plausible...`)
     try {
       if (typeof window !== `undefined` && window.plausible) {
         window.plausible(`Signup`, {
@@ -228,7 +228,7 @@ export async function signup_form_submit_handler(
       // Don't throw, just log - plausible errors shouldn't break submission
     }
 
-    console.log(`Scrolling to top...`)
+    console.warn(`Scrolling to top...`)
     try {
       if (typeof window !== `undefined`) {
         window.scrollTo({ top: 0, behavior: `smooth` })
@@ -238,7 +238,7 @@ export async function signup_form_submit_handler(
       // Don't throw, just log
     }
 
-    console.log(`Resetting signup store...`)
+    console.warn(`Resetting signup store...`)
     try {
       signup_store.set({} as SignupStore) // reset store for potential next signup
     } catch (storeError) {
@@ -258,7 +258,7 @@ export async function signup_form_submit_handler(
       } else {
         errorInfo = String(err)
       }
-    } catch (serializationError) {
+    } catch {
       errorInfo = `Serialization failed: ${String(err)}`
     }
 

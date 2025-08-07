@@ -38,4 +38,4 @@ export const signupStore = createSessionStore<SignupStore>(
   {} as SignupStore,
 )
 
-export const microcopy = writable<Record<string, any>>({})
+export const microcopy = writable<Record<string, unknown>>({})

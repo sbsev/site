@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Run ESLint (production code)
+        run: pnpm lint:prod
+
+      - name: Run type checking
+        run: pnpm check
+
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:

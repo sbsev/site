@@ -271,9 +271,9 @@ export async function fetch_yaml_list(
 ): Promise<Record<string, unknown>[]> {
   const list = (await fetch_yaml(title)) as Record<string, unknown>[]
   return list
-    .map((item) => parse_body(item as any))
-    .map((item) => title_to_slug(item as any))
-    .map((item) => prefixSlug(slugPrefix)(item as any))
+    .map((item) => parse_body(item as Page | Post))
+    .map((item) => title_to_slug(item as Record<string, unknown> & { title: string }))
+    .map((item) => prefixSlug(slugPrefix)(item as Page | Post))
 }
 
 // remove outer-most paragraph tags (if any)
@@ -294,15 +294,15 @@ export function parse_form_data(obj: Form): Form {
       // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
       const markdown = (itm as string).replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-      ;(obj as any)[key] = strip_outer_par_tag(marked(markdown))
+      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(marked(markdown))
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)
-      parse_form_data(itm as any)
+      parse_form_data(itm as unknown as Form)
     } else if (Array.isArray(itm)) {
       // Process arrays of objects (like fields array)
       itm.forEach((item) => {
         if (typeof item === `object` && item !== null) {
-          parse_form_data(item as any)
+          parse_form_data(item as unknown as Form)
         }
       })
     }

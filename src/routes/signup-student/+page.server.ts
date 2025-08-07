@@ -6,7 +6,7 @@ import raw_form from '../../signup-form/de/student.yml'
 
 export const load = async () => {
   try {
-    console.log(`Loading student signup form - static imports...`)
+    console.warn(`Loading student signup form - static imports...`)
 
     // Use the imported YAML data directly
     const messagesData = messages || {
@@ -37,14 +37,14 @@ export const load = async () => {
       },
     }
 
-    console.log(`YAML data loaded:`, {
+    console.warn(`YAML data loaded:`, {
       messages: !!messagesData,
       options: !!optionsData,
       raw_form: !!rawFormData,
     })
 
     let chapters = await fetch_chapters()
-    console.log(`chapters loaded:`, chapters)
+    console.warn(`chapters loaded:`, chapters)
 
     // Handle case where chapters might be undefined or not an array
     if (!Array.isArray(chapters)) {
@@ -54,7 +54,7 @@ export const load = async () => {
     chapters = chapters.filter((chap) => chap.acceptsSignups)
 
     const form = parse_form_data({ ...rawFormData, ...messagesData })
-    console.log(`form parsed:`, form)
+    console.warn(`form parsed:`, form)
 
     if (dev && chapters.length > 0) {
       chapters[0] = {
@@ -72,7 +72,7 @@ export const load = async () => {
       }
     }
 
-    console.log(`Returning data:`, { chapters, form })
+    console.warn(`Returning data:`, { chapters, form })
 
     // Ensure data is properly serializable for hydration
     return {
@@ -101,7 +101,7 @@ export const load = async () => {
       errMsg: { required: `This field is required` },
     }
 
-    console.log(`Returning fallback form:`, basicForm)
+    console.warn(`Returning fallback form:`, basicForm)
     return {
       chapters: [],
       form: JSON.parse(JSON.stringify(basicForm)),

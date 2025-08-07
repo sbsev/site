@@ -3,15 +3,15 @@
   // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
-  import Icon from '@iconify/svelte'
+  import _Icon from '@iconify/svelte'
 
   export let data
   $: ({ chapters, form } = data)
 
   // Add debugging and fallback
-  $: console.log(`Client-side data received:`, { data, form: !!form, chapters: !!chapters })
-  $: console.log(`Form structure:`, { form })
-  $: console.log(`Form header check:`, { hasForm: !!form, hasHeader: !!(form && form.header) })
+  $: console.warn(`Client-side data received:`, { data, form: !!form, chapters: !!chapters })
+  $: console.warn(`Form structure:`, { form })
+  $: console.warn(`Form header check:`, { hasForm: !!form, hasHeader: !!(form && form.header) })
   $: if (!form || !form.header) {
     console.error(`Form data is missing or incomplete:`, { data, form })
   }
