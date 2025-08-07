@@ -1,4 +1,3 @@
- 
 import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import marked from '../utils/marked'
