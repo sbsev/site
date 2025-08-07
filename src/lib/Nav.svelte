@@ -35,7 +35,7 @@
   // isCurrent needs to be reactive to respond to changes in $page.url.pathname
   $: isCurrent = (url: string) => {
     // Only access page store on the client to avoid SSR issues
-    if (typeof window === 'undefined') return undefined
+    if (typeof window === `undefined`) return undefined
     if (url === $page.url.pathname) return `page`
     if (url !== `/` && $page.url.pathname.includes(url)) return `page`
     return undefined

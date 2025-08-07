@@ -1,29 +1,29 @@
 import { expect, test } from '@playwright/test'
 
-test.describe('Component Functionality', () => {
-  test('search functionality works', async ({ page }) => {
-    await page.goto('/')
+test.describe(`Component Functionality`, () => {
+  test(`search functionality works`, async ({ page }) => {
+    await page.goto(`/`)
 
     // Look for search input
     const searchInput = page.locator(
-      'input[type="search"], input[placeholder*="Suche"], input[placeholder*="Search"]',
+      `input[type="search"], input[placeholder*="Suche"], input[placeholder*="Search"]`,
     )
 
     if ((await searchInput.count()) > 0) {
-      await searchInput.first().fill('test')
-      await page.keyboard.press('Enter')
+      await searchInput.first().fill(`test`)
+      await page.keyboard.press(`Enter`)
 
       // Should either navigate or show results
       await page.waitForTimeout(1000)
-      await expect(page.locator('body')).toBeVisible()
+      await expect(page.locator(`body`)).toBeVisible()
     }
   })
 
-  test('map component loads', async ({ page }) => {
-    await page.goto('/standorte')
+  test(`map component loads`, async ({ page }) => {
+    await page.goto(`/standorte`)
 
     // Look for map container
-    const map = page.locator('#map, .map, .mapbox, [class*="mapbox"]')
+    const map = page.locator(`#map, .map, .mapbox, [class*="mapbox"]`)
 
     if ((await map.count()) > 0) {
       await expect(map.first()).toBeVisible()
@@ -33,12 +33,12 @@ test.describe('Component Functionality', () => {
     }
   })
 
-  test('modal/dialog functionality', async ({ page }) => {
-    await page.goto('/')
+  test(`modal/dialog functionality`, async ({ page }) => {
+    await page.goto(`/`)
 
     // Look for buttons that might open modals
     const modalTriggers = page.locator(
-      'button:has-text("info"), button:has-text("mehr"), button[aria-haspopup="dialog"]',
+      `button:has-text("info"), button:has-text("mehr"), button[aria-haspopup="dialog"]`,
     )
     const count = await modalTriggers.count()
 
@@ -46,29 +46,29 @@ test.describe('Component Functionality', () => {
       await modalTriggers.first().click()
 
       // Look for modal content
-      const modal = page.locator('[role="dialog"], .modal, [class*="modal"]')
+      const modal = page.locator(`[role="dialog"], .modal, [class*="modal"]`)
       if ((await modal.count()) > 0) {
         await expect(modal.first()).toBeVisible()
 
         // Should be able to close modal
         const closeButton = page.locator(
-          'button:has-text("×"), button:has-text("close"), button[aria-label*="close"]',
+          `button:has-text("×"), button:has-text("close"), button[aria-label*="close"]`,
         )
         if ((await closeButton.count()) > 0) {
           await closeButton.first().click()
         } else {
-          await page.keyboard.press('Escape')
+          await page.keyboard.press(`Escape`)
         }
       }
     }
   })
 
-  test('dropdown menus work', async ({ page }) => {
-    await page.goto('/')
+  test(`dropdown menus work`, async ({ page }) => {
+    await page.goto(`/`)
 
     // Look for dropdown triggers in navigation
     const dropdownTriggers = page.locator(
-      'button:has-text("öffnen"), button[aria-expanded], [class*="dropdown"] button',
+      `button:has-text("öffnen"), button[aria-expanded], [class*="dropdown"] button`,
     )
     const count = await dropdownTriggers.count()
 
@@ -81,17 +81,17 @@ test.describe('Component Functionality', () => {
         await page.waitForTimeout(500)
 
         // Click somewhere else to close
-        await page.click('body')
+        await page.click(`body`)
       }
     }
   })
 
-  test('tooltips appear on hover', async ({ page }) => {
-    await page.goto('/')
+  test(`tooltips appear on hover`, async ({ page }) => {
+    await page.goto(`/`)
 
     // Look for elements that might have tooltips
     const tooltipTriggers = page.locator(
-      '[title], [data-tooltip], [aria-describedby]',
+      `[title], [data-tooltip], [aria-describedby]`,
     )
     const count = await tooltipTriggers.count()
 
@@ -107,17 +107,17 @@ test.describe('Component Functionality', () => {
     }
   })
 
-  test('pagination works', async ({ page }) => {
-    await page.goto('/blog')
+  test(`pagination works`, async ({ page }) => {
+    await page.goto(`/blog`)
 
     // Look for pagination controls
     const pagination = page.locator(
-      '.pagination, [class*="pagination"], nav[aria-label*="pagination"]',
+      `.pagination, [class*="pagination"], nav[aria-label*="pagination"]`,
     )
 
     if ((await pagination.count()) > 0) {
       const nextButton = page.locator(
-        'a:has-text("next"), a:has-text("weiter"), a:has-text(">")',
+        `a:has-text("next"), a:has-text("weiter"), a:has-text(">")`,
       )
 
       if ((await nextButton.count()) > 0) {
@@ -131,18 +131,18 @@ test.describe('Component Functionality', () => {
     }
   })
 
-  test('social media links work', async ({ page }) => {
-    await page.goto('/')
+  test(`social media links work`, async ({ page }) => {
+    await page.goto(`/`)
 
     // Look for social media links
     const socialLinks = page.locator(
-      'a[href*="facebook"], a[href*="twitter"], a[href*="instagram"], a[href*="linkedin"]',
+      `a[href*="facebook"], a[href*="twitter"], a[href*="instagram"], a[href*="linkedin"]`,
     )
     const count = await socialLinks.count()
 
     for (let i = 0; i < Math.min(count, 3); i++) {
       const link = socialLinks.nth(i)
-      const href = await link.getAttribute('href')
+      const href = await link.getAttribute(`href`)
 
       // Should have valid social media URLs
       expect(href).toMatch(
@@ -150,7 +150,7 @@ test.describe('Component Functionality', () => {
       )
 
       // Should open in new tab (optional)
-      const target = await link.getAttribute('target')
+      const target = await link.getAttribute(`target`)
       // Some social links may not have target="_blank", which is fine
     }
   })

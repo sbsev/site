@@ -24,16 +24,16 @@
 
   // Set default values based on field type to prevent Svelte 5 bind:value={undefined} error
   $: if (value === undefined) {
-    if (type === 'select' || type === 'placeSelect') {
-      value = maxSelect === 1 ? '' : []
-    } else if (type === 'toggle' || type === 'checkbox') {
+    if (type === `select` || type === `placeSelect`) {
+      value = maxSelect === 1 ? `` : []
+    } else if (type === `toggle` || type === `checkbox`) {
       value = false
-    } else if (type === 'number' || type === 'singleRange') {
+    } else if (type === `number` || type === `singleRange`) {
       value = min || 0
-    } else if (type === 'doubleRange') {
+    } else if (type === `doubleRange`) {
       value = [min || 0, max || 100]
     } else {
-      value = ''
+      value = ``
     }
   }
 

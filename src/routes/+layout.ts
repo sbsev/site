@@ -4,7 +4,7 @@ import type { Chapter, NavLink } from '$lib/types'
 
 export const load = async () => {
   try {
-    console.log('Loading layout data...')
+    console.log(`Loading layout data...`)
     const nav = (await fetch_yaml(`Nav`)) as NavLink[]
     const footer = await fetch_yaml(`Footer`)
     const social = await fetch_yaml(`Social`)
@@ -35,10 +35,10 @@ export const load = async () => {
       standorteNavForChapters.subNav.unshift(...chapterLinks)
     }
 
-    console.log('Layout data loaded successfully')
+    console.log(`Layout data loaded successfully`)
     return { nav, footer, social }
   } catch (error) {
-    console.error('Error loading layout data:', error)
+    console.error(`Error loading layout data:`, error)
     // Return minimal fallback data so the page can still load
     return {
       nav: [],

@@ -32,12 +32,12 @@
   // count tag occurrences
   $: tags = Array.isArray(data.faqs)
     ? data.faqs.reduce(
-        (obj, faq) => {
-          faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
-          return obj
-        },
-        { Alle: data.faqs.length }
-      )
+      (obj, faq) => {
+        faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
+        return obj
+      },
+      { Alle: data.faqs.length }
+    )
     : { Alle: 0 }
 </script>
 

@@ -126,7 +126,7 @@ export async function signup_form_submit_handler(
       const field = signup_data[name]
 
       // Skip if field doesn't exist or isn't properly initialized
-      if (!field || typeof field !== 'object') {
+      if (!field || typeof field !== `object`) {
         console.warn(`Field ${name} is not properly initialized`)
         continue
       }
@@ -143,12 +143,12 @@ export async function signup_form_submit_handler(
       if (
         fieldValue === undefined ||
         fieldValue === null ||
-        fieldValue === ''
+        fieldValue === ``
       ) {
         isEmpty = true
       } else if (Array.isArray(fieldValue) && fieldValue.length === 0) {
         isEmpty = true
-      } else if (fieldValue === 0 && name !== 'level' && name !== 'birthYear') {
+      } else if (fieldValue === 0 && name !== `level` && name !== `birthYear`) {
         // 0 is empty except for numeric fields like level and birthYear
         isEmpty = true
       }
@@ -156,13 +156,13 @@ export async function signup_form_submit_handler(
       if (isEmpty) {
         // Field is required but empty
         try {
-          field.error = err_msg?.required || 'This field is required'
+          field.error = err_msg?.required || `This field is required`
           signup_store.set(signup_data)
 
           // Try to focus and scroll to the field
-          if (field.node && typeof field.node.focus === 'function') {
+          if (field.node && typeof field.node.focus === `function`) {
             field.node.focus()
-            field.node.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            field.node.scrollIntoView({ behavior: `smooth`, block: `center` })
           }
         } catch (focusError) {
           console.error(`Error focusing field ${name}:`, focusError)
@@ -195,65 +195,65 @@ export async function signup_form_submit_handler(
   }
 
   try {
-    console.log('Preparing signup data for Azure...')
+    console.log(`Preparing signup data for Azure...`)
     let response
     try {
       response = await prepare_signup_data_for_azure(signup_data, baseId)
     } catch (prepareError) {
-      console.error('Error in prepare_signup_data_for_azure:', prepareError)
+      console.error(`Error in prepare_signup_data_for_azure:`, prepareError)
       throw prepareError
     }
 
-    console.log('Azure response:', response)
-    if (!response || typeof response !== 'object') {
-      throw new Error('Invalid response from Azure')
+    console.log(`Azure response:`, response)
+    if (!response || typeof response !== `object`) {
+      throw new Error(`Invalid response from Azure`)
     }
 
     // Check if response has status property
-    if (!response.hasOwnProperty('status') || response.status !== 200) {
+    if (!response.hasOwnProperty(`status`) || response.status !== 200) {
       throw new Error(
-        `Azure request failed with status: ${response.status || 'unknown'}`,
+        `Azure request failed with status: ${response.status || `unknown`}`,
       )
     }
 
-    console.log('Calling plausible...')
+    console.log(`Calling plausible...`)
     try {
-      if (typeof window !== 'undefined' && window.plausible) {
+      if (typeof window !== `undefined` && window.plausible) {
         window.plausible(`Signup`, {
           props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
         })
       }
     } catch (plausibleError) {
-      console.error('Error calling plausible:', plausibleError)
+      console.error(`Error calling plausible:`, plausibleError)
       // Don't throw, just log - plausible errors shouldn't break submission
     }
 
-    console.log('Scrolling to top...')
+    console.log(`Scrolling to top...`)
     try {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== `undefined`) {
         window.scrollTo({ top: 0, behavior: `smooth` })
       }
     } catch (scrollError) {
-      console.error('Error scrolling:', scrollError)
+      console.error(`Error scrolling:`, scrollError)
       // Don't throw, just log
     }
 
-    console.log('Resetting signup store...')
+    console.log(`Resetting signup store...`)
     try {
       signup_store.set({} as SignupStore) // reset store for potential next signup
     } catch (storeError) {
-      console.error('Error resetting store:', storeError)
+      console.error(`Error resetting store:`, storeError)
       // Don't throw, just log
     }
 
     return { success: true }
   } catch (err) {
-    console.error('Caught error - type:', typeof err, 'value:', err)
+    console.error(`Caught error - type:`, typeof err, `value:`, err)
 
     // Safely serialize error for Plausible
     let errorInfo: string
     try {
-      if (err && typeof err === 'object' && err.constructor === Error) {
+      if (err && typeof err === `object` && err.constructor === Error) {
         errorInfo = JSON.stringify(err, Object.getOwnPropertyNames(err))
       } else {
         errorInfo = String(err)
@@ -262,7 +262,7 @@ export async function signup_form_submit_handler(
       errorInfo = `Serialization failed: ${String(err)}`
     }
 
-    if (typeof window !== 'undefined' && window.plausible) {
+    if (typeof window !== `undefined` && window.plausible) {
       window.plausible(`Signup Error`, {
         props: {
           error: errorInfo,
