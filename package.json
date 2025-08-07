@@ -17,7 +17,8 @@
     "test:smoke": "playwright test tests/smoke.test.ts",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
-    "check": "svelte-check"
+    "check": "svelte-check",
+    "lint": "eslint . --fix"
   },
   "devDependencies": {
     "@eslint/js": "9.32.0",

@@ -35,20 +35,9 @@ repos:
         exclude: (/de/.+\.yml|.+\.svelte)
         args: [--ignore-words-list, 'adresse,afterall,presse,ue,alle']
 
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.32.0
-    hooks:
-      - id: eslint
-        types: [file]
-        args: [--fix]
-        files: \.(js|ts|svelte)$
-        additional_dependencies:
-          - eslint
-          - svelte
-          - typescript
-          - eslint-plugin-svelte
-          - svelte-eslint-parser
-          - '@typescript-eslint/eslint-plugin'
-          - '@typescript-eslint/parser'
-          - '@eslint/js'
-          - 'typescript-eslint'
+  # ESLint v9 disabled in pre-commit due to module resolution issues
+  # Run manually with: npm run lint
+  # - repo: https://github.com/pre-commit/mirrors-eslint
+  #   rev: v9.32.0
+  #   hooks:
+  #     - id: eslint
