@@ -3,9 +3,9 @@ import { fetch_posts } from '$lib/fetch'
 export async function entries() {
   try {
     const posts = await fetch_posts()
-    return posts.map((post) => ({ slug: post.slug.replace('/blog/', '') }))
+    return posts.map((post) => ({ slug: post.slug.replace(`/blog/`, ``) }))
   } catch (error) {
-    console.warn('Failed to fetch posts for prerendering:', error)
+    console.warn(`Failed to fetch posts for prerendering:`, error)
     return []
   }
 }

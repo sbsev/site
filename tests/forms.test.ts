@@ -1,69 +1,69 @@
 import { expect, test } from '@playwright/test'
 
-test.describe('Form Functionality (Without Submission)', () => {
-  test('student signup form renders correctly', async ({ page }) => {
-    await page.goto('/signup-student')
+test.describe(`Form Functionality (Without Submission)`, () => {
+  test(`student signup form renders correctly`, async ({ page }) => {
+    await page.goto(`/signup-student`)
 
     // Check that form is present
-    await expect(page.locator('form')).toBeVisible()
+    await expect(page.locator(`form`)).toBeVisible()
 
     // Check that required fields are present
     const formElementCount = await page
-      .locator('input, select, textarea')
+      .locator(`input, select, textarea`)
       .count()
     expect(formElementCount).toBeGreaterThan(2)
 
     // Check that submit button exists (may be hidden/disabled initially)
     const submitButton = page.locator(
-      'button[type="submit"]:not([aria-hidden="true"]), button:has-text("abschicken"), button:has-text("Anmeldung")',
+      `button[type="submit"]:not([aria-hidden="true"]), button:has-text("abschicken"), button:has-text("Anmeldung")`,
     )
     expect(await submitButton.count()).toBeGreaterThan(0)
   })
 
-  test('pupil signup form renders correctly', async ({ page }) => {
-    await page.goto('/signup-pupil')
+  test(`pupil signup form renders correctly`, async ({ page }) => {
+    await page.goto(`/signup-pupil`)
 
     // Check that form is present
-    await expect(page.locator('form')).toBeVisible()
+    await expect(page.locator(`form`)).toBeVisible()
 
     // Check that required fields are present
     const formElementCount = await page
-      .locator('input, select, textarea')
+      .locator(`input, select, textarea`)
       .count()
     expect(formElementCount).toBeGreaterThan(2)
 
     // Check that submit button exists (may be hidden/disabled initially)
     const submitButton = page.locator(
-      'button[type="submit"]:not([aria-hidden="true"]), button:has-text("abschicken"), button:has-text("Anmeldung")',
+      `button[type="submit"]:not([aria-hidden="true"]), button:has-text("abschicken"), button:has-text("Anmeldung")`,
     )
     expect(await submitButton.count()).toBeGreaterThan(0)
   })
 
-  test('form fields can be filled', async ({ page }) => {
-    await page.goto('/signup-student')
+  test(`form fields can be filled`, async ({ page }) => {
+    await page.goto(`/signup-student`)
 
     // Find text inputs and fill them
     const textInputs = page.locator(
-      'input[type="text"], input[type="email"], input[type="tel"]',
+      `input[type="text"], input[type="email"], input[type="tel"]`,
     )
     const count = await textInputs.count()
 
     for (let i = 0; i < Math.min(count, 3); i++) {
       const input = textInputs.nth(i)
       if ((await input.isVisible()) && (await input.isEnabled())) {
-        await input.fill('Test Value')
-        await expect(input).toHaveValue('Test Value')
+        await input.fill(`Test Value`)
+        await expect(input).toHaveValue(`Test Value`)
       }
     }
   })
 
-  test('form validation works for required fields', async ({ page }) => {
-    await page.goto('/signup-student')
+  test(`form validation works for required fields`, async ({ page }) => {
+    await page.goto(`/signup-student`)
 
     // Try to submit empty form (if submit button is visible and enabled)
     const submitButton = page
       .locator(
-        'button[type="submit"], button:has-text("abschicken"), button:has-text("Anmeldung")',
+        `button[type="submit"], button:has-text("abschicken"), button:has-text("Anmeldung")`,
       )
       .first()
 
@@ -75,18 +75,18 @@ test.describe('Form Functionality (Without Submission)', () => {
     // We don't want it to actually submit with empty data
     const hasValidationErrors =
       (await page
-        .locator('[class*="error"], .invalid, [aria-invalid="true"]')
+        .locator(`[class*="error"], .invalid, [aria-invalid="true"]`)
         .count()) > 0
-    const stillOnFormPage = page.url().includes('signup')
+    const stillOnFormPage = page.url().includes(`signup`)
 
     expect(hasValidationErrors || stillOnFormPage).toBeTruthy()
   })
 
-  test('multiselect components work', async ({ page }) => {
-    await page.goto('/signup-pupil')
+  test(`multiselect components work`, async ({ page }) => {
+    await page.goto(`/signup-pupil`)
 
     // Look for multiselect dropdowns (common in this app)
-    const selects = page.locator('select, [class*="multiselect"]')
+    const selects = page.locator(`select, [class*="multiselect"]`)
     const count = await selects.count()
 
     if (count > 0) {
@@ -94,26 +94,26 @@ test.describe('Form Functionality (Without Submission)', () => {
       await expect(selects.first()).toBeVisible()
     } else {
       // If no selects found, that's also valid - just verify form exists
-      await expect(page.locator('form')).toBeVisible()
+      await expect(page.locator(`form`)).toBeVisible()
     }
   })
 
-  test('place selector works', async ({ page }) => {
-    await page.goto('/signup-pupil')
+  test(`place selector works`, async ({ page }) => {
+    await page.goto(`/signup-pupil`)
 
     // Look for place/location input
     const placeInput = page.locator(
-      '#places input, input[placeholder*="Stadt"], input[placeholder*="Adresse"]',
+      `#places input, input[placeholder*="Stadt"], input[placeholder*="Adresse"]`,
     )
 
     if (await placeInput.isVisible()) {
-      await placeInput.fill('Hamburg')
+      await placeInput.fill(`Hamburg`)
 
       // Should trigger some kind of autocomplete or validation
       await page.waitForTimeout(1000) // Wait for debounce
 
       // Input should retain the value
-      await expect(placeInput).toHaveValue('Hamburg')
+      await expect(placeInput).toHaveValue(`Hamburg`)
     }
   })
 })

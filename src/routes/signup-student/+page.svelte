@@ -9,7 +9,7 @@
 
   // Add debugging and fallback
   $: if (!form || !form.header) {
-    console.error('Form data is missing or incomplete:', { data, form })
+    console.error(`Form data is missing or incomplete:`, { data, form })
   }
 
   let success = false
@@ -25,8 +25,8 @@
 
       // Ensure form fields exist before mapping
       if (!form || !form.fields) {
-        console.error('Form fields not available:', { form })
-        error = new Error('Form configuration is missing')
+        console.error(`Form fields not available:`, { form })
+        error = new Error(`Form configuration is missing`)
         return
       }
 
@@ -40,7 +40,7 @@
       if (response.success) success = true
       error = response.error
     } catch (submitError) {
-      console.error('Submit error:', submitError)
+      console.error(`Submit error:`, submitError)
       error = submitError as Error
     } finally {
       isSubmitting = false
@@ -50,8 +50,8 @@
 
 {#if success}
   <section>
-    <span>{form?.submitSuccess?.title || 'Success!'}</span>
-    <p>{@html form?.submitSuccess?.note || 'Your registration was successful.'}</p>
+    <span>{form?.submitSuccess?.title || `Success!`}</span>
+    <p>{@html form?.submitSuccess?.note || `Your registration was successful.`}</p>
   </section>
 {:else if form && form.header}
   <form on:submit|preventDefault={submit}>
@@ -70,9 +70,9 @@
     {/each}
 
     <h3>
-      {@html form.submit?.title || 'Submit'}
+      {@html form.submit?.title || `Submit`}
     </h3>
-    <p>{@html form.submit?.note || ''}</p>
+    <p>{@html form.submit?.note || ``}</p>
     <!-- class main used by CSS selector in signup form tests -->
     <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
@@ -91,8 +91,8 @@
 {#if modalOpen}
   <Modal on:close={() => (modalOpen = false)} style="background: var(--body-bg);">
     <div>
-      <span>{form?.submitError?.title || 'Error'}</span>
-      <p>{@html form?.submitError?.note || 'An error occurred.'}</p>
+      <span>{form?.submitError?.title || `Error`}</span>
+      <p>{@html form?.submitError?.note || `An error occurred.`}</p>
 
       <!-- <pre style="overflow-x: auto;"><code>
         {JSON.stringify(error, null, 2)}

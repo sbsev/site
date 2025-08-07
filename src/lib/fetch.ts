@@ -1,4 +1,4 @@
-/* eslint-disable indent */
+ 
 import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import marked from '../utils/marked'
@@ -79,7 +79,7 @@ export async function fetch_chapters(): Promise<Chapter[]> {
     const { chapters } = await contentful_fetch(chapters_query)
     return chapters?.items?.map(prefixSlug(`/standorte/`)) || []
   } catch (error) {
-    console.error('Error fetching chapters:', error)
+    console.error(`Error fetching chapters:`, error)
     return []
   }
 }
@@ -289,7 +289,7 @@ export function parse_form_data(obj: Form): Form {
 
   // Process all string fields that might contain markdown
   for (const [key, itm] of Object.entries(obj)) {
-    if (typeof itm === 'string') {
+    if (typeof itm === `string`) {
       // Process any string field that might contain markdown (title, note, etc.)
       // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
@@ -301,7 +301,7 @@ export function parse_form_data(obj: Form): Form {
     } else if (Array.isArray(itm)) {
       // Process arrays of objects (like fields array)
       itm.forEach((item) => {
-        if (typeof item === 'object' && item !== null) {
+        if (typeof item === `object` && item !== null) {
           parse_form_data(item as any)
         }
       })
