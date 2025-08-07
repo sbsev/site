@@ -210,7 +210,10 @@ export async function signup_form_submit_handler(
     }
 
     // Check if response has status property
-    if (!Object.prototype.hasOwnProperty.call(response, `status`) || response.status !== 200) {
+    if (
+      !Object.prototype.hasOwnProperty.call(response, `status`) ||
+      response.status !== 200
+    ) {
       throw new Error(
         `Azure request failed with status: ${response.status || `unknown`}`,
       )

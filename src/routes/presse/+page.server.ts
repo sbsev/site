@@ -3,7 +3,10 @@ import { fetch_page, fetch_yaml_list } from '$lib/fetch'
 export const load = async () => {
   const pressItems = await fetch_yaml_list(`Presse`, `presse#`)
   const itemsByYear = pressItems.reduce(
-    (acc: Record<number, Record<string, unknown>[]>, itm: Record<string, unknown>) => {
+    (
+      acc: Record<number, Record<string, unknown>[]>,
+      itm: Record<string, unknown>,
+    ) => {
       // split items into sub-lists by year
       const year = (itm.date as Date).getFullYear()
       if (!acc[year]) acc[year] = []

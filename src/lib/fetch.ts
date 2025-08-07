@@ -1,4 +1,3 @@
- 
 import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import marked from '../utils/marked'
@@ -272,7 +271,9 @@ export async function fetch_yaml_list(
   const list = (await fetch_yaml(title)) as Record<string, unknown>[]
   return list
     .map((item) => parse_body(item as Page | Post))
-    .map((item) => title_to_slug(item as Record<string, unknown> & { title: string }))
+    .map((item) =>
+      title_to_slug(item as Record<string, unknown> & { title: string }),
+    )
     .map((item) => prefixSlug(slugPrefix)(item as Page | Post))
 }
 
@@ -294,7 +295,9 @@ export function parse_form_data(obj: Form): Form {
       // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
       const markdown = (itm as string).replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(marked(markdown))
+      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(
+        marked(markdown),
+      )
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)
       parse_form_data(itm as unknown as Form)
