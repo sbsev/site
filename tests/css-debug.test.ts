@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 
 test(`debug CSS loading in head section`, async ({ page }) => {
   await page.goto(`/signup-pupil`, { waitUntil: `networkidle` })
