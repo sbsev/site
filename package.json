@@ -29,8 +29,8 @@
     "@types/events": "3.0.1",
     "@types/mapbox-gl": "2.7.15",
     "@types/mapbox__mapbox-gl-geocoder": "4.7.5",
-    "@typescript-eslint/eslint-plugin": "8.38.0",
-    "@typescript-eslint/parser": "8.38.0",
+    "@typescript-eslint/eslint-plugin": "8.39.0",
+    "@typescript-eslint/parser": "8.39.0",
     "eslint": "9.32.0",
     "eslint-plugin-svelte": "3.11.0",
     "js-yaml": "4.1.0",
@@ -49,7 +49,7 @@
     "svelte-zoo": "0.4.9",
     "svelte2tsx": "0.6.22",
     "typescript": "5.2.2",
-    "typescript-eslint": "8.38.0",
+    "typescript-eslint": "8.39.0",
     "vite": "4.4.9"
   }
 }
