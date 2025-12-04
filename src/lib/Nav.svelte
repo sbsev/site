@@ -5,8 +5,7 @@
   import { slide } from 'svelte/transition'
   import type { NavLink } from './types'
 
-  export let nav: NavLink[]
-  export let mobile: boolean
+  let { nav, mobile } = $props<{ nav: NavLink[]; mobile: boolean }>()
 
   const icon_map: Record<string, string> = {
     'Über Uns': `ri:plant-fill`,
@@ -33,13 +32,13 @@
   }
 
   // isCurrent needs to be reactive to respond to changes in $page.url.pathname
-  $: isCurrent = (url: string) => {
+  const isCurrent = $derived((url: string) => {
     // Only access page store on the client to avoid SSR issues
     if (typeof window === `undefined`) return undefined
     if (url === $page.url.pathname) return `page`
     if (url !== `/` && $page.url.pathname.includes(url)) return `page`
     return undefined
-  }
+  })
   beforeNavigate(close)
 
   const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])

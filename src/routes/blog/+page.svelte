@@ -4,13 +4,15 @@
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
-  export let data
+  const { data } = $props()
 
   let active_tag: BlogTag
 
-  $: filtered_posts = Array.isArray(data.posts)
-    ? data.posts.filter((post) => active_tag === `Alle` || post.tags.includes(active_tag))
-    : []
+  const filtered_posts = $derived(
+    Array.isArray(data.posts)
+      ? data.posts.filter((post) => active_tag === `Alle` || post.tags.includes(active_tag))
+      : []
+  )
 </script>
 
 <Social social={data.social} fixed vertical />

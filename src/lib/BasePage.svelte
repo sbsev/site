@@ -5,10 +5,10 @@
   import { microcopy } from './stores'
   import type { Page } from './types'
 
-  export let page: Page
+  const { page } = $props<{ page: Page }>()
 
-  $: ({ title, slug, cover, body, toc, yaml, sys } = page)
-  $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
+  const { title, slug, cover, body, toc, yaml, sys } = page
+  const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`))
 </script>
 
 <svelte:head>

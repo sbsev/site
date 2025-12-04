@@ -4,16 +4,6 @@
   import { onMount } from 'svelte'
   import { microcopy } from './stores'
 
-  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
-
-  export let map: mapboxgl.Map | null = null
-  export let markers: MapMarker[] = []
-  export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? [
-    10, 51.3, 5.05, 4, 10,
-  ]
-  export let css = ``
-
-  let map_div: HTMLDivElement
   type MapMarker = {
     lng: number
     lat: number
@@ -22,8 +12,30 @@
     classes?: string[]
   }
 
+  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
+
+  let {
+    map = null,
+    markers = [],
+    css = ``,
+  } = $props<{
+    map?: mapboxgl.Map | null
+    markers?: MapMarker[]
+    css?: string
+  }>()
+
+  const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? [
+    10, 51.3, 5.05, 4, 10,
+  ]
+
+  let map_div: HTMLDivElement
+
   // sort markers from north to south so southern makers have higher z-index
-  $: markers = markers.sort((m1, m2) => m2.lat - m1.lat)
+  $effect(() => {
+    if (markers.length > 0) {
+      markers = markers.sort((m1, m2) => m2.lat - m1.lat)
+    }
+  })
 
   onMount(() => {
     map = new mapboxgl.Map({

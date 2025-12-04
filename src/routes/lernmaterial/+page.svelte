@@ -4,7 +4,7 @@
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
-  export let data
+  const { data } = $props()
 
   const icon_map: Record<string, string> = {
     Alle: `ic:select-all`,
@@ -22,12 +22,14 @@
   const email = `it@studytutors.de`
   let hash: string
 
-  $: filtered = Array.isArray(data.studyPlatforms)
-    ? data.studyPlatforms.filter((itm) => active_tag === `Alle` || itm.tags.includes(active_tag))
-    : []
+  const filtered = $derived(
+    Array.isArray(data.studyPlatforms)
+      ? data.studyPlatforms.filter((itm) => active_tag === `Alle` || itm.tags.includes(active_tag))
+      : []
+  )
 
   // count tag occurrences
-  $: tags = (() => {
+  const tags = $derived((() => {
     if (!Array.isArray(data.studyPlatforms)) return { Alle: 0 }
 
     const tagCounts = { Alle: data.studyPlatforms.length } as Record<string, number>
@@ -37,7 +39,7 @@
       }
     }
     return tagCounts
-  })()
+  })())
 
   function setHash() {
     hash = window.location.hash.replace(`#`, ``)

@@ -4,18 +4,20 @@
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
 
-  export let data
-  $: ({ chapters, form } = data)
+  const { data } = $props()
+  const { chapters, form } = data
 
   // Add debugging and fallback
-  $: if (!form || !form.header) {
-    console.error(`Form data is missing or incomplete:`, { data, form })
-  }
+  $effect(() => {
+    if (!form || !form.header) {
+      console.error(`Form data is missing or incomplete:`, { data, form })
+    }
+  })
 
   let success = false
   let error: Error | undefined = undefined
   let isSubmitting: boolean
-  $: modalOpen = Boolean(error)
+  const modalOpen = $derived(Boolean(error))
 
   async function submit() {
     isSubmitting = true
@@ -89,7 +91,7 @@
   </div>
 {/if}
 {#if modalOpen}
-  <Modal on:close={() => (modalOpen = false)} style="background: var(--body-bg);">
+  <Modal on:close={() => (error = undefined)} style="background: var(--body-bg);">
     <div>
       <span>{form?.submitError?.title || `Error`}</span>
       <p>{@html form?.submitError?.note || `An error occurred.`}</p>
