@@ -5,16 +5,29 @@
   import { signupStore } from './stores'
   import type { FormFieldType, SignupStore } from './types'
 
-  export let title: string
-  export let note = ``
-  export let id: keyof SignupStore
-  export let placeholder = title
-  export let options: string[] = []
-  export let type: FormFieldType = `text`
-  export let required = false
-  export let min: number | null = null
-  export let max: number | null = null
-  export let maxSelect: number | null = null
+  let {
+    title,
+    note = ``,
+    id,
+    placeholder = title,
+    options = [],
+    type = `text`,
+    required = false,
+    min = null,
+    max = null,
+    maxSelect = null,
+  } = $props<{
+    title: string
+    note?: string
+    id: keyof SignupStore
+    placeholder?: string
+    options?: string[]
+    type?: FormFieldType
+    required?: boolean
+    min?: number | null
+    max?: number | null
+    maxSelect?: number | null
+  }>()
 
   let label: HTMLLabelElement
   let slider: HTMLDivElement
@@ -23,24 +36,31 @@
   let value: string | number | boolean | (string | number)[] | undefined
 
   // Set default values based on field type to prevent Svelte 5 bind:value={undefined} error
-  $: if (value === undefined) {
-    if (type === `select` || type === `placeSelect`) {
-      value = maxSelect === 1 ? `` : []
-    } else if (type === `toggle` || type === `checkbox`) {
-      value = false
-    } else if (type === `number` || type === `singleRange`) {
-      value = min || 0
-    } else if (type === `doubleRange`) {
-      value = [min || 0, max || 100]
-    } else {
-      value = ``
+  $effect(() => {
+    if (value === undefined) {
+      if (type === `select` || type === `placeSelect`) {
+        value = maxSelect === 1 ? `` : []
+      } else if (type === `toggle` || type === `checkbox`) {
+        value = false
+      } else if (type === `number` || type === `singleRange`) {
+        value = min || 0
+      } else if (type === `doubleRange`) {
+        value = [min || 0, max || 100]
+      } else {
+        value = ``
+      }
     }
-  }
+  })
 
-  $: $signupStore[id] = { required, node: label }
-  $: $signupStore[id].value = value
-  $: $signupStore[id].node = label
-  $: if (value) $signupStore[id].error = ``
+  $effect(() => {
+    $signupStore[id] = { required, node: label }
+    $signupStore[id].value = value
+    $signupStore[id].node = label
+  })
+
+  $effect(() => {
+    if (value) $signupStore[id].error = ``
+  })
 
   function input_type(node: HTMLInputElement): void {
     node.type = type

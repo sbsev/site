@@ -3,7 +3,7 @@
   import Icon from '@iconify/svelte'
   import { onMount } from 'svelte'
 
-  export let data
+  const { data } = $props()
   let n_readers = 0
 
   onMount(async () => {
@@ -24,8 +24,8 @@
     n_readers = results.visitors.value
   })
 
-  $: ({ title, body, cover, date } = data.post)
-  $: ({ bio, fieldOfStudy, name, photo } = data.post.author)
+  const { title, body, cover, date } = data.post
+  const { bio, fieldOfStudy, name, photo } = data.post.author
   const style = `padding: 0 3pt;`
 </script>
 

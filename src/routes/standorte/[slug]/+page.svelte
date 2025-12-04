@@ -3,8 +3,8 @@
   import { microcopy } from '$lib/stores'
   import Icon from '@iconify/svelte'
 
-  export let data
-  $: ({ page, slug } = data)
+  const { data } = $props()
+  const { page, slug } = data
 
   const style = `margin-right: 3pt;`
 </script>

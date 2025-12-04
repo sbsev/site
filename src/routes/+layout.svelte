@@ -4,8 +4,8 @@
   import { colorMode, microcopy } from '$lib/stores'
   import '../app.css'
 
-  export let data
-  $: ({ nav, footer, social } = data)
+  const { data } = $props()
+  const { nav, footer, social } = data
 
   afterNavigate(() => {
     // Track user navigation across the site. This data is transferred to Airtable
