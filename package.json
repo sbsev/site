@@ -14,7 +14,6 @@
     "preview": "vite preview",
     "serve": "vite build && vite preview",
     "test": "playwright test",
-    "test:smoke": "playwright test tests/smoke.test.ts",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "check": "svelte-check",
