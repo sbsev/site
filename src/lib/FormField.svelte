@@ -32,25 +32,21 @@
   let label: HTMLLabelElement
   let slider: HTMLDivElement
 
-  // Initialize value with appropriate defaults based on type to fix Svelte 5 binding issue
-  let value: string | number | boolean | (string | number)[] | undefined
-
-  // Set default values based on field type to prevent Svelte 5 bind:value={undefined} error
-  $effect(() => {
-    if (value === undefined) {
-      if (type === `select` || type === `placeSelect`) {
-        value = maxSelect === 1 ? `` : []
-      } else if (type === `toggle` || type === `checkbox`) {
-        value = false
-      } else if (type === `number` || type === `singleRange`) {
-        value = min || 0
-      } else if (type === `doubleRange`) {
-        value = [min || 0, max || 100]
-      } else {
-        value = ``
-      }
-    }
-  })
+  // Initialize value immediately with appropriate defaults based on type to fix Svelte 5 binding issue
+  // Cannot use $effect for this because bind:value requires a non-undefined value immediately
+  let value: string | number | boolean | (string | number)[] = $state(
+    type === `select` || type === `placeSelect`
+      ? maxSelect === 1
+        ? ``
+        : []
+      : type === `toggle` || type === `checkbox`
+        ? false
+        : type === `number` || type === `singleRange`
+          ? min || 0
+          : type === `doubleRange`
+            ? [min || 0, max || 100]
+            : ``,
+  )
 
   $effect(() => {
     $signupStore[id] = { required, node: label }
