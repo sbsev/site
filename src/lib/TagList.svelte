@@ -35,6 +35,7 @@
     Auszeichnung: `fa-solid:award`,
     Sonstiges: `fa6-solid:earth-europe`,
     Standorte: `fa6-solid:map-location-dot`,
+    Workshops: `grommet-icons:workshop`,
   }
 
   let open = false
