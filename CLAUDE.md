@@ -133,10 +133,12 @@ tests/                # Playwright end-to-end tests
 ### Core Components
 
 **Layout/Navigation:**
+
 - `Header.svelte`, `Nav.svelte`, `Footer.svelte` - Main layout structure
 - `BasePage.svelte` - Base layout for content pages
 
 **Interactive:**
+
 - `Modal.svelte` - Modal dialogs
 - `ChapterMap.svelte`, `Map.svelte`, `Geocoder.svelte` - Mapbox integration
 - `PlaceSelect.svelte` - Location selection
@@ -144,6 +146,7 @@ tests/                # Playwright end-to-end tests
 - `ThemeSwitcher.svelte` - Dark/light mode toggle
 
 **Content Display:**
+
 - `PostPreview.svelte` - Blog post cards
 - `ChapterList.svelte` - Chapter listings
 - `SearchHit.svelte` - Search results
@@ -151,31 +154,35 @@ tests/                # Playwright end-to-end tests
 - `TagList.svelte`, `Social.svelte`, `ToolTip.svelte` - Utility components
 
 **Forms:**
+
 - `FormField.svelte` - Reusable form input wrapper
 
 ### Data Fetching
 
 **lib/fetch.ts** - Primary data layer:
+
 - `contentful_fetch(query, variables)` - GraphQL queries to Contentful
 - `airtable_fetch(query, variables)` - GraphQL queries to Airtable
 - `fetch_chapters()` - Loads all chapter/location data
 - `base64_thumbnail(imageUrl)` - Generates low-quality image placeholders
 
 Example usage:
+
 ```typescript
 // In +page.server.ts or +layout.ts
-import { contentful_fetch, fetch_chapters } from '$lib';
+import { contentful_fetch, fetch_chapters } from '$lib'
 
 export async function load({ params }) {
-  const chapters = await fetch_chapters();
-  const pageData = await contentful_fetch(query, { slug: params.slug });
-  return { chapters, pageData };
+  const chapters = await fetch_chapters()
+  const pageData = await contentful_fetch(query, { slug: params.slug })
+  return { chapters, pageData }
 }
 ```
 
 ### Types (lib/types.ts)
 
 Key TypeScript interfaces:
+
 - `Chapter` - Location/chapter information
 - `Page` - CMS page
 - `Post` - Blog post with author
@@ -235,6 +242,7 @@ LHCI_GITHUB_APP_TOKEN=<for-lighthouse-ci>
   - Case conflict detection
 
 Run linting:
+
 ```bash
 pnpm lint              # Auto-fix all files
 pnpm lint:prod         # Production code only
@@ -255,6 +263,7 @@ pnpm check             # svelte-check type validation
 **Framework**: Playwright 1.54+ for end-to-end testing
 
 **Test Files** (in `tests/`):
+
 - `smoke.test.ts` - Quick sanity checks
 - `accessibility.test.ts` - A11y validation
 - `core-functionality.test.ts` - Main features
@@ -263,9 +272,11 @@ pnpm check             # svelte-check type validation
 - `console-capture.test.ts` - Console error detection
 
 **Test Helpers** (tests/helpers.ts):
+
 - Utility functions available for your tests
 
 **Running Tests**:
+
 ```bash
 pnpm test              # Full suite (all browsers)
 pnpm test:smoke        # Smoke tests only
@@ -280,6 +291,7 @@ pnpm test:debug        # Debug mode
 ```
 
 **CI/CD Testing** (.github/workflows/test.yml):
+
 - Runs on push to main and pull requests
 - Runs: ESLint (prod only) → Type check → Playwright tests
 - Uploads test artifacts (7-day retention)
@@ -292,11 +304,13 @@ pnpm test:debug        # Debug mode
 Two main signup flows with configuration in `src/signup-form/`:
 
 **Pupil Signup** (`routes/signup-pupil/`):
+
 - Student seeking tutoring
 - Form config: `signup-form/de/pupil.yml`
 - Submits to Airtable
 
 **Student Signup** (`routes/signup-student/`):
+
 - Volunteer tutor/mentor
 - Form config: `signup-form/de/student.yml`
 - Submits to Airtable
@@ -304,6 +318,7 @@ Two main signup flows with configuration in `src/signup-form/`:
 ### Form Implementation
 
 Forms use:
+
 - YAML configuration for fields (language-specific)
 - `utils/actions.ts` for form handlers (server actions)
 - `FormField.svelte` for input components
@@ -312,6 +327,7 @@ Forms use:
 ## Markdown & Content
 
 **Markdown Rendering**: `utils/marked.ts`
+
 - Converts markdown to HTML
 - Custom styling for code blocks, links, etc.
 - Used in blog posts and CMS content
@@ -319,11 +335,13 @@ Forms use:
 ## Internationalization
 
 Currently German-focused (de) with optional US (us) support:
+
 - `src/signup-form/de/` - German forms
 - `src/signup-form/us/` - US forms (optional)
 - Language detection/selection in Header component
 
 Translation utilities available:
+
 - DeepL API (utils/deeplTranslate.js)
 - Google Translate API (utils/googleTranslate.js)
 
@@ -332,6 +350,7 @@ Translation utilities available:
 ### Lighthouse CI
 
 Automatically runs on every push/PR (`.github/workflows/lighthouse.yml`):
+
 - Performance, Accessibility, Best Practices, SEO scores
 - Results displayed on commits and PRs
 
@@ -353,6 +372,7 @@ Automatically runs on every push/PR (`.github/workflows/lighthouse.yml`):
 ### Automatic Deployment
 
 Main branch pushes automatically deploy to Netlify (via `netlify.toml`):
+
 1. Build: `pnpm build`
 2. Publish: `build/` directory
 3. Node 18.16.0
@@ -360,6 +380,7 @@ Main branch pushes automatically deploy to Netlify (via `netlify.toml`):
 ### Domain Configuration
 
 Domain redirects (Netlify):
+
 - `sbsev.netlify.com` → `studytutors.de`
 - `studenten-bilden-schueler.at` → `studytutors.at`
 - `studenten-bilden-schueler.de` → `studytutors.de`
@@ -391,6 +412,7 @@ netlify deploy --prod
 5. Use `contentful_fetch()` or `airtable_fetch()` for data
 
 Example:
+
 ```svelte
 <!-- src/routes/new-page/+page.svelte -->
 <script lang="ts">
@@ -418,7 +440,7 @@ Content is fetched via GraphQL in `+page.ts` or `+layout.ts`:
 
 ```typescript
 // src/routes/example/+page.ts
-import { contentful_fetch } from '$lib';
+import { contentful_fetch } from '$lib'
 
 const query = `
   query GetPage($slug: String!) {
@@ -429,11 +451,11 @@ const query = `
       }
     }
   }
-`;
+`
 
 export async function load({ params }) {
-  const data = await contentful_fetch(query, { slug: params.slug });
-  return data.pageCollection.items[0];
+  const data = await contentful_fetch(query, { slug: params.slug })
+  return data.pageCollection.items[0]
 }
 ```
 
@@ -458,6 +480,7 @@ Current branch: `dev/update`
 Main branch: `main` (protected, requires PR)
 
 Working with pre-commit hooks:
+
 ```bash
 # Install hooks
 pre-commit install
@@ -475,6 +498,7 @@ git commit --no-verify
 ## Troubleshooting
 
 **Dev server won't start**:
+
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules .svelte-kit
@@ -483,6 +507,7 @@ pnpm dev
 ```
 
 **Tests failing**:
+
 ```bash
 # Ensure Contentful env vars are set
 # Run smoke tests first
@@ -496,6 +521,7 @@ pnpm test tests/console-capture.test.ts
 ```
 
 **Linting errors**:
+
 ```bash
 # Auto-fix all issues
 pnpm lint
@@ -505,6 +531,7 @@ pnpm check
 ```
 
 **Build fails**:
+
 ```bash
 # Ensure env vars include all required keys from .env.example
 # Check that Contentful/Airtable credentials are valid
@@ -516,6 +543,7 @@ pnpm build --verbose
 **GitHub Actions** (`.github/workflows/`):
 
 **test.yml** - Runs on PR and push to main:
+
 1. Setup Node 20.x + pnpm
 2. Install dependencies
 3. ESLint check (production code only)
@@ -525,11 +553,13 @@ pnpm build --verbose
 7. Upload artifacts (7 days)
 
 **lighthouse.yml** - Runs on PR and push to main:
+
 1. Build site
 2. Run Lighthouse CI
 3. Display performance results
 
 Required secrets in GitHub:
+
 - `VITE_CONTENTFUL_SPACE_ID`
 - `VITE_CONTENTFUL_ACCESS_TOKEN`
 - `VITE_AIRTABLE_API_KEY`
