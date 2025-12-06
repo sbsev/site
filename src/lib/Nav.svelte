@@ -26,6 +26,10 @@
   }
 
   const setActiveSubNav = (idx: number) => () => {
+    activeSubNav = idx
+  }
+
+  const toggleSubNav = (idx: number) => () => {
     // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
     if (activeSubNav === idx) activeSubNav = -1
     else activeSubNav = idx
@@ -92,7 +96,7 @@
           </a>
           {#if subNav}
             <button
-              on:click={setActiveSubNav(idx, false)}
+              on:click={toggleSubNav(idx)}
               aria-label="Untermenü {title} öffnen"
             >
               <Icon icon="bi:chevron-expand" />
