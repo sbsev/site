@@ -41,6 +41,25 @@
   beforeNavigate(close)
 
   const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
+
+  function markFirstLetters(
+  subNav: { title: string; url: string; spanCols?: boolean; lightFont?: boolean }[]
+) {
+  const seen = new Set<string>()
+  return subNav.map(item => {
+    const firstChar = item.title[0]
+    const upper = firstChar.toUpperCase()
+    const isFirst = !seen.has(upper)
+    seen.add(upper)
+    return {
+      ...item,
+      firstChar,
+      rest: item.title.slice(1),
+      highlight: isFirst
+    }
+  })
+}
+
 </script>
 
 <svelte:window
@@ -107,6 +126,19 @@
               4
             )}, 1fr);"
           >
+          {#if title === 'Standorte'}
+            {#each markFirstLetters(subNav) as { url, spanCols, lightFont, firstChar, rest, highlight }}
+              <li class:spanCols class:lightFont>
+                <a on:click={close} aria-current={isCurrent(url)} href={url}>
+                  {#if highlight}
+                    <span class="highlight">{firstChar}</span>{rest}
+                  {:else}
+                    {firstChar}{rest}
+                  {/if}
+                </a>
+              </li>
+            {/each}
+          {:else}
             {#each subNav as { title, url, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
                 <a on:click={close} aria-current={isCurrent(url)} href={url}>
@@ -114,6 +146,7 @@
                 </a>
               </li>
             {/each}
+          {/if}
           </ul>
         {/if}
       </li>
@@ -228,5 +261,9 @@
   }
   nav.desktop button:first-child {
     display: none;
+  }
+  .highlight {
+    color: var(--green);
+    font-weight: bold;
   }
 </style>
