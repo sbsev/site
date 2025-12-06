@@ -17,8 +17,8 @@
     Anmeldung: `ic:round-assignment-ind`,
   }
 
-  let isOpen = false
-  let activeSubNav = -1
+  let isOpen = $state(false)
+  let activeSubNav = $state(-1)
   let node: HTMLElement
   const close = () => {
     isOpen = false
@@ -26,7 +26,9 @@
   }
 
   const setActiveSubNav = (idx: number) => () => {
-    activeSubNav = idx
+    // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
+    if (activeSubNav === idx) activeSubNav = -1
+    else activeSubNav = idx
   }
 
   const toggleSubNav = (idx: number) => () => {
