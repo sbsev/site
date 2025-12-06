@@ -161,6 +161,7 @@ icons:
       Standortleiter: *GRADUATION_CAP
       Stipendium: 'fa-solid:donate'
       Werbung: 'ic:public'
+      Workshops: 'grommet-icons:workshop'
     faq:
       Alle: *SELECT_ALL
       Datenschutz: 'ic:round-privacy-tip'
