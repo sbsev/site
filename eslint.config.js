@@ -54,7 +54,7 @@ export default [
       quotes: [`error`, `backtick`, { avoidEscape: true }],
       semi: [`error`, `never`],
       'linebreak-style': [`error`, `unix`],
-      'no-console': [`error`, { allow: [`warn`, `error`] }],
+      'no-console': [`error`, { allow: [`warn`, `error`, `debug`] }],
       'no-var': `error`,
       '@typescript-eslint/no-inferrable-types': `off`,
       '@typescript-eslint/no-unused-vars': [
