@@ -1,5 +1,6 @@
 ci:
   autoupdate_schedule: quarterly
+  skip: [eslint]  # ESLint runs in GitHub Actions workflow instead
 
 default_stages: [pre-commit]
 
@@ -35,20 +36,14 @@ repos:
         exclude: (/de/.+\.yml|.+\.svelte)
         args: [--ignore-words-list, 'adresse,afterall,presse,ue,alle']
 
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.32.0
+  - repo: local
     hooks:
       - id: eslint
+        name: eslint
+        entry: npx eslint --fix
+        language: system
         types: [file]
-        args: [--fix]
         files: \.(js|ts|svelte)$
-        additional_dependencies:
-          - eslint
-          - svelte
-          - typescript
-          - eslint-plugin-svelte
-          - svelte-eslint-parser
-          - '@typescript-eslint/eslint-plugin'
-          - '@typescript-eslint/parser'
-          - '@eslint/js'
-          - 'typescript-eslint'
+        stages: [pre-commit]
+        # Skip on CI - the GitHub Actions workflow handles ESLint there
+        # This hook only runs locally where node_modules exists
