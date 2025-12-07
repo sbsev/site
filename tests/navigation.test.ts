@@ -38,8 +38,8 @@ test.describe(`Navigation`, () => {
     await page.setViewportSize({ width: 1200, height: 800 })
     await page.goto(`/`)
 
-    // Check that main navigation items exist
-    const nav = page.locator(`nav.desktop`)
+    // Check that main navigation exists (no longer using .desktop class - styled via CSS media query)
+    const nav = page.locator(`nav`)
     await expect(nav).toBeVisible()
 
     // Check for expected menu items
@@ -56,27 +56,16 @@ test.describe(`Navigation`, () => {
     await page.goto(`/`)
     await page.waitForLoadState(`networkidle`)
 
-    // Trigger a resize event to ensure Svelte's window binding updates
-    await page.evaluate(() => {
-      window.dispatchEvent(new Event(`resize`))
-    })
+    // With CSS media queries, the mobile menu button should be visible on small screens
+    const mobileMenuBtn = page.locator(`button.mobile-menu-btn`)
+    await expect(mobileMenuBtn).toBeVisible()
 
-    // Give Svelte time to react to the binding update
-    await page.waitForTimeout(100)
+    // The nav element should exist
+    const nav = page.locator(`nav`)
+    await expect(nav).toHaveCount(1)
 
-    // The header should now have class 'mobile' based on viewport width
-    const header = page.locator(`header`)
-    const headerClass = await header.getAttribute(`class`)
-
-    // Verify we're in mobile mode (viewport is 375px < 1100px breakpoint)
-    expect(headerClass).toContain(`mobile`)
-
-    // Mobile nav should exist within the header
-    const mobileNav = page.locator(`nav.mobile`)
-    await expect(mobileNav).toHaveCount(1)
-
-    // Check that the mobile menu has expected structure
-    const navUl = mobileNav.locator(`> ul`)
+    // Check that the nav has expected structure
+    const navUl = nav.locator(`> ul`)
     await expect(navUl).toHaveCount(1)
   })
 })

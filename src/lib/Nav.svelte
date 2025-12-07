@@ -66,21 +66,21 @@
   >
 {/each}
 
-{#if mobile}
-  <button
-    on:click|preventDefault|stopPropagation={() => (isOpen = true)}
-    aria-label="Navigationsmenü öffnen"
-    style="grid-area: nav;"
-  >
-    <Icon icon="heroicons-solid:menu" />
-  </button>
-{/if}
+<!-- Mobile menu button - shown via CSS media query -->
+<button
+  class="mobile-menu-btn"
+  on:click|preventDefault|stopPropagation={() => (isOpen = true)}
+  aria-label="Navigationsmenü öffnen"
+  style="grid-area: nav;"
+>
+  <Icon icon="heroicons-solid:menu" />
+</button>
 
 <a on:click={close} class="logo" href="/" aria-current={isCurrent(`/`)}>
   <img src="/favicon.svg" alt="ST Logo" height="50" width="50" />
 </a>
 
-<nav class:isOpen class={mobile ? `mobile` : `desktop`} bind:this={node}>
+<nav class:isOpen bind:this={node}>
   <ul>
     {#each nav as { title, url, subNav }, idx}
       <li
@@ -133,6 +133,10 @@
   button {
     display: flex;
   }
+  /* Mobile menu button - hidden on desktop via media query */
+  button.mobile-menu-btn {
+    display: flex;
+  }
   a,
   button {
     color: var(--header-color);
@@ -179,43 +183,19 @@
     font-weight: lighter;
     opacity: 0.6;
   }
-  /* mobile styles */
-  nav.mobile {
-    position: fixed;
-    top: 1em;
-    left: 1em;
-    padding: 1em;
-    transition: 0.4s;
-    max-height: calc(100vh - 2em);
-    background: var(--header-bg);
-    transform: translate(-120%);
-    box-sizing: border-box;
-    overscroll-behavior: none;
+
+  /* Desktop styles (default) */
+  button.mobile-menu-btn {
+    display: none;
   }
-  nav.mobile.isOpen {
-    box-shadow: 0 0 1em black;
-    transform: translate(0);
-  }
-  nav.mobile > ul {
-    display: grid;
-    grid-gap: 1em;
-    padding: 0;
-    margin: 0;
-  }
-  nav.mobile > ul > li > ul {
-    margin-top: 1ex;
-    list-style: disc;
-    padding-left: 2ex;
-  }
-  /* desktop styles */
-  nav.desktop,
-  nav.desktop > ul {
+  nav,
+  nav > ul {
     display: contents;
   }
-  nav.desktop > ul > li {
+  nav > ul > li {
     position: relative;
   }
-  nav.desktop > ul > li > ul {
+  nav > ul > li > ul {
     position: absolute;
     background: var(--header-bg);
     padding: 1ex 1em;
@@ -229,13 +209,48 @@
     overflow-y: auto;
     overscroll-behavior: none;
   }
-  nav.desktop > ul > li > ul > li.spanCols {
+  nav > ul > li > ul > li.spanCols {
     grid-column: 1/-1;
     border-top: 1px solid var(--header-color);
     padding-top: 6pt;
     margin-top: 6pt;
   }
-  nav.desktop button:first-child {
-    display: none;
+
+  /* Mobile styles via media query - no JS flash! */
+  @media (max-width: 1100px) {
+    button.mobile-menu-btn {
+      display: flex;
+    }
+    nav {
+      position: fixed;
+      top: 1em;
+      left: 1em;
+      padding: 1em;
+      transition: 0.4s;
+      max-height: calc(100vh - 2em);
+      background: var(--header-bg);
+      transform: translate(-120%);
+      box-sizing: border-box;
+      overscroll-behavior: none;
+    }
+    nav.isOpen {
+      box-shadow: 0 0 1em black;
+      transform: translate(0);
+    }
+    nav > ul {
+      display: grid;
+      grid-gap: 1em;
+      padding: 0;
+      margin: 0;
+    }
+    nav > ul > li > ul {
+      margin-top: 1ex;
+      list-style: disc;
+      padding-left: 2ex;
+      position: static;
+      box-shadow: none;
+      padding: 0;
+      border-radius: 0;
+    }
   }
 </style>

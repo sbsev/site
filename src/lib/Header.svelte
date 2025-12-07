@@ -1,31 +1,22 @@
 <script lang="ts">
   // import Search from 'svelte-algolia'
+  import { browser } from '$app/environment'
   import { Nav, ThemeSwitcher } from '.'
   // import { SearchHit } from '.'
   import type { NavLink } from './types'
 
   let { nav, breakpoint = 1100 } = $props<{ nav: NavLink[]; breakpoint?: number }>()
 
-  let viewWidth: number = $state(0) // Start at 0 so SSR defaults to mobile layout
+  // Only used for JavaScript behavior (mouse events in Nav), not for CSS layout
+  // CSS media queries handle the visual layout, so no flash on initial load
+  let viewWidth = $state(browser ? window.innerWidth : breakpoint + 1)
   const mobile = $derived(viewWidth < breakpoint)
-  // const searchProps = {
-  //   indices: Object.fromEntries(
-  //     [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])
-  //   ),
-  //   appId: import.meta.env.VITE_ALGOLIA_APP_ID,
-  //   searchKey: import.meta.env.VITE_ALGOLIA_SEARCH_KEY,
-  //   loadingMsg: `Suche läuft...`,
-  //   noResultMsg: (query: string) => `Keine Ergebnisse für '${query}'`,
-  //   resultCounter: (hits: unknown[]) =>
-  //     hits.length > 0 ? `<span>Ergebnisse: ${hits.length}<span>` : ``,
-  //   placeholder: `Suche`,
-  //   ariaLabel: `Suche`,
-  // }
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
 
-<header class={mobile ? `mobile` : `desktop`}>
+<!-- CSS classes for layout are set via media queries, not JS -->
+<header>
   <Nav {nav} {mobile} />
 
   <ThemeSwitcher />
@@ -51,15 +42,18 @@
     box-shadow: 0 0 1ex black;
     z-index: 6; /* needed to stay above multiselect and range slider on signup page */
     padding: 3pt 1ex;
-  }
-  header.mobile {
-    font-size: 1.4em;
-    gap: 5vw;
-    grid-template-columns: auto 1fr auto auto;
-    grid-template-areas: 'nav logo colormode search'; /* switch order of nav and logo*/
-  }
-  header.desktop {
+    /* Default: desktop layout */
     font-size: 1.1em;
     display: flex;
+  }
+  /* Mobile layout via media query - no JS flash! */
+  @media (max-width: 1100px) {
+    header {
+      font-size: 1.4em;
+      gap: 5vw;
+      display: grid;
+      grid-template-columns: auto 1fr auto auto;
+      grid-template-areas: 'nav logo colormode search';
+    }
   }
 </style>
