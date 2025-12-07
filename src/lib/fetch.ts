@@ -32,7 +32,10 @@ export async function airtable_fetch(
   return data
 }
 
-export async function contentful_fetch(query: string) {
+export async function contentful_fetch(
+  query: string,
+  customFetch: typeof fetch = fetch,
+) {
   const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
   const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
 
@@ -43,7 +46,7 @@ export async function contentful_fetch(query: string) {
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
   const ctfGraphqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
 
-  const response = await fetch(ctfGraphqlEndPoint, {
+  const response = await customFetch(ctfGraphqlEndPoint, {
     method: `POST`,
     headers: { 'Content-Type': `application/json` },
     body: JSON.stringify({ query }),
@@ -73,9 +76,11 @@ const chapters_query = `{
   }
 }`
 
-export async function fetch_chapters(): Promise<Chapter[]> {
+export async function fetch_chapters(
+  customFetch: typeof fetch = fetch,
+): Promise<Chapter[]> {
   try {
-    const { chapters } = await contentful_fetch(chapters_query)
+    const { chapters } = await contentful_fetch(chapters_query, customFetch)
     return chapters?.items?.map(prefixSlug(`/standorte/`)) || []
   } catch (error) {
     console.error(`Error fetching chapters:`, error)
@@ -146,12 +151,15 @@ const page_query = (slug: string) => `{
   }
 }`
 
-export async function fetch_page(slug: string): Promise<Page | null> {
+export async function fetch_page(
+  slug: string,
+  customFetch: typeof fetch = fetch,
+): Promise<Page | null> {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
 
   if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
 
-  const data = await contentful_fetch(page_query(slug))
+  const data = await contentful_fetch(page_query(slug), customFetch)
   const page = data?.pages?.items[0]
   if (!page) return null
 
@@ -231,8 +239,10 @@ export async function fetch_post(slug: string): Promise<Post> {
   return post
 }
 
-export async function fetch_posts(): Promise<Post[]> {
-  const data = await contentful_fetch(posts_query)
+export async function fetch_posts(
+  customFetch: typeof fetch = fetch,
+): Promise<Post[]> {
+  const data = await contentful_fetch(posts_query, customFetch)
   const posts = data?.posts?.items
   return await Promise.all(posts.map(process_post))
 }
@@ -245,9 +255,12 @@ const yaml_query = (title: string) => `{
   }
 }`
 
-export async function fetch_yaml(title: string) {
+export async function fetch_yaml(
+  title: string,
+  customFetch: typeof fetch = fetch,
+) {
   if (!title) throw `fetch_yaml() requires a title, got '${title}'`
-  const { yml } = await contentful_fetch(yaml_query(title))
+  const { yml } = await contentful_fetch(yaml_query(title), customFetch)
   return yaml.load(yml?.items[0]?.data)
 }
 
@@ -267,8 +280,9 @@ function title_to_slug(itm: Record<string, unknown> & { title: string }) {
 export async function fetch_yaml_list(
   title: string,
   slugPrefix: string,
+  customFetch: typeof fetch = fetch,
 ): Promise<Record<string, unknown>[]> {
-  const list = (await fetch_yaml(title)) as Record<string, unknown>[]
+  const list = (await fetch_yaml(title, customFetch)) as Record<string, unknown>[]
   return list
     .map((item) => parse_body(item as Page | Post))
     .map((item) =>

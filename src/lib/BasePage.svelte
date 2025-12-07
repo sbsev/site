@@ -7,7 +7,13 @@
 
   const { page } = $props<{ page: Page }>()
 
-  const { title, slug, cover, body, toc, yaml, sys } = page
+  const title = $derived(page.title)
+  const slug = $derived(page.slug)
+  const cover = $derived(page.cover)
+  const body = $derived(page.body)
+  const toc = $derived(page.toc)
+  const yaml = $derived(page.yaml)
+  const sys = $derived(page.sys)
   const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`))
 </script>
 

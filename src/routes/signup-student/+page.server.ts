@@ -43,7 +43,7 @@ export const load = async () => {
       raw_form: !!rawFormData,
     })
 
-    let chapters = await fetch_chapters()
+    let chapters = await fetch_chapters(fetch)
     console.warn(`chapters loaded:`, chapters)
 
     // Handle case where chapters might be undefined or not an array

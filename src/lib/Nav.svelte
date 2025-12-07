@@ -17,15 +17,22 @@
     Anmeldung: `ic:round-assignment-ind`,
   }
 
-  let isOpen = false
-  let activeSubNav = -1
+  let isOpen = $state(false)
+  let activeSubNav = $state(-1)
   let node: HTMLElement
+
   const close = () => {
     isOpen = false
     activeSubNav = -1
   }
 
   const setActiveSubNav = (idx: number) => () => {
+    // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
+    if (activeSubNav === idx) activeSubNav = -1
+    else activeSubNav = idx
+  }
+
+  const toggleSubNav = (idx: number) => () => {
     // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
     if (activeSubNav === idx) activeSubNav = -1
     else activeSubNav = idx
@@ -92,7 +99,7 @@
           </a>
           {#if subNav}
             <button
-              on:click={setActiveSubNav(idx, false)}
+              on:click={toggleSubNav(idx)}
               aria-label="Untermenü {title} öffnen"
             >
               <Icon icon="bi:chevron-expand" />
@@ -214,7 +221,8 @@
     padding: 1ex 1em;
     border-radius: 1ex;
     box-shadow: 0 0 1em black;
-    top: 3ex;
+    top: 100%;
+    margin-top: 0;
     display: grid;
     gap: 5pt 1em;
     max-height: 80vh;
