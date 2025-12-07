@@ -60,7 +60,7 @@
     </section>
   {/if}
 
-  <svelte:fragment slot="afterBody">
+  {#snippet afterBody()}
     {#if page?.yaml?.showSignupButtons !== false}
       <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
       <p>{$microcopy?.location?.questions}</p>
@@ -101,7 +101,7 @@
         </li>
       </ul>
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </BasePage>
 
 <style>

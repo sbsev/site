@@ -18,9 +18,9 @@
     Physik: `simple-icons:atom`,
   }
 
-  let active_tag = `Alle`
+  let active_tag = $state(`Alle`)
   const email = `it@studytutors.de`
-  let hash: string
+  let hash = $state(``)
 
   const filtered = $derived(
     Array.isArray(data.studyPlatforms)
@@ -47,14 +47,14 @@
 </script>
 
 <!-- used to briefly flash an list item as active when it's hash is found in the URL -->
-<svelte:window on:hashchange={setHash} />
+<svelte:window onhashchange={setHash} />
 
 <BasePage page={data.page}>
-  <svelte:fragment slot="afterArticle">
+  {#snippet afterArticle()}
     <ul class="tags">
       {#each Object.entries(tags) as [tag, count]}
         <li>
-          <button class:active={active_tag === tag} on:click={() => (active_tag = tag)}>
+          <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
             <Icon inline icon={icon_map[tag]} />
             {tag}
             ({count})
@@ -63,7 +63,7 @@
       {/each}
     </ul>
     <ul class="items">
-      {#each filtered as { title, id, img, body, tags, url } (title)}
+      {#each filtered as { title, id, img, body, tags: itemTags, url } (title)}
         <li animate:flip={{ duration: 200 }} transition:scale>
           <a href={url}>
             <Img
@@ -76,7 +76,7 @@
           <h3 {id} active={id === hash}>
             <a href={url}>{title}</a>
           </h3>
-          <span><Icon icon="fa-solid:tags" inline /> {tags.join(`, `)}</span>
+          <span><Icon icon="fa-solid:tags" inline /> {itemTags.join(`, `)}</span>
           {@html body}
         </li>
       {/each}
@@ -88,7 +88,7 @@
       uns direkt an
       <a href="mailto:{email}">{email}</a> und wir fügen sie gerne hinzu.
     </div>
-  </svelte:fragment>
+  {/snippet}
 </BasePage>
 
 <!-- used to briefly flash an list item as active when it's hash is found in the URL -->

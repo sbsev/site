@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import type { SignupStore } from './types'
+import type { Microcopy, SignupStore } from './types'
 
 const has_local_store = typeof localStorage !== `undefined`
 const has_session_store = typeof sessionStorage !== `undefined`
@@ -38,4 +38,4 @@ export const signupStore = createSessionStore<SignupStore>(
   {} as SignupStore,
 )
 
-export const microcopy = writable<Record<string, unknown>>({})
+export const microcopy = writable<Microcopy>({})

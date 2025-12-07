@@ -9,5 +9,7 @@
 <ChapterList {chapters} />
 
 <BasePage {page}>
-  <h2 slot="title">🤗 Wir brauchen dich! 🤗</h2>
+  {#snippet title()}
+    <h2>🤗 Wir brauchen dich! 🤗</h2>
+  {/snippet}
 </BasePage>

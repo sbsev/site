@@ -2,14 +2,14 @@
   import { BasePage, Img } from '$lib'
   import Icon from '@iconify/svelte'
 
-  export let data
+  const { data } = $props()
 
   const style = `margin: 0 5pt 0 0;`
 </script>
 
 {#if data.page}
 <BasePage page={data.page}>
-  <svelte:fragment slot="afterArticle">
+  {#snippet afterArticle()}
     {#each Object.entries(data.pressItems).reverse() as [year, pressArr] (year)}
       <h2>{year}</h2>
       <ul class="items">
@@ -50,7 +50,7 @@
         {/each}
       </ul>
     {/each}
-  </svelte:fragment>
+  {/snippet}
 </BasePage>
 {/if}
 

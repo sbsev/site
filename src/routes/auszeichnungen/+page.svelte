@@ -2,37 +2,39 @@
   import { BasePage, Img } from '$lib'
   import Icon from '@iconify/svelte'
 
-  export let data
+  const { data } = $props()
 
   const style = `margin: 0 5pt 0 0;`
 </script>
 
 <BasePage page={data.page}>
-  <ul class="items" slot="afterArticle">
-    {#each data.awards as { title, id, img, url, date, prize } (title)}
-      <li>
-        <a href={url}
-          ><Img
-            src={img}
-            alt={title}
-            sizes={[{ w: 175 }]}
-            img_style="width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;"
-          /></a
-        >
-        <h3 {id}><a href={url}>{title}</a></h3>
-        <div>
-          <span>
-            <Icon inline icon="octicon:calendar" {style} />
-            {date}
-          </span>
-          <span>
-            <Icon inline icon="fa-solid:award" {style} />
-            {prize}
-          </span>
-        </div>
-      </li>
-    {/each}
-  </ul>
+  {#snippet afterArticle()}
+    <ul class="items">
+      {#each data.awards as { title, id, img, url, date, prize } (title)}
+        <li>
+          <a href={url}
+            ><Img
+              src={img}
+              alt={title}
+              sizes={[{ w: 175 }]}
+              img_style="width: 175px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;"
+            /></a
+          >
+          <h3 {id}><a href={url}>{title}</a></h3>
+          <div>
+            <span>
+              <Icon inline icon="octicon:calendar" {style} />
+              {date}
+            </span>
+            <span>
+              <Icon inline icon="fa-solid:award" {style} />
+              {prize}
+            </span>
+          </div>
+        </li>
+      {/each}
+    </ul>
+  {/snippet}
 </BasePage>
 
 <style>
