@@ -282,7 +282,10 @@ export async function fetch_yaml_list(
   slugPrefix: string,
   customFetch: typeof fetch = fetch,
 ): Promise<Record<string, unknown>[]> {
-  const list = (await fetch_yaml(title, customFetch)) as Record<string, unknown>[]
+  const list = (await fetch_yaml(title, customFetch)) as Record<
+    string,
+    unknown
+  >[]
   return list
     .map((item) => parse_body(item as Page | Post))
     .map((item) =>

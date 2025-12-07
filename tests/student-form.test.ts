@@ -6,12 +6,12 @@ test(`student signup page displays correctly with all required elements`, async 
 }) => {
   // Capture console errors and unhandled rejections
   const errors: string[] = []
-  page.on('console', (msg) => {
-    if (msg.type() === 'error') {
+  page.on(`console`, (msg) => {
+    if (msg.type() === `error`) {
       errors.push(msg.text())
     }
   })
-  page.on('pageerror', (error) => {
+  page.on(`pageerror`, (error) => {
     errors.push(error.message)
   })
 
@@ -20,12 +20,12 @@ test(`student signup page displays correctly with all required elements`, async 
   // Fail test immediately if there are Svelte errors
   const svelteErrors = errors.filter(
     (err) =>
-      err.includes('Svelte error') ||
-      err.includes('props_invalid_value') ||
-      err.includes('bind:value'),
+      err.includes(`Svelte error`) ||
+      err.includes(`props_invalid_value`) ||
+      err.includes(`bind:value`),
   )
   if (svelteErrors.length > 0) {
-    throw new Error(`Svelte errors detected:\n${svelteErrors.join('\n')}`)
+    throw new Error(`Svelte errors detected:\n${svelteErrors.join(`\n`)}`)
   }
 
   // Check page title contains proper heading
