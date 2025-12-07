@@ -122,7 +122,7 @@ test.describe(`Component Functionality`, () => {
 
       if ((await nextButton.count()) > 0) {
         const currentUrl = page.url()
-        console.warn(`currentUrl:`, currentUrl)
+        console.debug(`currentUrl:`, currentUrl)
         await nextButton.first().click()
 
         // Should navigate to different page
@@ -152,7 +152,7 @@ test.describe(`Component Functionality`, () => {
 
       // Should open in new tab (optional)
       const target = await link.getAttribute(`target`)
-      console.warn(`target:`, target)
+      console.debug(`target:`, target)
 
       // Some social links may not have target="_blank", which is fine
     }

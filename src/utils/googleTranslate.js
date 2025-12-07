@@ -45,7 +45,7 @@ async function translateContentfulEntries() {
       await itm.publish()
       const title = itm.fields.title[sourceLocale]
       // eslint-disable-next-line no-console
-      console.log(
+      console.debug(
         `successfully translated ${contentType} '${title}' to ${targetLocale}`,
       )
     }

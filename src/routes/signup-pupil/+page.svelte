@@ -10,9 +10,9 @@
 
   // Add debugging and fallback
   $effect(() => {
-    console.warn(`Client-side data received:`, { data, form: !!form, chapters: !!chapters })
-    console.warn(`Form structure:`, { form })
-    console.warn(`Form header check:`, { hasForm: !!form, hasHeader: !!(form && form.header) })
+    console.debug(`Client-side data received:`, { data, form: !!form, chapters: !!chapters })
+    console.debug(`Form structure:`, { form })
+    console.debug(`Form header check:`, { hasForm: !!form, hasHeader: !!(form && form.header) })
     if (!form || !form.header) {
       console.error(`Form data is missing or incomplete:`, { data, form })
     }

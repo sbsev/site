@@ -5,7 +5,7 @@ export async function entries() {
     const posts = await fetch_posts()
     return posts.map((post) => ({ slug: post.slug.replace(`/blog/`, ``) }))
   } catch (error) {
-    console.warn(`Failed to fetch posts for prerendering:`, error)
+    console.debug(`Failed to fetch posts for prerendering:`, error)
     return []
   }
 }

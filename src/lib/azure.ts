@@ -101,7 +101,7 @@ export async function prepare_signup_data_for_azure(
   const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
-    console.log(`fields:`, fields) // eslint-disable-line no-console
+    console.debug(`fields:`, fields) // eslint-disable-line no-console
     return await azure_post_new_records(test_base_id, table, fields)
   }
   return await azure_post_new_records(chapter_base_id, table, globalFields)
