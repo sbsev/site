@@ -1,16 +1,10 @@
-// require js from '@eslint/js'
-// require typescript from '@typescript-eslint/eslint-plugin'
-// require typescriptParser from '@typescript-eslint/parser'
-// require svelte from 'eslint-plugin-svelte'
-// require svelteParser from 'svelte-eslint-parser'
+import js from '@eslint/js'
+import typescript from '@typescript-eslint/eslint-plugin'
+import typescriptParser from '@typescript-eslint/parser'
+import svelte from 'eslint-plugin-svelte'
+import svelteParser from 'svelte-eslint-parser'
 
-const js = require('@eslint/js')
-const typescript = require('@typescript-eslint/eslint-plugin')
-const typescriptParser = require('@typescript-eslint/parser')
-const svelte = require('eslint-plugin-svelte')
-const svelteParser = require('svelte-eslint-parser')
-
-module.exports = [
+export default [
   js.configs.recommended,
   {
     files: [`**/*.{js,ts,svelte}`],

@@ -14,7 +14,7 @@ async function azure_post_new_records(
   base_id: string,
   table_id: string,
   data: { [key: string]: unknown },
-) {
+): Promise<{ status: number; data: unknown }> {
   const response = await fetch(azure_url(base_id, table_id), {
     method: `POST`,
     headers: {
@@ -22,13 +22,8 @@ async function azure_post_new_records(
     },
     body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
   })
-
-  // Return both the status and the JSON data
   const jsonData = await response.json()
-  return {
-    status: response.status,
-    data: jsonData,
-  }
+  return { status: response.status, data: jsonData }
 }
 
 // Prepares the form data
@@ -106,7 +101,7 @@ export async function prepare_signup_data_for_azure(
   const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
-    console.warn(`fields:`, fields)
+    console.log(`fields:`, fields) // eslint-disable-line no-console
     return await azure_post_new_records(test_base_id, table, fields)
   }
   return await azure_post_new_records(chapter_base_id, table, globalFields)
@@ -120,160 +115,57 @@ export async function signup_form_submit_handler(
   // handles form validation and Plausible event reporting
   const signup_data = get(signup_store)
 
-  // form validation - defensive approach
+  // form validation
   for (const name of fields_to_validate) {
-    try {
-      const field = signup_data[name]
-
-      // Skip if field doesn't exist or isn't properly initialized
-      if (!field || typeof field !== `object`) {
-        console.warn(`Field ${name} is not properly initialized`)
-        continue
+    const field = signup_data[name]
+    const is_empty_arr = Array.isArray(field.value) && field.value.length === 0
+    if (field.required && (is_empty_arr || !field.value)) {
+      try {
+        field.error = err_msg.required
+        signup_store.set(signup_data)
+        field.node?.focus()
+        field.node?.scrollIntoView()
+      } catch (error) {
+        console.error(`error in validating field ${name}:`, error)
       }
-
-      // Skip if field is not required
-      if (!field.required) {
-        continue
-      }
-
-      // Check if field value is empty
-      const fieldValue = field.value
-      let isEmpty = false
-
-      if (
-        fieldValue === undefined ||
-        fieldValue === null ||
-        fieldValue === ``
-      ) {
-        isEmpty = true
-      } else if (Array.isArray(fieldValue) && fieldValue.length === 0) {
-        isEmpty = true
-      } else if (fieldValue === 0 && name !== `level` && name !== `birthYear`) {
-        // 0 is empty except for numeric fields like level and birthYear
-        isEmpty = true
-      }
-
-      if (isEmpty) {
-        // Field is required but empty
-        try {
-          field.error = err_msg?.required || `This field is required`
-          signup_store.set(signup_data)
-
-          // Try to focus and scroll to the field
-          if (field.node && typeof field.node.focus === `function`) {
-            field.node.focus()
-            field.node.scrollIntoView({ behavior: `smooth`, block: `center` })
-          }
-        } catch (focusError) {
-          console.error(`Error focusing field ${name}:`, focusError)
-        }
-
-        return {} // abort submission
-      }
-    } catch (fieldError) {
-      console.error(`Error processing field ${name}:`, fieldError)
-      continue
+      return {} // abort submission
     }
   }
 
-  const chapter = signup_data.chapter?.value
-  const type = signup_data.type?.value
-
-  if (!chapter || !type) {
-    const error = new Error(
-      `Missing required form data: chapter=${chapter}, type=${type}`,
-    )
-    return { error }
-  }
+  const chapter = signup_data.chapter.value
+  const type = signup_data.type.value
 
   const baseId = chapters?.find(({ title }) => chapter?.includes(title))?.baseId
   if (!baseId) {
-    const error = new Error(
-      `baseId could not be determined for chapter: ${chapter}`,
-    )
+    const error = new Error(`baseId could not be determined`)
+    error.name = `BaseIDError`
     return { error }
   }
 
   try {
-    console.warn(`Preparing signup data for Azure...`)
-    let response
-    try {
-      response = await prepare_signup_data_for_azure(signup_data, baseId)
-    } catch (prepareError) {
-      console.error(`Error in prepare_signup_data_for_azure:`, prepareError)
-      throw prepareError
+    const response = await prepare_signup_data_for_azure(signup_data, baseId)
+
+    if (response.status !== 200) {
+      throw new Error(`Azure request failed with status: ${response.status}`)
     }
 
-    console.warn(`Azure response:`, response)
-    if (!response || typeof response !== `object`) {
-      throw new Error(`Invalid response from Azure`)
-    }
+    window.plausible(`Signup`, {
+      props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
+    })
+    window.scrollTo({ top: 0, behavior: `smooth` })
 
-    // Check if response has status property
-    if (
-      !Object.prototype.hasOwnProperty.call(response, `status`) ||
-      response.status !== 200
-    ) {
-      throw new Error(
-        `Azure request failed with status: ${response.status || `unknown`}`,
-      )
-    }
-
-    console.warn(`Calling plausible...`)
-    try {
-      if (typeof window !== `undefined` && window.plausible) {
-        window.plausible(`Signup`, {
-          props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
-        })
-      }
-    } catch (plausibleError) {
-      console.error(`Error calling plausible:`, plausibleError)
-      // Don't throw, just log - plausible errors shouldn't break submission
-    }
-
-    console.warn(`Scrolling to top...`)
-    try {
-      if (typeof window !== `undefined`) {
-        window.scrollTo({ top: 0, behavior: `smooth` })
-      }
-    } catch (scrollError) {
-      console.error(`Error scrolling:`, scrollError)
-      // Don't throw, just log
-    }
-
-    console.warn(`Resetting signup store...`)
-    try {
-      signup_store.set({} as SignupStore) // reset store for potential next signup
-    } catch (storeError) {
-      console.error(`Error resetting store:`, storeError)
-      // Don't throw, just log
-    }
-
+    signup_store.set({} as SignupStore) // reset store for potential next signup
     return { success: true }
   } catch (err) {
-    console.error(`Caught error - type:`, typeof err, `value:`, err)
-
-    // Safely serialize error for Plausible
-    let errorInfo: string
-    try {
-      if (err && typeof err === `object` && err.constructor === Error) {
-        errorInfo = JSON.stringify(err, Object.getOwnPropertyNames(err))
-      } else {
-        errorInfo = String(err)
-      }
-    } catch {
-      errorInfo = `Serialization failed: ${String(err)}`
-    }
-
-    if (typeof window !== `undefined` && window.plausible) {
-      window.plausible(`Signup Error`, {
-        props: {
-          error: errorInfo,
-          chapter,
-          type,
-        },
-      })
-    }
-    return { error: err as Error }
+    const error = err as Error
+    console.error(error)
+    window.plausible(`Signup Error`, {
+      props: {
+        error: JSON.stringify(error, Object.getOwnPropertyNames(error)),
+        chapter,
+        type,
+      },
+    })
+    return { error }
   }
 }
