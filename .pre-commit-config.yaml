@@ -1,6 +1,6 @@
 ci:
   autoupdate_schedule: quarterly
-  skip: [eslint]  # ESLint runs in GitHub Actions workflow instead
+  skip: [eslint] # ESLint runs in GitHub Actions workflow instead
 
 default_stages: [pre-commit]
 
