@@ -14,25 +14,18 @@
     afterArticle?: Snippet
   }
 
-  const {
+  let {
     page,
     title: titleSlot,
     children,
     afterBody,
     afterArticle,
-  } = $props<Props>()
+  }: Props = $props()
 
-  const pageTitle = $derived(page.title)
-  const slug = $derived(page.slug)
-  const cover = $derived(page.cover)
-  const body = $derived(page.body)
-  const toc = $derived(page.toc)
-  const yaml = $derived(page.yaml)
-  const sys = $derived(page.sys)
+  const { title: pageTitle, slug, cover, body, toc, yaml, sys } = $derived(page)
   const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`))
 
-  // Type the microcopy store access
-  const mc = $derived($microcopy as { basepage?: { lastUpdated?: string; email?: string; feedback?: string } })
+  const mc = $derived($microcopy?.basepage ?? {})
 </script>
 
 <svelte:head>
@@ -85,12 +78,12 @@
       width="1.3em"
       style="padding: 0 4pt; vertical-align: middle;"
     />
-    {mc?.basepage?.lastUpdated}
+    {mc?.lastUpdated}
     {date}
   </time>
   <address>
-    <a href="mailto:{mc?.basepage?.email} {pageTitle}">
-      {mc?.basepage?.feedback}
+    <a href="mailto:{mc?.email} {pageTitle}">
+      {mc?.feedback}
     </a>
   </address>
 {/if}

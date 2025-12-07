@@ -1,11 +1,21 @@
 <script lang="ts">
   import Icon from '@iconify/svelte'
 
-  export let social: Record<string, string>
-  export let style = ``
-  export let vertical = false
-  export let fixed = false
-  export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
+  interface Props {
+    social: Record<string, string>
+    style?: string
+    vertical?: boolean
+    fixed?: boolean
+    include?: string[]
+  }
+
+  let {
+    social,
+    style = ``,
+    vertical = false,
+    fixed = false,
+    include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
+  }: Props = $props()
 </script>
 
 <div {style} class:vertical class:fixed>

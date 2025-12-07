@@ -5,7 +5,12 @@
   import { slide } from 'svelte/transition'
   import type { NavLink } from './types'
 
-  let { nav, mobile } = $props<{ nav: NavLink[]; mobile: boolean }>()
+  interface Props {
+    nav: NavLink[]
+    mobile: boolean
+  }
+
+  let { nav, mobile }: Props = $props()
 
   const icon_map: Record<string, string> = {
     'Über Uns': `ri:plant-fill`,
@@ -48,12 +53,12 @@
   })
   beforeNavigate(close)
 
-  const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
+  const crawl_links = $derived(nav.flatMap((itm) => itm?.subNav ?? []))
 </script>
 
 <svelte:window
-  on:click={(event) => {
-    if (!node.contains(event.target)) close()
+  onclick={(event) => {
+    if (node && !node.contains(event.target as Node)) close()
   }}
 />
 
@@ -69,14 +74,14 @@
 <!-- Mobile menu button - shown via CSS media query -->
 <button
   class="mobile-menu-btn"
-  on:click|preventDefault|stopPropagation={() => (isOpen = true)}
+  onclick={(e) => { e.preventDefault(); e.stopPropagation(); isOpen = true }}
   aria-label="Navigationsmenü öffnen"
   style="grid-area: nav;"
 >
   <Icon icon="heroicons-solid:menu" />
 </button>
 
-<a on:click={close} class="logo" href="/" aria-current={isCurrent(`/`)}>
+<a onclick={close} class="logo" href="/" aria-current={isCurrent(`/`)}>
   <img src="/favicon.svg" alt="ST Logo" height="50" width="50" />
 </a>
 
@@ -84,12 +89,12 @@
   <ul>
     {#each nav as { title, url, subNav }, idx}
       <li
-        on:mouseenter={mobile ? null : setActiveSubNav(idx)}
-        on:mouseleave={mobile ? null : setActiveSubNav(-1)}
+        onmouseenter={mobile ? undefined : setActiveSubNav(idx)}
+        onmouseleave={mobile ? undefined : setActiveSubNav(-1)}
       >
         <span>
           <a
-            on:click={close}
+            onclick={close}
             aria-current={isCurrent(url)}
             href={url}
             style="display: flex; align-items: center;"
@@ -99,7 +104,7 @@
           </a>
           {#if subNav}
             <button
-              on:click={toggleSubNav(idx)}
+              onclick={toggleSubNav(idx)}
               aria-label="Untermenü {title} öffnen"
             >
               <Icon icon="bi:chevron-expand" />
@@ -115,10 +120,10 @@
               4
             )}, 1fr);"
           >
-            {#each subNav as { title, url, spanCols, lightFont }}
+            {#each subNav as { title: subTitle, url: subUrl, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
-                <a on:click={close} aria-current={isCurrent(url)} href={url}>
-                  {title}
+                <a onclick={close} aria-current={isCurrent(subUrl)} href={subUrl}>
+                  {subTitle}
                 </a>
               </li>
             {/each}

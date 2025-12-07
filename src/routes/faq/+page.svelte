@@ -21,9 +21,9 @@
     Führungszeugnis: `ic:round-assignment-ind`,
   }
 
-  let active_tag = `Alle`
+  let active_tag = $state(`Alle`)
   const email = `info@studytutors.de`
-  let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
+  let hash = $state(typeof window !== `undefined` ? window.location.hash.slice(1) : ``)
 
   const filteredFaqs = $derived(
     Array.isArray(data.faqs)
@@ -46,13 +46,13 @@
 </script>
 
 <!-- used to briefly flash an FAQ as active when it's hash is found in the URL -->
-<svelte:window on:hashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
+<svelte:window onhashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
 
 <h1>FAQs</h1>
 <ul class="tags">
   {#each Object.entries(tags).sort() as [tag, count] (tag)}
     <li>
-      <button class:active={active_tag === tag} on:click={() => (active_tag = tag)}>
+      <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
         <Icon inline icon={icons[tag]} />
         {tag}
         ({count})</button
@@ -61,14 +61,16 @@
   {/each}
 </ul>
 <ul class="faqs">
-  {#each filteredFaqs as { title, id, body, tags } (title)}
+  {#each filteredFaqs as { title, id, body, tags: itemTags } (title)}
     <li animate:flip={{ duration: 200 }} transition:scale>
       <Collapsible {id} active={id === hash}>
-        <span slot="title">
-          {title}
-          <Icon icon="fa-solid:tags" width="16pt" style="margin: 0 3pt 0 10pt;" />
-          <small>{tags.join(`, `)}</small>
-        </span>
+        {#snippet title()}
+          <span>
+            {title}
+            <Icon icon="fa-solid:tags" width="16pt" style="margin: 0 3pt 0 10pt;" />
+            <small>{itemTags.join(`, `)}</small>
+          </span>
+        {/snippet}
         {@html body}
       </Collapsible>
     </li>

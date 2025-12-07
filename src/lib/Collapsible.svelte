@@ -1,8 +1,16 @@
 <script lang="ts">
   import { tweened } from 'svelte/motion'
   import { slide } from 'svelte/transition'
+  import type { Snippet } from 'svelte'
 
-  let { id, active } = $props<{ id: string; active: boolean }>()
+  interface Props {
+    id: string
+    active: boolean
+    title?: Snippet
+    children?: Snippet
+  }
+
+  let { id, active = $bindable(), title: titleSnippet, children }: Props = $props()
 
   const duration = 200
   const angle = tweened(180, { duration })
@@ -24,14 +32,18 @@
 
 <h3 style="--angle: {$angle}" class:active>
   <span class="anchor" {id}></span>
-  <button on:click={toggle}>
+  <button onclick={toggle}>
     <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
-    <slot name="title" />
+    {#if titleSnippet}
+      {@render titleSnippet()}
+    {/if}
   </button>
 </h3>
 {#if isOpen}
   <div transition:slide={{ duration }}>
-    <slot />
+    {#if children}
+      {@render children()}
+    {/if}
   </div>
 {/if}
 

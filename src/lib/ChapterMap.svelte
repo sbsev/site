@@ -1,18 +1,14 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import { Map } from '.'
-  import { fetch_chapters } from './fetch'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
-  export const load: Load = () => {
-    return { props: { chapters: fetch_chapters() } }
+  interface Props {
+    chapters: Chapter[]
   }
-</script>
 
-<script lang="ts">
-  export let chapters: Chapter[]
-  export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? {}
+  let { chapters }: Props = $props()
+  const { lng, lat, zoom, minZoom, maxZoom } = $derived($microcopy?.map?.location ?? {})
 </script>
 
 <div>

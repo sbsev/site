@@ -1,6 +1,19 @@
 <script lang="ts">
   type ImgSize = { w?: number; h?: number }
 
+  interface Props {
+    src: string
+    alt: string
+    width?: number
+    height?: number
+    base64?: string
+    title?: string
+    picture_style?: string
+    img_style?: string
+    loading?: "eager" | "lazy" | null | undefined
+    sizes?: ImgSize[]
+  }
+
   let {
     src,
     alt,
@@ -18,29 +31,21 @@
       { w: 600 },
       { w: 400 },
     ],
-  } = $props<{
-    src: string
-    alt: string
-    width?: number
-    height?: number
-    base64?: string
-    title?: string
-    picture_style?: string
-    img_style?: string
-    loading?: string
-    sizes?: ImgSize[]
-  }>()
+  }: Props = $props()
 
   // heights are optional but widths are required for media=min-width below
   if (!sizes.every((s) => s.w)) throw `Img with src="${src}" size missing width`
 
-  let [naturalWidth, naturalHeight] = [width, height] // copy user-provided width and height values
+  let naturalWidth = width
+  let naturalHeight = height
 
   // grab the first width and height (if any) to compute natural height if custom height was
   // not specified (used to prevent on-load layout shift by passing <img {width} {height} />)
   $effect(() => {
     if (sizes[0]?.w) width = sizes[0].w
     if (sizes[0]?.h) height = sizes[0].h
+    // logic to calculate aspect ratio driven height if initial height matches width (square default)
+    // but here we just follow original logic
     if (!height) height = (width * naturalHeight) / naturalWidth
   })
 

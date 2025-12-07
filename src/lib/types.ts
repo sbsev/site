@@ -224,6 +224,7 @@ export type Form = {
 
 // Microcopy type for internationalization/localization content
 export type Microcopy = {
+  locale?: string
   country?: string
   meta?: {
     name?: string
@@ -296,6 +297,11 @@ export type Microcopy = {
     lastUpdated?: string
     email?: string
     feedback?: string
+  }
+  footer?: {
+    name?: string
+    site?: string
+    uses?: string
   }
 }
 

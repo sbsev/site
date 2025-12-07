@@ -5,7 +5,12 @@
   // import { SearchHit } from '.'
   import type { NavLink } from './types'
 
-  let { nav, breakpoint = 1100 } = $props<{ nav: NavLink[]; breakpoint?: number }>()
+  interface Props {
+    nav: NavLink[]
+    breakpoint?: number
+  }
+
+  let { nav, breakpoint = 1100 }: Props = $props()
 
   // Only used for JavaScript behavior (mouse events in Nav), not for CSS layout
   // CSS media queries handle the visual layout, so no flash on initial load

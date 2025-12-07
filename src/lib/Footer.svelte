@@ -12,8 +12,12 @@
     Satzung: `ion:document-text`,
   }
 
-  export let links: Link[]
-  export let social: Record<keyof typeof icon_map, string>
+  interface Props {
+    links: Link[]
+    social: Record<keyof typeof icon_map, string>
+  }
+
+  let { links, social }: Props = $props()
 </script>
 
 <footer>

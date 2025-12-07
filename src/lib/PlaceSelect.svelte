@@ -6,13 +6,22 @@
   import { Geocoder, Map } from '.'
   import type { Place } from './types'
 
-  export let value: Place[] = [] // currently selected places
-  export let placeholder = ``
-  export let div: HTMLDivElement | null = null
-  export let id: string | null = null
+  interface Props {
+    value?: Place[]
+    placeholder?: string
+    div?: HTMLDivElement | null
+    id?: string | null
+  }
+
+  let {
+    value = $bindable([]),
+    placeholder = ``,
+    div = $bindable(null),
+    id = null,
+  }: Props = $props()
 
   let markers: Marker[] = []
-  let map: MapBox
+  let map: MapBox | null = null // explicit null initialization
 
   function selectHandler(place: Result) {
     if (!place.center) {
@@ -26,29 +35,34 @@
 
     const [lng, lat] = place.center
 
+    // Update value correctly
     value = [...(value ?? []), { address: place.place_name, lng, lat }]
 
-    const marker = new mapbox.Marker()
-    marker.setLngLat([lng, lat]).addTo(map)
+    if (map) {
+      const marker = new mapbox.Marker()
+      marker.setLngLat([lng, lat]).addTo(map)
 
-    markers = [...markers, marker]
+      markers = [...markers, marker]
 
-    const bounds = new mapbox.LngLatBounds([lng, lat], [lng, lat])
-    for (const marker of markers) {
-      bounds.extend(marker.getLngLat())
+      const bounds = new mapbox.LngLatBounds([lng, lat], [lng, lat])
+      for (const marker of markers) {
+        bounds.extend(marker.getLngLat())
+      }
+
+      map.fitBounds(bounds, { padding: 100, duration: 400 })
     }
-
-    map.fitBounds(bounds, { padding: 100, duration: 400 })
   }
 
   const deletePlace = (idx: number) => () => {
+    if (!value) return
     // remove place from list
     value.splice(idx, 1)
-    value = [...value] // reassign to trigger rerender
+    value = [...value] // reassign to trigger rerender (although splice on proxy likely triggers, reassign safe)
     // remove marker from map
-    markers[idx].remove()
-
-    markers.splice(idx, 1)
+    if (markers[idx]) {
+      markers[idx].remove()
+      markers.splice(idx, 1)
+    }
   }
 </script>
 
@@ -62,7 +76,7 @@
         value={place.address.split(`, `).slice(0, 2).join(`, `)}
         disabled
       />
-      <button on:click={deletePlace(idx)} type="button">
+      <button onclick={deletePlace(idx)} type="button">
         <Icon icon="ic:delete" style="width: 3ex;" inline />
       </button>
     </li>

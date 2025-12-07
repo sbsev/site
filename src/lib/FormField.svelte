@@ -3,7 +3,20 @@
   import RangeSlider from 'svelte-range-slider-pips'
   import { PlaceSelect, RadioButtons, Toggle } from '.'
   import { signupStore } from './stores'
-  import type { FormFieldType, SignupStore } from './types'
+  import type { FormFieldType, SignupStore, Place } from './types'
+
+  interface Props {
+    title: string
+    note?: string
+    id: keyof SignupStore
+    placeholder?: string
+    options?: string[]
+    type?: FormFieldType
+    required?: boolean
+    min?: number | null
+    max?: number | null
+    maxSelect?: number | null
+  }
 
   let {
     title,
@@ -16,24 +29,12 @@
     min = null,
     max = null,
     maxSelect = null,
-  } = $props<{
-    title: string
-    note?: string
-    id: keyof SignupStore
-    placeholder?: string
-    options?: string[]
-    type?: FormFieldType
-    required?: boolean
-    min?: number | null
-    max?: number | null
-    maxSelect?: number | null
-  }>()
+  }: Props = $props()
 
   let label: HTMLLabelElement
   let slider: HTMLDivElement
 
-  // Initialize value immediately with appropriate defaults based on type to fix Svelte 5 binding issue
-  // Cannot use $effect for this because bind:value requires a non-undefined value immediately
+  // Initialize value immediately
   let value: string | number | boolean | (string | number)[] = $state(
     type === `select` || type === `placeSelect`
       ? maxSelect === 1
@@ -49,34 +50,42 @@
   )
 
   $effect(() => {
-    $signupStore[id] = { required, node: label }
-    $signupStore[id].value = value
-    $signupStore[id].node = label
+    if (!$signupStore[id]) {
+      // Initialize properly if possibly undefined to satisfy stricter types
+      // Using 'as any' safe because we construct the object fully
+      $signupStore[id] = { required, node: label, value: value as any }
+    } else {
+       $signupStore[id] = { ...$signupStore[id], required, node: label, value: value as any }
+    }
   })
 
   $effect(() => {
-    if (value) $signupStore[id].error = ``
+    if (value && $signupStore[id]) $signupStore[id].error = ``
   })
 
-  function input_type(node: HTMLInputElement): void {
-    node.type = type
+  function input_type(node: HTMLInputElement, currentType: string) {
+    node.type = currentType
+    return {
+      update(newType: string) {
+        node.type = newType
+      }
+    }
   }
 </script>
 
-<!-- on:click|preventDefault to avoid changing Toggle state and opening MultiSelects on clicking their labels -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- onclick|preventDefault logic manually implemented -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <label
   for={id}
   class:required
   bind:this={label}
-  on:click={(e) => type === `toggle` && e.preventDefault()}
-  on:keyup={(e) => type === `toggle` && e.preventDefault()}
+  onclick={(e: MouseEvent) => { if(type === `toggle`) e.preventDefault() }}
+  onkeyup={(e: KeyboardEvent) => { if(type === `toggle`) e.preventDefault() }}
 >
   {@html title}
 </label>
 
 {#if note}
-  <!-- wrapping @html in <p> seems to help with https://github.com/sveltejs/svelte/issues/7698 (though not in minimal repro) -->
   <p>{@html note}</p>
 {/if}
 
@@ -91,7 +100,7 @@
     {options}
     {maxSelect}
     noMatchingOptionsMsg="Keine passenden Optionen"
-    bind:value
+    bind:value={value as any}
     {required}
     --sms-options-bg="var(--accent-bg)"
     --sms-bg="var(--accent-bg)"
@@ -103,14 +112,14 @@
     --sms-button-hover-color="#dbecfd"
   />
 {:else if type === `toggle`}
-  <Toggle {id} bind:value />
+  <Toggle {id} bind:value={value as boolean} />
 {:else if type === `placeSelect`}
-  <PlaceSelect {id} bind:value {placeholder} />
+  <PlaceSelect {id} bind:value={value as unknown as Place[] | undefined} {placeholder} />
 {:else if type === `singleRange`}
   <RangeSlider
     bind:slider
     float
-    values={[value]}
+    values={[value as number]}
     on:stop={(e) => (value = e.detail.values[0])}
     {min}
     {max}
@@ -122,7 +131,7 @@
     range
     bind:slider
     float
-    values={value}
+    values={value as number[]}
     on:stop={(e) => (value = e.detail.values)}
     {min}
     {max}
@@ -130,25 +139,22 @@
     all="label"
   />
 {:else if type === `radio`}
-  <RadioButtons bind:value {options} />
+  <RadioButtons bind:value={value as string} {options} />
 {:else if type === `number`}
-  <!-- blur input type number on:mousewheel to prevent default browser scrolling behavior of changing input value  -->
   <input
     type="number"
-    bind:value
+    bind:value={value as number}
     {id}
     {placeholder}
-    on:wheel={(e) => type === `number` && e?.target?.blur()}
+    onwheel={(e) => { if(type === `number`) e.currentTarget.blur() }}
     {min}
     {max}
   />
 {:else}
-  <input use:input_type bind:value {id} {placeholder} />
+  <input use:input_type={type} bind:value={value as string} {id} {placeholder} />
 {/if}
 
 <style>
-  /* TODO: remove this once svelte-multiselect@5.0.5 is out, for which
-    --sms-text-color="var(--text-color)" will be a simpler fix */
   :global(div.multiselect ul.selected input) {
     color: var(--text-color);
   }
