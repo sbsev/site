@@ -4,7 +4,8 @@
   import Icon from '@iconify/svelte'
 
   const { data } = $props()
-  const { page, slug } = data
+  const page = $derived(data.page)
+  const slug = $derived(data.slug)
 
   const style = `margin-right: 3pt;`
 </script>

@@ -20,6 +20,7 @@
   let isOpen = $state(false)
   let activeSubNav = $state(-1)
   let node: HTMLElement
+
   const close = () => {
     isOpen = false
     activeSubNav = -1
@@ -220,7 +221,8 @@
     padding: 1ex 1em;
     border-radius: 1ex;
     box-shadow: 0 0 1em black;
-    top: 3ex;
+    top: 100%;
+    margin-top: 0;
     display: grid;
     gap: 5pt 1em;
     max-height: 80vh;
