@@ -6,7 +6,7 @@
 
   let { nav, breakpoint = 1100 } = $props<{ nav: NavLink[]; breakpoint?: number }>()
 
-  let viewWidth: number
+  let viewWidth: number = $state(0) // Start at 0 so SSR defaults to mobile layout
   const mobile = $derived(viewWidth < breakpoint)
   // const searchProps = {
   //   indices: Object.fromEntries(

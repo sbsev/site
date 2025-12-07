@@ -51,10 +51,27 @@ test.describe(`Navigation`, () => {
   })
 
   test(`mobile navigation exists on small screens`, async ({ page }) => {
+    // Set viewport BEFORE navigation so innerWidth is correct during hydration
     await page.setViewportSize({ width: 375, height: 667 })
     await page.goto(`/`)
+    await page.waitForLoadState(`networkidle`)
 
-    // Mobile nav should exist in DOM
+    // Trigger a resize event to ensure Svelte's window binding updates
+    await page.evaluate(() => {
+      window.dispatchEvent(new Event(`resize`))
+    })
+
+    // Give Svelte time to react to the binding update
+    await page.waitForTimeout(100)
+
+    // The header should now have class 'mobile' based on viewport width
+    const header = page.locator(`header`)
+    const headerClass = await header.getAttribute(`class`)
+
+    // Verify we're in mobile mode (viewport is 375px < 1100px breakpoint)
+    expect(headerClass).toContain(`mobile`)
+
+    // Mobile nav should exist within the header
     const mobileNav = page.locator(`nav.mobile`)
     await expect(mobileNav).toHaveCount(1)
 
