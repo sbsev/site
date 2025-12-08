@@ -7,7 +7,7 @@ export type Chapter = {
   }
   baseId: string
   acceptsSignups: boolean
-  status: 'active' | 'starting' | 'partner' | null
+  status: `active` | `starting` | `partner` | null
   token: string
 }
 
@@ -166,23 +166,23 @@ export type SignupStore = {
   semester: StoredFormField<number>
   studySubject: StoredFormField<string>
   subjects: StoredFormField<string>
-  type: StoredFormField<'student' | 'pupil'>
+  type: StoredFormField<`student` | `pupil`>
 }
 
 export type StandardTypes =
-  | 'text'
-  | 'email'
-  | 'number'
-  | 'date'
-  | 'tel'
-  | 'checkbox'
+  | `text`
+  | `email`
+  | `number`
+  | `date`
+  | `tel`
+  | `checkbox`
 export type CustomTypes =
-  | 'select'
-  | 'toggle'
-  | 'singleRange'
-  | 'doubleRange'
-  | 'placeSelect'
-  | 'radio'
+  | `select`
+  | `toggle`
+  | `singleRange`
+  | `doubleRange`
+  | `placeSelect`
+  | `radio`
 export type FormFieldType = StandardTypes | CustomTypes
 
 export type FormFieldProps = {
@@ -210,13 +210,13 @@ export type FormSelectOptions = {
 }
 
 export type FormMessages = {
-  submit: Record<'title' | 'note', string>
-  submitSuccess: Record<'title' | 'note', string>
-  submitError: Record<'title' | 'note', string>
-  errMsg: Record<'title' | 'note', string>
+  submit: Record<`title` | `note`, string>
+  submitSuccess: Record<`title` | `note`, string>
+  submitError: Record<`title` | `note`, string>
+  errMsg: Record<`title` | `note`, string>
 }
 
 export type Form = {
   fields: FormFieldProps[]
-  page: Record<'title' | 'note', string>
+  page: Record<`title` | `note`, string>
 } & FormMessages
