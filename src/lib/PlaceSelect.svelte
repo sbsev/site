@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
+  // import Icon from '@iconify/svelte'
+  import IconDelete from '~icons/ic/delete'
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import type { Map as MapBox, Marker } from 'mapbox-gl'
   import mapbox from 'mapbox-gl'
@@ -25,8 +26,6 @@
 
   function selectHandler(place: Result) {
     if (!place.center) {
-      // User entered the name of a place that was not suggested and
-      // pressed the Enter key, or the place details request failed.
       window.alert(
         `Für '${place.text}' konnte keine Adresse gefunden werden! Bitte versuche einen anderen Ort anzugeben.`
       )
@@ -35,7 +34,6 @@
 
     const [lng, lat] = place.center
 
-    // Update value correctly
     value = [...(value ?? []), { address: place.place_name, lng, lat }]
 
     if (map) {
@@ -57,7 +55,7 @@
     if (!value) return
     // remove place from list
     value.splice(idx, 1)
-    value = [...value] // reassign to trigger rerender (although splice on proxy likely triggers, reassign safe)
+    value = [...value]
     // remove marker from map
     if (markers[idx]) {
       markers[idx].remove()
@@ -77,7 +75,7 @@
         disabled
       />
       <button onclick={deletePlace(idx)} type="button">
-        <Icon icon="ic:delete" style="width: 3ex;" inline />
+        <IconDelete style="width: 3ex; display: inline-block; vertical-align: -0.125em;" />
       </button>
     </li>
   {/each}

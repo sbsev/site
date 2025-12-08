@@ -1,10 +1,16 @@
 <script lang="ts">
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
-  import Icon from '@iconify/svelte'
+  // import Icon from '@iconify/svelte' 
+  // Bundled icons to prevent layout shift
+  import IconPlace from '~icons/ic/place'
+  import IconUserGraduate from '~icons/fa-solid/user-graduate'
+  import IconChild from '~icons/fa-solid/child'
+  import IconUserGroup from '~icons/fa6-solid/user-group'
+
   export let data
 
-  const style = `margin-right: 5pt;`
+  const style = `margin-right: 5pt; display: inline-block; vertical-align: -0.125em;`
 
 </script>
 
@@ -31,35 +37,35 @@
   <div style="background: var(--light-blue);">
     <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
     <strong>
-      <Icon inline icon="ic:place" {style} />
+      <IconPlace {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong
     >
   </div>
   <div style="background: var(--green);">
     <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
     <strong>
-      <Icon inline icon="fa-solid:user-graduate" {style} />
+      <IconUserGraduate {style} />
       {$microcopy?.indexPage?.boxes?.studentsName}</strong
     >
   </div>
   <div style="background: var(--orange);">
     <span id="pupilNumber">{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
     <strong>
-      <Icon inline icon="fa-solid:child" {style} />
+      <IconChild {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
     >
   </div>
   <div style="background: var(--green);">
     <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
     <strong>
-      <Icon inline icon="fa-solid:user-graduate" {style} />
+      <IconUserGraduate {style} />
       {@html $microcopy?.indexPage?.boxes?.scholarshipName}
     </strong>
   </div>
   <div style="background: var(--light-blue);">
     <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
     <strong>
-      <Icon inline icon="fa6-solid:user-group" {style} />
+      <IconUserGroup {style} />
       {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
     </strong>
   </div>

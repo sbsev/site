@@ -1,9 +1,19 @@
 <script lang="ts">
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
-  import Icon from '@iconify/svelte'
   import { slide } from 'svelte/transition'
   import type { NavLink } from './types'
+
+  // Icon imports (bundled)
+  import IconChevronExpand from '~icons/bi/chevron-expand'
+  import IconRssSquare from '~icons/fa-solid/rss-square'
+  import IconMenu from '~icons/heroicons-solid/menu'
+  import IconPlace from '~icons/ic/place'
+  import IconAlternateEmail from '~icons/ic/round-alternate-email'
+  import IconAssignmentInd from '~icons/ic/round-assignment-ind'
+  import IconPeopleCircle from '~icons/ion/people-circle'
+  import IconPlantFill from '~icons/ri/plant-fill'
+  import IconHandsHelping from '~icons/fa-solid/hands-helping'
 
   interface Props {
     nav: NavLink[]
@@ -12,14 +22,15 @@
 
   let { nav, mobile }: Props = $props()
 
-  const icon_map: Record<string, string> = {
-    'Über Uns': `ri:plant-fill`,
-    Standorte: `ic:place`,
-    Mitmachen: `ion:people-circle`,
-    Blog: `fa-solid:rss-square`,
-    Kontakt: `ic:round-alternate-email`,
-    Internes: `fa-solid:hands-helping`,
-    Anmeldung: `ic:round-assignment-ind`,
+  // Map titles to components
+   const icon_map: Record<string, any> = {
+    'Über Uns': IconPlantFill,
+    Standorte: IconPlace,
+    Mitmachen: IconPeopleCircle,
+    Blog: IconRssSquare,
+    Kontakt: IconAlternateEmail,
+    Internes: IconHandsHelping,
+    Anmeldung: IconAssignmentInd,
   }
 
   let isOpen = $state(false)
@@ -32,20 +43,16 @@
   }
 
   const setActiveSubNav = (idx: number) => () => {
-    // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
     if (activeSubNav === idx) activeSubNav = -1
     else activeSubNav = idx
   }
 
   const toggleSubNav = (idx: number) => () => {
-    // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
     if (activeSubNav === idx) activeSubNav = -1
     else activeSubNav = idx
   }
 
-  // isCurrent needs to be reactive to respond to changes in $page.url.pathname
   const isCurrent = $derived((url: string) => {
-    // Only access page store on the client to avoid SSR issues
     if (typeof window === `undefined`) return undefined
     if (url === $page.url.pathname) return `page`
     if (url !== `/` && $page.url.pathname.includes(url)) return `page`
@@ -71,14 +78,13 @@
   >
 {/each}
 
-<!-- Mobile menu button - shown via CSS media query -->
 <button
   class="mobile-menu-btn"
   onclick={(e) => { e.preventDefault(); e.stopPropagation(); isOpen = true }}
   aria-label="Navigationsmenü öffnen"
   style="grid-area: nav;"
 >
-  <Icon icon="heroicons-solid:menu" />
+  <IconMenu />
 </button>
 
 <a onclick={close} class="logo" href="/" aria-current={isCurrent(`/`)}>
@@ -99,7 +105,12 @@
             href={url}
             style="display: flex; align-items: center;"
           >
-            <Icon icon={icon_map[title]} style="margin: 0 5pt 0 0;" />
+            <!-- Using component from map -->
+            {#if icon_map[title]}
+               <span style="display: inline-flex; margin: 0 5pt 0 0;">
+                 <svelte:component this={icon_map[title]} />
+               </span>
+            {/if}
             {title}
           </a>
           {#if subNav}
@@ -107,12 +118,11 @@
               onclick={toggleSubNav(idx)}
               aria-label="Untermenü {title} öffnen"
             >
-              <Icon icon="bi:chevron-expand" />
+              <IconChevronExpand />
             </button>
           {/if}
         </span>
         {#if subNav && activeSubNav === idx}
-          <!-- TODO: use media query to check if user prefers reduced motion and toggle (not slide) if so -->
           <ul
             transition:slide
             style="grid-template-columns: repeat({Math.min(
@@ -138,7 +148,6 @@
   button {
     display: flex;
   }
-  /* Mobile menu button - hidden on desktop via media query */
   button.mobile-menu-btn {
     display: flex;
   }
@@ -188,8 +197,6 @@
     font-weight: lighter;
     opacity: 0.6;
   }
-
-  /* Desktop styles (default) */
   button.mobile-menu-btn {
     display: none;
   }
@@ -220,8 +227,6 @@
     padding-top: 6pt;
     margin-top: 6pt;
   }
-
-  /* Mobile styles via media query - no JS flash! */
   @media (max-width: 1100px) {
     button.mobile-menu-btn {
       display: flex;

@@ -2,7 +2,8 @@
   import { CircleSpinner, FormField, Modal } from '$lib'
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
-  import Icon from '@iconify/svelte'
+  // import Icon from '@iconify/svelte'
+  import IconPlantFill from '~icons/ri/plant-fill'
 
   const { data } = $props()
   const { chapters, form } = data
@@ -61,7 +62,7 @@
     <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
     <button type="submit" disabled style="display: none" aria-hidden="true"></button>
     <h1>
-      <Icon icon="ri:plant-fill" inline />
+      <IconPlantFill style="display: inline-block; vertical-align: -0.125em;" />
       {@html form.header.title}
     </h1>
 

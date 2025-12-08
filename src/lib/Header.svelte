@@ -24,7 +24,9 @@
 <header>
   <Nav {nav} {mobile} />
 
-  <ThemeSwitcher />
+  <div style="grid-area: colormode; display: flex;">
+    <ThemeSwitcher />
+  </div>
   <!-- <Search
     {...searchProps}
     --search-hits-bg-color="var(--body-bg)"
