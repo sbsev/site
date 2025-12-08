@@ -1,6 +1,9 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
-  import Icon from '@iconify/svelte'
+
+  // Icon imports (bundled at build time)
+  import IconCalendar from '~icons/octicon/calendar'
+  import IconAward from '~icons/fa-solid/award'
 
   const { data } = $props()
 
@@ -23,11 +26,11 @@
           <h3 {id}><a href={url}>{title}</a></h3>
           <div>
             <span>
-              <Icon inline icon="octicon:calendar" {style} />
+              <IconCalendar {style} />
               {date}
             </span>
             <span>
-              <Icon inline icon="fa-solid:award" {style} />
+              <IconAward {style} />
               {prize}
             </span>
           </div>

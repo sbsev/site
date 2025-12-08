@@ -1,21 +1,32 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
-  import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
+  // Icon imports (bundled at build time)
+  import IconSelectAll from '~icons/ic/select-all'
+  import IconFunctions from '~icons/ic/functions'
+  import IconScience from '~icons/ic/round-science'
+  import IconCardText from '~icons/bi/card-text'
+  import IconGroupWork from '~icons/ic/group-work'
+  import IconLanguage from '~icons/ic/language'
+  import IconErlang from '~icons/fa-brands/erlang'
+  import IconDisqus from '~icons/simple-icons/disqus'
+  import IconAtom from '~icons/simple-icons/atom'
+  import IconTags from '~icons/fa-solid/tags'
+
   const { data } = $props()
 
-  const icon_map: Record<string, string> = {
-    Alle: `ic:select-all`,
-    Mathe: `ic:functions`,
-    Wissenschaft: `ic:round-science`,
-    'Lernen mit Karteikarten': `bi:card-text`,
-    'Viele Fächer': `ic:group-work`,
-    'Deutsche Sprache': `ic:language`,
-    Englisch: `fa-brands:erlang`,
-    Deutschunterricht: `simple-icons:disqus`,
-    Physik: `simple-icons:atom`,
+  const icon_map: Record<string, typeof IconSelectAll> = {
+    Alle: IconSelectAll,
+    Mathe: IconFunctions,
+    Wissenschaft: IconScience,
+    'Lernen mit Karteikarten': IconCardText,
+    'Viele Fächer': IconGroupWork,
+    'Deutsche Sprache': IconLanguage,
+    Englisch: IconErlang,
+    Deutschunterricht: IconDisqus,
+    Physik: IconAtom,
   }
 
   let active_tag = $state(`Alle`)
@@ -55,7 +66,7 @@
       {#each Object.entries(tags) as [tag, count]}
         <li>
           <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
-            <Icon inline icon={icon_map[tag]} />
+            <svelte:component this={icon_map[tag]} style="display: inline; vertical-align: -0.125em;" />
             {tag}
             ({count})
           </button>
@@ -76,7 +87,7 @@
           <h3 {id} active={id === hash}>
             <a href={url}>{title}</a>
           </h3>
-          <span><Icon icon="fa-solid:tags" inline /> {itemTags.join(`, `)}</span>
+          <span><IconTags style="display: inline; vertical-align: -0.125em;" /> {itemTags.join(`, `)}</span>
           {@html body}
         </li>
       {/each}

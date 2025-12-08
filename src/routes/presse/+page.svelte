@@ -1,6 +1,10 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
-  import Icon from '@iconify/svelte'
+
+  // Icon imports (bundled at build time)
+  import IconNewspaper from '~icons/ion/newspaper'
+  import IconCalendar from '~icons/octicon/calendar'
+  import IconPlace from '~icons/ic/place'
 
   const { data } = $props()
 
@@ -34,15 +38,15 @@
             </h3>
             <div>
               <span>
-                <Icon inline icon="ion:newspaper" {style} />
+                <IconNewspaper {style} />
                 {sourceStr}
               </span>
               <span>
-                <Icon inline icon="octicon:calendar" {style} />
+                <IconCalendar {style} />
                 {dateObj.toLocaleDateString(`de`)}
               </span>
               <span>
-                <Icon inline icon="ic:place" {style} />
+                <IconPlace {style} />
                 Standort {chapterStr}
               </span>
             </div>

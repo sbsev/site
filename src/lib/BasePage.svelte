@@ -1,10 +1,12 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
   import Toc from 'svelte-toc'
   import type { Snippet } from 'svelte'
   import { Img } from '.'
   import { microcopy } from './stores'
   import type { Page } from './types'
+
+  // Icon imports (bundled at build time)
+  import IconUpdate from '~icons/ic/update'
 
   interface Props {
     page: Page
@@ -73,8 +75,7 @@
 
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
-    <Icon
-      icon="ic:update"
+    <IconUpdate
       width="1.3em"
       style="padding: 0 4pt; vertical-align: middle;"
     />

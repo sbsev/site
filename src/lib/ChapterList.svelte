@@ -1,7 +1,10 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
+
+  // Icon imports (bundled at build time)
+  import IconPlace from '~icons/ic/place'
+  import IconConstruction from '~icons/ic/round-construction'
 
   const { chapters } = $props<{ chapters: Chapter[] }>()
 
@@ -11,7 +14,7 @@
 </script>
 
 <h1>
-  <Icon icon="ic:place" inline />
+  <IconPlace style="display: inline; vertical-align: -0.125em;" />
   {$microcopy?.chapterList?.locations}
 </h1>
 <ol>
@@ -21,7 +24,7 @@
 </ol>
 {#if startingChapters.length > 2}
   <h1>
-    <Icon icon="ic:round-construction" inline />
+    <IconConstruction style="display: inline; vertical-align: -0.125em;" />
     {$microcopy?.chapterList?.inSetup}
   </h1>
   <ol>
@@ -32,7 +35,7 @@
 {/if}
 {#if partnerChapters.length > 2}
   <h1>
-    <Icon icon="ic:place" inline />
+    <IconPlace style="display: inline; vertical-align: -0.125em;" />
     {$microcopy?.chapterList?.partner}
   </h1>
   <ol>

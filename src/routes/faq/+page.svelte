@@ -1,24 +1,38 @@
 <script lang="ts">
   import { Collapsible } from '$lib'
-  import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
+  // Icon imports (bundled at build time)
+  import IconHandsHelping from '~icons/fa-solid/hands-helping'
+  import IconChalkboard from '~icons/fa-solid/chalkboard-teacher'
+  import IconSupportAgent from '~icons/ic/round-support-agent'
+  import IconSelectAll from '~icons/ic/select-all'
+  import IconFilterFrames from '~icons/ic/filter-frames'
+  import IconExit from '~icons/ic/exit-to-app'
+  import IconMisc from '~icons/ic/round-miscellaneous-services'
+  import IconPrivacy from '~icons/ic/round-privacy-tip'
+  import IconStorefront from '~icons/ic/round-storefront'
+  import IconInsurance from '~icons/map/insurance-agency'
+  import IconGroup from '~icons/ic/round-group'
+  import IconAssignment from '~icons/ic/round-assignment-ind'
+  import IconTags from '~icons/fa-solid/tags'
+
   const { data } = $props()
 
-  const icons: Record<string, string> = {
-    'Rund ums Engagement': `fa-solid:hands-helping`,
-    Nachhilfe: `fa-solid:chalkboard-teacher`,
-    Vermittlung: `ic:round-support-agent`,
-    Alle: `ic:select-all`,
-    Rahmenbedingungen: `ic:filter-frames`,
-    Vereinsaustritt: `ic:exit-to-app`,
-    Sonstiges: `ic:round-miscellaneous-services`,
-    Datenschutz: `ic:round-privacy-tip`,
-    'Tipps für Standorte': `ic:round-storefront`,
-    Versicherung: `map:insurance-agency`,
-    Mitgliederversammlung: `ic:round-group`,
-    Führungszeugnis: `ic:round-assignment-ind`,
+  const icons: Record<string, typeof IconSelectAll> = {
+    'Rund ums Engagement': IconHandsHelping,
+    Nachhilfe: IconChalkboard,
+    Vermittlung: IconSupportAgent,
+    Alle: IconSelectAll,
+    Rahmenbedingungen: IconFilterFrames,
+    Vereinsaustritt: IconExit,
+    Sonstiges: IconMisc,
+    Datenschutz: IconPrivacy,
+    'Tipps für Standorte': IconStorefront,
+    Versicherung: IconInsurance,
+    Mitgliederversammlung: IconGroup,
+    Führungszeugnis: IconAssignment,
   }
 
   let active_tag = $state(`Alle`)
@@ -53,7 +67,7 @@
   {#each Object.entries(tags).sort() as [tag, count] (tag)}
     <li>
       <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
-        <Icon inline icon={icons[tag]} />
+        <svelte:component this={icons[tag]} style="display: inline; vertical-align: -0.125em;" />
         {tag}
         ({count})</button
       >
@@ -67,7 +81,7 @@
         {#snippet title()}
           <span>
             {title}
-            <Icon icon="fa-solid:tags" width="16pt" style="margin: 0 3pt 0 10pt;" />
+            <IconTags width="16pt" style="margin: 0 3pt 0 10pt;" />
             <small>{itemTags.join(`, `)}</small>
           </span>
         {/snippet}
