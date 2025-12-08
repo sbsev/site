@@ -232,6 +232,7 @@
       display: flex;
     }
     nav {
+      display: block;
       position: fixed;
       top: 1em;
       left: 1em;
