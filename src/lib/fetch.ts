@@ -299,11 +299,14 @@ const strip_outer_par_tag = (str: string) =>
   str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
 export function parse_form_data(obj: Form): Form {
-  const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
-  renderer.link = (href: string, _: string, text: string) =>
-    `<a target="_blank" href="${href}">${text}</a>`
-  marked.use({ renderer })
+  marked.use({
+    renderer: {
+      link({ href, text }: { href: string; text: string }) {
+        return `<a target="_blank" href="${href}">${text}</a>`
+      },
+    },
+  })
 
   // Process all string fields that might contain markdown
   for (const [key, itm] of Object.entries(obj)) {

@@ -75,12 +75,12 @@
   {/each}
 </ul>
 <ul class="faqs">
-  {#each filteredFaqs as { title, id, body, tags: itemTags } (title)}
+  {#each filteredFaqs as { title: faqTitle, id, body, tags: itemTags } (faqTitle)}
     <li animate:flip={{ duration: 200 }} transition:scale>
       <Collapsible {id} active={id === hash}>
         {#snippet title()}
           <span>
-            {title}
+            {faqTitle}
             <IconTags width="16pt" style="margin: 0 3pt 0 10pt;" />
             <small>{itemTags.join(`, `)}</small>
           </span>

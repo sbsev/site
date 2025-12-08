@@ -3,7 +3,6 @@
   // to make the signup form truely adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
-  import _Icon from '@iconify/svelte'
 
   const { data } = $props()
   const { chapters, form } = data
