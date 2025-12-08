@@ -14,3 +14,37 @@
   --invert: 1;
   --transparent: rgba(0, 0, 0, 0.5);
 }
+
+h2#-a-href-mitmachen-kooperationspartner-wir-werden-unterstützt-durch-a-
+  + section
+  img {
+  filter: drop-shadow(1px 0 white) drop-shadow(-1px 0 white)
+    drop-shadow(0 1px white) drop-shadow(0 -1px white);
+}
+
+/* Alternatives to increase contrast of images */
+/* h2#-a-href-mitmachen-kooperationspartner-wir-werden-unterstützt-durch-a- + section img {
+    background: radial-gradient(
+      circle,
+      var(--light-blue) 0%,
+      transparent 100%
+    );
+    } */
+
+/* h2#-a-href-mitmachen-kooperationspartner-wir-werden-unterstützt-durch-a- + section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  h2#-a-href-mitmachen-kooperationspartner-wir-werden-unterstützt-durch-a- + section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, var(--blue) 60%, transparent 100%);
+    z-index: 0;
+  }
+
+  h2#-a-href-mitmachen-kooperationspartner-wir-werden-unterstützt-durch-a- + section * {
+    position: relative;
+    z-index: 1;
+  } */
