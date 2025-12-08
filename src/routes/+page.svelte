@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
-  // import Icon from '@iconify/svelte' 
+  // import Icon from '@iconify/svelte'
   // Bundled icons to prevent layout shift
   import IconPlace from '~icons/ic/place'
   import IconUserGraduate from '~icons/fa-solid/user-graduate'

@@ -84,12 +84,12 @@ export type Image = {
 
 export type Yaml = {
   [key: string]:
-  | string
-  | number
-  | Date
-  | boolean
-  | (string | number | Date | boolean)[]
-  | Yaml
+    | string
+    | number
+    | Date
+    | boolean
+    | (string | number | Date | boolean)[]
+    | Yaml
 }
 
 export type PressItem = {
@@ -304,4 +304,3 @@ export type Microcopy = {
     uses?: string
   }
 }
-

@@ -302,7 +302,7 @@ section.blue div.box-list ul li a {
 }
 
 /* captions */
-p> :is(picture + em, a + em) {
+p > :is(picture + em, a + em) {
   text-align: center;
   display: block;
 }
