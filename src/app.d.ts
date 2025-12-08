@@ -29,3 +29,5 @@ declare module '*messages.yml' {
 }
 
 declare module '*package.json'
+
+declare module 'svelte-carousel'

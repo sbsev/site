@@ -1,11 +1,14 @@
 <script lang="ts">
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
+
   import Icon from '@iconify/svelte'
+
   export let data
 
   const style = `margin-right: 5pt;`
 
+  import { Carousel } from '$lib'
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
@@ -79,6 +82,11 @@
 
 <article>
   {@html data.page.body}
+</article>
+
+<!-- TODO:CS: Kann man das Carousel eleganter auf content Breite bringen als mit "article" zu verpacken? -->
+<article>
+  <Carousel/>
 </article>
 
 <style>

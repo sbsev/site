@@ -1,6 +1,7 @@
 export { default as BasePage } from './BasePage.svelte'
 export { default as ChapterList } from './ChapterList.svelte'
 export { default as ChapterMap } from './ChapterMap.svelte'
+export { default as Carousel } from './Carousel.svelte'
 export { default as CircleSpinner } from './CircleSpinner.svelte'
 export { default as Collapsible } from './Collapsible.svelte'
 export { default as Footer } from './Footer.svelte'
