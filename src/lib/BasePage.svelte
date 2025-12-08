@@ -1,33 +1,54 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
   import Toc from 'svelte-toc'
+  import type { Snippet } from 'svelte'
   import { Img } from '.'
   import { microcopy } from './stores'
   import type { Page } from './types'
 
-  export let page: Page
+  // Icon imports (bundled at build time)
+  import IconUpdate from '~icons/ic/update'
 
-  $: ({ title, slug, cover, body, toc, yaml, sys } = page)
-  $: date = new Date(sys?.publishedAt).toLocaleDateString(`de`)
+  interface Props {
+    page: Page
+    title?: Snippet
+    children?: Snippet
+    afterBody?: Snippet
+    afterArticle?: Snippet
+  }
+
+  let {
+    page,
+    title: titleSlot,
+    children,
+    afterBody,
+    afterArticle,
+  }: Props = $props()
+
+  const { title: pageTitle, slug, cover, body, toc, yaml, sys } = $derived(page)
+  const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`))
+
+  const mc = $derived($microcopy?.basepage ?? {})
 </script>
 
 <svelte:head>
-  <title>{title ? `${title} - ST` : `ST`}</title>
+  <title>{pageTitle ? `${pageTitle} - ST` : `ST`}</title>
   <meta name="date" content={date} />
 </svelte:head>
 
 <figure>
   <Img {...cover} img_style="height: 100%" />
-  {#if $$slots.title}
-    <slot name="title" />
-  {:else if title}
-    <h1>{title}</h1>
+  {#if titleSlot}
+    {@render titleSlot()}
+  {:else if pageTitle}
+    <h1>{pageTitle}</h1>
   {/if}
   {#if yaml?.caption}
     <figcaption>{@html yaml.caption}</figcaption>
   {/if}
 </figure>
-<slot />
+{#if children}
+  {@render children()}
+{/if}
 <article>
   {#if toc}
     <Toc
@@ -42,25 +63,28 @@
   {/if}
   <div>
     {@html body}
-    <slot name="afterBody" />
+    {#if afterBody}
+      {@render afterBody()}
+    {/if}
   </div>
 </article>
 
-<slot name="afterArticle" />
+{#if afterArticle}
+  {@render afterArticle()}
+{/if}
 
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
-    <Icon
-      icon="ic:update"
+    <IconUpdate
       width="1.3em"
       style="padding: 0 4pt; vertical-align: middle;"
     />
-    {$microcopy?.basepage?.lastUpdated}
+    {mc?.lastUpdated}
     {date}
   </time>
   <address>
-    <a href="mailto:{$microcopy?.basepage?.email} {title}">
-      {$microcopy?.basepage?.feedback}
+    <a href="mailto:{mc?.email} {pageTitle}">
+      {mc?.feedback}
     </a>
   </address>
 {/if}

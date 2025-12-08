@@ -1,7 +1,13 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
   import { Img, ToolTip } from '.'
   import type { Post } from './types'
+
+  // Icon imports (bundled at build time)
+  import IconLink from '~icons/bx/link'
+  import IconEmail from '~icons/ic/email'
+  import IconGraduation from '~icons/fa-solid/graduation-cap'
+  import IconCalendar from '~icons/octicon/calendar'
+  import IconTags from '~icons/fa-solid/tags'
 
   export let post: Post
 
@@ -31,28 +37,28 @@
       <address slot="tip">
         {#if author.url}
           <a href={author.url}>
-            <Icon inline icon="bx:link" {style} />{author.url}
+            <IconLink {style} />{author.url}
           </a>
           <br />
         {/if}
         {#if author.email}
           <a href="mailto:{author.email}">
-            <Icon inline icon="ic:email" {style} />
+            <IconEmail {style} />
             {author.email}
           </a>
           <br />
         {/if}
         {#if author.fieldOfStudy}
-          <Icon inline icon="fa-solid:graduation-cap" {style} />{author.fieldOfStudy}
+          <IconGraduation {style} />{author.fieldOfStudy}
         {/if}
       </address>
     </ToolTip>
     <span>
-      <Icon inline icon="octicon:calendar" {style} />
+      <IconCalendar {style} />
       {new Date(date).toLocaleDateString(`de`)}
     </span>
     <span>
-      <Icon inline icon="fa-solid:tags" {style} />{tags.join(`, `)}
+      <IconTags {style} />{tags.join(`, `)}
     </span>
   </div>
   <p>

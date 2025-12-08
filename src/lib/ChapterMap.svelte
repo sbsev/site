@@ -1,28 +1,24 @@
-<script lang="ts" context="module">
-  import type { Load } from '@sveltejs/kit'
+<script lang="ts">
   import { Map } from '.'
-  import { fetch_chapters } from './fetch'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
-  export const load: Load = () => {
-    return { props: { chapters: fetch_chapters() } }
+  interface Props {
+    chapters: Chapter[]
   }
-</script>
 
-<script lang="ts">
-  export let chapters: Chapter[]
-  export const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? {}
+  let { chapters }: Props = $props()
+  const { lng, lat, zoom, minZoom, maxZoom } = $derived($microcopy?.map?.location ?? {})
 </script>
 
 <div>
   <Map
-    markers={chapters.map((chap) => ({
+    markers={Array.isArray(chapters) ? chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
-      classes: [`chapter`, chap.status],
+      classes: [`chapter`, chap.status].filter((item): item is string => Boolean(item)),
       title: chap.token,
       url: chap.slug,
-    }))}
+    })) : []}
     {lng}
     {lat}
     {zoom}
@@ -32,15 +28,15 @@
 
   <legend>
     <div>
-      <span style="background: var(--light-blue)" />
+      <span style="background: var(--light-blue)"></span>
       {$microcopy?.map?.text?.active}
     </div>
     <div>
-      <span style="background: var(--dark-green)" />
+      <span style="background: var(--dark-green)"></span>
       {$microcopy?.map?.text?.inSetup}
     </div>
     <div>
-      <span style="background: var(--grey)" />
+      <span style="background: var(--grey)"></span>
       {$microcopy?.map?.text?.partner}
     </div>
   </legend>

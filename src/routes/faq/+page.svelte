@@ -1,52 +1,73 @@
 <script lang="ts">
   import { Collapsible } from '$lib'
-  import Icon from '@iconify/svelte'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
-  export let data
+  // Icon imports (bundled at build time)
+  import IconHandsHelping from '~icons/fa-solid/hands-helping'
+  import IconChalkboard from '~icons/fa-solid/chalkboard-teacher'
+  import IconSupportAgent from '~icons/ic/round-support-agent'
+  import IconSelectAll from '~icons/ic/select-all'
+  import IconFilterFrames from '~icons/ic/filter-frames'
+  import IconExit from '~icons/ic/exit-to-app'
+  import IconMisc from '~icons/ic/round-miscellaneous-services'
+  import IconPrivacy from '~icons/ic/round-privacy-tip'
+  import IconStorefront from '~icons/ic/round-storefront'
+  import IconInsurance from '~icons/map/insurance-agency'
+  import IconGroup from '~icons/ic/round-group'
+  import IconAssignment from '~icons/ic/round-assignment-ind'
+  import IconTags from '~icons/fa-solid/tags'
 
-  const icons: Record<string, string> = {
-    'Rund ums Engagement': `fa-solid:hands-helping`,
-    Nachhilfe: `fa-solid:chalkboard-teacher`,
-    Vermittlung: `ic:round-support-agent`,
-    Alle: `ic:select-all`,
-    Rahmenbedingungen: `ic:filter-frames`,
-    Vereinsaustritt: `ic:exit-to-app`,
-    Sonstiges: `ic:round-miscellaneous-services`,
-    Datenschutz: `ic:round-privacy-tip`,
-    'Tipps für Standorte': `ic:round-storefront`,
-    Versicherung: `map:insurance-agency`,
-    Mitgliederversammlung: `ic:round-group`,
-    Führungszeugnis: `ic:round-assignment-ind`,
+  const { data } = $props()
+
+  const icons: Record<string, typeof IconSelectAll> = {
+    'Rund ums Engagement': IconHandsHelping,
+    Nachhilfe: IconChalkboard,
+    Vermittlung: IconSupportAgent,
+    Alle: IconSelectAll,
+    Rahmenbedingungen: IconFilterFrames,
+    Vereinsaustritt: IconExit,
+    Sonstiges: IconMisc,
+    Datenschutz: IconPrivacy,
+    'Tipps für Standorte': IconStorefront,
+    Versicherung: IconInsurance,
+    Mitgliederversammlung: IconGroup,
+    Führungszeugnis: IconAssignment,
   }
 
-  let active_tag = `Alle`
+  let active_tag = $state(`Alle`)
   const email = `info@studytutors.de`
-  let hash = typeof window !== `undefined` ? window.location.hash.slice(1) : ``
+  let hash = $state(typeof window !== `undefined` ? window.location.hash.slice(1) : ``)
 
-  $: filteredFaqs = data.faqs.filter(
-    (faq) => active_tag === `Alle` || faq.tags.includes(active_tag)
+  const filteredFaqs = $derived(
+    Array.isArray(data.faqs)
+      ? data.faqs.filter((faq) => active_tag === `Alle` || faq.tags.includes(active_tag))
+      : []
   )
+
   // count tag occurrences
-  const tags = data.faqs?.reduce(
-    (obj, faq) => {
-      faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
-      return obj
-    },
-    { Alle: data.faqs?.length }
+  const tags = $derived(
+    Array.isArray(data.faqs)
+      ? data.faqs.reduce(
+        (obj, faq) => {
+          faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
+          return obj
+        },
+        { Alle: data.faqs.length }
+      )
+      : { Alle: 0 }
   )
 </script>
 
 <!-- used to briefly flash an FAQ as active when it's hash is found in the URL -->
-<svelte:window on:hashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
+<svelte:window onhashchange={() => (hash = window.location.hash.replace(`#`, ``))} />
 
 <h1>FAQs</h1>
 <ul class="tags">
   {#each Object.entries(tags).sort() as [tag, count] (tag)}
     <li>
-      <button class:active={active_tag === tag} on:click={() => (active_tag = tag)}>
-        <Icon inline icon={icons[tag]} />
+      <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
+        <svelte:component this={icons[tag]} style="display: inline; vertical-align: -0.125em;" />
         {tag}
         ({count})</button
       >
@@ -54,14 +75,16 @@
   {/each}
 </ul>
 <ul class="faqs">
-  {#each filteredFaqs as { title, id, body, tags } (title)}
+  {#each filteredFaqs as { title: faqTitle, id, body, tags: itemTags } (faqTitle)}
     <li animate:flip={{ duration: 200 }} transition:scale>
       <Collapsible {id} active={id === hash}>
-        <span slot="title">
-          {title}
-          <Icon icon="fa-solid:tags" width="16pt" style="margin: 0 3pt 0 10pt;" />
-          <small>{tags.join(`, `)}</small>
-        </span>
+        {#snippet title()}
+          <span>
+            {faqTitle}
+            <IconTags width="16pt" style="margin: 0 3pt 0 10pt;" />
+            <small>{itemTags.join(`, `)}</small>
+          </span>
+        {/snippet}
         {@html body}
       </Collapsible>
     </li>

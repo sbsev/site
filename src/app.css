@@ -43,30 +43,37 @@ body {
   background: var(--body-bg);
   color: var(--text-color);
 }
+
 /* outer div = hydration target */
 body > div {
   display: grid;
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
 }
+
 main {
   hyphens: auto;
-  width: 100vw;
+  width: 100%;
 }
+
 main h1 {
   text-align: center;
   color: var(--heading-color);
 }
+
 main img {
   width: 100%;
 }
+
 a {
   color: var(--link-color);
   text-decoration: none;
 }
+
 a:hover {
   color: var(--hover-color);
 }
+
 button {
   color: var(--text-color);
   background: transparent;
@@ -76,6 +83,7 @@ button {
   cursor: pointer;
   outline: none;
 }
+
 input,
 select {
   font-size: 1em;
@@ -86,46 +94,57 @@ select {
   max-width: 100%;
   box-sizing: border-box;
 }
+
 blockquote {
   border-left: 3pt solid var(--link-color);
   padding: 3pt 8pt;
   background: var(--light-bg);
   margin: 1em 0;
 }
+
 table {
   border-collapse: collapse;
   width: 100%;
 }
+
 table :is(td, th) {
   border: 1px solid var(--text-color);
   padding: 0.4em 0.8em;
 }
+
 tbody tr:nth-child(odd) {
   background: var(--accent-bg);
 }
+
 .grid {
   display: grid;
   grid-gap: 2em;
   grid-template-columns: repeat(auto-fill, minmax(7em, 1fr));
   text-align: center;
 }
+
 .grid.small {
   grid-template-columns: repeat(auto-fill, minmax(4em, 1fr));
 }
+
 /* increase column width to use available space if not all columns filled */
 .grid.fit {
   grid-template-columns: repeat(auto-fit, minmax(7em, 1fr));
 }
+
 .grid :is(h2, h3) {
   grid-column: 1 / -1;
 }
+
 .grid :is(em, strong) {
   font-style: normal;
   display: block;
 }
+
 .grid strong {
   font-weight: lighter;
 }
+
 .grid.disk-img img {
   grid-gap: 2em;
   border-radius: 50%;
@@ -144,76 +163,99 @@ tbody tr:nth-child(odd) {
   width: fit-content;
   box-sizing: border-box;
 }
+
 .btn.small {
   display: inline-block;
   font-size: 0.8em;
   padding: 0.5ex 1ex;
 }
+
 .btn:hover {
   transform: scale(1.03);
 }
+
 .btn.blue {
   background: var(--blue);
 }
+
 .btn.blue:hover {
   background: var(--light-blue);
 }
+
 .btn.green {
   background: var(--green);
 }
+
 .btn.green:hover {
   background: var(--dark-green);
 }
+
 .btn.orange {
   background: var(--orange);
 }
+
 .btn.orange:hover {
   background: var(--dark-orange);
 }
+
 .btn.stroke {
   color: var(--text-color) !important;
   background: none;
 }
+
 .btn.stroke.blue {
   border: 2pt solid var(--blue);
 }
+
 .btn.stroke.green {
   border: 2pt solid var(--green);
 }
+
 .btn.stroke.orange {
   border: 2pt solid var(--orange);
 }
+
 .btn.stroke:hover {
   color: white !important;
   border: 2pt solid transparent;
 }
 
 section:is(.blue, .green) {
-  position: relative; /* for the child pseudo-elements */
+  position: relative;
+  /* for the child pseudo-elements */
   color: white;
   padding: 1.5em 0;
 }
+
 section.blue a {
   color: var(--green);
 }
+
 section.green a {
   color: var(--dark-blue);
 }
+
 section:before {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  right: clamp(-3em, -4vw, -1em);
-  left: clamp(-3em, -4vw, -1em);
+  /* Use inset with negative values to extend beyond parent, but clip overflow at main level */
+  left: 50%;
+  right: auto;
+  width: 100vw;
+  transform: translateX(-50%);
   z-index: -1;
 }
+
 section.blue:before {
   background: var(--dark-blue);
 }
+
 section.green:before {
   background: var(--dark-green);
 }
+
 section:is(.blue, .green) blockquote {
   background: rgba(0, 0, 0, 0.3);
 }
@@ -228,6 +270,7 @@ div.box-list ul {
   flex-wrap: wrap;
   hyphens: none;
 }
+
 div.box-list ul li {
   padding: 5pt 1ex;
   border-radius: 5pt;
@@ -240,19 +283,24 @@ div.box-list ul li {
   place-items: center;
   gap: 3pt;
 }
+
 div.box-list ul li em {
   font-style: normal;
 }
+
 div.box-list ul li a {
   color: var(--green);
 }
+
 section.blue div.box-list ul li {
   background: var(--green);
   box-shadow: 0 0 2em -1em black;
 }
+
 section.blue div.box-list ul li a {
   color: var(--dark-blue);
 }
+
 /* captions */
 p > :is(picture + em, a + em) {
   text-align: center;
@@ -262,12 +310,14 @@ p > :is(picture + em, a + em) {
 :where(h1, h2, h3, h4, h5, h6, label, input, select, button, textarea) {
   scroll-margin-top: 100px;
 }
+
 /* heading links inserted by custom heading renderer in src/utils/marked.ts */
 :where(h2, h3, h4, h5, h6) a[aria-hidden='true'] {
   transition: 0.3s;
   margin-left: 4pt;
   opacity: 0;
 }
+
 :where(h2, h3, h4, h5, h6):hover a[aria-hidden='true'] {
   opacity: 1;
 }

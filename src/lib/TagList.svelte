@@ -1,7 +1,28 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
   import { fade, slide } from 'svelte/transition'
   import type { BlogTag, Post } from './types'
+
+  // Icon imports (bundled at build time)
+  import IconSelectAll from '~icons/ic/select-all'
+  import IconEuro from '~icons/ic/round-euro'
+  import IconPublic from '~icons/ic/public'
+  import IconGraduation from '~icons/fa-solid/graduation-cap'
+  import IconRateReview from '~icons/ic/rate-review'
+  import IconChalkboard from '~icons/fa-solid/chalkboard-teacher'
+  import IconQuestionAnswer from '~icons/ic/question-answer'
+  import IconHandshake from '~icons/fa-solid/handshake'
+  import IconEvent from '~icons/ic/event-available'
+  import IconBeach from '~icons/ic/beach-access'
+  import IconGitBranch from '~icons/bx/git-branch'
+  import IconStats from '~icons/ion/stats-chart'
+  import IconDonate from '~icons/fa-solid/donate'
+  import IconAward from '~icons/fa-solid/award'
+  import IconEarthEurope from '~icons/fa6-solid/earth-europe'
+  import IconMapLocation from '~icons/fa6-solid/map-location-dot'
+  import IconWorkshop from '~icons/grommet-icons/workshop'
+  import IconTags from '~icons/fa-solid/tags'
+  import IconClose from '~icons/ic/round-close'
+  import IconChevronExpand from '~icons/bi/chevron-expand'
 
   export let posts: Post[]
   export let active_tag = `Alle`
@@ -17,25 +38,25 @@
 
   const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][]
 
-  const icons: Record<BlogTag, string> = {
-    Alle: `ic:select-all`,
-    Spenden: `ic:round-euro`,
-    Werbung: `ic:public`,
-    Standortleiter: `fa-solid:graduation-cap`,
-    Erfahrungsberichte: `ic:rate-review`,
-    Nachhilfelehrer: `fa-solid:chalkboard-teacher`,
-    Interview: `ic:question-answer`,
-    'Soziale Partner': `fa-solid:handshake`,
-    Events: `ic:event-available`,
-    Freizeit: `ic:beach-access`,
-    IT: `bx:git-branch`,
-    Bundesvorstand: `ion:stats-chart`,
-    Stipendium: `fa-solid:donate`,
-    Mentoring: `fa-solid:chalkboard-teacher`,
-    Auszeichnung: `fa-solid:award`,
-    Sonstiges: `fa6-solid:earth-europe`,
-    Standorte: `fa6-solid:map-location-dot`,
-    Workshops: `grommet-icons:workshop`,
+  const icons: Record<BlogTag, typeof IconSelectAll> = {
+    Alle: IconSelectAll,
+    Spenden: IconEuro,
+    Werbung: IconPublic,
+    Standortleiter: IconGraduation,
+    Erfahrungsberichte: IconRateReview,
+    Nachhilfelehrer: IconChalkboard,
+    Interview: IconQuestionAnswer,
+    'Soziale Partner': IconHandshake,
+    Events: IconEvent,
+    Freizeit: IconBeach,
+    IT: IconGitBranch,
+    Bundesvorstand: IconStats,
+    Stipendium: IconDonate,
+    Mentoring: IconChalkboard,
+    Auszeichnung: IconAward,
+    Sonstiges: IconEarthEurope,
+    Standorte: IconMapLocation,
+    Workshops: IconWorkshop,
   }
 
   let open = false
@@ -46,13 +67,13 @@
 <svelte:window bind:innerWidth={viewWidth} />
 
 <h2>
-  <Icon icon="fa-solid:tags" style="height: 18pt;" />Tags
+  <IconTags style="height: 18pt;" />Tags
   {#if viewWidth < 750}
     <button on:click={() => (open = !open)} aria-label="Blog Tags öffnen">
       {#if open}
-        <Icon inline icon="ic:round-close" {style} />
+        <IconClose {style} />
       {:else}
-        <Icon inline icon="bi:chevron-expand" {style} />
+        <IconChevronExpand {style} />
       {/if}
     </button>
   {/if}
@@ -67,7 +88,7 @@
           class:active={active_tag === tag}
           on:click={() => (active_tag = tag)}
         >
-          <Icon inline icon={icons[tag]} style="margin-right: 6pt" />
+          <svelte:component this={icons[tag]} style="margin-right: 6pt" />
           {tag} ({count})
         </button>
       </li>

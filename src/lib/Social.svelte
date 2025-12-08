@@ -1,18 +1,43 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
+  // import Icon from '@iconify/svelte'
+  import IconFacebook from '~icons/fa-brands/facebook'
+  import IconTwitter from '~icons/fa-brands/twitter'
+  import IconInstagram from '~icons/fa-brands/instagram'
+  import IconYoutube from '~icons/fa-brands/youtube'
+  import IconLinkedin from '~icons/fa-brands/linkedin'
 
-  export let social: Record<string, string>
-  export let style = ``
-  export let vertical = false
-  export let fixed = false
-  export let include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
+  interface Props {
+    social: Record<string, string>
+    style?: string
+    vertical?: boolean
+    fixed?: boolean
+    include?: string[]
+  }
+
+  let {
+    social,
+    style = ``,
+    vertical = false,
+    fixed = false,
+    include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
+  }: Props = $props()
+
+  const icons: Record<string, any> = {
+    Facebook: IconFacebook,
+    Twitter: IconTwitter,
+    Instagram: IconInstagram,
+    Youtube: IconYoutube,
+    Linkedin: IconLinkedin
+  }
 </script>
 
 <div {style} class:vertical class:fixed>
   {#each include as key}
-    <a href={social[key]} aria-label={key}>
-      <Icon icon="fa-brands:{key.toLowerCase()}" />
-    </a>
+    {#if social[key] && icons[key]}
+      <a href={social[key]} aria-label={key}>
+        <svelte:component this={icons[key]} />
+      </a>
+    {/if}
   {/each}
 </div>
 

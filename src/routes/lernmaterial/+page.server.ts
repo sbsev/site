@@ -1,8 +1,8 @@
 import { fetch_page, fetch_yaml_list } from '$lib/fetch'
 
-export const load = () => {
+export const load = async () => {
   return {
-    page: fetch_page(`lernmaterial`),
-    studyPlatforms: fetch_yaml_list(`Lernmaterial`, `lernmaterial#`),
+    page: await fetch_page(`lernmaterial`),
+    studyPlatforms: await fetch_yaml_list(`Lernmaterial`, `lernmaterial#`),
   }
 }

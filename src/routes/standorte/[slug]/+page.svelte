@@ -1,10 +1,16 @@
 <script lang="ts">
   import { BasePage } from '$lib'
   import { microcopy } from '$lib/stores'
-  import Icon from '@iconify/svelte'
 
-  export let data
-  $: ({ page, slug } = data)
+  // Icon imports (bundled at build time)
+  import IconGraduation from '~icons/fa-solid/graduation-cap'
+  import IconInfo from '~icons/bi/info-circle-fill'
+  import IconChild from '~icons/fa-solid/child'
+  import IconEmail from '~icons/ic/email'
+
+  const { data } = $props()
+  const page = $derived(data.page)
+  const slug = $derived(data.slug)
 
   const style = `margin-right: 3pt;`
 </script>
@@ -18,60 +24,45 @@
       <span>
         {$microcopy?.location?.joinStudent}
         <a href="/signup-student?chapter={page.title}" class="btn blue">
-          <Icon inline icon="fa-solid:graduation-cap" {style} />{$microcopy?.location
-            ?.registerStudent}
+          <IconGraduation {style} />{$microcopy?.location?.registerStudent}
         </a>
         <a href={$microcopy?.location?.linkStudentInfo} class="btn blue stroke">
-          <Icon
-            inline
-            icon="bi:info-circle-fill"
-            style={style + `margin-right: 6pt;`}
-          />{$microcopy?.location?.infoStudentButton}
+          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoStudentButton}
         </a>
       </span>
       <span>
         {$microcopy?.location?.joinPupil}
         <a href="/signup-pupil?chapter={page.title}" class="btn green">
-          <Icon inline icon="fa-solid:child" {style} />{$microcopy?.location
-            ?.registerPupil}
+          <IconChild {style} />{$microcopy?.location?.registerPupil}
         </a>
         <a href={$microcopy?.location?.linkPupilInfo} class="btn green stroke">
-          <Icon
-            inline
-            icon="bi:info-circle-fill"
-            style={style + `margin-right: 6pt;`}
-          />{$microcopy?.location?.infoPupilButton}</a
+          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoPupilButton}</a
         >
       </span>
       <span>
         {$microcopy?.location?.locationManagement}
         <a href="mailto:info.{slug}{$microcopy?.location?.mailTo}" class="btn orange">
-          <Icon inline icon="ic:email" {style} />{$microcopy?.location?.writeMailButton}
+          <IconEmail {style} />{$microcopy?.location?.writeMailButton}
         </a>
         <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
-          <Icon
-            inline
-            icon="bi:info-circle-fill"
-            style={style + `margin-right: 6pt;`}
-          />{$microcopy?.location?.infoLeadingButton}</a
+          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoLeadingButton}</a
         >
       </span>
     </section>
   {/if}
 
-  <svelte:fragment slot="afterBody">
+  {#snippet afterBody()}
     {#if page?.yaml?.showSignupButtons !== false}
       <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
       <p>{$microcopy?.location?.questions}</p>
       <ul class="contact">
         <li>
           <a
-            href="mailto:{$microcopy?.location?.student}.{slug}@{$microcopy?.location
-              ?.url}"
+            href="mailto:{$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}"
             title="{$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}"
             class="btn blue"
           >
-            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
+            <IconEmail style="margin: 0 3pt 0 0;" />
             {$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.forStudents}
@@ -82,7 +73,7 @@
             title="{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
             class="btn green"
           >
-            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
+            <IconEmail style="margin: 0 3pt 0 0;" />
             {$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.forPartner}
@@ -93,14 +84,14 @@
             title="{$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}"
             class="btn orange"
           >
-            <Icon icon="ic:email" inline style="margin: 0 3pt 0 0;" />
+            <IconEmail style="margin: 0 3pt 0 0;" />
             {$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}
           </a>
           {$microcopy?.location?.generalRequests}
         </li>
       </ul>
     {/if}
-  </svelte:fragment>
+  {/snippet}
 </BasePage>
 
 <style>

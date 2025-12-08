@@ -4,8 +4,8 @@
   import { colorMode, microcopy } from '$lib/stores'
   import '../app.css'
 
-  export let data
-  $: ({ nav, footer, social } = data)
+  const { data } = $props()
+  const { nav, footer, social } = data
 
   afterNavigate(() => {
     // Track user navigation across the site. This data is transferred to Airtable
@@ -22,8 +22,8 @@
   <meta name="description" content={$microcopy?.meta?.description} />
   <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
 
-  <meta name="color-scheme" content={$colorMode} />
-  <link rel="stylesheet" href="/{$colorMode}-theme.css" />
+  <meta name="color-scheme" content={$colorMode || `system`} />
+  <link rel="stylesheet" href="/{$colorMode || `system`}-theme.css" />
 </svelte:head>
 
 <Header {nav} />

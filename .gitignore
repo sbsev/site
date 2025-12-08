@@ -14,3 +14,7 @@ googleTranslateApiKey.json
 
 # pnpm generated
 pnpm-lock.y[a]ml
+
+# test results
+test-results/
+playwright-report/

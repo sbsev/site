@@ -1,10 +1,11 @@
-import { marked } from 'marked'
+import { marked, type Tokens } from 'marked'
 
 const renderer = {
   // responsive markdown images
-  image(href: string, title: string, text: string) {
+  image(token: Tokens.Image) {
+    const { href, title, text } = token
     if (href?.includes(`images.ctfassets.net`) && !href.endsWith(`.svg`)) {
-      title = title ? `title="${title}"` : ``
+      const titleAttr = title ? `title="${title}"` : ``
 
       const srcset = (params: string) =>
         [900, 600, 400]
@@ -15,7 +16,7 @@ const renderer = {
       <picture>
         <source srcset="${srcset(`q=80&fit=fill&fm=webp`)}" type="image/webp" />
         <source srcset="${srcset(`q=80&fit=fill`)}" />
-        <img src="${href}?w=900&q=80" alt="${text}" ${title} loading="lazy" />
+        <img src="${href}?w=900&q=80" alt="${text}" ${titleAttr} loading="lazy" />
       </picture>`
     }
 
@@ -23,7 +24,8 @@ const renderer = {
   },
 
   // adapted from https://marked.js.org/using_pro
-  heading(text: string, level: string) {
+  heading(token: Tokens.Heading) {
+    const { text, depth: level } = token
     const id = text.toLowerCase().replace(/[^\wäöü]+/g, `-`)
 
     // heading links are styled in static/global.css
@@ -39,19 +41,21 @@ const renderer = {
   },
 
   // add SvelteKit prefetching for local markdown links
-  link(href: string, title: string, text: string) {
+  link(token: Tokens.Link) {
+    const { href, title, text } = token
     if (href.startsWith(`/`)) {
-      title = title ? `title="${title}"` : ``
-      return `<a href="${href}" ${title}>${text}</a>`
+      const titleAttr = title ? `title="${title}"` : ``
+      return `<a href="${href}" ${titleAttr}>${text}</a>`
     }
     return false // delegate to default marked link renderer
   },
 
   // responsive iframes for video embeds
-  codespan(code: string) {
+  codespan(token: Tokens.Codespan) {
+    const { text: code } = token
     if (code.startsWith(`youtube:`) || code.startsWith(`vimeo:`)) {
       const [platform, id] = code.split(/:\s?/)
-      const embed = {
+      const embed: Record<string, (id: string) => string> = {
         youtube: (id: string) => `https://www.youtube-nocookie.com/embed/${id}`,
         vimeo: (id: string) => `https://player.vimeo.com/video/${id}`,
       }
@@ -71,10 +75,6 @@ const renderer = {
   },
 }
 
-marked.use({
-  renderer,
-  mangle: false,
-  headerIds: false,
-})
+marked.use({ renderer })
 
 export default marked

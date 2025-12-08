@@ -7,7 +7,7 @@ export type Chapter = {
   }
   baseId: string
   acceptsSignups: boolean
-  status: 'active' | 'starting' | 'partner' | null
+  status: `active` | `starting` | `partner` | null
   token: string
 }
 
@@ -166,23 +166,23 @@ export type SignupStore = {
   semester: StoredFormField<number>
   studySubject: StoredFormField<string>
   subjects: StoredFormField<string>
-  type: StoredFormField<'student' | 'pupil'>
+  type: StoredFormField<`student` | `pupil`>
 }
 
 export type StandardTypes =
-  | 'text'
-  | 'email'
-  | 'number'
-  | 'date'
-  | 'tel'
-  | 'checkbox'
+  | `text`
+  | `email`
+  | `number`
+  | `date`
+  | `tel`
+  | `checkbox`
 export type CustomTypes =
-  | 'select'
-  | 'toggle'
-  | 'singleRange'
-  | 'doubleRange'
-  | 'placeSelect'
-  | 'radio'
+  | `select`
+  | `toggle`
+  | `singleRange`
+  | `doubleRange`
+  | `placeSelect`
+  | `radio`
 export type FormFieldType = StandardTypes | CustomTypes
 
 export type FormFieldProps = {
@@ -210,13 +210,97 @@ export type FormSelectOptions = {
 }
 
 export type FormMessages = {
-  submit: Record<'title' | 'note', string>
-  submitSuccess: Record<'title' | 'note', string>
-  submitError: Record<'title' | 'note', string>
-  errMsg: Record<'title' | 'note', string>
+  submit: Record<`title` | `note`, string>
+  submitSuccess: Record<`title` | `note`, string>
+  submitError: Record<`title` | `note`, string>
+  errMsg: Record<`title` | `note`, string>
 }
 
 export type Form = {
   fields: FormFieldProps[]
-  page: Record<'title' | 'note', string>
+  page: Record<`title` | `note`, string>
+  header: Record<`title` | `note`, string>
 } & FormMessages
+
+// Microcopy type for internationalization/localization content
+export type Microcopy = {
+  locale?: string
+  country?: string
+  meta?: {
+    name?: string
+    description?: string
+    url?: string
+  }
+  location?: {
+    register?: string
+    joinStudent?: string
+    registerStudent?: string
+    linkStudentInfo?: string
+    infoStudentButton?: string
+    joinPupil?: string
+    registerPupil?: string
+    linkPupilInfo?: string
+    infoPupilButton?: string
+    locationManagement?: string
+    mailTo?: string
+    writeMailButton?: string
+    linkLeadingInfo?: string
+    infoLeadingButton?: string
+    contact?: string
+    questions?: string
+    student?: string
+    pupil?: string
+    info?: string
+    url?: string
+    forStudents?: string
+    forPartner?: string
+    generalRequests?: string
+  }
+  chapterList?: {
+    locations?: string
+    inSetup?: string
+    partner?: string
+  }
+  map?: {
+    location?: {
+      lng?: number
+      lat?: number
+      zoom?: number
+      minZoom?: number
+      maxZoom?: number
+    }
+    text?: {
+      active?: string
+      inSetup?: string
+      partner?: string
+    }
+  }
+  indexPage?: {
+    title?: string
+    theme?: string
+    chooseLocation?: string
+    register?: string
+    boxes?: {
+      locationsNumber?: number
+      locationsName?: string
+      studentsNumber?: number
+      studentsName?: string
+      pupilsNumber?: number
+      pupilsName?: string
+      scholarshipNumber?: number
+      scholarshipName?: string
+      organizationMemberNumber?: number
+      organizationMemberName?: string
+    }
+  }
+  basepage?: {
+    lastUpdated?: string
+    email?: string
+    feedback?: string
+  }
+  footer?: {
+    name?: string
+    site?: string
+    uses?: string
+  }
+}

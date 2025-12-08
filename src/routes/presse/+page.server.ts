@@ -1,16 +1,23 @@
 import { fetch_page, fetch_yaml_list } from '$lib/fetch'
 
-export const load = () => {
+export const load = async () => {
+  const pressItems = await fetch_yaml_list(`Presse`, `presse#`)
+  const itemsByYear = pressItems.reduce(
+    (
+      acc: Record<number, Record<string, unknown>[]>,
+      itm: Record<string, unknown>,
+    ) => {
+      // split items into sub-lists by year
+      const year = (itm.date as Date).getFullYear()
+      if (!acc[year]) acc[year] = []
+      acc[year].push(itm)
+      return acc
+    },
+    {},
+  )
+
   return {
-    page: fetch_page(`presse`),
-    pressItems: fetch_yaml_list(`Presse`, `presse#`).then((items) => {
-      return items.reduce((acc, itm) => {
-        // split items into sub-lists by year
-        const year = itm.date.getFullYear()
-        if (!acc[year]) acc[year] = []
-        acc[year].push(itm)
-        return acc
-      }, {})
-    }),
+    page: await fetch_page(`presse`),
+    pressItems: itemsByYear,
   }
 }

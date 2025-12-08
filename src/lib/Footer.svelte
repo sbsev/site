@@ -1,19 +1,30 @@
 <script lang="ts">
   import { repository } from '$root/package.json'
-  import Icon from '@iconify/svelte'
   import { Social } from '.'
   import { microcopy } from './stores'
   import type { Link } from './types'
 
-  const icon_map: Record<string, string> = {
-    Impressum: `octicon:law`,
-    Datenschutz: `ic:round-privacy-tip`,
-    Spenden: `ic:round-euro`,
-    Satzung: `ion:document-text`,
+  // Icon imports (bundled at build time)
+  import IconLaw from '~icons/octicon/law'
+  import IconPrivacy from '~icons/ic/round-privacy-tip'
+  import IconEuro from '~icons/ic/round-euro'
+  import IconDocument from '~icons/ion/document-text'
+  import IconOpenSource from '~icons/ri/open-source-fill'
+  import IconCookie from '~icons/bxs/cookie'
+
+  const icon_map: Record<string, typeof IconLaw> = {
+    Impressum: IconLaw,
+    Datenschutz: IconPrivacy,
+    Spenden: IconEuro,
+    Satzung: IconDocument,
   }
 
-  export let links: Link[]
-  export let social: Record<keyof typeof icon_map, string>
+  interface Props {
+    links: Link[]
+    social: Record<keyof typeof icon_map, string>
+  }
+
+  let { links, social }: Props = $props()
 </script>
 
 <footer>
@@ -22,7 +33,7 @@
   <div>
     {#each links as { title, url }}
       <a href={url}>
-        <Icon inline icon={icon_map[title]} />
+        <svelte:component this={icon_map[title]} style="display: inline; vertical-align: -0.125em;" />
         {title}
       </a>
     {/each}
@@ -30,10 +41,10 @@
   <span>
     {@html $microcopy?.footer?.site}
     <a href={repository}>
-      <Icon inline icon="ri:open-source-fill" style="padding-right: 3pt;" />open source
+      <IconOpenSource style="display: inline; vertical-align: -0.125em; padding-right: 3pt;" />open source
     </a>
     {@html $microcopy?.footer?.uses}
-    <Icon inline icon="bxs:cookie" />
+    <IconCookie style="display: inline; vertical-align: -0.125em;" />
     Cookies.
   </span>
   {#if $microcopy?.country == `de`}

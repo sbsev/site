@@ -1,17 +1,20 @@
 <script lang="ts">
-  import Icon from '@iconify/svelte'
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
-  export let chapters: Chapter[]
+  // Icon imports (bundled at build time)
+  import IconPlace from '~icons/ic/place'
+  import IconConstruction from '~icons/ic/round-construction'
 
-  const openChapters = chapters.filter((ch) => ch.acceptsSignups)
-  const startingChapters = chapters.filter((ch) => ch.status == `starting`)
-  const partnerChapters = chapters.filter((ch) => ch.status == `partner`)
+  const { chapters } = $props<{ chapters: Chapter[] }>()
+
+  const openChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.acceptsSignups) : [])
+  const startingChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `starting`) : [])
+  const partnerChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `partner`) : [])
 </script>
 
 <h1>
-  <Icon icon="ic:place" inline />
+  <IconPlace style="display: inline; vertical-align: -0.125em;" />
   {$microcopy?.chapterList?.locations}
 </h1>
 <ol>
@@ -21,7 +24,7 @@
 </ol>
 {#if startingChapters.length > 2}
   <h1>
-    <Icon icon="ic:round-construction" inline />
+    <IconConstruction style="display: inline; vertical-align: -0.125em;" />
     {$microcopy?.chapterList?.inSetup}
   </h1>
   <ol>
@@ -32,7 +35,7 @@
 {/if}
 {#if partnerChapters.length > 2}
   <h1>
-    <Icon icon="ic:place" inline />
+    <IconPlace style="display: inline; vertical-align: -0.125em;" />
     {$microcopy?.chapterList?.partner}
   </h1>
   <ol>

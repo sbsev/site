@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import marked from '../utils/marked'
@@ -33,7 +32,10 @@ export async function airtable_fetch(
   return data
 }
 
-export async function contentful_fetch(query: string) {
+export async function contentful_fetch(
+  query: string,
+  customFetch: typeof fetch = fetch,
+) {
   const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
   const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
 
@@ -44,7 +46,7 @@ export async function contentful_fetch(query: string) {
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
   const ctfGraphqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
 
-  const response = await fetch(ctfGraphqlEndPoint, {
+  const response = await customFetch(ctfGraphqlEndPoint, {
     method: `POST`,
     headers: { 'Content-Type': `application/json` },
     body: JSON.stringify({ query }),
@@ -74,9 +76,16 @@ const chapters_query = `{
   }
 }`
 
-export async function fetch_chapters(): Promise<Chapter[]> {
-  const { chapters } = await contentful_fetch(chapters_query)
-  return chapters?.items?.map(prefixSlug(`/standorte/`))
+export async function fetch_chapters(
+  customFetch: typeof fetch = fetch,
+): Promise<Chapter[]> {
+  try {
+    const { chapters } = await contentful_fetch(chapters_query, customFetch)
+    return chapters?.items?.map(prefixSlug(`/standorte/`)) || []
+  } catch (error) {
+    console.error(`Error fetching chapters:`, error)
+    return []
+  }
 }
 
 export async function base64_thumbnail(
@@ -142,12 +151,15 @@ const page_query = (slug: string) => `{
   }
 }`
 
-export async function fetch_page(slug: string): Promise<Page | null> {
+export async function fetch_page(
+  slug: string,
+  customFetch: typeof fetch = fetch,
+): Promise<Page | null> {
   if (!slug) throw `fetchPage requires a slug, got '${slug}'`
 
   if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
 
-  const data = await contentful_fetch(page_query(slug))
+  const data = await contentful_fetch(page_query(slug), customFetch)
   const page = data?.pages?.items[0]
   if (!page) return null
 
@@ -227,8 +239,10 @@ export async function fetch_post(slug: string): Promise<Post> {
   return post
 }
 
-export async function fetch_posts(): Promise<Post[]> {
-  const data = await contentful_fetch(posts_query)
+export async function fetch_posts(
+  customFetch: typeof fetch = fetch,
+): Promise<Post[]> {
+  const data = await contentful_fetch(posts_query, customFetch)
   const posts = data?.posts?.items
   return await Promise.all(posts.map(process_post))
 }
@@ -241,9 +255,12 @@ const yaml_query = (title: string) => `{
   }
 }`
 
-export async function fetch_yaml(title: string) {
+export async function fetch_yaml(
+  title: string,
+  customFetch: typeof fetch = fetch,
+) {
   if (!title) throw `fetch_yaml() requires a title, got '${title}'`
-  const { yml } = await contentful_fetch(yaml_query(title))
+  const { yml } = await contentful_fetch(yaml_query(title), customFetch)
   return yaml.load(yml?.items[0]?.data)
 }
 
@@ -263,9 +280,18 @@ function title_to_slug(itm: Record<string, unknown> & { title: string }) {
 export async function fetch_yaml_list(
   title: string,
   slugPrefix: string,
+  customFetch: typeof fetch = fetch,
 ): Promise<Record<string, unknown>[]> {
-  const list = await fetch_yaml(title)
-  return list.map(parse_body).map(title_to_slug).map(prefixSlug(slugPrefix))
+  const list = (await fetch_yaml(title, customFetch)) as Record<
+    string,
+    unknown
+  >[]
+  return list
+    .map((item) => parse_body(item as Page | Post))
+    .map((item) =>
+      title_to_slug(item as Record<string, unknown> & { title: string }),
+    )
+    .map((item) => prefixSlug(slugPrefix)(item as Page | Post))
 }
 
 // remove outer-most paragraph tags (if any)
@@ -273,19 +299,36 @@ const strip_outer_par_tag = (str: string) =>
   str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
 export function parse_form_data(obj: Form): Form {
-  const renderer = new marked.Renderer()
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
-  renderer.link = (href: string, _: string, text: string) =>
-    `<a target="_blank" href="${href}">${text}</a>`
-  marked.use({ renderer })
+  marked.use({
+    renderer: {
+      link({ href, text }: { href: string; text: string }) {
+        return `<a target="_blank" href="${href}">${text}</a>`
+      },
+    },
+  })
 
+  // Process all string fields that might contain markdown
   for (const [key, itm] of Object.entries(obj)) {
-    if ([`title`, `note`].includes(key)) {
+    if (typeof itm === `string`) {
+      // Process any string field that might contain markdown (title, note, etc.)
       // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
       // https://github.com/markedjs/marked/issues/1696
-      const markdown = itm.replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-      obj[key] = strip_outer_par_tag(marked(markdown))
-    } else if (typeof itm === `object` && itm !== null) parse_form_data(itm)
+      const markdown = (itm as string).replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(
+        marked(markdown),
+      )
+    } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
+      // Recursively process nested objects (like header, submit, etc.)
+      parse_form_data(itm as unknown as Form)
+    } else if (Array.isArray(itm)) {
+      // Process arrays of objects (like fields array)
+      itm.forEach((item) => {
+        if (typeof item === `object` && item !== null) {
+          parse_form_data(item as unknown as Form)
+        }
+      })
+    }
   }
   return obj
 }
