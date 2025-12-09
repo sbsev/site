@@ -4,7 +4,15 @@ import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
 
 export default {
-  plugins: [sveltekit(), yaml(), Icons({ compiler: 'svelte' })],
+  plugins: [
+    sveltekit(),
+    yaml(),
+    Icons({
+      compiler: 'svelte',
+      // Match @iconify/svelte default sizing (1em = text size)
+      scale: 1,
+    }),
+  ],
 
   server: {
     port: 3000,
