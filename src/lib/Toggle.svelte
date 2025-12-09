@@ -21,7 +21,7 @@
     bind:this={input}
     on:keydown={handleKeydown}
   />
-  <span />
+  <span></span>
 </label>
 
 <style>

@@ -4,28 +4,46 @@
   import { signupStore } from '$lib/stores'
   import Icon from '@iconify/svelte'
 
-  export let data
-  $: ({ chapters, form } = data)
+  const { data } = $props()
+  const { chapters, form } = data
+
+  // Add debugging and fallback
+  $effect(() => {
+    if (!form || !form.header) {
+      console.error(`Form data is missing or incomplete:`, { data, form })
+    }
+  })
 
   let success = false
   let error: Error | undefined = undefined
   let isSubmitting: boolean
-  $: modalOpen = Boolean(error)
+  const modalOpen = $derived(Boolean(error))
 
   async function submit() {
     isSubmitting = true
 
     try {
       $signupStore.type = { value: `student` }
+
+      // Ensure form fields exist before mapping
+      if (!form || !form.fields) {
+        console.error(`Form fields not available:`, { form })
+        error = new Error(`Form configuration is missing`)
+        return
+      }
+
       const field_ids_to_validate = form.fields.map((field) => field.id) // list of form fields to validate
 
       const response = await signup_form_submit_handler(
         field_ids_to_validate,
         chapters,
-        form.errMsg
+        form.errMsg || {}
       )
       if (response.success) success = true
       error = response.error
+    } catch (submitError) {
+      console.error(`Submit error:`, submitError)
+      error = submitError as Error
     } finally {
       isSubmitting = false
     }
@@ -34,13 +52,13 @@
 
 {#if success}
   <section>
-    <span>{form.submitSuccess.title}</span>
-    <p>{@html form.submitSuccess.note}</p>
+    <span>{form?.submitSuccess?.title || `Success!`}</span>
+    <p>{@html form?.submitSuccess?.note || `Your registration was successful.`}</p>
   </section>
-{:else}
-  <form onsubmit="return false;" on:submit|preventDefault={submit}>
+{:else if form && form.header}
+  <form on:submit|preventDefault={submit}>
     <!-- Prevent implicit submission of the form https://stackoverflow.com/a/51507806 -->
-    <button type="submit" disabled style="display: none" aria-hidden="true" />
+    <button type="submit" disabled style="display: none" aria-hidden="true"></button>
     <h1>
       <Icon icon="ri:plant-fill" inline />
       {@html form.header.title}
@@ -49,14 +67,14 @@
     <!-- wrapping @html in <p> seems to help with https://github.com/sveltejs/svelte/issues/7698 (though not in minimal repro) -->
     <p>{@html form.header.note}</p>
 
-    {#each form.fields as props, idx (idx)}
+    {#each form.fields || [] as props, idx (idx)}
       <FormField {...props} />
     {/each}
 
     <h3>
-      {@html form.submit.title}
+      {@html form.submit?.title || `Submit`}
     </h3>
-    <p>{@html form.submit.note}</p>
+    <p>{@html form.submit?.note || ``}</p>
     <!-- class main used by CSS selector in signup form tests -->
     <button type="submit" class="main" disabled={isSubmitting}>
       {#if isSubmitting}
@@ -66,21 +84,26 @@
       {/if}
     </button>
   </form>
-  {#if modalOpen}
-    <Modal on:close={() => (modalOpen = false)} style="background: var(--body-bg);">
-      <div>
-        <span>{form.submitError.title}</span>
-        <p>{@html form.submitError.note}</p>
+{:else}
+  <div>
+    <h1>Loading form...</h1>
+    <p>Please wait while the form loads. If this persists, there may be an issue with the form data.</p>
+  </div>
+{/if}
+{#if modalOpen}
+  <Modal on:close={() => (error = undefined)} style="background: var(--body-bg);">
+    <div>
+      <span>{form?.submitError?.title || `Error`}</span>
+      <p>{@html form?.submitError?.note || `An error occurred.`}</p>
 
-        <!-- <pre style="overflow-x: auto;"><code>
-          {JSON.stringify(error, null, 2)}
-        </code></pre>
-        <pre><code>
-          {JSON.stringify(error, Object.getOwnPropertyNames(error))}
-        </code></pre> -->
-      </div>
-    </Modal>
-  {/if}
+      <!-- <pre style="overflow-x: auto;"><code>
+        {JSON.stringify(error, null, 2)}
+      </code></pre>
+      <pre><code>
+        {JSON.stringify(error, Object.getOwnPropertyNames(error))}
+      </code></pre> -->
+    </div>
+  </Modal>
 {/if}
 
 <style>

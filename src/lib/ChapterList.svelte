@@ -3,11 +3,11 @@
   import { microcopy } from './stores'
   import type { Chapter } from './types'
 
-  export let chapters: Chapter[]
+  const { chapters } = $props<{ chapters: Chapter[] }>()
 
-  const openChapters = chapters.filter((ch) => ch.acceptsSignups)
-  const startingChapters = chapters.filter((ch) => ch.status == `starting`)
-  const partnerChapters = chapters.filter((ch) => ch.status == `partner`)
+  const openChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.acceptsSignups) : [])
+  const startingChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `starting`) : [])
+  const partnerChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `partner`) : [])
 </script>
 
 <h1>

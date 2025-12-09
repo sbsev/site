@@ -1,21 +1,35 @@
 <script lang="ts">
-  export let src: string, alt: string
-  export let width = 100
-  export let height = 100
-  export let base64 = ``
-  export let title = ``
-  export let picture_style = ``
-  export let img_style = ``
-  export let loading = `lazy`
-  export let sizes: ImgSize[] = [
-    { w: 1500 },
-    { w: 1200 },
-    { w: 900 },
-    { w: 600 },
-    { w: 400 },
-  ]
-
   type ImgSize = { w?: number; h?: number }
+
+  let {
+    src,
+    alt,
+    width = 100,
+    height = 100,
+    base64 = ``,
+    title = ``,
+    picture_style = ``,
+    img_style = ``,
+    loading = `lazy`,
+    sizes = [
+      { w: 1500 },
+      { w: 1200 },
+      { w: 900 },
+      { w: 600 },
+      { w: 400 },
+    ],
+  } = $props<{
+    src: string
+    alt: string
+    width?: number
+    height?: number
+    base64?: string
+    title?: string
+    picture_style?: string
+    img_style?: string
+    loading?: string
+    sizes?: ImgSize[]
+  }>()
 
   // heights are optional but widths are required for media=min-width below
   if (!sizes.every((s) => s.w)) throw `Img with src="${src}" size missing width`
@@ -24,21 +38,24 @@
 
   // grab the first width and height (if any) to compute natural height if custom height was
   // not specified (used to prevent on-load layout shift by passing <img {width} {height} />)
-  $: if (sizes[0]?.w) width = sizes[0].w
-  $: if (sizes[0]?.h) height = sizes[0].h
-  $: if (!height) height = (width * naturalHeight) / naturalWidth
+  $effect(() => {
+    if (sizes[0]?.w) width = sizes[0].w
+    if (sizes[0]?.h) height = sizes[0].h
+    if (!height) height = (width * naturalHeight) / naturalWidth
+  })
 
   const toQueryStr = (size: ImgSize) =>
     new URLSearchParams(size as Record<string, string>).toString()
 
   // must be reactive to render changes to src and sizes
-  $: srcSet = (params: string) =>
+  const srcSet = $derived((params: string) =>
     sizes.map((size) => `${src}?${toQueryStr(size)}&${params} ${size.w}w`).join(`, `)
+  )
 
-  $: style = base64 ? `background-image: url('${base64}');${img_style}` : img_style
+  const style = $derived(base64 ? `background-image: url('${base64}');${img_style}` : img_style)
 </script>
 
-{#if src.endsWith(`.svg`)}
+{#if src?.endsWith(`.svg`)}
   <img {src} {alt} {title} {width} {height} style={img_style} />
 {:else}
   <picture style={picture_style}>

@@ -33,7 +33,7 @@ export async function search_string_in_content_type(args) {
       locale = `de`,
     } = args
 
-    console.log(`Now running search_string_in_content_type with args = `, {
+    console.debug(`Now running search_string_in_content_type with args = `, {
       searchTerm,
       contentType,
       field,
@@ -48,7 +48,7 @@ export async function search_string_in_content_type(args) {
       item?.fields[field][locale]?.includes(searchTerm),
     )
     items = items.map((item) => item.fields.slug[locale])
-    console.log(
+    console.debug(
       `'${contentType}' entries containing '${searchTerm}' in field '${field}.${locale}':`,
       items,
     )
@@ -72,7 +72,7 @@ export async function replace_string_in_content_type(args) {
       locale = `de`,
     } = args
 
-    console.log(`Now running replace_string_in_content_type with args = `, {
+    console.debug(`Now running replace_string_in_content_type with args = `, {
       searchTerm,
       replaceTerm,
       contentType,
@@ -89,7 +89,7 @@ export async function replace_string_in_content_type(args) {
 
     for (const itm of items) {
       if (dryRun && dryRun < counter) {
-        console.log(`\nreached dryRun count ${dryRun}, stopping`)
+        console.debug(`\nreached dryRun count ${dryRun}, stopping`)
         return
       }
 
@@ -106,19 +106,19 @@ export async function replace_string_in_content_type(args) {
         replaceTerm,
       )
       if (dryRun) {
-        console.log(
+        console.debug(
           `new ${field}.${locale} of ${contentType} ${itm?.fields?.title.de} after replacement: ${itm.fields[field][locale]}`,
         )
       } else {
         await itm.update()
-        console.log(
+        console.debug(
           `performed replacement in ${contentType} ${itm?.fields?.title.de}`,
         )
         // await itm.publish()
       }
     }
-    if (!dryRun) console.log(`\ntotal replacements performed: ${counter}`)
-    if (counter === 0) console.log(`found 0 matches`)
+    if (!dryRun) console.debug(`\ntotal replacements performed: ${counter}`)
+    if (counter === 0) console.debug(`found 0 matches`)
   } catch (error) {
     console.error(error)
   }
@@ -132,7 +132,7 @@ export async function prettier_format_md(args) {
 
     const { contentType = `page`, field = `body`, locale = `de` } = args
 
-    console.log(`Now running prettierFormatMd with args = `, {
+    console.debug(`Now running prettierFormatMd with args = `, {
       contentType,
       field,
       locale,
@@ -153,11 +153,11 @@ export async function prettier_format_md(args) {
         itm.fields[field][locale] = formatted
 
         await itm.update()
-        console.log(`formatted ${contentType} ${itm?.fields?.title.de}`)
+        console.debug(`formatted ${contentType} ${itm?.fields?.title.de}`)
       }
     }
-    if (counter === 0) console.log(`performed 0 formats`)
-    else console.log(`\ntotal ${contentType}s formatted: ${counter}`)
+    if (counter === 0) console.debug(`performed 0 formats`)
+    else console.debug(`\ntotal ${contentType}s formatted: ${counter}`)
   } catch (error) {
     console.error(error)
   }

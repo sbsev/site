@@ -2,18 +2,19 @@
   import { tweened } from 'svelte/motion'
   import { slide } from 'svelte/transition'
 
-  export let id: string
-  export let active: boolean
+  let { id, active } = $props<{ id: string; active: boolean }>()
 
   const duration = 200
   const angle = tweened(180, { duration })
 
-  let isOpen = false
+  let isOpen = $state(false)
 
-  $: if (active) {
-    toggle()
-    setTimeout(() => (active = false), 2000)
-  }
+  $effect(() => {
+    if (active) {
+      toggle()
+      setTimeout(() => (active = false), 2000)
+    }
+  })
 
   function toggle() {
     isOpen = !isOpen
@@ -22,7 +23,7 @@
 </script>
 
 <h3 style="--angle: {$angle}" class:active>
-  <span class="anchor" {id} />
+  <span class="anchor" {id}></span>
   <button on:click={toggle}>
     <span style="display: inline-block; transform: rotate({$angle}deg);">👆</span>
     <slot name="title" />

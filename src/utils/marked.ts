@@ -51,7 +51,7 @@ const renderer = {
   codespan(code: string) {
     if (code.startsWith(`youtube:`) || code.startsWith(`vimeo:`)) {
       const [platform, id] = code.split(/:\s?/)
-      const embed = {
+      const embed: Record<string, (id: string) => string> = {
         youtube: (id: string) => `https://www.youtube-nocookie.com/embed/${id}`,
         vimeo: (id: string) => `https://player.vimeo.com/video/${id}`,
       }

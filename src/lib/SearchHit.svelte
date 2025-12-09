@@ -4,11 +4,11 @@
   import { Img } from '.'
   import type { Post } from './types'
 
-  export let hit: Post
+  let { hit } = $props<{ hit: Post }>()
   const dispatch = createEventDispatcher()
   const close = () => dispatch(`close`)
 
-  $: ({ title, slug, body, cover, date, author } = hit)
+  const { title, slug, body, cover, date, author } = hit
 </script>
 
 <div>

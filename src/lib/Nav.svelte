@@ -5,8 +5,7 @@
   import { slide } from 'svelte/transition'
   import type { NavLink } from './types'
 
-  export let nav: NavLink[]
-  export let mobile: boolean
+  let { nav, mobile } = $props<{ nav: NavLink[]; mobile: boolean }>()
 
   const icon_map: Record<string, string> = {
     'Über Uns': `ri:plant-fill`,
@@ -18,9 +17,10 @@
     Anmeldung: `ic:round-assignment-ind`,
   }
 
-  let isOpen = false
-  let activeSubNav = -1
+  let isOpen = $state(false)
+  let activeSubNav = $state(-1)
   let node: HTMLElement
+
   const close = () => {
     isOpen = false
     activeSubNav = -1
@@ -32,12 +32,20 @@
     else activeSubNav = idx
   }
 
+  const toggleSubNav = (idx: number) => () => {
+    // if activeSubNav already is idx, we want to close the subnav to get toggle behavior on mobile
+    if (activeSubNav === idx) activeSubNav = -1
+    else activeSubNav = idx
+  }
+
   // isCurrent needs to be reactive to respond to changes in $page.url.pathname
-  $: isCurrent = (url: string) => {
+  const isCurrent = $derived((url: string) => {
+    // Only access page store on the client to avoid SSR issues
+    if (typeof window === `undefined`) return undefined
     if (url === $page.url.pathname) return `page`
     if (url !== `/` && $page.url.pathname.includes(url)) return `page`
     return undefined
-  }
+  })
   beforeNavigate(close)
 
   const crawl_links = nav.flatMap((itm) => itm?.subNav ?? [])
@@ -91,7 +99,7 @@
           </a>
           {#if subNav}
             <button
-              on:click={setActiveSubNav(idx, false)}
+              on:click={toggleSubNav(idx)}
               aria-label="Untermenü {title} öffnen"
             >
               <Icon icon="bi:chevron-expand" />
@@ -213,7 +221,8 @@
     padding: 1ex 1em;
     border-radius: 1ex;
     box-shadow: 0 0 1em black;
-    top: 3ex;
+    top: 100%;
+    margin-top: 0;
     display: grid;
     gap: 5pt 1em;
     max-height: 80vh;

@@ -14,7 +14,7 @@ async function azure_post_new_records(
   base_id: string,
   table_id: string,
   data: { [key: string]: unknown },
-) {
+): Promise<{ status: number; data: unknown }> {
   const response = await fetch(azure_url(base_id, table_id), {
     method: `POST`,
     headers: {
@@ -22,7 +22,8 @@ async function azure_post_new_records(
     },
     body: JSON.stringify({ records: [{ fields: data }], typecast: true }),
   })
-  return await response.json()
+  const jsonData = await response.json()
+  return { status: response.status, data: jsonData }
 }
 
 // Prepares the form data
@@ -30,7 +31,7 @@ export async function prepare_signup_data_for_azure(
   data: SignupStore,
   chapter_base_id: string,
   test = false,
-): Promise<Response> {
+): Promise<{ status: number; data: unknown }> {
   const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
   // common fields for both students and pupils
@@ -100,7 +101,7 @@ export async function prepare_signup_data_for_azure(
   const test_base_id = `appe3hVONuwBkuQv1` // called 'Anmeldeformular Test Base' in Airtable
 
   if (test) {
-    console.log(`fields:`, fields) // eslint-disable-line no-console
+    console.debug(`fields:`, fields) // eslint-disable-line no-console
     return await azure_post_new_records(test_base_id, table, fields)
   }
   return await azure_post_new_records(chapter_base_id, table, globalFields)
@@ -136,17 +137,17 @@ export async function signup_form_submit_handler(
 
   const baseId = chapters?.find(({ title }) => chapter?.includes(title))?.baseId
   if (!baseId) {
-    const error = {
-      name: `BaseIDError`,
-      message: `baseId could not be determined`,
-    }
+    const error = new Error(`baseId could not be determined`)
+    error.name = `BaseIDError`
     return { error }
   }
 
   try {
     const response = await prepare_signup_data_for_azure(signup_data, baseId)
 
-    if (response.StatusCode !== 200) throw response.StatusCode
+    if (response.status !== 200) {
+      throw new Error(`Azure request failed with status: ${response.status}`)
+    }
 
     window.plausible(`Signup`, {
       props: { chapter, type, 'chapter+type': `${type} aus ${chapter}` },
@@ -156,7 +157,7 @@ export async function signup_form_submit_handler(
     signup_store.set({} as SignupStore) // reset store for potential next signup
     return { success: true }
   } catch (err) {
-    const error = err as Error // cast from unknown
+    const error = err as Error
     console.error(error)
     window.plausible(`Signup Error`, {
       props: {

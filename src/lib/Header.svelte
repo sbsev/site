@@ -4,11 +4,10 @@
   // import { SearchHit } from '.'
   import type { NavLink } from './types'
 
-  export let nav: NavLink[]
-  export let breakpoint = 1100
+  let { nav, breakpoint = 1100 } = $props<{ nav: NavLink[]; breakpoint?: number }>()
 
-  let viewWidth: number
-  $: mobile = viewWidth < breakpoint
+  let viewWidth: number = $state(0) // Start at 0 so SSR defaults to mobile layout
+  const mobile = $derived(viewWidth < breakpoint)
   // const searchProps = {
   //   indices: Object.fromEntries(
   //     [`Seiten`, `Posts`, `FAQs`, `Lernmaterial`].map((el) => [el, SearchHit])

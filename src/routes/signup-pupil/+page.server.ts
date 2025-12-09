@@ -1,28 +1,113 @@
 import { dev } from '$app/environment'
 import { fetch_chapters, parse_form_data } from '$lib/fetch'
-// to make the signup form i18n-compatible,
-// these 3 files need to be imported adaptively (same in the student form)
 import messages from '../../signup-form/de/messages.yml'
 import options from '../../signup-form/de/options.yml'
 import raw_form from '../../signup-form/de/pupil.yml'
 
 export const load = async () => {
-  let chapters = await fetch_chapters()
-  chapters = chapters.filter((chap) => chap.acceptsSignups)
+  try {
+    console.debug(`Loading pupil signup form - static imports...`)
 
-  const form = parse_form_data({ ...raw_form, ...messages })
+    // Use the imported YAML data directly
+    const messagesData = messages || {
+      submitSuccess: { title: `🎉 ⭐ 🎉`, note: `Success!` },
+      submitError: { title: `😢`, note: `Error occurred.` },
+      errMsg: { required: `This field is required` },
+    }
 
-  if (dev) {
-    chapters[0] = { ...chapters[0], title: `Test`, baseId: `appe3hVONuwBkuQv1` }
-  }
+    const optionsData = options || {}
+    const rawFormData = raw_form || {
+      header: {
+        title: `Anmeldung Schüler:innen`,
+        note: `Formular für Schüler:innen`,
+      },
+      fields: [
+        {
+          id: `chapter`,
+          title: `Standort`,
+          note: `Wähle einen unserer Nachhilfestandorte.`,
+          required: true,
+          type: `select`,
+          maxSelect: 1,
+        },
+      ],
+      submit: {
+        title: `Anmeldung abschicken`,
+        note: `Du bekommst innerhalb einer Minute eine Bestätigungs-Email von uns.`,
+      },
+    }
 
-  for (const field of form.fields) {
-    if (field.id in options) {
-      field.options = options[field.id]
-    } else if (field.id === `chapter`) {
-      field.options = chapters.map((chap) => chap.title)
+    console.debug(`YAML data loaded:`, {
+      messages: !!messagesData,
+      options: !!optionsData,
+      raw_form: !!rawFormData,
+    })
+
+    let chapters = await fetch_chapters(fetch)
+    console.debug(`chapters loaded:`, chapters)
+
+    // Handle case where chapters might be undefined or not an array
+    if (!Array.isArray(chapters)) {
+      chapters = []
+    }
+
+    chapters = chapters.filter((chap) => chap.acceptsSignups)
+
+    const form = parse_form_data({ ...rawFormData, ...messagesData })
+    console.debug(`form parsed:`, form)
+
+    if (dev && chapters.length > 0) {
+      chapters[0] = {
+        ...chapters[0],
+        title: `Test`,
+        baseId: `appe3hVONuwBkuQv1`,
+      }
+    }
+
+    for (const field of form.fields || []) {
+      if (field.id in optionsData) {
+        field.options = optionsData[field.id]
+      } else if (field.id === `chapter`) {
+        field.options = chapters.map((chap) => chap.title)
+      }
+    }
+
+    console.debug(`Returning data:`, { chapters, form })
+
+    // Ensure data is properly serializable for hydration
+    return {
+      chapters: JSON.parse(JSON.stringify(chapters)),
+      form: JSON.parse(JSON.stringify(form)),
+    }
+  } catch (error) {
+    console.error(`Error loading pupil signup form:`, error)
+    console.error(
+      `Error stack:`,
+      error instanceof Error ? error.stack : `Unknown error`,
+    )
+
+    // Return fallback form structure
+    const basicForm = {
+      header: { title: `Anmeldung Schüler:innen`, note: `Form loading...` },
+      fields: [
+        {
+          id: `chapter`,
+          title: `Standort`,
+          required: true,
+          type: `select`,
+          maxSelect: 1,
+        },
+      ],
+      submit: { title: `Anmeldung abschicken`, note: `` },
+      submitSuccess: { title: `Success`, note: `Success!` },
+      submitError: { title: `Error`, note: `Error occurred` },
+      errMsg: { required: `This field is required` },
+    }
+
+    console.debug(`Returning fallback form:`, basicForm)
+    return {
+      chapters: [],
+      form: JSON.parse(JSON.stringify(basicForm)),
     }
   }
-
-  return { chapters, form }
 }

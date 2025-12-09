@@ -3,7 +3,7 @@ command = "pnpm build"
 publish = "build"
 
 [build.environment]
-NODE_VERSION = "18.16.0"
+NODE_VERSION = "24.11.0"
 
 [[redirects]]
 force = true

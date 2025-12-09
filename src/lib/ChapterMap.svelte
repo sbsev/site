@@ -17,12 +17,12 @@
 
 <div>
   <Map
-    markers={chapters.map((chap) => ({
+    markers={Array.isArray(chapters) ? chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
-      classes: [`chapter`, chap.status],
+      classes: [`chapter`, chap.status].filter((item): item is string => Boolean(item)),
       title: chap.token,
       url: chap.slug,
-    }))}
+    })) : []}
     {lng}
     {lat}
     {zoom}
@@ -32,15 +32,15 @@
 
   <legend>
     <div>
-      <span style="background: var(--light-blue)" />
+      <span style="background: var(--light-blue)"></span>
       {$microcopy?.map?.text?.active}
     </div>
     <div>
-      <span style="background: var(--dark-green)" />
+      <span style="background: var(--dark-green)"></span>
       {$microcopy?.map?.text?.inSetup}
     </div>
     <div>
-      <span style="background: var(--grey)" />
+      <span style="background: var(--grey)"></span>
       {$microcopy?.map?.text?.partner}
     </div>
   </legend>

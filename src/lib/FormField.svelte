@@ -5,26 +5,58 @@
   import { signupStore } from './stores'
   import type { FormFieldType, SignupStore } from './types'
 
-  export let title: string
-  export let note = ``
-  export let id: keyof SignupStore
-  export let placeholder = title
-  export let options: string[] = []
-  export let type: FormFieldType = `text`
-  export let required = false
-  export let min: number | null = null
-  export let max: number | null = null
-  export let maxSelect: number | null = null
+  let {
+    title,
+    note = ``,
+    id,
+    placeholder = title,
+    options = [],
+    type = `text`,
+    required = false,
+    min = null,
+    max = null,
+    maxSelect = null,
+  } = $props<{
+    title: string
+    note?: string
+    id: keyof SignupStore
+    placeholder?: string
+    options?: string[]
+    type?: FormFieldType
+    required?: boolean
+    min?: number | null
+    max?: number | null
+    maxSelect?: number | null
+  }>()
 
   let label: HTMLLabelElement
   let slider: HTMLDivElement
 
-  let value: string | number | boolean | (string | number)[] | undefined
+  // Initialize value immediately with appropriate defaults based on type to fix Svelte 5 binding issue
+  // Cannot use $effect for this because bind:value requires a non-undefined value immediately
+  let value: string | number | boolean | (string | number)[] = $state(
+    type === `select` || type === `placeSelect`
+      ? maxSelect === 1
+        ? ``
+        : []
+      : type === `toggle` || type === `checkbox`
+        ? false
+        : type === `number` || type === `singleRange`
+          ? min || 0
+          : type === `doubleRange`
+            ? [min || 0, max || 100]
+            : ``,
+  )
 
-  $: $signupStore[id] = { required, node: label }
-  $: $signupStore[id].value = value
-  $: $signupStore[id].node = label
-  $: if (value) $signupStore[id].error = ``
+  $effect(() => {
+    $signupStore[id] = { required, node: label }
+    $signupStore[id].value = value
+    $signupStore[id].node = label
+  })
+
+  $effect(() => {
+    if (value) $signupStore[id].error = ``
+  })
 
   function input_type(node: HTMLInputElement): void {
     node.type = type
@@ -75,13 +107,22 @@
 {:else if type === `placeSelect`}
   <PlaceSelect {id} bind:value {placeholder} />
 {:else if type === `singleRange`}
-  <RangeSlider bind:slider float bind:values={value} {min} {max} pips all="label" />
+  <RangeSlider
+    bind:slider
+    float
+    values={[value]}
+    on:stop={(e) => (value = e.detail.values[0])}
+    {min}
+    {max}
+    pips
+    all="label"
+  />
 {:else if type === `doubleRange`}
   <RangeSlider
     range
     bind:slider
     float
-    values={[min, max]}
+    values={value}
     on:stop={(e) => (value = e.detail.values)}
     {min}
     {max}
