@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
   import { PlaceSelect, RadioButtons, Toggle } from '.'
@@ -49,18 +50,31 @@
             : ``,
   )
 
+  // Sync value and label to store - use untrack to avoid infinite loop
   $effect(() => {
-    if (!$signupStore[id]) {
-      // Initialize properly if possibly undefined to satisfy stricter types
-      // Using 'as any' safe because we construct the object fully
-      $signupStore[id] = { required, node: label, value: value as any }
-    } else {
-       $signupStore[id] = { ...$signupStore[id], required, node: label, value: value as any }
-    }
+    // Read value and label as dependencies
+    const currentValue = value
+    const currentLabel = label
+
+    // Write to store without reading it (untrack prevents loop)
+    untrack(() => {
+      const existing = $signupStore[id]
+      $signupStore[id] = {
+        ...existing,
+        required,
+        node: currentLabel,
+        value: currentValue as any,
+      }
+    })
   })
 
+  // Clear error when value changes
   $effect(() => {
-    if (value && $signupStore[id]) $signupStore[id].error = ``
+    if (value) {
+      untrack(() => {
+        if ($signupStore[id]) $signupStore[id].error = ``
+      })
+    }
   })
 
   function input_type(node: HTMLInputElement, currentType: string) {
