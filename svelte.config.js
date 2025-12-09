@@ -1,16 +1,16 @@
 import adapter from '@sveltejs/adapter-static'
-import preprocess from 'svelte-preprocess'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
-  preprocess: preprocess(),
+  preprocess: vitePreprocess(),
 
   kit: {
     adapter: adapter(),
 
     prerender: {
       handleMissingId: `warn`,
-      handleHttpError: ({ status, path, referrer, message }) => {
+      handleHttpError: ({ path, referrer }) => {
         // Provide a clear, actionable error message for content editors
         const errorMsg = `
 ════════════════════════════════════════════════════════════════════
