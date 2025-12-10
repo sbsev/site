@@ -6,13 +6,20 @@
   import { Geocoder, Map } from '.'
   import type { Place } from './types'
 
-  export let value: Place[] = [] // currently selected places
-  export let placeholder = ``
-  export let div: HTMLDivElement | null = null
-  export let id: string | null = null
+  let {
+    value = $bindable([]),
+    placeholder = ``,
+    div = $bindable(null),
+    id = null,
+  }: {
+    value?: Place[]
+    placeholder?: string
+    div?: HTMLDivElement | null
+    id?: string | null
+  } = $props()
 
-  let markers: Marker[] = []
-  let map: MapBox
+  let markers: Marker[] = $state([])
+  let map: MapBox | null = $state(null)
 
   function selectHandler(place: Result) {
     if (!place.center) {
@@ -21,6 +28,12 @@
       window.alert(
         `Für '${place.text}' konnte keine Adresse gefunden werden! Bitte versuche einen anderen Ort anzugeben.`
       )
+      return
+    }
+
+    // Wait for map to be initialized
+    if (!map) {
+      console.warn(`Map not yet initialized, cannot add marker`)
       return
     }
 

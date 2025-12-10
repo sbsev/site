@@ -14,9 +14,9 @@
     }
   })
 
-  let success = false
-  let error: Error | undefined = undefined
-  let isSubmitting: boolean
+  let success = $state(false)
+  let error: Error | undefined = $state(undefined)
+  let isSubmitting = $state(false)
   const modalOpen = $derived(Boolean(error))
 
   async function submit() {

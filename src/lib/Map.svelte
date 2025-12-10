@@ -15,14 +15,14 @@
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 
   let {
-    map = null,
+    map = $bindable(null),
     markers = [],
     css = ``,
-  } = $props<{
+  }: {
     map?: mapboxgl.Map | null
     markers?: MapMarker[]
     css?: string
-  }>()
+  } = $props()
 
   const { lng, lat, zoom, minZoom, maxZoom } = $microcopy?.map?.location ?? [
     10, 51.3, 5.05, 4, 10,

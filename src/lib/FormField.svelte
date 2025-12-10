@@ -48,6 +48,20 @@
             : ``,
   )
 
+  // Separate state for range sliders to avoid ownership_invalid_mutation warning
+  // RangeSlider mutates the values array internally, so we need bindable state
+  let singleRangeValues = $state([min || 0])
+  let doubleRangeValues = $state([min || 0, max || 100])
+
+  // Sync range slider values with the main value
+  $effect(() => {
+    if (type === `singleRange`) {
+      value = singleRangeValues[0]
+    } else if (type === `doubleRange`) {
+      value = doubleRangeValues
+    }
+  })
+
   $effect(() => {
     $signupStore[id] = { required, node: label }
     $signupStore[id].value = value
@@ -110,8 +124,7 @@
   <RangeSlider
     bind:slider
     float
-    values={[value]}
-    on:stop={(e) => (value = e.detail.values[0])}
+    bind:values={singleRangeValues}
     {min}
     {max}
     pips
@@ -122,8 +135,7 @@
     range
     bind:slider
     float
-    values={value}
-    on:stop={(e) => (value = e.detail.values)}
+    bind:values={doubleRangeValues}
     {min}
     {max}
     pips
