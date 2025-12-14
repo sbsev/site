@@ -32,8 +32,9 @@
   <span>© {new Date().getFullYear()} {$microcopy?.footer?.name}</span>
   <div>
     {#each links as { title, url }}
+      {@const Icon = icon_map[title]}
       <a href={url}>
-        <svelte:component this={icon_map[title]} style="display: inline; vertical-align: -0.125em;" />
+        {#if Icon}<Icon style="display: inline; vertical-align: -0.125em;" />{/if}
         {title}
       </a>
     {/each}

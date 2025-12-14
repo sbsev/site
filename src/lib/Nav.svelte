@@ -107,8 +107,9 @@
           >
             <!-- Using component from map -->
             {#if icon_map[title]}
+               {@const Icon = icon_map[title]}
                <span style="display: inline-flex; margin: 0 5pt 0 0;">
-                 <svelte:component this={icon_map[title]} />
+                 <Icon />
                </span>
             {/if}
             {title}

@@ -10,11 +10,24 @@
   import IconEye from '~icons/ic/round-remove-red-eye'
 
   const { data } = $props()
-  let n_readers = 0
+  let n_readers = $state(0)
+
+  // Derived values from data.post
+  const post = $derived(data.post)
+  const title = $derived(post.title)
+  const body = $derived(post.body)
+  const cover = $derived(post.cover)
+  const date = $derived(post.date)
+  const author = $derived(post.author)
+  const bio = $derived(author.bio)
+  const fieldOfStudy = $derived(author.fieldOfStudy)
+  const name = $derived(author.name)
+  const photo = $derived(author.photo)
+  const style = `padding: 0 3pt;`
 
   onMount(async () => {
     const response = await fetch(
-      `https://plausible.io/api/v1/stats/aggregate?site_id=studytutors.de&period=6mo&filters=event:page==${data.post.slug}`,
+      `https://plausible.io/api/v1/stats/aggregate?site_id=studytutors.de&period=6mo&filters=event:page==${post.slug}`,
       {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_PLAUSIBLE_API_KEY}`,
@@ -29,10 +42,6 @@
     const { results } = await response.json()
     n_readers = results.visitors.value
   })
-
-  const { title, body, cover, date } = data.post
-  const { bio, fieldOfStudy, name, photo } = data.post.author
-  const style = `padding: 0 3pt;`
 </script>
 
 <article>

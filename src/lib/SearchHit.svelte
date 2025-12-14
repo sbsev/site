@@ -1,24 +1,25 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
-
   import { Img } from '.'
   import type { Post } from './types'
 
-  let { hit } = $props<{ hit: Post }>()
-  const dispatch = createEventDispatcher()
-  const close = () => dispatch(`close`)
+  interface Props {
+    hit: Post
+    onclose?: () => void
+  }
 
-  const { title, slug, body, cover, date, author } = hit
+  let { hit, onclose }: Props = $props()
+
+  const { title, slug, body, cover, date, author } = $derived(hit)
 </script>
 
 <div>
   {#if cover?.src}
-    <a href={slug} on:click={close}>
+    <a href={slug} onclick={onclose}>
       <Img {...cover} sizes={[{ w: 150 }]} img_style="height: auto;" />
     </a>
   {/if}
   <h3>
-    <a href={slug} on:click={close}>{@html title}</a>
+    <a href={slug} onclick={onclose}>{@html title}</a>
   </h3>
   {#if date}<span>{new Date(date).toLocaleDateString(`de`)}</span>{/if}
   {#if author}<span>{author.name}</span>{/if}

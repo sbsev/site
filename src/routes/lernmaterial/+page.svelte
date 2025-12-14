@@ -17,7 +17,7 @@
   import IconTags from '~icons/fa-solid/tags'
 
   const { data } = $props()
-  const studyPlatforms = data.studyPlatforms as StudyPlatform[]
+  const studyPlatforms = $derived(data.studyPlatforms as StudyPlatform[])
 
   const icon_map: Record<string, typeof IconSelectAll> = {
     Alle: IconSelectAll,
@@ -66,9 +66,10 @@
   {#snippet afterArticle()}
     <ul class="tags">
       {#each Object.entries(tags) as [tag, count]}
+        {@const Icon = icon_map[tag]}
         <li>
           <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
-            <svelte:component this={icon_map[tag]} style="display: inline; vertical-align: -0.125em;" />
+            {#if Icon}<Icon style="display: inline; vertical-align: -0.125em;" />{/if}
             {tag}
             ({count})
           </button>

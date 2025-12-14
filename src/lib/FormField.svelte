@@ -23,7 +23,7 @@
     title,
     note = ``,
     id,
-    placeholder = title,
+    placeholder: propPlaceholder,
     options = [],
     type = `text`,
     required = false,
@@ -32,23 +32,29 @@
     maxSelect = null,
   }: Props = $props()
 
+  const placeholder = $derived(propPlaceholder ?? title)
+
   let label: HTMLLabelElement = $state(null!)
   let slider: HTMLDivElement = $state(null!)
 
-  // Initialize value immediately
-  let value: string | number | boolean | (string | number)[] = $state(
-    type === `select` || type === `placeSelect`
-      ? maxSelect === 1
-        ? ``
-        : []
-      : type === `toggle` || type === `checkbox`
-        ? false
-        : type === `number` || type === `singleRange`
-          ? min || 0
-          : type === `doubleRange`
-            ? [min || 0, max || 100]
-            : ``,
-  )
+  // Compute initial value based on type - using a function to get initial value
+  const getInitialValue = () => {
+    if (type === `select` || type === `placeSelect`) {
+      return maxSelect === 1 ? `` : []
+    }
+    if (type === `toggle` || type === `checkbox`) {
+      return false
+    }
+    if (type === `number` || type === `singleRange`) {
+      return min || 0
+    }
+    if (type === `doubleRange`) {
+      return [min || 0, max || 100]
+    }
+    return ``
+  }
+
+  let value: string | number | boolean | (string | number)[] = $state(getInitialValue())
 
   // Sync value and label to store - use untrack to avoid infinite loop
   $effect(() => {

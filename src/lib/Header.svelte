@@ -10,7 +10,8 @@
     breakpoint?: number
   }
 
-  let { nav, breakpoint = 1100 }: Props = $props()
+  const props: Props = $props()
+  const breakpoint = props.breakpoint ?? 1100
 
   // Only used for JavaScript behavior (mouse events in Nav), not for CSS layout
   // CSS media queries handle the visual layout, so no flash on initial load
@@ -22,7 +23,7 @@
 
 <!-- CSS classes for layout are set via media queries, not JS -->
 <header>
-  <Nav {nav} {mobile} />
+  <Nav nav={props.nav} {mobile} />
 
   <div style="grid-area: colormode; display: flex;">
     <ThemeSwitcher />

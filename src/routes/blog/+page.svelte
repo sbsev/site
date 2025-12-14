@@ -5,9 +5,9 @@
   import { scale } from 'svelte/transition'
 
   const { data } = $props()
-  const social = data.social as Record<string, string>
+  const social = $derived(data.social as Record<string, string>)
 
-  let active_tag: BlogTag
+  let active_tag: BlogTag = $state(`Alle` as BlogTag)
 
   const filtered_posts = $derived(
     Array.isArray(data.posts)

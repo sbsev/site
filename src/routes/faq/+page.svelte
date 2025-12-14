@@ -20,7 +20,7 @@
   import IconTags from '~icons/fa-solid/tags'
 
   const { data } = $props()
-  const faqs = data.faqs as FAQ[]
+  const faqs = $derived(data.faqs as FAQ[])
 
   const icons: Record<string, typeof IconSelectAll> = {
     'Rund ums Engagement': IconHandsHelping,
@@ -67,9 +67,10 @@
 <h1>FAQs</h1>
 <ul class="tags">
   {#each Object.entries(tags).sort() as [tag, count] (tag)}
+    {@const Icon = icons[tag]}
     <li>
       <button class:active={active_tag === tag} onclick={() => (active_tag = tag)}>
-        <svelte:component this={icons[tag]} style="display: inline; vertical-align: -0.125em;" />
+        {#if Icon}<Icon style="display: inline; vertical-align: -0.125em;" />{/if}
         {tag}
         ({count})</button
       >

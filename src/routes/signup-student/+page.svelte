@@ -6,7 +6,8 @@
   import IconPlantFill from '~icons/ri/plant-fill'
 
   const { data } = $props()
-  const { chapters, form } = data
+  const chapters = $derived(data.chapters)
+  const form = $derived(data.form)
 
   // Add debugging and fallback
   $effect(() => {
@@ -92,7 +93,7 @@
   </div>
 {/if}
 {#if modalOpen}
-  <Modal on:close={() => (error = undefined)} style="background: var(--body-bg);">
+  <Modal onclose={() => (error = undefined)} style="background: var(--body-bg);">
     <div>
       <span>{form?.submitError?.title || `Error`}</span>
       <p>{@html form?.submitError?.note || `An error occurred.`}</p>

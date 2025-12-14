@@ -8,7 +8,7 @@
   import IconPlace from '~icons/ic/place'
 
   const { data } = $props()
-  const pressItems = data.pressItems as Record<string, PressItem[]>
+  const pressItems = $derived(data.pressItems as Record<string, PressItem[]>)
 
   const style = `margin: 0 5pt 0 0;`
 </script>

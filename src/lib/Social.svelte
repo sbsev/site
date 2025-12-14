@@ -34,8 +34,9 @@
 <div {style} class:vertical class:fixed>
   {#each include as key}
     {#if social[key] && icons[key]}
+      {@const Icon = icons[key]}
       <a href={social[key]} aria-label={key}>
-        <svelte:component this={icons[key]} />
+        <Icon />
       </a>
     {/if}
   {/each}

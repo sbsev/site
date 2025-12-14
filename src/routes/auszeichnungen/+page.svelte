@@ -7,7 +7,7 @@
   import IconAward from '~icons/fa-solid/award'
 
   const { data } = $props()
-  const awards = data.awards as Award[]
+  const awards = $derived(data.awards as Award[])
 
   const style = `margin: 0 5pt 0 0;`
 </script>

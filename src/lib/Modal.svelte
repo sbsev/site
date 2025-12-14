@@ -1,16 +1,21 @@
 <script lang="ts">
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+  import { onDestroy, onMount, type Snippet } from 'svelte'
   import { preventOverScroll } from '../utils/actions'
 
-  export let style: string
-  export let show_close_btn = false
+  interface Props {
+    style: string
+    show_close_btn?: boolean
+    onclose?: () => void
+    children: Snippet
+  }
 
-  const dispatch = createEventDispatcher()
-  const close = () => dispatch(`close`)
+  let { style, show_close_btn = false, onclose, children }: Props = $props()
 
-  let modal: HTMLDivElement
-  let origScrollPos: [number, number]
-  let origActiveElement: HTMLElement | null
+  const close = () => onclose?.()
+
+  let modal: HTMLDivElement = $state(null!)
+  let origScrollPos: [number, number] = $state([0, 0])
+  let origActiveElement: HTMLElement | null = $state(null)
 
   // record original scroll position and focused element
   // to return to when modal closes (see onDestroy)
@@ -46,12 +51,13 @@
   }
 </script>
 
-<svelte:window on:keydown={handle_keydown} />
+<svelte:window onkeydown={handle_keydown} />
 
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   class="modal-background"
-  on:click|self={close}
-  on:keyup|self={close}
+  onclick={(e) => { if (e.target === e.currentTarget) close() }}
+  onkeyup={(e) => { if (e.target === e.currentTarget) close() }}
   role="presentation"
 >
   <div
@@ -62,8 +68,8 @@
     bind:this={modal}
     {style}
   >
-    {#if show_close_btn}<button on:click={close}><span>&times;</span></button>{/if}
-    <slot />
+    {#if show_close_btn}<button onclick={close}><span>&times;</span></button>{/if}
+    {@render children()}
   </div>
 </div>
 
