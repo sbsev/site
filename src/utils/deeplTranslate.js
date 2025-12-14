@@ -47,7 +47,7 @@ async function translateContentfulEntries() {
       // await itm.update()
       // await itm.publish()
       const title = itm.fields.title[sourceLocale]
-       
+
       console.debug(
         `successfully translated ${contentType} '${title}' to ${targetLocale}`,
       )

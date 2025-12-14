@@ -1,4 +1,3 @@
- 
 import contentful from 'contentful-management'
 import 'dotenv/config'
 import prettier from 'prettier'
