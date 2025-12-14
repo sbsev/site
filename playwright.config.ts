@@ -33,6 +33,5 @@ export default {
     command: `pnpm dev --port 3005`,
     port: 3005,
     reuseExistingServer: !process.env.CI,
-    timeout: 10 * 60 * 1000, // 10 min to start dev server in CI
   },
 } satisfies PlaywrightTestConfig

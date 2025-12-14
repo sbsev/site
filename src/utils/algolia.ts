@@ -9,9 +9,7 @@ type AlgoliaItem = (Page | Post | Record<string, unknown>) & {
   plainBody?: string
 }
 
-function processResults(
-  fetchFunction: () => Promise<AlgoliaItem[]>,
-) {
+function processResults(fetchFunction: () => Promise<AlgoliaItem[]>) {
   return async () => {
     const items = await fetchFunction()
 
@@ -38,15 +36,28 @@ export const algoliaConfig = {
   apiKey: import.meta.env.VITE_ALGOLIA_ADMIN_KEY,
   // partialUpdates: true,
   indices: [
-    { name: `Seiten`, getData: processResults(fetch_pages as () => Promise<AlgoliaItem[]>) },
-    { name: `Posts`, getData: processResults(fetch_posts as () => Promise<AlgoliaItem[]>) },
+    {
+      name: `Seiten`,
+      getData: processResults(fetch_pages as () => Promise<AlgoliaItem[]>),
+    },
+    {
+      name: `Posts`,
+      getData: processResults(fetch_posts as () => Promise<AlgoliaItem[]>),
+    },
     {
       name: `FAQs`,
-      getData: processResults(() => fetch_yaml_list(`FAQ`, `faq#`) as Promise<AlgoliaItem[]>),
+      getData: processResults(
+        () => fetch_yaml_list(`FAQ`, `faq#`) as Promise<AlgoliaItem[]>,
+      ),
     },
     {
       name: `Lernmaterial`,
-      getData: processResults(() => fetch_yaml_list(`Lernmaterial`, `lernmaterial#`) as Promise<AlgoliaItem[]>),
+      getData: processResults(
+        () =>
+          fetch_yaml_list(`Lernmaterial`, `lernmaterial#`) as Promise<
+            AlgoliaItem[]
+          >,
+      ),
     },
   ],
   settings: {
