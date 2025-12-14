@@ -13,7 +13,7 @@
 
   function set_color_mode() {
     const next = color_mode_icons[$colorMode][1]
-    // @ts-ignore
+    // @ts-expect-error - next is narrowed from the const tuple but colorMode expects the union type
     $colorMode = next
   }
 </script>

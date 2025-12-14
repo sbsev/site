@@ -4,7 +4,7 @@
   import RangeSlider from 'svelte-range-slider-pips'
   import { PlaceSelect, RadioButtons, Toggle } from '.'
   import { signupStore } from './stores'
-  import type { FormFieldType, SignupStore, Place } from './types'
+  import type { FormFieldType, SignupStore, Place, StoredFormField } from './types'
 
   interface Props {
     title: string
@@ -63,7 +63,7 @@
         ...existing,
         required,
         node: currentLabel,
-        value: currentValue as any,
+        value: currentValue as StoredFormField<typeof currentValue>[`value`],
       }
     })
   })
@@ -93,7 +93,7 @@
   for={id}
   class:required
   bind:this={label}
-  onclick={(e: MouseEvent) => { if(type === `toggle`) e.preventDefault() }}
+  onclick={(e) => { if(type === `toggle`) e.preventDefault() }}
   onkeyup={(e: KeyboardEvent) => { if(type === `toggle`) e.preventDefault() }}
 >
   {@html title}
@@ -114,7 +114,7 @@
     {options}
     {maxSelect}
     noMatchingOptionsMsg="Keine passenden Optionen"
-    bind:value={value as any}
+    bind:value={value as string | string[]}
     {required}
     --sms-options-bg="var(--accent-bg)"
     --sms-bg="var(--accent-bg)"

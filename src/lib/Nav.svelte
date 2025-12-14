@@ -23,15 +23,15 @@
   let { nav, mobile }: Props = $props()
 
   // Map titles to components
-   const icon_map: Record<string, any> = {
-    'Über Uns': IconPlantFill,
-    Standorte: IconPlace,
-    Mitmachen: IconPeopleCircle,
-    Blog: IconRssSquare,
-    Kontakt: IconAlternateEmail,
-    Internes: IconHandsHelping,
-    Anmeldung: IconAssignmentInd,
-  }
+   const icon_map: Record<string, typeof IconPlantFill> = {
+     'Über Uns': IconPlantFill,
+     Standorte: IconPlace,
+     Mitmachen: IconPeopleCircle,
+     Blog: IconRssSquare,
+     Kontakt: IconAlternateEmail,
+     Internes: IconHandsHelping,
+     Anmeldung: IconAssignmentInd,
+   }
 
   let isOpen = $state(false)
   let activeSubNav = $state(-1)
@@ -65,7 +65,7 @@
 
 <svelte:window
   onclick={(event) => {
-    if (node && !node.contains(event.target as Node)) close()
+    if (node && !node.contains(event.target as globalThis.Node)) close()
   }}
 />
 

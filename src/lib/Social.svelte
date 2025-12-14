@@ -22,7 +22,7 @@
     include = [`Facebook`, `Twitter`, `Instagram`, `Youtube`, `Linkedin`]
   }: Props = $props()
 
-  const icons: Record<string, any> = {
+  const icons: Record<string, typeof IconFacebook> = {
     Facebook: IconFacebook,
     Twitter: IconTwitter,
     Instagram: IconInstagram,

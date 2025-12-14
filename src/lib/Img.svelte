@@ -10,7 +10,7 @@
     title?: string
     picture_style?: string
     img_style?: string
-    loading?: "eager" | "lazy" | null | undefined
+    loading?: `eager` | `lazy` | null | undefined
     sizes?: ImgSize[]
   }
 
