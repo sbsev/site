@@ -49,7 +49,7 @@
     >
   </div>
   <div style="background: var(--orange);">
-    <span id="pupilNumber">{$microcopy?.indexPage?.boxes.pupilsNumber}</span>
+    <span id="pupilNumber">{$microcopy?.indexPage?.boxes?.pupilsNumber}</span>
     <strong>
       <IconChild {style} />
       {$microcopy?.indexPage?.boxes?.pupilsName}</strong
@@ -84,7 +84,7 @@
 </h2>
 
 <article>
-  {@html data.page.body}
+  {@html data.page?.body}
 </article>
 
 <style>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import mapboxgl from 'mapbox-gl'
+  import type { Map as MapboxMap } from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
   import { microcopy } from './stores'
@@ -15,7 +16,7 @@
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 
   interface Props {
-    map?: mapboxgl.Map | null
+    map?: MapboxMap | null
     markers?: MapMarker[]
     css?: string
     lng?: number
@@ -62,7 +63,7 @@
   onMount(() => {
     if (!map_div) return
 
-    map = new mapboxgl.Map({
+    const mapInstance = new mapboxgl.Map({
       cooperativeGestures: true,
       container: map_div,
       style: `mapbox://styles/mapbox/outdoors-v11?optimize=true`,
@@ -72,7 +73,9 @@
       maxZoom,
     })
 
-    map.on(`load`, map.resize) // ensure map takes up full available width
+    map = mapInstance
+
+    mapInstance.on(`load`, () => mapInstance.resize()) // ensure map takes up full available width
 
     for (const { lng, lat, title, url, classes } of markers) {
       if (url) {
@@ -81,13 +84,13 @@
         node.href = url
         if (classes?.length) node.classList.add(...classes)
         const marker = new mapboxgl.Marker(node, { anchor: `bottom`, offset: [0, -11] })
-        marker.setLngLat([lng, lat]).addTo(map)
+        marker.setLngLat([lng, lat]).addTo(mapInstance)
       } else {
         const node = document.createElement(`span`)
         node.innerHTML = title
         if (classes?.length) node.classList.add(...classes)
         const marker = new mapboxgl.Marker(node, { anchor: `bottom`, offset: [0, -11] })
-        marker.setLngLat([lng, lat]).addTo(map)
+        marker.setLngLat([lng, lat]).addTo(mapInstance)
       }
     }
   })

@@ -9,7 +9,7 @@
   import IconUpdate from '~icons/ic/update'
 
   interface Props {
-    page: Page
+    page: Page | null
     title?: Snippet
     children?: Snippet
     afterBody?: Snippet
@@ -24,7 +24,7 @@
     afterArticle,
   }: Props = $props()
 
-  const { title: pageTitle, slug, cover, body, toc, yaml, sys } = $derived(page)
+  const { title: pageTitle, slug, cover, body, toc, yaml, sys } = $derived(page ?? {} as Page)
   const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`))
 
   const mc = $derived($microcopy?.basepage ?? {})

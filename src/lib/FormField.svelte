@@ -4,7 +4,7 @@
   import RangeSlider from 'svelte-range-slider-pips'
   import { PlaceSelect, RadioButtons, Toggle } from '.'
   import { signupStore } from './stores'
-  import type { FormFieldType, SignupStore, Place, StoredFormField } from './types'
+  import type { FormFieldType, SignupStore, Place } from './types'
 
   interface Props {
     title: string
@@ -32,8 +32,8 @@
     maxSelect = null,
   }: Props = $props()
 
-  let label: HTMLLabelElement
-  let slider: HTMLDivElement
+  let label: HTMLLabelElement = $state(null!)
+  let slider: HTMLDivElement = $state(null!)
 
   // Initialize value immediately
   let value: string | number | boolean | (string | number)[] = $state(
@@ -59,11 +59,12 @@
     // Write to store without reading it (untrack prevents loop)
     untrack(() => {
       const existing = $signupStore[id]
-      $signupStore[id] = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;($signupStore[id] as any) = {
         ...existing,
         required,
         node: currentLabel,
-        value: currentValue as StoredFormField<typeof currentValue>[`value`],
+        value: currentValue,
       }
     })
   })
@@ -134,7 +135,7 @@
     bind:slider
     float
     values={[value as number]}
-    on:stop={(e) => (value = e.detail.values[0])}
+    on:stop={(e: globalThis.CustomEvent<{ values: number[] }>) => (value = e.detail.values[0])}
     {min}
     {max}
     pips
@@ -146,7 +147,7 @@
     bind:slider
     float
     values={value as number[]}
-    on:stop={(e) => (value = e.detail.values)}
+    on:stop={(e: globalThis.CustomEvent<{ values: number[] }>) => (value = e.detail.values)}
     {min}
     {max}
     pips

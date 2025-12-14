@@ -1,5 +1,6 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
+  import type { PressItem } from '$lib/types'
 
   // Icon imports (bundled at build time)
   import IconNewspaper from '~icons/ion/newspaper'
@@ -7,6 +8,7 @@
   import IconPlace from '~icons/ic/place'
 
   const { data } = $props()
+  const pressItems = data.pressItems as Record<string, PressItem[]>
 
   const style = `margin: 0 5pt 0 0;`
 </script>
@@ -14,40 +16,34 @@
 {#if data.page}
 <BasePage page={data.page}>
   {#snippet afterArticle()}
-    {#each Object.entries(data.pressItems).reverse() as [year, pressArr] (year)}
+    {#each Object.entries(pressItems).reverse() as [year, pressArr] (year)}
       <h2>{year}</h2>
       <ul class="items">
         {#each pressArr as { title, id, img, url, date, chapter, source } (id)}
-          {@const titleStr = title as string}
-          {@const imgStr = img as string}
-          {@const urlStr = url as string}
-          {@const dateObj = date as Date}
-          {@const chapterStr = chapter as string}
-          {@const sourceStr = source as string}
           <li>
-            <a href={urlStr}>
+            <a href={url}>
               <Img
-                src={imgStr}
-                alt={titleStr}
+                src={img}
+                alt={title}
                 sizes={[{ w: 175 }]}
                 img_style="width: 125px; float: left; margin: 2ex 3ex 1em 0; border-radius: 2pt;"
               />
             </a>
             <h3 {id}>
-              <a href={urlStr}>{titleStr}</a>
+              <a href={url}>{title}</a>
             </h3>
             <div>
               <span>
                 <IconNewspaper {style} />
-                {sourceStr}
+                {source}
               </span>
               <span>
                 <IconCalendar {style} />
-                {dateObj.toLocaleDateString(`de`)}
+                {date.toLocaleDateString(`de`)}
               </span>
               <span>
                 <IconPlace {style} />
-                Standort {chapterStr}
+                Standort {chapter}
               </span>
             </div>
           </li>

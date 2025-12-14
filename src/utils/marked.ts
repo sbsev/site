@@ -1,8 +1,40 @@
-import { marked, type Tokens } from 'marked'
+import { marked } from 'marked'
+
+// Define token types inline since marked v17 doesn't export Tokens namespace properly
+interface ImageToken {
+  type: `image`
+  raw: string
+  href: string
+  title: string | null
+  text: string
+}
+
+interface HeadingToken {
+  type: `heading`
+  raw: string
+  depth: number
+  text: string
+  tokens: unknown[]
+}
+
+interface LinkToken {
+  type: `link`
+  raw: string
+  href: string
+  title: string | null
+  text: string
+  tokens: unknown[]
+}
+
+interface CodespanToken {
+  type: `codespan`
+  raw: string
+  text: string
+}
 
 const renderer = {
   // responsive markdown images
-  image(token: Tokens.Image) {
+  image(token: ImageToken) {
     const { href, title, text } = token
     if (href?.includes(`images.ctfassets.net`) && !href.endsWith(`.svg`)) {
       const titleAttr = title ? `title="${title}"` : ``
@@ -24,7 +56,7 @@ const renderer = {
   },
 
   // adapted from https://marked.js.org/using_pro
-  heading(token: Tokens.Heading) {
+  heading(token: HeadingToken) {
     const { text, depth: level } = token
     const id = text.toLowerCase().replace(/[^\wäöü]+/g, `-`)
 
@@ -41,7 +73,7 @@ const renderer = {
   },
 
   // add SvelteKit prefetching for local markdown links
-  link(token: Tokens.Link) {
+  link(token: LinkToken) {
     const { href, title, text } = token
     if (href.startsWith(`/`)) {
       const titleAttr = title ? `title="${title}"` : ``
@@ -51,7 +83,7 @@ const renderer = {
   },
 
   // responsive iframes for video embeds
-  codespan(token: Tokens.Codespan) {
+  codespan(token: CodespanToken) {
     const { text: code } = token
     if (code.startsWith(`youtube:`) || code.startsWith(`vimeo:`)) {
       const [platform, id] = code.split(/:\s?/)

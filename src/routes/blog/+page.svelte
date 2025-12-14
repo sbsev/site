@@ -5,6 +5,7 @@
   import { scale } from 'svelte/transition'
 
   const { data } = $props()
+  const social = data.social as Record<string, string>
 
   let active_tag: BlogTag
 
@@ -15,7 +16,7 @@
   )
 </script>
 
-<Social social={data.social} fixed vertical />
+<Social {social} fixed vertical />
 
 <TagList posts={Array.isArray(data.posts) ? data.posts : []} bind:active_tag />
 

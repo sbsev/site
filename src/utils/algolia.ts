@@ -1,14 +1,19 @@
 import { fetch_pages, fetch_posts, fetch_yaml_list } from '$lib/fetch.js'
+import type { Page, Post } from '$lib/types'
+
+type AlgoliaItem = (Page | Post | Record<string, unknown>) & {
+  id?: string
+  slug?: string
+  title?: string
+  body?: string
+  plainBody?: string
+}
 
 function processResults(
-  fetchFunction:
-    | typeof fetch_pages
-    | typeof fetch_posts
-    | typeof fetch_yaml_list,
-  ...args: unknown[]
+  fetchFunction: () => Promise<AlgoliaItem[]>,
 ) {
   return async () => {
-    const items = await fetchFunction(...args)
+    const items = await fetchFunction()
 
     for (const itm of items) {
       if (!itm.id) itm.id = itm?.slug || itm?.title
@@ -33,15 +38,15 @@ export const algoliaConfig = {
   apiKey: import.meta.env.VITE_ALGOLIA_ADMIN_KEY,
   // partialUpdates: true,
   indices: [
-    { name: `Seiten`, getData: processResults(fetch_pages) },
-    { name: `Posts`, getData: processResults(fetch_posts) },
+    { name: `Seiten`, getData: processResults(fetch_pages as () => Promise<AlgoliaItem[]>) },
+    { name: `Posts`, getData: processResults(fetch_posts as () => Promise<AlgoliaItem[]>) },
     {
       name: `FAQs`,
-      getData: processResults(fetch_yaml_list, `FAQ`, `faq#`),
+      getData: processResults(() => fetch_yaml_list(`FAQ`, `faq#`) as Promise<AlgoliaItem[]>),
     },
     {
       name: `Lernmaterial`,
-      getData: processResults(fetch_yaml_list, `Lernmaterial`, `lernmaterial#`),
+      getData: processResults(() => fetch_yaml_list(`Lernmaterial`, `lernmaterial#`) as Promise<AlgoliaItem[]>),
     },
   ],
   settings: {

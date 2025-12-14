@@ -17,9 +17,9 @@
     </p>
   {/if}
 
-  {#if dev && $page.error?.stack}
+  {#if dev && $page.error && `stack` in $page.error}
     <h2>Stack Trace</h2>
-    <pre>{$page.error.stack}</pre>
+    <pre>{($page.error as { stack: string }).stack}</pre>
   {/if}
 </div>
 

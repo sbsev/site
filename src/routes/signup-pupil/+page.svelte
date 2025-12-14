@@ -3,6 +3,7 @@
   // to make the signup form truly adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
+  import type { FormFieldProps } from '$lib/types'
 
   const { data } = $props()
   const { chapters, form } = data
@@ -32,7 +33,7 @@
         return
       }
 
-      const field_ids_to_validate = form.fields.map((field) => field.id) // list of form fields to validate
+      const field_ids_to_validate = form.fields.map((field: FormFieldProps) => field.id) // list of form fields to validate
 
       const response = await signup_form_submit_handler(
         field_ids_to_validate,

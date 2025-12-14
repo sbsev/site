@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Collapsible } from '$lib'
+  import type { FAQ } from '$lib/types'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
@@ -19,6 +20,7 @@
   import IconTags from '~icons/fa-solid/tags'
 
   const { data } = $props()
+  const faqs = data.faqs as FAQ[]
 
   const icons: Record<string, typeof IconSelectAll> = {
     'Rund ums Engagement': IconHandsHelping,
@@ -40,20 +42,20 @@
   let hash = $state(typeof window !== `undefined` ? window.location.hash.slice(1) : ``)
 
   const filteredFaqs = $derived(
-    Array.isArray(data.faqs)
-      ? data.faqs.filter((faq) => active_tag === `Alle` || faq.tags.includes(active_tag))
+    Array.isArray(faqs)
+      ? faqs.filter((faq) => active_tag === `Alle` || faq.tags.includes(active_tag))
       : []
   )
 
   // count tag occurrences
   const tags = $derived(
-    Array.isArray(data.faqs)
-      ? data.faqs.reduce(
-        (obj, faq) => {
+    Array.isArray(faqs)
+      ? faqs.reduce(
+        (obj: Record<string, number>, faq) => {
           faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
           return obj
         },
-        { Alle: data.faqs.length }
+        { Alle: faqs.length }
       )
       : { Alle: 0 }
   )

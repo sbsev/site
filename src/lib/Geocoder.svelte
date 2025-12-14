@@ -66,14 +66,14 @@
 </script>
 
 <!-- has to be <div/>, <input/> won't work -->
+<!-- placeholder and required are passed to MapboxGeocoder, not the div -->
 <div
   {id}
-  {placeholder}
-  {required}
   bind:this={div}
   onkeydown={ignoreUpDownArrows}
   role="textbox"
   tabindex="0"
+  data-required={required || undefined}
 ></div>
 
 <style>

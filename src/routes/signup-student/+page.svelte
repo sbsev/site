@@ -2,7 +2,7 @@
   import { CircleSpinner, FormField, Modal } from '$lib'
   import { signup_form_submit_handler } from '$lib/azure'
   import { signupStore } from '$lib/stores'
-  // import Icon from '@iconify/svelte'
+  import type { FormFieldProps } from '$lib/types'
   import IconPlantFill from '~icons/ri/plant-fill'
 
   const { data } = $props()
@@ -34,7 +34,7 @@
         return
       }
 
-      const field_ids_to_validate = form.fields.map((field) => field.id) // list of form fields to validate
+      const field_ids_to_validate = form.fields.map((field: FormFieldProps) => field.id) // list of form fields to validate
 
       const response = await signup_form_submit_handler(
         field_ids_to_validate,

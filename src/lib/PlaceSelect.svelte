@@ -2,9 +2,9 @@
   // import Icon from '@iconify/svelte'
   import IconDelete from '~icons/ic/delete'
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
-  import type { Map as MapBox, Marker } from 'mapbox-gl'
+  import type { Map as MapBoxMap, Marker } from 'mapbox-gl'
   import mapbox from 'mapbox-gl'
-  import { Geocoder, Map } from '.'
+  import { Geocoder, Map as MapComponent } from '.'
   import type { Place } from './types'
 
   interface Props {
@@ -21,8 +21,8 @@
     id = null,
   }: Props = $props()
 
-  let markers: Marker[] = []
-  let map: MapBox | null = null // explicit null initialization
+  let markers: Marker[] = $state([])
+  let map: MapBoxMap | null = $state(null)
 
   function selectHandler(place: Result) {
     if (!place.center) {
@@ -81,7 +81,7 @@
   {/each}
 </ol>
 
-<Map bind:map css="height: 300px;" maxZoom={16} />
+<MapComponent bind:map css="height: 300px;" maxZoom={16} />
 
 <style>
   ol {

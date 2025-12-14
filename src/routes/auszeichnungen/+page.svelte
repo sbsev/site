@@ -1,11 +1,13 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
+  import type { Award } from '$lib/types'
 
   // Icon imports (bundled at build time)
   import IconCalendar from '~icons/octicon/calendar'
   import IconAward from '~icons/fa-solid/award'
 
   const { data } = $props()
+  const awards = data.awards as Award[]
 
   const style = `margin: 0 5pt 0 0;`
 </script>
@@ -13,7 +15,7 @@
 <BasePage page={data.page}>
   {#snippet afterArticle()}
     <ul class="items">
-      {#each data.awards as { title, id, img, url, date, prize } (title)}
+      {#each awards as { title, id, img, url, date, prize } (title)}
         <li>
           <a href={url}
             ><Img

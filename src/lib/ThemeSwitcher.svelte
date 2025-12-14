@@ -12,10 +12,11 @@
   } as const
 
   function set_color_mode() {
-    const next = color_mode_icons[$colorMode][1]
-    // @ts-expect-error - next is narrowed from the const tuple but colorMode expects the union type
+    const next = color_mode_icons[$colorMode][1] as typeof $colorMode
     $colorMode = next
   }
+
+  const CurrentIcon = $derived(color_mode_icons[$colorMode][0])
 </script>
 
 <button
@@ -23,5 +24,5 @@
   onclick={set_color_mode}
   style="display: flex; color: white;"
 >
-  <svelte:component this={color_mode_icons[$colorMode][0]} title={$colorMode} />
+  <CurrentIcon title={$colorMode} />
 </button>

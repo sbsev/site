@@ -1,5 +1,6 @@
 <script lang="ts">
   import { BasePage, Img } from '$lib'
+  import type { StudyPlatform } from '$lib/types'
   import { flip } from 'svelte/animate'
   import { scale } from 'svelte/transition'
 
@@ -16,6 +17,7 @@
   import IconTags from '~icons/fa-solid/tags'
 
   const { data } = $props()
+  const studyPlatforms = data.studyPlatforms as StudyPlatform[]
 
   const icon_map: Record<string, typeof IconSelectAll> = {
     Alle: IconSelectAll,
@@ -34,17 +36,17 @@
   let hash = $state(``)
 
   const filtered = $derived(
-    Array.isArray(data.studyPlatforms)
-      ? data.studyPlatforms.filter((itm) => active_tag === `Alle` || itm.tags.includes(active_tag))
+    Array.isArray(studyPlatforms)
+      ? studyPlatforms.filter((itm) => active_tag === `Alle` || itm.tags.includes(active_tag))
       : []
   )
 
   // count tag occurrences
   const tags = $derived((() => {
-    if (!Array.isArray(data.studyPlatforms)) return { Alle: 0 }
+    if (!Array.isArray(studyPlatforms)) return { Alle: 0 }
 
-    const tagCounts = { Alle: data.studyPlatforms.length } as Record<string, number>
-    for (const itm of data.studyPlatforms) {
+    const tagCounts = { Alle: studyPlatforms.length } as Record<string, number>
+    for (const itm of studyPlatforms) {
       for (const tag of itm.tags) {
         tagCounts[tag] = (tagCounts[tag] ?? 0) + 1
       }
@@ -84,7 +86,7 @@
               img_style="width: 125px; float: right; margin: 1ex 0 1em 1em; border-radius: 2pt;"
             />
           </a>
-          <h3 {id} active={id === hash}>
+          <h3 {id} class:active={id === hash}>
             <a href={url}>{title}</a>
           </h3>
           <span><IconTags style="display: inline; vertical-align: -0.125em;" /> {itemTags.join(`, `)}</span>

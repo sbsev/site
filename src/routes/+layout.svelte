@@ -2,10 +2,20 @@
   import { afterNavigate } from '$app/navigation'
   import { Footer, Header } from '$lib'
   import { colorMode, microcopy } from '$lib/stores'
+  import type { Snippet } from 'svelte'
+  import type { NavLink, Link } from '$lib/types'
   import '../app.css'
 
-  const { data } = $props()
-  const { nav, footer, social } = data
+  interface Props {
+    data: {
+      nav: NavLink[]
+      footer: { links: Link[] }
+      social: Record<string, string>
+    }
+    children: Snippet
+  }
+
+  const { data, children }: Props = $props()
 
   afterNavigate(() => {
     // Track user navigation across the site. This data is transferred to Airtable
@@ -26,8 +36,8 @@
   <link rel="stylesheet" href="/{$colorMode || `system`}-theme.css" />
 </svelte:head>
 
-<Header {nav} />
+<Header nav={data.nav} />
 <main>
-  <slot />
+  {@render children()}
 </main>
-<Footer links={footer.links} {social} />
+<Footer links={data.footer.links} social={data.social} />
