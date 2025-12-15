@@ -32,7 +32,9 @@ export default {
   webServer: {
     // In CI, use preview (serves built files) for stability
     // Locally, use dev for faster iteration
-    command: process.env.CI ? `pnpm preview --port 3005` : `pnpm dev --port 3005`,
+    command: process.env.CI
+      ? `pnpm preview --port 3005`
+      : `pnpm dev --port 3005`,
     port: 3005,
     reuseExistingServer: !process.env.CI,
     timeout: 2 * 60 * 1000, // 2 minutes to start server

@@ -177,7 +177,9 @@ test(`compare pupil and student form data loading`, async ({ page }) => {
   const studentForm = page.locator(`form`)
   const studentFormVisible = await studentForm.isVisible().catch(() => false)
   const studentSubmitBtn = page.locator(`button[type="submit"]`)
-  const studentSubmitVisible = await studentSubmitBtn.isVisible().catch(() => false)
+  const studentSubmitVisible = await studentSubmitBtn
+    .isVisible()
+    .catch(() => false)
 
   console.log(`\n=== FORM COMPARISON ===`)
   console.log(`Pupil form visible: ${pupilFormVisible}`)

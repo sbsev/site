@@ -27,7 +27,11 @@ test.describe(`Accessibility and UX`, () => {
         await page.waitForTimeout(500)
 
         // Check if page loaded correctly (not an error page)
-        const hasContent = await page.locator(`header, nav, main, h1`).first().isVisible().catch(() => false)
+        const hasContent = await page
+          .locator(`header, nav, main, h1`)
+          .first()
+          .isVisible()
+          .catch(() => false)
         if (hasContent) {
           success = true
         } else {
@@ -49,7 +53,9 @@ test.describe(`Accessibility and UX`, () => {
     // If page loaded correctly, we should have focusable elements
     // If not, this may be a server warm-up issue - skip rather than fail
     if (count === 0) {
-      console.log(`Note: No focusable elements found - server may still be warming up`)
+      console.log(
+        `Note: No focusable elements found - server may still be warming up`,
+      )
       test.skip()
       return
     }
@@ -70,7 +76,9 @@ test.describe(`Accessibility and UX`, () => {
 
     // This is a soft check - some browsers may handle focus differently
     if (!hasFocusedElement) {
-      console.log(`Note: No element focused after Tab - this may be browser-specific behavior`)
+      console.log(
+        `Note: No element focused after Tab - this may be browser-specific behavior`,
+      )
     }
   })
 
