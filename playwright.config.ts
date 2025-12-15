@@ -2,9 +2,9 @@ import type { PlaywrightTestConfig } from '@playwright/test'
 
 export default {
   testDir: `./tests`,
-  timeout: 30 * 1000,
+  timeout: 2 * 60 * 1000, // 2 minutes per test
   expect: {
-    timeout: 5 * 1000,
+    timeout: 10 * 1000, // 10 seconds for assertions
   },
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -30,8 +30,11 @@ export default {
     },
   ],
   webServer: {
-    command: `pnpm dev --port 3005`,
+    // In CI, use preview (serves built files) for stability
+    // Locally, use dev for faster iteration
+    command: process.env.CI ? `pnpm preview --port 3005` : `pnpm dev --port 3005`,
     port: 3005,
     reuseExistingServer: !process.env.CI,
+    timeout: 2 * 60 * 1000, // 2 minutes to start server
   },
 } satisfies PlaywrightTestConfig

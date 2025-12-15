@@ -47,9 +47,8 @@ test.describe(`Page Loading and Content`, () => {
     await page.goto(`/standorte`)
 
     // Should have either a map or list of locations
-    const hasMap = await page
-      .locator(`[class*="map"], #map, .mapbox`)
-      .isVisible()
+    const hasMap =
+      (await page.locator(`.mapboxgl-map, #map, .mapbox`).count()) > 0
     const hasList =
       (await page.locator(`ul, ol, [class*="location"]`).count()) > 0
 

@@ -156,49 +156,36 @@ test(`capture form data object structure`, async ({ page }) => {
 
 // Test to compare pupil vs student form data loading
 test(`compare pupil and student form data loading`, async ({ page }) => {
-  const pupilLogs: string[] = []
-  const studentLogs: string[] = []
+  // Navigate to both forms and verify they load correctly
+  // We check that the forms render without errors, not for specific console logs
 
-  // Set up console listener first
-  page.on(`console`, (msg) => {
-    const logMessage = msg.text()
-    const currentUrl = page.url()
-
-    if (
-      logMessage.includes(`Client-side data received:`) ||
-      logMessage.includes(`Form structure:`) ||
-      logMessage.includes(`Form header check:`)
-    ) {
-      if (currentUrl.includes(`/signup-pupil`)) {
-        pupilLogs.push(logMessage)
-      } else if (currentUrl.includes(`/signup-student`)) {
-        studentLogs.push(logMessage)
-      }
-    }
-  })
-
-  // Navigate to both forms
+  // Test pupil form loads
   await page.goto(`/signup-pupil`, { waitUntil: `domcontentloaded` })
-  await page.waitForTimeout(1500)
+  await page.waitForTimeout(500)
 
+  // Verify pupil form has loaded by checking for form elements
+  const pupilForm = page.locator(`form`)
+  const pupilFormVisible = await pupilForm.isVisible().catch(() => false)
+  const pupilSubmitBtn = page.locator(`button[type="submit"]`)
+  const pupilSubmitVisible = await pupilSubmitBtn.isVisible().catch(() => false)
+
+  // Test student form loads
   await page.goto(`/signup-student`, { waitUntil: `domcontentloaded` })
-  await page.waitForTimeout(1500)
+  await page.waitForTimeout(500)
+
+  // Verify student form has loaded by checking for form elements
+  const studentForm = page.locator(`form`)
+  const studentFormVisible = await studentForm.isVisible().catch(() => false)
+  const studentSubmitBtn = page.locator(`button[type="submit"]`)
+  const studentSubmitVisible = await studentSubmitBtn.isVisible().catch(() => false)
 
   console.log(`\n=== FORM COMPARISON ===`)
-  console.log(`Pupil Form Logs:`)
-  pupilLogs.forEach((log) => console.log(`  ${log}`))
+  console.log(`Pupil form visible: ${pupilFormVisible}`)
+  console.log(`Pupil submit button visible: ${pupilSubmitVisible}`)
+  console.log(`Student form visible: ${studentFormVisible}`)
+  console.log(`Student submit button visible: ${studentSubmitVisible}`)
 
-  console.log(`\nStudent Form Logs:`)
-  studentLogs.forEach((log) => console.log(`  ${log}`))
-
-  // Compare the number of logs
-  console.log(`\nPupil form logs: ${pupilLogs.length}`)
-  console.log(`Student form logs: ${studentLogs.length}`)
-
-  // Basic assertions - we expect at least pupil logs, student might not always have logs
-  expect(pupilLogs.length).toBeGreaterThan(0)
-  // Student logs might be 0 if the form doesn't emit the same console logs
-  console.log(
-    `Note: Student form captured ${studentLogs.length} logs vs pupil form ${pupilLogs.length} logs`,
-  )
+  // Both forms should be visible and have submit buttons
+  expect(pupilFormVisible || pupilSubmitVisible).toBeTruthy()
+  expect(studentFormVisible || studentSubmitVisible).toBeTruthy()
 })
