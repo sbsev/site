@@ -126,10 +126,7 @@
         {#if subNav && activeSubNav === idx}
           <ul
             transition:slide
-            style="grid-template-columns: repeat({Math.min(
-              Math.ceil(subNav.length / 10),
-              4
-            )}, 1fr);"
+            style="--cols: {Math.min(Math.ceil(subNav.length / 10), 4)}"
           >
             {#each subNav as { title: subTitle, url: subUrl, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
@@ -217,6 +214,7 @@
     top: 100%;
     margin-top: 0;
     display: grid;
+    grid-template-columns: repeat(var(--cols, 1), 1fr);
     gap: 5pt 1em;
     max-height: 80vh;
     overflow-y: auto;
@@ -263,6 +261,7 @@
       box-shadow: none;
       padding: 0;
       border-radius: 0;
+      grid-template-columns: 1fr;
     }
   }
 </style>
