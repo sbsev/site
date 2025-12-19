@@ -1,7 +1,9 @@
-import { marked } from 'marked'
+import { Marked } from 'marked'
 
 // Define token types inline since marked v17 doesn't export Tokens namespace properly
 interface ImageToken {
+  // ... (rest is fine, I will use ReplaceFileContent wisely)
+
   type: `image`
   raw: string
   href: string
@@ -107,6 +109,18 @@ const renderer = {
   },
 }
 
-marked.use({ renderer })
 
-export default marked
+// Export a factory function to create isolated instances
+
+// Export a factory function to create isolated instances
+export const createMarked = () => {
+  const instance = new Marked()
+  instance.use({ renderer })
+  return instance
+}
+
+
+// For backward compatibility (though we should move away from this)
+const defaultInstance = createMarked()
+export default defaultInstance
+

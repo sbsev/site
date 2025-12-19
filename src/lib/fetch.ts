@@ -1,6 +1,6 @@
 import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
-import marked from '../utils/marked'
+import { createMarked } from '../utils/marked'
 import type { Chapter, Form, Page, Post } from './types'
 
 const prefixSlug = (prefix: string) => (obj: Page | Post) => {
@@ -112,10 +112,18 @@ export async function base64_thumbnail(
   }
 }
 
+// strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
+// https://github.com/markedjs/marked/issues/1696
+const strip_indentation = (str: string) =>
+  str
+    .replace(/(?:\r\n|\r|\n)[ \t]*(?=>\s*<)/g, ``) // join lines where a tag seems to close and immediately open another
+    .replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+
+
 function parse_body(itm: Page | Post) {
   if (!itm?.body) return itm
 
-  itm.body = marked(itm.body) // generate HTML
+  itm.body = createMarked().parse(strip_indentation(itm.body)) as string // generate HTML
   itm.plainBody = itm.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
 
   return itm
@@ -166,7 +174,7 @@ export async function fetch_page(
   if (page?.yaml) {
     page.yaml = yaml.load(page.yaml)
     Object.entries(page.yaml).forEach(([key, val]) => {
-      if (typeof val === `string`) page.yaml[key] = marked.parseInline(val)
+      if (typeof val === `string`) page.yaml[key] = createMarked().parseInline(val)
     })
   }
 
@@ -299,8 +307,11 @@ const strip_outer_par_tag = (str: string) =>
   str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
 
 export function parse_form_data(obj: Form): Form {
+  // Create isolated instance for this form processing
+  const markedInstance = createMarked()
+
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
-  marked.use({
+  markedInstance.use({
     renderer: {
       link({ href, text }: { href: string; text: string }) {
         return `<a target="_blank" href="${href}">${text}</a>`
@@ -312,12 +323,10 @@ export function parse_form_data(obj: Form): Form {
   for (const [key, itm] of Object.entries(obj)) {
     if (typeof itm === `string`) {
       // Process any string field that might contain markdown (title, note, etc.)
-      // strip lines of leading white space to prevent turning indented markdown into <pre> code blocks
-      // https://github.com/markedjs/marked/issues/1696
-      const markdown = (itm as string).replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
-      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(
-        marked(markdown),
-      )
+      const markdown = strip_indentation(itm as string)
+        ; (obj as Record<string, unknown>)[key] = strip_outer_par_tag(
+          markedInstance.parse(markdown) as string,
+        )
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)
       parse_form_data(itm as unknown as Form)
