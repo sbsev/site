@@ -31,7 +31,7 @@
 </script>
 
 <svelte:head>
-  <title>{pageTitle ? `${pageTitle} - ST` : `ST`}</title>
+  <title>{pageTitle ? `${pageTitle} - StudyTutors` : `StudyTutors`}</title>
   <meta name="date" content={date} />
 </svelte:head>
 
@@ -157,5 +157,10 @@
     font-size: 1.5ex;
     font-style: normal;
     margin: 2em;
+  }
+  @media (max-width: 900px) {
+    article {
+      flex-direction: column;
+    }
   }
 </style>
