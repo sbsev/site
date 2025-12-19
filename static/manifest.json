@@ -1,15 +1,20 @@
 {
   "background_color": "#ffffff",
   "theme_color": "#003056",
-  "name": "Studenten Bilden Schüler e.V.",
-  "short_name": "SbS",
+  "name": "StudyTutors e.V.",
+  "short_name": "StudyTutors",
   "display": "minimal-ui",
   "start_url": "/",
   "icons": [
     {
       "src": "favicon.svg",
       "sizes": "any",
-      "type": "image/svg"
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     }
   ]
 }
