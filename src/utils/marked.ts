@@ -109,7 +109,6 @@ const renderer = {
   },
 }
 
-
 // Export a factory function to create isolated instances
 
 // Export a factory function to create isolated instances
@@ -119,8 +118,6 @@ export const createMarked = () => {
   return instance
 }
 
-
 // For backward compatibility (though we should move away from this)
 const defaultInstance = createMarked()
 export default defaultInstance
-

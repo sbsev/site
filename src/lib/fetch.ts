@@ -119,7 +119,6 @@ const strip_indentation = (str: string) =>
     .replace(/(?:\r\n|\r|\n)[ \t]*(?=>\s*<)/g, ``) // join lines where a tag seems to close and immediately open another
     .replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
 
-
 function parse_body(itm: Page | Post) {
   if (!itm?.body) return itm
 
@@ -174,7 +173,8 @@ export async function fetch_page(
   if (page?.yaml) {
     page.yaml = yaml.load(page.yaml)
     Object.entries(page.yaml).forEach(([key, val]) => {
-      if (typeof val === `string`) page.yaml[key] = createMarked().parseInline(val)
+      if (typeof val === `string`)
+        page.yaml[key] = createMarked().parseInline(val)
     })
   }
 
@@ -324,9 +324,9 @@ export function parse_form_data(obj: Form): Form {
     if (typeof itm === `string`) {
       // Process any string field that might contain markdown (title, note, etc.)
       const markdown = strip_indentation(itm as string)
-        ; (obj as Record<string, unknown>)[key] = strip_outer_par_tag(
-          markedInstance.parse(markdown) as string,
-        )
+      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(
+        markedInstance.parse(markdown) as string,
+      )
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)
       parse_form_data(itm as unknown as Form)
