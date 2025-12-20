@@ -45,7 +45,7 @@ body {
 }
 
 /* outer div = hydration target */
-body > div {
+body>div {
   display: grid;
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
@@ -54,6 +54,8 @@ body > div {
 main {
   hyphens: auto;
   width: 100%;
+  min-width: 0;
+  /* Allow shrinking below content width for responsive layouts */
 }
 
 main h1 {
@@ -302,7 +304,7 @@ section.blue div.box-list ul li a {
 }
 
 /* captions */
-p > :is(picture + em, a + em) {
+p> :is(picture + em, a + em) {
   text-align: center;
   display: block;
 }

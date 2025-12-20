@@ -33,9 +33,19 @@
     list-style: none;
     max-width: 56em;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 1em;
     margin: auto;
     padding: 2em 1em;
+  }
+  @media (max-width: 900px) {
+    ul {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    ul {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

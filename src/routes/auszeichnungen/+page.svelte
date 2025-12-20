@@ -52,6 +52,11 @@
     grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
     grid-gap: 1em;
   }
+  @media (max-width: 700px) {
+    ul.items {
+      grid-template-columns: 1fr;
+    }
+  }
   ul.items > li {
     font-size: 0.85em;
     background: var(--accent-bg);

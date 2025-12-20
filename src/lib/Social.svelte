@@ -65,7 +65,7 @@
     top: 50%;
     transform: translateY(-50%);
   }
-  @media (max-width: 1150px) {
+  @media (max-width: 1100px) {
     div.fixed {
       display: none;
     }
