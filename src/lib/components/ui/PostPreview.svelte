@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Img, ToolTip } from '.'
-  import type { Post } from './types'
+  import { Img, ToolTip } from '../..'
+  import type { Post } from '../../types'
 
   // Icon imports (bundled at build time)
   import IconLink from '~icons/bx/link'

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Map } from '.'
-  import { microcopy } from './stores'
-  import type { Chapter } from './types'
+  import { Map } from '../..'
+  import { microcopy } from '../../stores'
+  import type { Chapter } from '../../types'
 
   interface Props {
     chapters: Chapter[]

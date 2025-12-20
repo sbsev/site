@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade, slide } from 'svelte/transition'
-  import type { BlogTag, Post } from './types'
+  import type { BlogTag, Post } from '../../types'
 
   // Icon imports (bundled at build time)
   import IconSelectAll from '~icons/ic/select-all'

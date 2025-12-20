@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Img } from '.'
-  import type { Post } from './types'
+  import { Img } from '../..'
+  import type { Post } from '../../types'
 
   interface Props {
     hit: Post

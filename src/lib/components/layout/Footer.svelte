@@ -1,8 +1,8 @@
 <script lang="ts">
   import { repository } from '$root/package.json'
-  import { Social } from '.'
-  import { microcopy } from './stores'
-  import type { Link } from './types'
+  import { Social } from '../..'
+  import { microcopy } from '../../stores'
+  import type { Link } from '../../types'
 
   // Icon imports (bundled at build time)
   import IconLaw from '~icons/octicon/law'

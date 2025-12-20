@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount, type Snippet } from 'svelte'
-  import { preventOverScroll } from '../utils/actions'
+  import { preventOverScroll } from '../../../utils/actions'
 
   interface Props {
     style: string

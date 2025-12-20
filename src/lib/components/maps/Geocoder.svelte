@@ -7,7 +7,7 @@
   import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
-  import { microcopy } from './stores'
+  import { microcopy } from '../../stores'
 
   // required pnpm add -D events @types/events
   // https://github.com/mapbox/mapbox-gl-geocoder/issues/441

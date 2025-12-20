@@ -3,7 +3,7 @@
   import type { Map as MapboxMap } from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
-  import { microcopy } from './stores'
+  import { microcopy } from '../../stores'
 
   type MapMarker = {
     lng: number

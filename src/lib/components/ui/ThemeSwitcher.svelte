@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { colorMode } from './stores'
+  import { colorMode } from '../../stores'
   import IconSunny from '~icons/ic/round-wb-sunny'
   import IconMoon from '~icons/octicon/moon-16'
   import IconLaptop from '~icons/bi/laptop'

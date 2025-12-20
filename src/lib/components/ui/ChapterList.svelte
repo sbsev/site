@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { microcopy } from './stores'
-  import type { Chapter } from './types'
+  import { microcopy } from '../../stores'
+  import type { Chapter } from '../../types'
 
   // Icon imports (bundled at build time)
   import IconPlace from '~icons/ic/place'

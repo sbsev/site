@@ -1,9 +1,9 @@
 <script lang="ts">
   import Toc from 'svelte-toc'
   import type { Snippet } from 'svelte'
-  import { Img } from '.'
-  import { microcopy } from './stores'
-  import type { Page } from './types'
+  import { Img } from '../..'
+  import { microcopy } from '../../stores'
+  import type { Page } from '../../types'
 
   // Icon imports (bundled at build time)
   import IconUpdate from '~icons/ic/update'

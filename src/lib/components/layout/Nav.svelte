@@ -2,7 +2,7 @@
   import { beforeNavigate } from '$app/navigation'
   import { page } from '$app/stores'
   import { slide } from 'svelte/transition'
-  import type { NavLink } from './types'
+  import type { NavLink } from '../../types'
 
   // Icon imports (bundled)
   import IconChevronExpand from '~icons/bi/chevron-expand'

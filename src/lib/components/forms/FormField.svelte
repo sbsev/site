@@ -2,9 +2,9 @@
   import { untrack } from 'svelte'
   import MultiSelect from 'svelte-multiselect'
   import RangeSlider from 'svelte-range-slider-pips'
-  import { PlaceSelect, RadioButtons, Toggle } from '.'
-  import { signupStore } from './stores'
-  import type { FormFieldType, SignupStore, Place } from './types'
+  import { PlaceSelect, RadioButtons, Toggle } from '../..'
+  import { signupStore } from '../../stores'
+  import type { FormFieldType, SignupStore, Place } from '../../types'
 
   interface Props {
     title: string

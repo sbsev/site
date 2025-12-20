@@ -4,8 +4,8 @@
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import type { Map as MapBoxMap, Marker } from 'mapbox-gl'
   import mapbox from 'mapbox-gl'
-  import { Geocoder, Map as MapComponent } from '.'
-  import type { Place } from './types'
+  import { Geocoder, Map as MapComponent } from '../..'
+  import type { Place } from '../../types'
 
   interface Props {
     value?: Place[]
