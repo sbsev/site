@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CircleSpinner, FormField, Modal } from '$lib'
-  import { signup_form_submit_handler } from '$lib/azure'
+  import { signup_form_submit_handler } from '$lib/airtable'
   import { signupStore } from '$lib/stores'
   import type { FormFieldProps } from '$lib/types'
   import IconPlantFill from '~icons/ri/plant-fill'
