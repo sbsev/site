@@ -37,9 +37,10 @@ async function airtable_post_new_records(
     }
 }
 
-// Error logging configuration
-const ERROR_LOG_BASE_ID = `appSswal9DNdJKRB8`
-const ERROR_LOG_TABLE_ID = `tblqUftPeJBV2RAln`
+// Configuration - uses env vars with fallbacks to production values
+const GLOBAL_BASE_ID = import.meta.env.VITE_AIRTABLE_GLOBAL_BASE_ID || `appSswal9DNdJKRB8`
+const ERROR_LOG_TABLE = `Errors`
+const TEST_BASE_ID = import.meta.env.VITE_AIRTABLE_TEST_BASE_ID || `appe3hVONuwBkuQv1`
 
 // Log signup errors to Airtable for monitoring
 async function log_error_to_airtable(
@@ -64,7 +65,7 @@ async function log_error_to_airtable(
             Type: type || ``,
         }
 
-        await airtable_post_new_records(ERROR_LOG_BASE_ID, ERROR_LOG_TABLE_ID, error_fields)
+        await airtable_post_new_records(GLOBAL_BASE_ID, ERROR_LOG_TABLE, error_fields)
     } catch (logError) {
         // Don't let error logging failures affect the user experience
         console.error(`Failed to log error to Airtable:`, logError)
@@ -134,17 +135,16 @@ export async function prepare_signup_data_for_airtable(
         Spur: window.visitedPages?.join(`,\n`) || ``,
     }
 
-    const global_base_id = `appSswal9DNdJKRB8` // Global base 'Alle Standorte'
-    const test_base_id = `appe3hVONuwBkuQv1` // Anmeldeformular Test Base
+    // GLOBAL_BASE_ID used for cross-chapter tracking (defined at module level)
 
     if (test) {
         console.debug(`Test mode - fields:`, fields)
-        return { status: 200, data: await airtable_post_new_records(test_base_id, table, fields) }
+        return { status: 200, data: await airtable_post_new_records(TEST_BASE_ID, table, fields) }
     }
 
     // Send to both global and chapter tables, collect all errors
     const results = await Promise.allSettled([
-        airtable_post_new_records(global_base_id, table, globalFields),
+        airtable_post_new_records(GLOBAL_BASE_ID, table, globalFields),
         airtable_post_new_records(chapter_base_id, table, fields),
     ])
 
@@ -217,6 +217,17 @@ export async function signup_form_submit_handler(
             const airtableError = JSON.stringify(response.data, null, 2)
             console.error(`Airtable error response:`, response.data)
             throw new Error(`Airtable request failed with status: ${response.status}\n${airtableError}`)
+        }
+
+        // Check for partial failure (e.g., global succeeded but chapter failed)
+        const responseData = response.data as { errors?: string[]; partialSuccess?: boolean }
+        if (responseData?.errors && responseData.errors.length > 0) {
+            // Log partial failure to Airtable error log
+            const partialError = new Error(`Partial failure: ${responseData.errors.join('; ')}`)
+            partialError.name = 'PartialFailure'
+            const chapterStr = Array.isArray(chapter) ? chapter.join(`, `) : chapter
+            await log_error_to_airtable(partialError, signup_data, chapterStr, type)
+            console.warn(`Partial signup failure logged:`, responseData.errors)
         }
 
         // Track successful signup

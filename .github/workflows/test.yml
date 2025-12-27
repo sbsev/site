@@ -50,8 +50,7 @@ jobs:
         env:
           VITE_CONTENTFUL_SPACE_ID: ${{ secrets.VITE_CONTENTFUL_SPACE_ID }}
           VITE_CONTENTFUL_ACCESS_TOKEN: ${{ secrets.VITE_CONTENTFUL_ACCESS_TOKEN }}
-          VITE_AIRTABLE_CHAPTER_BASE_APP_ID: ${{ secrets.VITE_AIRTABLE_CHAPTER_BASE_APP_ID }}
-          VITE_AIRTABLE_API_KEY: ${{ secrets.VITE_AIRTABLE_API_KEY }}
+          VITE_AIRTABLE_WRITE_TOKEN: ${{ secrets.VITE_AIRTABLE_WRITE_TOKEN }}
           VITE_MAPBOX_PUBLIC_KEY: ${{ secrets.VITE_MAPBOX_PUBLIC_KEY }}
 
       - name: Run all tests
@@ -60,9 +59,8 @@ jobs:
           # needed to fetch website content
           VITE_CONTENTFUL_SPACE_ID: ${{ secrets.VITE_CONTENTFUL_SPACE_ID }}
           VITE_CONTENTFUL_ACCESS_TOKEN: ${{ secrets.VITE_CONTENTFUL_ACCESS_TOKEN }}
-          # needed to simulate form submission to Airtable test base
-          VITE_AIRTABLE_CHAPTER_BASE_APP_ID: ${{ secrets.VITE_AIRTABLE_CHAPTER_BASE_APP_ID }}
-          VITE_AIRTABLE_API_KEY: ${{ secrets.VITE_AIRTABLE_API_KEY }}
+          # needed for form submission to Airtable
+          VITE_AIRTABLE_WRITE_TOKEN: ${{ secrets.VITE_AIRTABLE_WRITE_TOKEN }}
           # needed to auto-complete and geocode addresses
           VITE_MAPBOX_PUBLIC_KEY: ${{ secrets.VITE_MAPBOX_PUBLIC_KEY }}
 
