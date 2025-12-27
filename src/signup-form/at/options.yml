@@ -33,34 +33,36 @@ discovery:
   - Jodel
   - Andere Maßnahme
 schoolTypes:
-  - Grundschule
+  - Volksschule
   - Mittelschule
-  - Berufsschule
+  - Sonderschule
+  - polytechnische Schule
   - Gymnasium
+  - Realgmynasium
+  - Wirtschaftskundliches Realgymnasium
+  - Oberstufenrealgymnasium
   - Ausbildung
-  - Hauptschule
-  - Realschule
-  - Flüchtlingsschule
-  - Andere
+  - Flüchtlingsschule/-betreuung
+  - Andere -> bitte in den Bemerkungen beschreiben
 subjects:
   - Alle Unterstufenfächer
   - Mathe
   - Deutsch
   - Englisch
-  - Gesellschaftskunde/Politik
-  - Erdkunde/Geographie
-  - Wirtschaft
+  - Geographie
+  - Wirtschaftliche Bildung
   - Chemie
-  - Biologie
+  - Biologie/Umweltbildung
   - Physik
-  - Geschichte
-  - Informatik
+  - Geschichte/Sozialkunde/politische Bildung
+  - Digitale Grundbildung/Informatik
   - Französisch
   - Spanisch
   - Latein
   - Sport
-  - Musik
+  - Technik und Design
+  - Musik/Musikerziehung
   - Philosophie
   - Religion/Ethik
   - Deutsch als Fremdsprache
-  - Sachkunde
+  - Sonstiges -> bitte in den Bemerkungen beschreiben
