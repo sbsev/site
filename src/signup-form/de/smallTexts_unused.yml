@@ -5,7 +5,7 @@ locale: de-DE
 
 indexPage:
   title: StudyTutors
-  theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
+  theme: Ehemals <b>Studenten bilden Schüler</b><br>Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder & Jugendliche
   chooseLocation: 'Wähle deinen <a href="/standorte"><strong>Standort</strong></a> auf der Karte!'
 
   register: 'Oder melde dich direkt <a href="/signup-student">
@@ -18,9 +18,9 @@ indexPage:
     pupilsName: Schüler:innen
     pupilsNumber: 3531
     scholarshipName: '<a style="color: white;" href="/stipendium">Stipendien</a>'
-    scholarshipNumber: 23
+    scholarshipNumber: 36
     organizationMemberName: Vereinsmitglieder
-    organizationMemberNumber: 319
+    organizationMemberNumber: 234
 
 footer:
   name: 'StudyTutors e.V.'
@@ -103,7 +103,6 @@ icons:
       Facebook: &FACEBOOK 'fa-brands:facebook'
       Instagram: &INSTAGRAM 'fa-brands:instagram'
       Linkedin: &LINKEDIN 'fa-brands:linkedin'
-      Twitter: &TWITTER 'fa-brands:twitter'
       Youtube: &YOUTUBE 'fa-brands:youtube'
     tags: &TAGS 'fa-solid:tags'
     teacher: &TEACHER 'fa-solid:chalkboard-teacher'

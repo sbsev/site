@@ -1,0 +1,199 @@
+comment: This yaml is both on github and on contentful for versioning and checking of correctness. Only the version on contentful is actually used!
+
+country: at
+locale: de-AT
+
+indexPage:
+  title: StudyTutors Österreich
+  theme: Kostenlose Nachhilfe von ehrenamtlichen Studierenden für finanziell benachteiligte Kinder
+  chooseLocation: 'Wähle deinen <a sveltekit:prefetch href="/standorte"><strong>Standort</strong></a> auf der Karte!'
+
+  register:
+    'Oder melde dich direkt <a sveltekit:prefetch href="/signup-student">
+    <strong>bei uns an.</strong>
+    </a>'
+  boxes:
+    locationsName: Standorte
+    studentsName: Studierende
+    studentsNumber: 19
+    pupilsName: Schüler:innen
+    pupilsNumber: 21
+    scholarshipName: Gründung
+    scholarshipNumber: 2023
+    organizationMemberName: Vereinsmitglieder
+    organizationMemberNumber: 10
+
+footer:
+  name: 'StudyTutors Österreich – Verein für ehrenamtliche Nachhilfe'
+  siteInfos: 'Diese Seite ist
+    <a href="https://github.com/sbsev/svelte-site">
+    <OpenSource
+    height="2.5ex"
+    style="vertical-align: bottom; padding-right: 3pt;"
+    />open source
+    </a>
+    und verwendet keine
+    <a href="https://de.wikipedia.org/wiki/HTTP-Cookie">
+    use
+    <Cookie height="2.2ex" style="vertical-align: middle;" />
+    cookies.
+    </a>'
+  site: 'Diese Seite ist'
+  uses: 'und verwendet keine'
+
+map:
+  location:
+    lng: 13.55
+    lat: 47.71
+    zoom: 6.00
+    minZoom: 4
+    maxZoom: 10
+  text:
+    active: 'aktiver Standort'
+    inSetup: 'in Gründung'
+    partner: 'Partner'
+
+chapterList:
+  locations: 'Unsere Standorte'
+  inSetup: 'Standorte in Gründung'
+  partner: "Partner Standorte"
+
+location:
+  register: 'Anmeldungen'
+  joinStudent: 'Willst du Nachhilfe geben?'
+  registerStudent: 'Als Student:in anmelden'
+  linkStudentInfo: '/mitmachen/nachhilfelehrkraft'
+  infoStudentButton: 'Infos für Studierende'
+  joinPupil: 'Suchst du Nachhilfe?'
+  registerPupil: 'Als Schüler:in anmelden'
+  linkPupilInfo: '/mitmachen/schueler'
+  infoPupilButton: 'Infos für Schüler:innen'
+  locationManagement: 'Interesse am Orga-Team?'
+  mailTo: 'info.@studytutors.at'
+  writeMailButton: 'Schreib uns an'
+  linkLeadingInfo: '/mitmachen/standortleiter'
+  infoLeadingButton: 'Infos für Standortleitende'
+  contact: 'Kontakt'
+  questions: 'Noch Fragen? Schreib uns eine Mail!'
+  url: 'studytutors.at'
+  student: 'studenten'
+  forStudents: 'für Studierende'
+  pupil: 'schueler'
+  info: 'info'
+  forPartner: 'für Schüler:innen, Soziale Einrichtungen und Nachhilfeanfragen'
+  generalRequests: 'für Allgemeine Anfragen'
+
+basepage:
+  lastUpdated: 'Zuletzt bearbeitet:'
+  feedback: 'Feedback zu dieser Seite?'
+  email: 'it@studytutors.at?subject=Feedback zu Seite:'
+
+meta:
+  name: 'StudyTutors Österreich'
+  description: 'Ehrenamtliche Nachhilfe von Studierenden für Schüler:innen österreichischen Unistädten.'
+  url: studytutors.at
+
+icons:
+  global:
+    award: &AWARD "fa-solid:award"
+    calendar: &CALENDAR "oction:calendar"
+    child: &CHILD "fa-solid:child"
+    close: &CLOSE "ic:round-close"
+    currency: &CURRENCY "ic:round-euro"
+    email: &EMAIL "ic:email"
+    expand: &EXPAND "bi:chevron-expand"
+    graduate: &GRADUATE "fa-solid:user-graduate"
+    graduationCap: &GRADUATION_CAP "fa-solid:graduation-cap"
+    group: &GROUP "fa6-solid:user-group"
+    hands: &HANDS_HELPING "fa-solid:hands-helping"
+    information: &INFORMATION "bi:info-circle-fill"
+    link: &LINK "bx:link"
+    newspaper: &NEWSPAPER "ion:newspaper"
+    place: &PLACE "ic:place"
+    plant: &PLANT "ri:plant-fill"
+    selectAll: &SELECT_ALL "ic:select-all"
+    socials:
+      Facebook: &FACEBOOK "fa-brands:facebook"
+      Instagram: &INSTAGRAM "fa-brands:instagram"
+      Linkedin: &LINKEDIN "fa-brands:linkedin"
+      Twitter: &TWITTER "fa-brands:twitter"
+      Youtube: &YOUTUBE "fa-brands:youtube"
+    tags: &TAGS "fa-solid:tags"
+    teacher: &TEACHER "fa-solid:chalkboard-teacher"
+    theme:
+      dark: &THEME_DARK "octicon:moon-16"
+      light: &THEME_LIGHT "ic:round-wb-sunny"
+      system: &THEME_SYSTEM "bi:laptop"
+
+  pages:
+    article:
+      history: "ic:round-history-edu"
+      person: "bi:person-circle"
+    blog:
+      eye: "ic:round-remove-red-eye"
+    chapterList:
+      construction: "ic:round-construction"
+    footer:
+      Datenschutz: "ic:round-privacy-tip"
+      Impressum: "octicon:law"
+      Satzung: "ion:document-text"
+      Spenden: *CURRENCY
+      cookie: "bxs:cookie"
+      opensource: "ri:open-source-fill"
+    index:
+      update: "ic:update"
+    nav:
+      Anmeldung: "ic:round-assignment-ind"
+      Blog: "fa-solid:rss-square"
+      Internes: *HANDS_HELPING
+      Kontakt: "ic:round-alternate-email"
+      Mitmachen: "ion:people-circle"
+      Standorte: *PLACE
+      expand: *EXPAND
+      menu: "heroicons-solid:menu"
+      "Über Uns": *PLANT
+    placeSelect:
+      delete: "ic:delete"
+
+  tags:
+    blog:
+      Alle: *SELECT_ALL
+      Auszeichnung: *AWARD
+      Bundesvorstand: "ion:stats-chart"
+      Erfahrungsberichte: "ic:rate-review"
+      Events: "ic:event-available"
+      Freizeit: "ic:beach-access"
+      IT: "bx:git-branch"
+      Interview: "ic:question-answer"
+      Mentoring: *TEACHER
+      Nachhilfelehrer: *TEACHER
+      Sonstiges: "fa6-solid:earth-europe"
+      "Soziale Partner": "fa-solid:handshake"
+      Spenden: *CURRENCY
+      Standorte: "fa6-solid:map-location-dot"
+      Standortleiter: *GRADUATION_CAP
+      Stipendium: "fa-solid:donate"
+      Werbung: "ic:public"
+    faq:
+      Alle: *SELECT_ALL
+      Datenschutz: "ic:round-privacy-tip"
+      Führungszeugnis: "ic:round-assignment-ind"
+      Mitgliederversammlung: "ic:round-group"
+      Nachhilfe: *TEACHER
+      Rahmenbedingungen: "ic:filter-frames"
+      "Rund ums Engagement": *HANDS_HELPING
+      Sonstiges: "ic:round-miscellaneous-services"
+      "Tipps für Standorte": "ic:round-storefront"
+      Vereinsaustritt: "ic:exit-to-app"
+      Vermittlung: "ic:round-support-agent"
+      Versicherung: "map:insurance-agency"
+    learningMaterial:
+      Alle: *SELECT_ALL
+      "Deutsche Sprache": "ic:language"
+      Deutschunterricht: "simple-icons:disqus"
+      Englisch: "fa-brands:erlang"
+      "Lernen mit Karteikarten": "bi:card-text"
+      Mathe: "ic:functions"
+      Physik: "simple-icons:atom"
+      "Viele Fächer": "ic:group-work"
+      Wissenschaft: "ic:round-science"

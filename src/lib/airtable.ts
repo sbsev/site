@@ -141,7 +141,6 @@ export async function prepare_signup_data_for_airtable(
 
     // Collect errors from both requests
     const errors: string[] = []
-    let hasSuccess = false
 
     results.forEach((result, idx) => {
         const tableName = idx === 0 ? 'Global' : 'Chapter'
@@ -149,17 +148,15 @@ export async function prepare_signup_data_for_airtable(
             errors.push(`${tableName}: ${result.reason}`)
         } else if (result.value.status < 200 || result.value.status >= 300) {
             errors.push(`${tableName} (${result.value.status}): ${JSON.stringify(result.value.data)}`)
-        } else {
-            hasSuccess = true
         }
     })
 
     if (errors.length > 0) {
         console.error(`Airtable errors:`, errors)
-        // Return combined error info, but report success if at least one worked
+        // Strict: any error = failure, even if one table succeeded
         return {
-            status: hasSuccess ? 200 : 422,
-            data: { errors, partialSuccess: hasSuccess },
+            status: 422,
+            data: { errors },
         }
     }
 
