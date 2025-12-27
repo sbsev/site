@@ -3,12 +3,18 @@ import { fetch_chapters, fetch_yaml, parse_form_data } from '$lib/fetch'
 
 // Pre-load all locale modules for Vite static analysis
 const localeModules = {
-  messages: import.meta.glob('../../signup-form/*/messages.yml', { eager: true }),
+  messages: import.meta.glob('../../signup-form/*/messages.yml', {
+    eager: true,
+  }),
   options: import.meta.glob('../../signup-form/*/options.yml', { eager: true }),
   student: import.meta.glob('../../signup-form/*/student.yml', { eager: true }),
 }
 
-function getLocaleModule(modules: Record<string, unknown>, locale: string, fallback: string = 'de') {
+function getLocaleModule(
+  modules: Record<string, unknown>,
+  locale: string,
+  fallback: string = 'de',
+) {
   const localePath = `../../signup-form/${locale}/`
   const fallbackPath = `../../signup-form/${fallback}/`
 
@@ -30,7 +36,9 @@ function getLocaleModule(modules: Record<string, unknown>, locale: string, fallb
 export const load = async ({ fetch: customFetch }: { fetch: typeof fetch }) => {
   try {
     // Get country from Contentful to determine locale
-    const smallTexts = await fetch_yaml('smallTexts', customFetch) as { country?: string } | null
+    const smallTexts = (await fetch_yaml('smallTexts', customFetch)) as {
+      country?: string
+    } | null
     const locale = smallTexts?.country || 'de'
     console.debug(`Loading student signup form for locale: ${locale}`)
 
@@ -41,7 +49,8 @@ export const load = async ({ fetch: customFetch }: { fetch: typeof fetch }) => {
       errMsg: { required: `This field is required` },
     }
 
-    const optionsData = (getLocaleModule(localeModules.options, locale) || {}) as Record<string, string[]>
+    const optionsData = (getLocaleModule(localeModules.options, locale) ||
+      {}) as Record<string, string[]>
     const rawFormData = getLocaleModule(localeModules.student, locale) || {
       header: {
         title: `Anmeldung Studierende`,
@@ -79,7 +88,10 @@ export const load = async ({ fetch: customFetch }: { fetch: typeof fetch }) => {
 
     chapters = chapters.filter((chap) => chap.acceptsSignups)
 
-    const form = parse_form_data({ ...rawFormData, ...messagesData } as Parameters<typeof parse_form_data>[0])
+    const form = parse_form_data({
+      ...rawFormData,
+      ...messagesData,
+    } as Parameters<typeof parse_form_data>[0])
     console.debug(`form parsed:`, form)
 
     // In dev mode, add a test chapter at the beginning for testing purposes if defined
