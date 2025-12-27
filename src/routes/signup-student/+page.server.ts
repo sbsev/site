@@ -56,11 +56,19 @@ export const load = async () => {
     const form = parse_form_data({ ...rawFormData, ...messagesData })
     console.debug(`form parsed:`, form)
 
-    if (dev && chapters.length > 0) {
-      chapters[0] = {
-        ...chapters[0],
-        title: `Test`,
-        baseId: `appe3hVONuwBkuQv1`,
+    // In dev mode, add a test chapter at the beginning for testing purposes if defined
+    if (dev) {
+      const testBaseId = import.meta.env.VITE_AIRTABLE_TEST_BASE_ID
+      if (testBaseId) {
+        chapters.unshift({
+          title: `Test`,
+          baseId: testBaseId,
+          acceptsSignups: true,
+          slug: `test`,
+          coords: { lat: 0, lng: 0 },
+          status: null,
+          token: ``,
+        })
       }
     }
 

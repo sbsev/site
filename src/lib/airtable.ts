@@ -40,7 +40,6 @@ async function airtable_post_new_records(
 // Configuration - uses env vars with fallbacks to production values
 const GLOBAL_BASE_ID = import.meta.env.VITE_AIRTABLE_GLOBAL_BASE_ID || `appSswal9DNdJKRB8`
 const ERROR_LOG_TABLE = `Errors`
-const TEST_BASE_ID = import.meta.env.VITE_AIRTABLE_TEST_BASE_ID || `appe3hVONuwBkuQv1`
 
 // Log signup errors to Airtable for monitoring
 async function log_error_to_airtable(
@@ -76,7 +75,6 @@ async function log_error_to_airtable(
 export async function prepare_signup_data_for_airtable(
     data: SignupStore,
     chapter_base_id: string,
-    test = false,
 ): Promise<{ status: number; data: unknown }> {
     const table = data.type.value === `student` ? `Studenten` : `Schüler`
 
@@ -133,13 +131,6 @@ export async function prepare_signup_data_for_airtable(
         ...fields,
         Standort: data.chapter.value,
         Spur: window.visitedPages?.join(`,\n`) || ``,
-    }
-
-    // GLOBAL_BASE_ID used for cross-chapter tracking (defined at module level)
-
-    if (test) {
-        console.debug(`Test mode - fields:`, fields)
-        return { status: 200, data: await airtable_post_new_records(TEST_BASE_ID, table, fields) }
     }
 
     // Send to both global and chapter tables, collect all errors
