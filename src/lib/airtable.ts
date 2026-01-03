@@ -115,7 +115,6 @@ export async function prepare_signup_data_for_airtable(
       Studienfach: data.studySubject.value,
       Geburtsort: to_str(data.birthPlace.value),
       Geburtsdatum: data.birthDate.value,
-
     }
     fields = { ...fields, ...student_fields }
   } else if (data.type.value === `pupil`) {
