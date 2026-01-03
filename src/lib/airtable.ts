@@ -40,7 +40,11 @@ async function airtable_post_new_records(
 // Configuration - uses env vars with fallbacks to production values
 const GLOBAL_BASE_ID =
   import.meta.env.VITE_AIRTABLE_GLOBAL_BASE_ID || `appSswal9DNdJKRB8`
-const ERROR_LOG_TABLE = `Errors`
+const ERROR_LOG_TABLE = `Anmeldefehler`
+
+// Airtable table names for signups
+const STUDENTS_TABLE = `Studenten`
+const PUPILS_TABLE = `Schüler`
 
 // Log signup errors to Airtable for monitoring
 async function log_error_to_airtable(
@@ -82,7 +86,7 @@ export async function prepare_signup_data_for_airtable(
   data: SignupStore,
   chapter_base_id: string,
 ): Promise<{ status: number; data: unknown }> {
-  const table = data.type.value === `student` ? `Studenten` : `Schüler`
+  const table = data.type.value === `student` ? STUDENTS_TABLE : PUPILS_TABLE
 
   // Common fields for both students and pupils
   let fields = {
@@ -97,6 +101,7 @@ export async function prepare_signup_data_for_airtable(
     Bemerkung: to_str(data.remarks.value),
     Datenschutz: data.dataProtection.value,
     Quelle: `landing: ${location.origin}${window.visitedPages?.[1] || ``}, prev: ${window.visitedPages?.[0] || ``}`,
+    Werbemaßnahme: data.discovery.value,
   }
 
   if (data.type.value === `student`) {
@@ -110,7 +115,7 @@ export async function prepare_signup_data_for_airtable(
       Studienfach: data.studySubject.value,
       Geburtsort: to_str(data.birthPlace.value),
       Geburtsdatum: data.birthDate.value,
-      Werbemaßnahme: data.discovery.value,
+
     }
     fields = { ...fields, ...student_fields }
   } else if (data.type.value === `pupil`) {
@@ -126,7 +131,7 @@ export async function prepare_signup_data_for_airtable(
       'E-Mail Kontaktperson': to_str(data.emailContact.value),
       'Telefon Kontaktperson': to_str(data.phoneContact.value),
       'Organisation Kontaktperson': to_str(data.orgContact.value),
-      Werbemaßnahme: data.discovery.value,
+
       Online: data.online.value,
     }
     fields = { ...fields, ...pupil_fields }
@@ -224,7 +229,8 @@ export async function signup_form_submit_handler(
       )
     }
 
-    // Check for partial failure (e.g., global succeeded but chapter failed)
+    // Check for partial failure - occurs when one of the two Airtable writes
+    // (global table or chapter table) succeeds while the other fails
     const responseData = response.data as {
       errors?: string[]
       partialSuccess?: boolean
@@ -234,7 +240,7 @@ export async function signup_form_submit_handler(
       const partialError = new Error(
         `Partial failure: ${responseData.errors.join('; ')}`,
       )
-      partialError.name = 'PartialFailure'
+      partialError.name = 'PartialSubmitError'
       const chapterStr = Array.isArray(chapter) ? chapter.join(`, `) : chapter
       await log_error_to_airtable(partialError, signup_data, chapterStr, type)
       console.warn(`Partial signup failure logged:`, responseData.errors)

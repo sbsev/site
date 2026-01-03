@@ -1,9 +1,7 @@
 <script lang="ts">
-  // import Search from 'svelte-algolia'
   import { browser } from '$app/environment'
   import Nav from './Nav.svelte'
   import ThemeSwitcher from '../ui/ThemeSwitcher.svelte'
-  // import { SearchHit } from '.'
   import type { NavLink } from '../../types'
 
   interface Props {
