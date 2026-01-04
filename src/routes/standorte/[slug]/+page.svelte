@@ -129,7 +129,7 @@
     text-overflow: ellipsis;
     overflow-x: hidden;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 850px) {
     section {
       flex-direction: column;
     }
