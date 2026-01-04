@@ -43,8 +43,8 @@ const GLOBAL_BASE_ID =
 const ERROR_LOG_TABLE = `Anmeldefehler`
 
 // Airtable table names for signups
-const STUDENTS_TABLE = `Studenten`
-const PUPILS_TABLE = `Schüler`
+const STUDENTS_TABLE = `Nachhilfelehrkräfte`
+const PUPILS_TABLE = `Lernende`
 
 // Log signup errors to Airtable for monitoring
 async function log_error_to_airtable(
