@@ -1,5 +1,6 @@
 <script lang="ts">
   import { afterNavigate } from '$app/navigation'
+  import { browser } from '$app/environment'
   import { Footer, Header } from '$lib'
   import { colorMode, microcopy } from '$lib/stores'
   import type { Snippet } from 'svelte'
@@ -23,6 +24,13 @@
     if (!window.visitedPages) window.visitedPages = [document.referrer]
     window.visitedPages.push(location.pathname + location.search)
   })
+
+  // Sync data-theme attribute when colorMode changes (for client-side theme switching)
+  $effect(() => {
+    if (browser) {
+      document.documentElement.setAttribute('data-theme', $colorMode)
+    }
+  })
 </script>
 
 <!-- Moved these here, from app.html, so these parameter can get different attributes for each site -->
@@ -33,7 +41,6 @@
   <script defer data-domain={$microcopy?.meta?.url} src="/js/script.js"></script>
 
   <meta name="color-scheme" content={$colorMode || `system`} />
-  <link rel="stylesheet" href="/{$colorMode || `system`}-theme.css" />
 </svelte:head>
 
 <Header nav={data.nav} />

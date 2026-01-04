@@ -12,6 +12,8 @@
     system: [IconLaptop, `dark`, `bi:laptop`],
   } as const
 
+  let hydrated = $state(false)
+
   function set_color_mode() {
     const next = color_mode_icons[$colorMode][1] as typeof $colorMode
     $colorMode = next
@@ -21,13 +23,14 @@
 
   onMount(() => {
     hydrateColorMode()
+    hydrated = true
   })
 </script>
 
 <button
   title="Set color mode"
   onclick={set_color_mode}
-  style="display: flex; color: white;"
+  style="display: flex; color: white; opacity: {hydrated ? 1 : 0}; transition: opacity 0.15s;"
 >
   <CurrentIcon title={$colorMode} />
 </button>

@@ -1,40 +1,54 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Static CSS imports to ensure theme is always available -->
-    <link rel="stylesheet" href="/system-theme.css" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
 
-    <!-- required for triggering custom events in signup form -->
-    <script>
-      window.plausible =
-        window.plausible ||
-        function () {
-          ;(window.plausible.q = window.plausible.q || []).push(arguments)
-        }
-    </script>
+  <!-- All theme CSS files loaded statically - data-theme attribute controls which applies -->
+  <link rel="stylesheet" href="/light-theme.css" />
+  <link rel="stylesheet" href="/dark-theme.css" />
+  <link rel="stylesheet" href="/system-theme.css" />
 
-    %sveltekit.head%
-  </head>
+  <!-- Blocking script to prevent theme flash - must run before page renders -->
+  <script>
+    (function () {
+      var theme = localStorage.getItem('color-mode') || 'system';
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 
-  <body data-sveltekit-prefetch>
-    <svg style="display: none">
-      <!-- used for heading links in src/utils/marked.js, svg from https://primer.style/octicons/link-16 -->
-      <symbol id="octicon-link" fill="currentColor">
-        <path
-          d="M7.775 3.275a.75.75 0 0 0 1.06 1.06l1.25-1.25a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 0 1 0-2.83l2.5-2.5a2 2 0 0 1 2.83 0 .75.75 0 0 0 1.06-1.06 3.5 3.5 0 0 0-4.95 0l-2.5 2.5a3.5 3.5 0 0 0 4.95 4.95l1.25-1.25a.75.75 0 0 0-1.06-1.06l-1.25 1.25a2 2 0 0 1-2.83 0z"
-        />
-      </symbol>
-    </svg>
+  <!-- required for triggering custom events in signup form -->
+  <script>
+    window.plausible =
+      window.plausible ||
+      function () {
+        ; (window.plausible.q = window.plausible.q || []).push(arguments)
+      }
+  </script>
 
-    <div>%sveltekit.body%</div>
-  </body>
+  %sveltekit.head%
+</head>
+
+<body data-sveltekit-prefetch>
+  <svg style="display: none">
+    <!-- used for heading links in src/utils/marked.js, svg from https://primer.style/octicons/link-16 -->
+    <symbol id="octicon-link" fill="currentColor">
+      <path
+        d="M7.775 3.275a.75.75 0 0 0 1.06 1.06l1.25-1.25a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 0 1 0-2.83l2.5-2.5a2 2 0 0 1 2.83 0 .75.75 0 0 0 1.06-1.06 3.5 3.5 0 0 0-4.95 0l-2.5 2.5a3.5 3.5 0 0 0 4.95 4.95l1.25-1.25a.75.75 0 0 0-1.06-1.06l-1.25 1.25a2 2 0 0 1-2.83 0z" />
+    </symbol>
+  </svg>
+
+  <div>%sveltekit.body%</div>
+</body>
+
 </html>

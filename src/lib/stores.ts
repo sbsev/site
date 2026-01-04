@@ -15,15 +15,21 @@ export const colorMode = writable<ColorMode>(`system`)
 let colorModeHydrated = false
 
 export function hydrateColorMode() {
-  if (!colorModeHydrated && has_local_store && localStorage[colorModeKey]) {
-    colorMode.set(localStorage[colorModeKey] as ColorMode)
+  if (!colorModeHydrated && has_local_store) {
+    const stored = localStorage[colorModeKey] as ColorMode | undefined
+    if (stored) {
+      colorMode.set(stored)
+    }
     colorModeHydrated = true
   }
 }
 
-colorMode.subscribe(
-  (val: ColorMode) => has_local_store && (localStorage[colorModeKey] = val),
-)
+// Only persist to localStorage AFTER hydration (to avoid overwriting stored value)
+colorMode.subscribe((val: ColorMode) => {
+  if (colorModeHydrated && has_local_store) {
+    localStorage[colorModeKey] = val
+  }
+})
 
 // Custom session store implementation to replace svelte-zoo
 function createSessionStore<T>(key: string, initialValue: T) {
