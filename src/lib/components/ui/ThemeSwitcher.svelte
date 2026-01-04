@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { colorMode } from '../../stores'
+  import { onMount } from 'svelte'
+  import { colorMode, hydrateColorMode } from '../../stores'
   import IconSunny from '~icons/ic/round-wb-sunny'
   import IconMoon from '~icons/octicon/moon-16'
   import IconLaptop from '~icons/bi/laptop'
@@ -17,6 +18,10 @@
   }
 
   const CurrentIcon = $derived(color_mode_icons[$colorMode][0])
+
+  onMount(() => {
+    hydrateColorMode()
+  })
 </script>
 
 <button

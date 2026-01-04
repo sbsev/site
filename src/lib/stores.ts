@@ -8,9 +8,18 @@ export const colorModeKey = `color-mode`
 
 type ColorMode = `light` | `dark` | `system`
 
-export const colorMode = writable<ColorMode>(
-  (has_local_store && localStorage[colorModeKey]) || `system`,
-)
+// Initialize to 'system' for SSR, then hydrate from localStorage on client
+export const colorMode = writable<ColorMode>(`system`)
+
+// Flag to track if we've hydrated from localStorage
+let colorModeHydrated = false
+
+export function hydrateColorMode() {
+  if (!colorModeHydrated && has_local_store && localStorage[colorModeKey]) {
+    colorMode.set(localStorage[colorModeKey] as ColorMode)
+    colorModeHydrated = true
+  }
+}
 
 colorMode.subscribe(
   (val: ColorMode) => has_local_store && (localStorage[colorModeKey] = val),
