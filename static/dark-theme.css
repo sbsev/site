@@ -1,5 +1,5 @@
 /* Dark theme - applies when data-theme="dark" or system preference is dark */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --text-color: white;
   --link-color: var(--light-blue);
   --hover-color: var(--green);

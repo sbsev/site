@@ -1,6 +1,6 @@
 /* Light theme - applies when data-theme="light" or system preference is light */
 :root,
-[data-theme="light"] {
+[data-theme='light'] {
   --text-color: black;
   --link-color: var(--blue);
   --hover-color: var(--light-blue);

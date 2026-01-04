@@ -3,20 +3,20 @@
 
 /* Apply dark theme when system preference is dark AND data-theme is "system" */
 @media (prefers-color-scheme: dark) {
-    [data-theme="system"] {
-        --text-color: white;
-        --link-color: var(--light-blue);
-        --hover-color: var(--green);
-        --body-bg: var(--darker-blue);
-        --accent-bg: var(--alt-gray);
-        --light-bg: var(--dark-gray);
-        --shadow: black;
-        --border-color: var(--dark-green);
-        --heading-color: var(--light-green);
-        --header-bg: var(--darker-blue);
-        --header-color: var(--light-blue);
-        --footer-bg: black;
-        --invert: 1;
-        --transparent: rgba(0, 0, 0, 0.5);
-    }
+  [data-theme='system'] {
+    --text-color: white;
+    --link-color: var(--light-blue);
+    --hover-color: var(--green);
+    --body-bg: var(--darker-blue);
+    --accent-bg: var(--alt-gray);
+    --light-bg: var(--dark-gray);
+    --shadow: black;
+    --border-color: var(--dark-green);
+    --heading-color: var(--light-green);
+    --header-bg: var(--darker-blue);
+    --header-color: var(--light-blue);
+    --footer-bg: black;
+    --invert: 1;
+    --transparent: rgba(0, 0, 0, 0.5);
+  }
 }
