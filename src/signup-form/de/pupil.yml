@@ -82,15 +82,6 @@ fields:
     min: 1960
     max: 2025
 
-  - id: online
-    title: Ist Online-Nachhilfe in Ordnung?
-    note: |
-      Aufgrund der Pandemie muss die Nachhilfe vielerorts zur Zeit online stattfinden ohne persönliche Treffen zwischen Schülern und Studierenden.
-
-      Hat das Kind Zugang zu einem Laptop, Tablet o.ä. und ist technisch in der Lage, Online-Nachhilfe zu erhalten? Wenn nicht, können wir auch da helfen.
-    type: toggle
-    maxSelect: 1
-
   - id: remarks
     title: Bemerkungen
     note: |
