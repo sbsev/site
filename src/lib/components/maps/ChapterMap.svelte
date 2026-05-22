@@ -1,10 +1,18 @@
 <script lang="ts">
   import { Map } from '../..'
   import { microcopy } from '../../stores'
-  import type { Chapter } from '../../types'
+  import type { Chapter, ChapterStatus } from '../../types'
 
   interface Props {
     chapters: Chapter[]
+  }
+
+  // Map status to CSS class for map markers
+  function getMapClass(status: ChapterStatus): string {
+    if (status === 'acceptStudents' || status === 'acceptPupils' || status === 'active') {
+      return 'active'
+    }
+    return status // 'starting' or 'partner'
   }
 
   let { chapters }: Props = $props()
@@ -15,7 +23,7 @@
   <Map
     markers={Array.isArray(chapters) ? chapters.map((chap) => ({
       ...chap.coords, // contains { lng, lat }
-      classes: [`chapter`, chap.status].filter((item): item is string => Boolean(item)),
+      classes: [`chapter`, getMapClass(chap.status)].filter((item): item is string => Boolean(item)),
       title: chap.token,
       url: chap.slug,
     })) : []}

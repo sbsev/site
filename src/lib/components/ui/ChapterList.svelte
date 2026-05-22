@@ -1,5 +1,6 @@
 <script lang="ts">
   import { microcopy } from '../../stores'
+  import { showsSignupSection } from '../../types'
   import type { Chapter } from '../../types'
 
   // Icon imports (bundled at build time)
@@ -8,9 +9,9 @@
 
   const { chapters } = $props<{ chapters: Chapter[] }>()
 
-  const openChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.acceptsSignups) : [])
-  const startingChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `starting`) : [])
-  const partnerChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `partner`) : [])
+  const openChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => showsSignupSection(ch.status)) : [])
+  const startingChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status === `starting`) : [])
+  const partnerChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status === `partner`) : [])
 </script>
 
 <h1>

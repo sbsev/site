@@ -32,3 +32,9 @@ status = 200
 from = "/api/event"
 to = "https://plausible.io/api/event"
 status = 202
+
+# Cache headers for SvelteKit immutable assets (content-hashed filenames)
+[[headers]]
+for = "/_app/immutable/*"
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"

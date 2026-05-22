@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ChapterMap } from '$lib'
   import { microcopy } from '$lib/stores'
+  import { showsSignupSection } from '$lib/types'
   // import Icon from '@iconify/svelte'
   // Bundled icons to prevent layout shift
   import IconPlace from '~icons/ic/place'
@@ -35,7 +36,7 @@
 
 <section style="white-space: nowrap;">
   <div style="background: var(--light-blue);">
-    <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+    <span id="chapterNumber">{data.chapters.filter((ch) => showsSignupSection(ch.status)).length}</span>
     <strong>
       <IconPlace {style} />
       {$microcopy?.indexPage?.boxes?.locationsName}</strong

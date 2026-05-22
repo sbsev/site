@@ -1,9 +1,3 @@
-types:
-  - Student
-  - Schüler
-locales:
-  - Deutsch
-  - English
 online:
   - Keine Angabe
   - Ja

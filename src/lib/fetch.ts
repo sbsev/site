@@ -69,7 +69,6 @@ const chapters_query = `{
         lng: lon
       }
       baseId
-      acceptsSignups
       status
       token
     }

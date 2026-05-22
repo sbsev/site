@@ -1,8 +1,10 @@
 import { fetch_chapters, fetch_yaml } from '$lib/fetch'
 import { microcopy } from '$lib/stores'
+import { showsSignupSection } from '$lib/types'
 import type { Chapter, NavLink } from '$lib/types'
+import type { LayoutLoad } from './$types'
 
-export const load = async ({ fetch }) => {
+export const load: LayoutLoad = async ({ fetch }) => {
   try {
     const nav = (await fetch_yaml(`Nav`, fetch)) as NavLink[]
     const footer = await fetch_yaml(`Footer`, fetch)
@@ -22,8 +24,8 @@ export const load = async ({ fetch }) => {
 
     // create { title, url } array containing all chapters
     const chapterLinks = chapters.map((chapter: Chapter) => {
-      const { title, slug, acceptsSignups } = chapter
-      return { title, url: slug, lightFont: !acceptsSignups }
+      const { title, slug, status } = chapter
+      return { title, url: slug, lightFont: !showsSignupSection(status) }
     })
 
     // prepend chapter links into chapter subnav

@@ -1,5 +1,6 @@
 import { dev } from '$app/environment'
 import { fetch_chapters, fetch_yaml, parse_form_data } from '$lib/fetch'
+import { canAcceptPupils } from '$lib/types'
 
 // Pre-load all locale modules for Vite static analysis
 const localeModules = {
@@ -86,7 +87,7 @@ export const load = async ({ fetch: customFetch }: { fetch: typeof fetch }) => {
       chapters = []
     }
 
-    chapters = chapters.filter((chap) => chap.acceptsSignups)
+    chapters = chapters.filter((chap) => canAcceptPupils(chap.status))
 
     const form = parse_form_data({
       ...rawFormData,
@@ -101,10 +102,9 @@ export const load = async ({ fetch: customFetch }: { fetch: typeof fetch }) => {
         chapters.unshift({
           title: `Test`,
           baseId: testBaseId,
-          acceptsSignups: true,
           slug: `test`,
           coords: { lat: 0, lng: 0 },
-          status: null,
+          status: 'active',
           token: ``,
         })
       }

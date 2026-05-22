@@ -1,6 +1,7 @@
 <script lang="ts">
   import { BasePage } from '$lib'
   import { microcopy } from '$lib/stores'
+  import { showsSignupSection, canAcceptStudents, canAcceptPupils } from '$lib/types'
 
   // Icon imports (bundled at build time)
   import IconGraduation from '~icons/fa-solid/graduation-cap'
@@ -11,30 +12,47 @@
   const { data } = $props()
   const page = $derived(data.page)
   const slug = $derived(data.slug)
+  const chapterStatus = $derived(data.chapterStatus)
+
+  // Derive signup eligibility from status
+  const showSignupSection = $derived(showsSignupSection(chapterStatus))
+  const studentsCanSignup = $derived(canAcceptStudents(chapterStatus))
+  const pupilsCanSignup = $derived(canAcceptPupils(chapterStatus))
 
   const style = `margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
-  <!-- Buttons at the end of the chapter pages to contact the different chapter manager by mail
-  showSignupButtons should be set false when chapter is still in setup -->
-  {#if page?.yaml?.showSignupButtons !== false}
+  <!-- Signup buttons section - only shown for active/accepting chapters -->
+  {#if showSignupSection}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
         {$microcopy?.location?.joinStudent}
-        <a href="/signup-student?chapter={page.title}" class="btn blue">
-          <IconGraduation {style} />{$microcopy?.location?.registerStudent}
-        </a>
+        {#if studentsCanSignup}
+          <a href="/signup-student?chapter={page.title}" class="btn blue">
+            <IconGraduation {style} />{$microcopy?.location?.registerStudent}
+          </a>
+        {:else}
+          <button class="btn blue disabled" disabled>
+            <IconGraduation {style} />{$microcopy?.location?.studentWaitlistFull ?? 'Warteliste voll'}
+          </button>
+        {/if}
         <a href={$microcopy?.location?.linkStudentInfo} class="btn blue stroke">
           <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoStudentButton}
         </a>
       </span>
       <span>
         {$microcopy?.location?.joinPupil}
-        <a href="/signup-pupil?chapter={page.title}" class="btn green">
-          <IconChild {style} />{$microcopy?.location?.registerPupil}
-        </a>
+        {#if pupilsCanSignup}
+          <a href="/signup-pupil?chapter={page.title}" class="btn green">
+            <IconChild {style} />{$microcopy?.location?.registerPupil}
+          </a>
+        {:else}
+          <button class="btn green disabled" disabled>
+            <IconChild {style} />{$microcopy?.location?.pupilWaitlistFull ?? 'Warteliste voll'}
+          </button>
+        {/if}
         <a href={$microcopy?.location?.linkPupilInfo} class="btn green stroke">
           <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoPupilButton}</a
         >
@@ -52,7 +70,7 @@
   {/if}
 
   {#snippet afterBody()}
-    {#if page?.yaml?.showSignupButtons !== false}
+    {#if showSignupSection}
       <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
       <p>{$microcopy?.location?.questions}</p>
       <ul class="contact">
@@ -107,11 +125,16 @@
     display: grid;
     gap: 1em;
   }
-  a.btn {
+  a.btn,
+  button.btn {
     width: 100%;
     box-sizing: border-box;
     margin: 0;
     padding: 3pt 5pt;
+  }
+  button.btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
   ul.contact {
     list-style: none;
