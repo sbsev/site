@@ -10,6 +10,8 @@ indexPage:
   register: 'Or just <a href="/signup-student">
     <strong>register on our website.</strong>
     </a>'
+  currentStatsTitle: We are currently
+  mediatedStatsTitle: 'Since 2020, we have facilitated:'
   boxes:
     locationsName: locations
     studentsName: students

@@ -33,41 +33,52 @@
   {@html $microcopy?.indexPage?.theme}
 </h2>
 
-<section style="white-space: nowrap;">
-  <div style="background: var(--light-blue);">
-    <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
-    <strong>
-      <IconPlace {style} />
-      {$microcopy?.indexPage?.boxes?.locationsName}</strong
-    >
+<section class="stat-groups" aria-label="Zahlen zu StudyTutors">
+  <div class="stat-group">
+    <h2>{$microcopy?.indexPage?.currentStatsTitle ?? `Wir sind aktuell`}</h2>
+    <div class="stat-row current">
+      <div class="stat-box" style="background: var(--blue);">
+        <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+        <strong>
+          <IconPlace {style} />
+          {$microcopy?.indexPage?.boxes?.locationsName}</strong
+        >
+      </div>
+      <div class="stat-box" style="background: var(--green);">
+        <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+        <strong>
+          <IconUserGroup {style} />
+          {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
+        </strong>
+      </div>
+    </div>
   </div>
-  <div style="background: var(--green);">
-    <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
-    <strong>
-      <IconUserGraduate {style} />
-      {$microcopy?.indexPage?.boxes?.studentsName}</strong
-    >
-  </div>
-  <div style="background: var(--orange);">
-    <span id="pupilNumber">{$microcopy?.indexPage?.boxes?.pupilsNumber}</span>
-    <strong>
-      <IconChild {style} />
-      {$microcopy?.indexPage?.boxes?.pupilsName}</strong
-    >
-  </div>
-  <div style="background: var(--green);">
-    <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
-    <strong>
-      <IconUserGraduate {style} />
-      {@html $microcopy?.indexPage?.boxes?.scholarshipName}
-    </strong>
-  </div>
-  <div style="background: var(--light-blue);">
-    <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
-    <strong>
-      <IconUserGroup {style} />
-      {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
-    </strong>
+
+  <div class="stat-group">
+    <h2>{$microcopy?.indexPage?.mediatedStatsTitle ?? `Wir vermittelten seit 2020:`}</h2>
+    <div class="stat-row mediated">
+      <div class="stat-box" style="background: var(--green);">
+        <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
+        <strong>
+          <IconUserGraduate {style} />
+          {$microcopy?.indexPage?.boxes?.studentsName}</strong
+        >
+      </div>
+      <div class="stat-box" style="background: var(--orange);">
+        <span id="pupilNumber">{$microcopy?.indexPage?.boxes?.pupilsNumber}</span>
+        <strong>
+          <IconChild {style} />
+          {$microcopy?.indexPage?.boxes?.pupilsName}</strong
+        >
+      </div>
+      <div class="stat-box" style="background: var(--light-blue);">
+        <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
+        <strong>
+          <IconUserGraduate {style} />
+          {@html $microcopy?.indexPage?.boxes?.scholarshipName}
+        </strong>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -100,25 +111,45 @@
     text-align: center;
     font-weight: lighter;
   }
-  section {
+  .stat-groups {
     display: flex;
     padding: 1em;
     place-content: center;
-    gap: 2em;
-    flex-wrap: wrap;
+    gap: 2.25em;
+    flex-direction: column;
     color: white;
   }
-  section div {
+
+  .stat-group {
+    color: var(--text-color);
+  }
+
+  .stat-group h2 {
+    margin: 0 0 0.75em;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .stat-box {
+    color: white;
     font-size: 2ex;
     text-align: center;
-    flex: 0 1 10%;
+    flex: 0 1 10em;
     padding: 1ex;
     border-radius: 1ex;
     font-weight: bold;
     display: flex;
     flex-direction: column;
   }
-  section div span {
+  .stat-box span {
     font-size: 3ex;
     display: block;
   }
