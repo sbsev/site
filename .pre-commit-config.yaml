@@ -19,7 +19,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.4.2
+    rev: v3.9.4
     hooks:
       - id: prettier
         args: [--write] # edit files in-place
@@ -29,7 +29,7 @@ repos:
           - svelte
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
         stages: [pre-commit, commit-msg]
