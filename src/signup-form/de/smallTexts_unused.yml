@@ -11,6 +11,7 @@ indexPage:
   register: 'Oder melde dich direkt <a href="/signup-student">
     <strong>bei uns an.</strong>
     </a>'
+  statsLayout: grouped
   currentStatsTitle: Wir sind aktuell
   mediatedStatsTitle: 'Wir vermittelten seit 2020:'
   boxes:

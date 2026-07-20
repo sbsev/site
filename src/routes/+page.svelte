@@ -33,54 +33,94 @@
   {@html $microcopy?.indexPage?.theme}
 </h2>
 
-<section class="stat-groups" aria-label="Zahlen zu StudyTutors">
-  <div class="stat-group">
-    <h2>{$microcopy?.indexPage?.currentStatsTitle ?? `Wir sind aktuell`}</h2>
-    <div class="stat-row current">
-      <div class="stat-box" style="background: var(--blue);">
-        <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
-        <strong>
-          <IconPlace {style} />
-          {$microcopy?.indexPage?.boxes?.locationsName}</strong
-        >
-      </div>
-      <div class="stat-box" style="background: var(--green);">
-        <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
-        <strong>
-          <IconUserGroup {style} />
-          {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
-        </strong>
+{#if $microcopy?.indexPage?.statsLayout === `grouped`}
+  <section class="stat-groups" aria-label="Zahlen zu StudyTutors">
+    <div class="stat-group">
+      <h2>{$microcopy?.indexPage?.currentStatsTitle ?? `Wir sind aktuell`}</h2>
+      <div class="stat-row current">
+        <div class="stat-box" style="background: var(--blue);">
+          <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+          <strong>
+            <IconPlace {style} />
+            {$microcopy?.indexPage?.boxes?.locationsName}</strong
+          >
+        </div>
+        <div class="stat-box" style="background: var(--green);">
+          <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+          <strong>
+            <IconUserGroup {style} />
+            {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
+          </strong>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="stat-group">
-    <h2>{$microcopy?.indexPage?.mediatedStatsTitle ?? `Wir vermittelten seit 2020:`}</h2>
-    <div class="stat-row mediated">
-      <div class="stat-box" style="background: var(--green);">
-        <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
-        <strong>
-          <IconUserGraduate {style} />
-          {$microcopy?.indexPage?.boxes?.studentsName}</strong
-        >
-      </div>
-      <div class="stat-box" style="background: var(--orange);">
-        <span id="pupilNumber">{$microcopy?.indexPage?.boxes?.pupilsNumber}</span>
-        <strong>
-          <IconChild {style} />
-          {$microcopy?.indexPage?.boxes?.pupilsName}</strong
-        >
-      </div>
-      <div class="stat-box" style="background: var(--light-blue);">
-        <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
-        <strong>
-          <IconUserGraduate {style} />
-          {@html $microcopy?.indexPage?.boxes?.scholarshipName}
-        </strong>
+    <div class="stat-group">
+      <h2>{$microcopy?.indexPage?.mediatedStatsTitle ?? `Wir vermittelten seit 2020:`}</h2>
+      <div class="stat-row mediated">
+        <div class="stat-box" style="background: var(--green);">
+          <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
+          <strong>
+            <IconUserGraduate {style} />
+            {$microcopy?.indexPage?.boxes?.studentsName}</strong
+          >
+        </div>
+        <div class="stat-box" style="background: var(--orange);">
+          <span id="pupilNumber">{$microcopy?.indexPage?.boxes?.pupilsNumber}</span>
+          <strong>
+            <IconChild {style} />
+            {$microcopy?.indexPage?.boxes?.pupilsName}</strong
+          >
+        </div>
+        <div class="stat-box" style="background: var(--light-blue);">
+          <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
+          <strong>
+            <IconUserGraduate {style} />
+            {@html $microcopy?.indexPage?.boxes?.scholarshipName}
+          </strong>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+{:else}
+  <section class="stat-row default-stats" style="white-space: nowrap;">
+    <div class="stat-box" style="background: var(--light-blue);">
+      <span id="chapterNumber">{data.chapters.filter((ch) => ch.acceptsSignups).length}</span>
+      <strong>
+        <IconPlace {style} />
+        {$microcopy?.indexPage?.boxes?.locationsName}</strong
+      >
+    </div>
+    <div class="stat-box" style="background: var(--green);">
+      <span id="studentNumber">{$microcopy?.indexPage?.boxes?.studentsNumber}</span>
+      <strong>
+        <IconUserGraduate {style} />
+        {$microcopy?.indexPage?.boxes?.studentsName}</strong
+      >
+    </div>
+    <div class="stat-box" style="background: var(--orange);">
+      <span id="pupilNumber">{$microcopy?.indexPage?.boxes?.pupilsNumber}</span>
+      <strong>
+        <IconChild {style} />
+        {$microcopy?.indexPage?.boxes?.pupilsName}</strong
+      >
+    </div>
+    <div class="stat-box" style="background: var(--green);">
+      <span id="scholarshipNumber">{$microcopy?.indexPage?.boxes?.scholarshipNumber}</span>
+      <strong>
+        <IconUserGraduate {style} />
+        {@html $microcopy?.indexPage?.boxes?.scholarshipName}
+      </strong>
+    </div>
+    <div class="stat-box" style="background: var(--light-blue);">
+      <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+      <strong>
+        <IconUserGroup {style} />
+        {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
+      </strong>
+    </div>
+  </section>
+{/if}
 
 <h2>
   <!-- choose on map -->

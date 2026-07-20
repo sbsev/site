@@ -280,6 +280,7 @@ export type Microcopy = {
     theme?: string
     chooseLocation?: string
     register?: string
+    statsLayout?: `default` | `grouped`
     currentStatsTitle?: string
     mediatedStatsTitle?: string
     boxes?: {

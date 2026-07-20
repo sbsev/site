@@ -12,8 +12,6 @@ indexPage:
     'Oder melde dich direkt <a sveltekit:prefetch href="/signup-student">
     <strong>bei uns an.</strong>
     </a>'
-  currentStatsTitle: Wir sind aktuell
-  mediatedStatsTitle: 'Wir vermittelten seit 2020:'
   boxes:
     locationsName: Standorte
     studentsName: Studierende
