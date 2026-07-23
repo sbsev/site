@@ -170,19 +170,9 @@ export type SignupStore = {
 }
 
 export type StandardTypes =
-  | `text`
-  | `email`
-  | `number`
-  | `date`
-  | `tel`
-  | `checkbox`
+  `text` | `email` | `number` | `date` | `tel` | `checkbox`
 export type CustomTypes =
-  | `select`
-  | `toggle`
-  | `singleRange`
-  | `doubleRange`
-  | `placeSelect`
-  | `radio`
+  `select` | `toggle` | `singleRange` | `doubleRange` | `placeSelect` | `radio`
 export type FormFieldType = StandardTypes | CustomTypes
 
 export type FormFieldProps = {
@@ -280,6 +270,9 @@ export type Microcopy = {
     theme?: string
     chooseLocation?: string
     register?: string
+    statsLayout?: `default` | `grouped`
+    currentStatsTitle?: string
+    mediatedStatsTitle?: string
     boxes?: {
       locationsNumber?: number
       locationsName?: string
