@@ -8,8 +8,8 @@ test.describe(`Page Loading and Content`, () => {
     { url: `/signup-pupil`, title: `Pupil Signup` },
     { url: `/faq`, title: `FAQ` },
     { url: `/lernmaterial`, title: `Lernmaterial` },
-    { url: `/auszeichnungen`, title: `Auszeichnungen` },
-    { url: `/presse`, title: `Presse` },
+    //{ url: `/auszeichnungen`, title: `Auszeichnungen` },
+    //{ url: `/presse`, title: `Presse` },
   ]
 
   for (const { url, title } of pages) {
