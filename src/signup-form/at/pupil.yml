@@ -1,3 +1,6 @@
+# Airtable table name for this form type
+airtableTable: Lernende
+
 header:
   title: Anmeldung Schüler:innen
   note: |

@@ -8,6 +8,7 @@
   const { data } = $props()
   const chapters = $derived(data.chapters)
   const form = $derived(data.form)
+  const airtableTable = $derived(data.airtableTable as string)
 
   // Add debugging and fallback
   $effect(() => {
@@ -39,7 +40,8 @@
       const response = await signup_form_submit_handler(
         field_ids_to_validate,
         chapters,
-        form.errMsg || {}
+        form.errMsg || {},
+        airtableTable
       )
       if (response.success) success = true
       error = response.error

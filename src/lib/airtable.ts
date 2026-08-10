@@ -42,10 +42,6 @@ const GLOBAL_BASE_ID =
   import.meta.env.VITE_AIRTABLE_GLOBAL_BASE_ID || `appSswal9DNdJKRB8`
 const ERROR_LOG_TABLE = `Anmeldefehler`
 
-// Airtable table names for signups
-const STUDENTS_TABLE = `Nachhilfelehrkräfte`
-const PUPILS_TABLE = `Lernende`
-
 // Log signup errors to Airtable for monitoring
 async function log_error_to_airtable(
   error: Error,
@@ -81,12 +77,12 @@ async function log_error_to_airtable(
   }
 }
 
-// Prepares the form data for Airtable submission
 export async function prepare_signup_data_for_airtable(
   data: SignupStore,
   chapter_base_id: string,
+  tableName: string,
 ): Promise<{ status: number; data: unknown }> {
-  const table = data.type.value === `student` ? STUDENTS_TABLE : PUPILS_TABLE
+  const table = tableName
 
   // Common fields for both students and pupils
   let fields = {
@@ -184,6 +180,7 @@ export async function signup_form_submit_handler(
   fields_to_validate: (keyof SignupStore)[],
   chapters: Chapter[],
   err_msg: Record<string, string>,
+  tableName: string,
 ): Promise<{ error?: Error; success?: boolean }> {
   const signup_data = get(signup_store)
 
@@ -217,7 +214,11 @@ export async function signup_form_submit_handler(
   }
 
   try {
-    const response = await prepare_signup_data_for_airtable(signup_data, baseId)
+    const response = await prepare_signup_data_for_airtable(
+      signup_data,
+      baseId,
+      tableName,
+    )
 
     if (response.status < 200 || response.status >= 300) {
       // Include Airtable's error response for debugging
