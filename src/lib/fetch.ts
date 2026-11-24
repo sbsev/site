@@ -1,6 +1,9 @@
-import yaml from "js-yaml";
+import { CORE_SCHEMA, load, mergeTag, timestampTag } from "js-yaml";
 import { createMarked } from "../utils/marked";
 import type { Chapter, Form, Page, Post } from "./types";
+
+// Contentful YAML uses merge keys and dates supported by the previous parser defaults.
+const contentfulYamlSchema = CORE_SCHEMA.withTags(mergeTag, timestampTag);
 
 const prefixSlug = (prefix: string) => (obj: Page | Post) => {
   obj.slug = prefix + obj.slug;
@@ -172,7 +175,7 @@ export async function fetch_page(
   if (!page) return null;
 
   if (page?.yaml) {
-    page.yaml = yaml.load(page.yaml);
+    page.yaml = load(page.yaml, { schema: contentfulYamlSchema });
     Object.entries(page.yaml).forEach(([key, val]) => {
       if (typeof val === `string`) page.yaml[key] = createMarked().parseInline(val);
     });
@@ -278,7 +281,7 @@ export async function fetch_yaml(title: string, customFetch: typeof fetch = fetc
     throw new Error(`Contentful YAML entry ${title} is missing or empty.`);
   }
   try {
-    const value = yaml.load(source);
+    const value = load(source, { schema: contentfulYamlSchema });
     if (value == null) throw new Error(`Empty YAML document`);
     return value;
   } catch (cause) {
