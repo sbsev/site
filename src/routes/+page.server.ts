@@ -1,4 +1,4 @@
-import { fetch_chapters, fetch_page } from "$lib/fetch";
+import { fetch_chapters, fetch_page } from "#lib/fetch.js";
 
 export const load = async ({ fetch }) => {
   const page = await fetch_page(`/`, fetch);

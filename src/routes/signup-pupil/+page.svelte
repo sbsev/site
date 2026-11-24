@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { CircleSpinner, FormField, Modal } from "$lib";
+  import { CircleSpinner, FormField, Modal } from "#lib";
   // to make the signup form truly adaptive to other countries, these 3 files need to be imported adaptively (same in the other form)
-  import { signup_form_submit_handler } from "$lib/airtable";
-  import { signupStore } from "$lib/stores";
-  import type { FormFieldProps } from "$lib/types";
+  import { signup_form_submit_handler } from "#lib/airtable.js";
+  import { signupStore } from "#lib/stores.js";
+  import type { FormFieldProps } from "#lib/types.js";
 
   const { data } = $props();
   const chapters = $derived(data.chapters);

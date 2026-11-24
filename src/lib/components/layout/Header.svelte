@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
+  import { browser } from "$app/env";
   import Nav from "./Nav.svelte";
   import ThemeSwitcher from "../ui/ThemeSwitcher.svelte";
   import type { NavLink } from "../../types";

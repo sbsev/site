@@ -1,5 +1,5 @@
-import { fetch_pages, fetch_posts, fetch_yaml_list } from "$lib/fetch.js";
-import type { Page, Post } from "$lib/types";
+import { fetch_pages, fetch_posts, fetch_yaml_list } from "#lib/fetch.js";
+import type { Page, Post } from "#lib/types.js";
 
 type AlgoliaItem = (Page | Post | Record<string, unknown>) & {
   id?: string;

@@ -1,25 +1,28 @@
 <script lang="ts">
-  import { dev } from "$app/environment";
-  import { page } from "$app/stores";
+  import { dev } from "$app/env";
+  import { page } from "$app/state";
+
+  const status = $derived(page.status);
+  const stack = $derived(dev && page.error && "stack" in page.error ? page.error.stack : undefined);
 </script>
 
 <svelte:head>
-  <title>Fehler {$page.status} - StudyTutors e.V.</title>
+  <title>Fehler {status} - StudyTutors e.V.</title>
 </svelte:head>
 
 <div>
-  <h1>Fehler {$page.status}</h1>
+  <h1>Fehler {status}</h1>
 
-  {#if $page.status === 404}
+  {#if status === 404}
     <p>
       😅 Ooops! Diese Seite konnte nicht gefunden.
       <a href="/">Zurück zur Startseite</a>.
     </p>
   {/if}
 
-  {#if dev && $page.error && `stack` in $page.error}
+  {#if typeof stack === "string"}
     <h2>Stack Trace</h2>
-    <pre>{($page.error as { stack: string }).stack}</pre>
+    <pre>{stack}</pre>
   {/if}
 </div>
 

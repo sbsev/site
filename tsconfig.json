@@ -1,5 +1,14 @@
 {
-  "extends": "./.svelte-kit/tsconfig.json",
+  "extends": "$app/tsconfig",
+  "include": ["src", "tests", "*.config.ts"],
+  "exclude": [
+    "node_modules",
+    "build",
+    // Optional command-line utilities with their own dependencies.
+    "src/utils/contentful.js",
+    "src/utils/deeplTranslate.js",
+    "src/utils/googleTranslate.js"
+  ],
   "compilerOptions": {
     "strict": true,
     "module": "esnext",

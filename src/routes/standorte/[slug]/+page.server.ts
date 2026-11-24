@@ -1,4 +1,4 @@
-import { fetch_page } from "$lib/fetch";
+import { fetch_page } from "#lib/fetch.js";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 

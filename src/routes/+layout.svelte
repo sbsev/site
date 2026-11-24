@@ -1,10 +1,10 @@
 <script lang="ts">
   import { afterNavigate } from "$app/navigation";
-  import { browser } from "$app/environment";
-  import { Footer, Header } from "$lib";
-  import { colorMode, microcopy } from "$lib/stores";
+  import { browser } from "$app/env";
+  import { Footer, Header } from "#lib";
+  import { colorMode, microcopy } from "#lib/stores.js";
   import type { Snippet } from "svelte";
-  import type { NavLink, Link } from "$lib/types";
+  import type { NavLink, Link } from "#lib/types.js";
   import "../app.css";
 
   interface Props {

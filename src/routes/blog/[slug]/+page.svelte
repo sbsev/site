@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Img, ToolTip } from "$lib";
+  import { Img, ToolTip } from "#lib";
   import { onMount } from "svelte";
 
   // Icon imports (bundled at build time)

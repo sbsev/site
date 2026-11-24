@@ -1,6 +1,6 @@
-import { dev } from "$app/environment";
-import { fetch_chapters, parse_form_data } from "$lib/fetch";
-import type { Form, FormMessages, FormSelectOptions } from "$lib/types";
+import { dev } from "$app/env";
+import { fetch_chapters, parse_form_data } from "#lib/fetch.js";
+import type { Form, FormMessages, FormSelectOptions } from "#lib/types.js";
 
 type SignupKind = `student` | `pupil`;
 

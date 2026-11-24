@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { BasePage } from "$lib";
-  import { microcopy } from "$lib/stores";
+  import { BasePage } from "#lib";
+  import { microcopy } from "#lib/stores.js";
 
   // Icon imports (bundled at build time)
   import IconGraduation from "~icons/fa-solid/graduation-cap";

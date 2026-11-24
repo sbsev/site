@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { BasePage, Img } from "$lib";
-  import type { StudyPlatform } from "$lib/types";
+  import { BasePage, Img } from "#lib";
+  import type { StudyPlatform } from "#lib/types.js";
   import { flip } from "svelte/animate";
   import { scale } from "svelte/transition";
 

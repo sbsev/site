@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BasePage } from "$lib";
+  import { BasePage } from "#lib";
 
   export let data;
 </script>

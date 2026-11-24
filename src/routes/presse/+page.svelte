@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { BasePage, Img } from "$lib";
-  import type { PressItem } from "$lib/types";
+  import { BasePage, Img } from "#lib";
+  import type { PressItem } from "#lib/types.js";
 
   // Icon imports (bundled at build time)
   import IconNewspaper from "~icons/ion/newspaper";

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { repository } from "$root/package.json";
+  import { repository } from "#package";
   import { Social } from "../..";
   import { microcopy } from "../../stores";
   import type { Link } from "../../types";

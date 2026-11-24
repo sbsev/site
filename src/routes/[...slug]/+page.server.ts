@@ -1,4 +1,4 @@
-import { fetch_page } from "$lib/fetch";
+import { fetch_page } from "#lib/fetch.js";
 import { error } from "@sveltejs/kit";
 
 export const load = async ({ params }) => {
@@ -6,7 +6,7 @@ export const load = async ({ params }) => {
 
   // If no page data could be fetched for params.slug, the page doesn't exist,
   // so we fall through to src/routes/__error.svelte.
-  if (!page) throw error(404);
+  if (!page) error(404);
 
   return { page };
 };

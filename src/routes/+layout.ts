@@ -1,4 +1,4 @@
-import { microcopy } from "$lib/stores";
+import { microcopy } from "#lib/stores.js";
 import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = ({ data }) => {

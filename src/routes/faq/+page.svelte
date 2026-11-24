@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Collapsible } from "$lib";
-  import type { FAQ } from "$lib/types";
+  import { Collapsible } from "#lib";
+  import type { FAQ } from "#lib/types.js";
   import { flip } from "svelte/animate";
   import { scale } from "svelte/transition";
 

@@ -6,7 +6,7 @@
   import IconPlace from "~icons/ic/place";
   import IconConstruction from "~icons/ic/round-construction";
 
-  const { chapters } = $props<{ chapters: Chapter[] }>();
+  const { chapters }: { chapters: Chapter[] } = $props();
 
   const openChapters = $derived(
     Array.isArray(chapters) ? chapters.filter((ch) => ch.acceptsSignups) : [],

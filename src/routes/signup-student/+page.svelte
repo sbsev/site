@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { CircleSpinner, FormField, Modal } from "$lib";
-  import { signup_form_submit_handler } from "$lib/airtable";
-  import { signupStore } from "$lib/stores";
-  import type { FormFieldProps } from "$lib/types";
+  import { CircleSpinner, FormField, Modal } from "#lib";
+  import { signup_form_submit_handler } from "#lib/airtable.js";
+  import { signupStore } from "#lib/stores.js";
+  import type { FormFieldProps } from "#lib/types.js";
   import IconPlantFill from "~icons/ri/plant-fill";
 
   const { data } = $props();

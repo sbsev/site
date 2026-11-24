@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { PostPreview, Social, TagList } from "$lib";
-  import type { BlogTag } from "$lib/types";
+  import { PostPreview, Social, TagList } from "#lib";
+  import type { BlogTag } from "#lib/types.js";
   import { flip } from "svelte/animate";
   import { scale } from "svelte/transition";
 

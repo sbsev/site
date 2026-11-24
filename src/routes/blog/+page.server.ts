@@ -1,4 +1,4 @@
-import { fetch_posts, fetch_yaml } from "$lib/fetch";
+import { fetch_posts, fetch_yaml } from "#lib/fetch.js";
 
 export const load = async ({ fetch }) => {
   return {

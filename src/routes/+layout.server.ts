@@ -1,5 +1,5 @@
-import { fetch_chapters, fetch_yaml } from "$lib/fetch";
-import type { Microcopy, NavLink } from "$lib/types";
+import { fetch_chapters, fetch_yaml } from "#lib/fetch.js";
+import type { Microcopy, NavLink } from "#lib/types.js";
 import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async ({ fetch }) => {

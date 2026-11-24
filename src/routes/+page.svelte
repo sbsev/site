@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { ChapterMap } from "$lib";
-  import { microcopy } from "$lib/stores";
+  import { ChapterMap } from "#lib";
+  import { microcopy } from "#lib/stores.js";
   // import Icon from '@iconify/svelte'
   // Bundled icons to prevent layout shift
   import IconPlace from "~icons/ic/place";

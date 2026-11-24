@@ -1,6 +1,6 @@
 <script lang="ts">
   import { beforeNavigate } from "$app/navigation";
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { slide } from "svelte/transition";
   import type { NavLink } from "../../types";
 
@@ -52,12 +52,12 @@
     else activeSubNav = idx;
   };
 
-  const isCurrent = $derived((url: string) => {
-    if (typeof window === `undefined`) return undefined;
-    if (url === $page.url.pathname) return `page`;
-    if (url !== `/` && $page.url.pathname.includes(url)) return `page`;
+  const pathname = $derived(page.url.pathname);
+  const isCurrent = (url: string) => {
+    if (url === pathname) return `page`;
+    if (url !== `/` && pathname.includes(url)) return `page`;
     return undefined;
-  });
+  };
   beforeNavigate(close);
 
   const crawl_links = $derived(nav.flatMap((itm) => itm?.subNav ?? []));

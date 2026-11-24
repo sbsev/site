@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { BasePage, Img } from "$lib";
-  import type { Award } from "$lib/types";
+  import { BasePage, Img } from "#lib";
+  import type { Award } from "#lib/types.js";
 
   // Icon imports (bundled at build time)
   import IconCalendar from "~icons/octicon/calendar";
