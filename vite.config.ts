@@ -42,6 +42,11 @@ export default defineConfig({
     port: 3000,
   },
 
+  ssr: {
+    // Keep Kit's cookie dependency in the server bundle so cached installs cannot shadow it.
+    noExternal: ["cookie"],
+  },
+
   fmt: {
     svelte: true,
     ignorePatterns: [`src/signup-form/**`],
