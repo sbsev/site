@@ -1,24 +1,26 @@
 <script lang="ts">
-  import { Map } from '../..'
-  import { microcopy } from '../../stores'
-  import type { Chapter } from '../../types'
+  import { Map } from "../..";
+  import { microcopy } from "../../stores";
+  import type { Chapter } from "../../types";
 
   interface Props {
-    chapters: Chapter[]
+    chapters: Chapter[];
   }
 
-  let { chapters }: Props = $props()
-  const { lng, lat, zoom, minZoom, maxZoom } = $derived($microcopy?.map?.location ?? {})
+  let { chapters }: Props = $props();
+  const { lng, lat, zoom, minZoom, maxZoom } = $derived($microcopy?.map?.location ?? {});
 </script>
 
 <div>
   <Map
-    markers={Array.isArray(chapters) ? chapters.map((chap) => ({
-      ...chap.coords, // contains { lng, lat }
-      classes: [`chapter`, chap.status].filter((item): item is string => Boolean(item)),
-      title: chap.token,
-      url: chap.slug,
-    })) : []}
+    markers={Array.isArray(chapters)
+      ? chapters.map((chap) => ({
+          ...chap.coords, // contains { lng, lat }
+          classes: [`chapter`, chap.status].filter((item): item is string => Boolean(item)),
+          title: chap.token,
+          url: chap.slug,
+        }))
+      : []}
     {lng}
     {lat}
     {zoom}
@@ -85,7 +87,7 @@
     background-color: var(--blue);
   }
   :global(a.chapter::after) {
-    content: '';
+    content: "";
     position: absolute;
     left: 50%;
     top: 100%;

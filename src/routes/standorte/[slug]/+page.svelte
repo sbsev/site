@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { BasePage } from '$lib'
-  import { microcopy } from '$lib/stores'
+  import { BasePage } from "$lib";
+  import { microcopy } from "$lib/stores";
 
   // Icon imports (bundled at build time)
-  import IconGraduation from '~icons/fa-solid/graduation-cap'
-  import IconInfo from '~icons/bi/info-circle-fill'
-  import IconChild from '~icons/fa-solid/child'
-  import IconEmail from '~icons/ic/email'
+  import IconGraduation from "~icons/fa-solid/graduation-cap";
+  import IconInfo from "~icons/bi/info-circle-fill";
+  import IconChild from "~icons/fa-solid/child";
+  import IconEmail from "~icons/ic/email";
 
-  const { data } = $props()
-  const page = $derived(data.page)
-  const location = $derived($microcopy?.location)
+  const { data } = $props();
+  const page = $derived(data.page);
+  const location = $derived($microcopy?.location);
   const contactLabels = $derived({
     student: { label: location?.forStudents, color: `blue` },
     pupil: { label: location?.forPartner, color: `green` },
     info: { label: location?.generalRequests, color: `orange` },
-  })
+  });
 
-  const style = `margin-right: 3pt;`
+  const style = `margin-right: 3pt;`;
 </script>
 
 <BasePage {page}>
@@ -39,7 +39,8 @@
           <IconChild {style} />{$microcopy?.location?.registerPupil}
         </a>
         <a href={$microcopy?.location?.linkPupilInfo} class="btn green stroke">
-          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoPupilButton}</a
+          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location
+            ?.infoPupilButton}</a
         >
       </span>
       <span>
@@ -50,7 +51,8 @@
           </a>
         {/if}
         <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
-          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoLeadingButton}</a
+          <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location
+            ?.infoLeadingButton}</a
         >
       </span>
     </section>

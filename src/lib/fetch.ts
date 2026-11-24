@@ -1,34 +1,31 @@
-import yaml from 'js-yaml'
-import { createMarked } from '../utils/marked'
-import type { Chapter, Form, Page, Post } from './types'
+import yaml from "js-yaml";
+import { createMarked } from "../utils/marked";
+import type { Chapter, Form, Page, Post } from "./types";
 
 const prefixSlug = (prefix: string) => (obj: Page | Post) => {
-  obj.slug = prefix + obj.slug
-  return obj
-}
+  obj.slug = prefix + obj.slug;
+  return obj;
+};
 
 export async function airtable_fetch(
   query: string,
   options = {},
 ): Promise<Record<string, unknown>> {
-  const apiKey = import.meta.env.VITE_AIRTABLE_CHAPTER_BASE_APP_ID
+  const apiKey = import.meta.env.VITE_AIRTABLE_CHAPTER_BASE_APP_ID;
 
-  if (!apiKey) throw `Missing Airtable API key. Please add to .env file`
+  if (!apiKey) throw `Missing Airtable API key. Please add to .env file`;
 
-  const response = await fetch(
-    `https://api.baseql.com/airtable/graphql/${apiKey}`,
-    {
-      method: `POST`,
-      headers: { 'Content-Type': `application/json` },
-      body: JSON.stringify({ query }),
-      ...options,
-    },
-  )
+  const response = await fetch(`https://api.baseql.com/airtable/graphql/${apiKey}`, {
+    method: `POST`,
+    headers: { "Content-Type": `application/json` },
+    body: JSON.stringify({ query }),
+    ...options,
+  });
 
-  const { data, error } = await response.json()
+  const { data, error } = await response.json();
 
-  if (error) throw error
-  return data
+  if (error) throw error;
+  return data;
 }
 
 export async function contentful_fetch(
@@ -36,34 +33,38 @@ export async function contentful_fetch(
   customFetch: typeof fetch = fetch,
   operation = `content`,
 ) {
-  const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
-  const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
+  const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
+  const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
 
   if (!token || !id) {
-    throw new Error(`Missing Contentful access token and/or space ID. Check the build environment.`)
+    throw new Error(
+      `Missing Contentful access token and/or space ID. Check the build environment.`,
+    );
   }
 
-  const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
-  let response: Response
+  const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`;
+  let response: Response;
   try {
     response = await customFetch(`${ctfGqlUrl}/${id}`, {
       method: `POST`,
-      headers: { 'Content-Type': `application/json`, Authorization: `Bearer ${token}` },
+      headers: { "Content-Type": `application/json`, Authorization: `Bearer ${token}` },
       body: JSON.stringify({ query }),
-    })
+    });
   } catch (cause) {
-    throw new Error(`Could not reach Contentful while loading ${operation}.`, { cause })
+    throw new Error(`Could not reach Contentful while loading ${operation}.`, { cause });
   }
 
   if (!response.ok) {
-    throw new Error(`Contentful returned HTTP ${response.status} while loading ${operation}.`)
+    throw new Error(`Contentful returned HTTP ${response.status} while loading ${operation}.`);
   }
 
-  const { data, errors } = await response.json()
+  const { data, errors } = await response.json();
   if (errors?.length || !data) {
-    throw new Error(`Contentful could not load ${operation}: ${errors?.[0]?.message ?? `no data returned`}`)
+    throw new Error(
+      `Contentful could not load ${operation}: ${errors?.[0]?.message ?? `no data returned`}`,
+    );
   }
-  return data
+  return data;
 }
 
 const chapters_query = `{
@@ -81,36 +82,34 @@ const chapters_query = `{
       token
     }
   }
-}`
+}`;
 
-export async function fetch_chapters(
-  customFetch: typeof fetch = fetch,
-): Promise<Chapter[]> {
-  const { chapters } = await contentful_fetch(chapters_query, customFetch, `chapters`)
-  return chapters.items.map(prefixSlug(`/standorte/`))
+export async function fetch_chapters(customFetch: typeof fetch = fetch): Promise<Chapter[]> {
+  const { chapters } = await contentful_fetch(chapters_query, customFetch, `chapters`);
+  return chapters.items.map(prefixSlug(`/standorte/`));
 }
 
 export async function base64_thumbnail(
   url: string,
   options?: { type?: string; w?: number; h?: number },
 ): Promise<string> {
-  const { type = `jpg`, w = 10, h = 10 } = options ?? {}
+  const { type = `jpg`, w = 10, h = 10 } = options ?? {};
 
-  const response = await fetch(`${url}?w=${w}&h=${h}&q=80`)
+  const response = await fetch(`${url}?w=${w}&h=${h}&q=80`);
 
   if (typeof window === `undefined`) {
     // server side (node) https://stackoverflow.com/a/52467372
-    const buffer = Buffer.from(await response.arrayBuffer())
-    return `data:image/${type};base64,` + buffer.toString(`base64`)
+    const buffer = Buffer.from(await response.arrayBuffer());
+    return `data:image/${type};base64,` + buffer.toString(`base64`);
   } else {
     // client side (browser) https://stackoverflow.com/a/20285053
-    const blob = await response.blob()
+    const blob = await response.blob();
     return await new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onloadend = () => resolve(reader.result as string)
-      reader.onerror = reject
-      reader.readAsDataURL(blob)
-    })
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   }
 }
 
@@ -119,15 +118,15 @@ export async function base64_thumbnail(
 const strip_indentation = (str: string) =>
   str
     .replace(/(?:\r\n|\r|\n)[ \t]*(?=>\s*<)/g, ``) // join lines where a tag seems to close and immediately open another
-    .replace(/^[^\S\r\n]+/gm, ``) // match all white space at line starts except newlines
+    .replace(/^[^\S\r\n]+/gm, ``); // match all white space at line starts except newlines
 
 function parse_body(itm: Page | Post) {
-  if (!itm?.body) return itm
+  if (!itm?.body) return itm;
 
-  itm.body = createMarked().parse(strip_indentation(itm.body)) as string // generate HTML
-  itm.plainBody = itm.body.replace(/<[^>]*>/g, ``) // strip HTML tags to get plain text
+  itm.body = createMarked().parse(strip_indentation(itm.body)) as string; // generate HTML
+  itm.plainBody = itm.body.replace(/<[^>]*>/g, ``); // strip HTML tags to get plain text
 
-  return itm
+  return itm;
 }
 
 const cover_fragment = `
@@ -138,7 +137,7 @@ const cover_fragment = `
     width
     height
   }
-`
+`;
 
 const page_fragment = `
   items {
@@ -152,37 +151,36 @@ const page_fragment = `
       publishedAt
     }
   }
-`
+`;
 
 const page_query = (slug: string) => `{
   pages: pageCollection(where: {slug_in: ["${slug}", "/${slug}"]}) {
     ${page_fragment}
   }
-}`
+}`;
 
 export async function fetch_page(
   slug: string,
   customFetch: typeof fetch = fetch,
 ): Promise<Page | null> {
-  if (!slug) throw `fetchPage requires a slug, got '${slug}'`
+  if (!slug) throw `fetchPage requires a slug, got '${slug}'`;
 
-  if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
+  if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1);
 
-  const data = await contentful_fetch(page_query(slug), customFetch, `page ${slug}`)
-  const page = data?.pages?.items[0]
-  if (!page) return null
+  const data = await contentful_fetch(page_query(slug), customFetch, `page ${slug}`);
+  const page = data?.pages?.items[0];
+  if (!page) return null;
 
   if (page?.yaml) {
-    page.yaml = yaml.load(page.yaml)
+    page.yaml = yaml.load(page.yaml);
     Object.entries(page.yaml).forEach(([key, val]) => {
-      if (typeof val === `string`)
-        page.yaml[key] = createMarked().parseInline(val)
-    })
+      if (typeof val === `string`) page.yaml[key] = createMarked().parseInline(val);
+    });
   }
 
-  page.cover.base64 = await base64_thumbnail(page.cover.src)
+  page.cover.base64 = await base64_thumbnail(page.cover.src);
 
-  return parse_body(page)
+  return parse_body(page);
 }
 
 export async function fetch_pages(): Promise<Page[]> {
@@ -190,8 +188,8 @@ export async function fetch_pages(): Promise<Page[]> {
     pages: pageCollection {
       ${page_fragment}
     }
-  }`)
-  return data?.pages?.items?.map(parse_body)
+  }`);
+  return data?.pages?.items?.map(parse_body);
 }
 
 const post_fragment = `
@@ -215,46 +213,44 @@ const post_fragment = `
       }
     }
   }
-`
+`;
 
 const post_query = (slug: string) => `{
   posts: postCollection(order: date_DESC, where: {slug_in: ["${slug}", "/${slug}"]}) {
     ${post_fragment}
   }
-}`
+}`;
 
 const posts_query = `{
   posts: postCollection(order: date_DESC) {
     ${post_fragment}
   }
-}`
+}`;
 
 async function process_post(post: Post) {
-  if (!post) return
-  parse_body(post)
-  prefixSlug(`/blog/`)(post)
+  if (!post) return;
+  parse_body(post);
+  prefixSlug(`/blog/`)(post);
   post.author.photo.base64 = await base64_thumbnail(post.author.photo.src, {
     w: 3,
     h: 3,
-  })
-  post.cover.base64 = await base64_thumbnail(post.cover.src)
-  return post
+  });
+  post.cover.base64 = await base64_thumbnail(post.cover.src);
+  return post;
 }
 
 export async function fetch_post(slug: string): Promise<Post> {
-  if (!slug) throw `fetch_post() requires a slug, got '${slug}'`
-  const data = await contentful_fetch(post_query(slug))
-  const post = data?.posts?.items[0]
-  await process_post(post)
-  return post
+  if (!slug) throw `fetch_post() requires a slug, got '${slug}'`;
+  const data = await contentful_fetch(post_query(slug));
+  const post = data?.posts?.items[0];
+  await process_post(post);
+  return post;
 }
 
-export async function fetch_posts(
-  customFetch: typeof fetch = fetch,
-): Promise<Post[]> {
-  const data = await contentful_fetch(posts_query, customFetch, `blog posts`)
-  const posts = data?.posts?.items
-  return await Promise.all(posts.map(process_post))
+export async function fetch_posts(customFetch: typeof fetch = fetch): Promise<Post[]> {
+  const data = await contentful_fetch(posts_query, customFetch, `blog posts`);
+  const posts = data?.posts?.items;
+  return await Promise.all(posts.map(process_post));
 }
 
 export async function fetch_post_slugs(): Promise<string[]> {
@@ -262,8 +258,8 @@ export async function fetch_post_slugs(): Promise<string[]> {
     `{ postCollection { items { slug } } }`,
     fetch,
     `blog post slugs`,
-  )
-  return postCollection.items.map(({ slug }: { slug: string }) => slug)
+  );
+  return postCollection.items.map(({ slug }: { slug: string }) => slug);
 }
 
 const yaml_query = (title: string) => `{
@@ -272,24 +268,21 @@ const yaml_query = (title: string) => `{
       data
     }
   }
-}`
+}`;
 
-export async function fetch_yaml(
-  title: string,
-  customFetch: typeof fetch = fetch,
-) {
-  if (!title) throw `fetch_yaml() requires a title, got '${title}'`
-  const { yml } = await contentful_fetch(yaml_query(title), customFetch, `YAML entry ${title}`)
-  const source = yml?.items[0]?.data
+export async function fetch_yaml(title: string, customFetch: typeof fetch = fetch) {
+  if (!title) throw `fetch_yaml() requires a title, got '${title}'`;
+  const { yml } = await contentful_fetch(yaml_query(title), customFetch, `YAML entry ${title}`);
+  const source = yml?.items[0]?.data;
   if (typeof source !== `string` || !source.trim()) {
-    throw new Error(`Contentful YAML entry ${title} is missing or empty.`)
+    throw new Error(`Contentful YAML entry ${title} is missing or empty.`);
   }
   try {
-    const value = yaml.load(source)
-    if (value == null) throw new Error(`Empty YAML document`)
-    return value
+    const value = yaml.load(source);
+    if (value == null) throw new Error(`Empty YAML document`);
+    return value;
   } catch (cause) {
-    throw new Error(`Could not read Contentful YAML entry ${title}.`, { cause })
+    throw new Error(`Could not read Contentful YAML entry ${title}.`, { cause });
   }
 }
 
@@ -301,9 +294,9 @@ function title_to_slug(itm: Record<string, unknown> & { title: string }) {
     .replace(/ü/g, `ue`)
     .replace(/[^\w ]+/g, ``)
     .replace(/[^\w ]+/g, ``)
-    .replace(/ +/g, `-`)
-  itm.id = itm.slug
-  return itm
+    .replace(/ +/g, `-`);
+  itm.id = itm.slug;
+  return itm;
 }
 
 export async function fetch_yaml_list(
@@ -311,54 +304,48 @@ export async function fetch_yaml_list(
   slugPrefix: string,
   customFetch: typeof fetch = fetch,
 ): Promise<Record<string, unknown>[]> {
-  const list = (await fetch_yaml(title, customFetch)) as Record<
-    string,
-    unknown
-  >[]
+  const list = (await fetch_yaml(title, customFetch)) as Record<string, unknown>[];
   return list
     .map((item) => parse_body(item as Page | Post))
-    .map((item) =>
-      title_to_slug(item as Record<string, unknown> & { title: string }),
-    )
-    .map((item) => prefixSlug(slugPrefix)(item as Page | Post))
+    .map((item) => title_to_slug(item as Record<string, unknown> & { title: string }))
+    .map((item) => prefixSlug(slugPrefix)(item as Page | Post));
 }
 
 // remove outer-most paragraph tags (if any)
-const strip_outer_par_tag = (str: string) =>
-  str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``)
+const strip_outer_par_tag = (str: string) => str.replace(/^<p>/, ``).replace(/<\/p>\s*?$/, ``);
 
 export function parse_form_data(obj: Form): Form {
   // Create isolated instance for this form processing
-  const markedInstance = createMarked()
+  const markedInstance = createMarked();
 
   // open links in new tabs so form is not closed (https://git.io/J3p5G)
   markedInstance.use({
     renderer: {
       link({ href, text }: { href: string; text: string }) {
-        return `<a target="_blank" href="${href}">${text}</a>`
+        return `<a target="_blank" href="${href}">${text}</a>`;
       },
     },
-  })
+  });
 
   // Process all string fields that might contain markdown
   for (const [key, itm] of Object.entries(obj)) {
     if (typeof itm === `string`) {
       // Process any string field that might contain markdown (title, note, etc.)
-      const markdown = strip_indentation(itm as string)
-      ;(obj as Record<string, unknown>)[key] = strip_outer_par_tag(
+      const markdown = strip_indentation(itm as string);
+      (obj as Record<string, unknown>)[key] = strip_outer_par_tag(
         markedInstance.parse(markdown) as string,
-      )
+      );
     } else if (typeof itm === `object` && itm !== null && !Array.isArray(itm)) {
       // Recursively process nested objects (like header, submit, etc.)
-      parse_form_data(itm as unknown as Form)
+      parse_form_data(itm as unknown as Form);
     } else if (Array.isArray(itm)) {
       // Process arrays of objects (like fields array)
       itm.forEach((item) => {
         if (typeof item === `object` && item !== null) {
-          parse_form_data(item as unknown as Form)
+          parse_form_data(item as unknown as Form);
         }
-      })
+      });
     }
   }
-  return obj
+  return obj;
 }

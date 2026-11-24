@@ -2,32 +2,28 @@
 // requires DEEPL_API_KEY, CONTENTFUL_MANAGEMENT_TOKEN and CONTENTFUL_SPACE_ID
 // to be provided in .env file
 
-import translate from 'deepl'
-import 'dotenv/config'
-import prettier from 'prettier'
-import { get_space } from './contentful'
+import translate from "deepl";
+import "dotenv/config";
+import prettier from "prettier";
+import { get_space } from "./contentful";
 
 async function translateContentfulEntries() {
   try {
-    const cli_args = process.argv.slice(2)
+    const cli_args = process.argv.slice(2);
 
     if (cli_args.length > 4)
-      throw `wrong number of CLI args, expected between 0 and 4, got ${cli_args.length}`
+      throw `wrong number of CLI args, expected between 0 and 4, got ${cli_args.length}`;
 
-    const [
-      targetLocale = `en`,
-      sourceLocale = `de`,
-      contentType = `page`,
-      field = `body`,
-    ] = cli_args
+    const [targetLocale = `en`, sourceLocale = `de`, contentType = `page`, field = `body`] =
+      cli_args;
 
-    const space = await get_space()
+    const space = await get_space();
 
-    const env = await space.getEnvironment(`master`)
-    let { items } = await env.getEntries({ content_type: contentType })
+    const env = await space.getEnvironment(`master`);
+    let { items } = await env.getEntries({ content_type: contentType });
 
     for (const itm of items) {
-      const text = itm.fields[field][sourceLocale]
+      const text = itm.fields[field][sourceLocale];
 
       const { data } = await translate({
         text,
@@ -39,22 +35,20 @@ async function translateContentfulEntries() {
         // 0 - no splitting at all, whole input is treated as one sentence
         // 1 (default) - splits on interpunction and on newlines
         // 'nonewlines' - splits on interpunction only, ignoring newlines
-      })
-      const translation = data.translations[0].text
-      const formatted = prettier.format(translation, { parser: `markdown` })
+      });
+      const translation = data.translations[0].text;
+      const formatted = prettier.format(translation, { parser: `markdown` });
 
-      itm.fields[field][targetLocale] = formatted
+      itm.fields[field][targetLocale] = formatted;
       // await itm.update()
       // await itm.publish()
-      const title = itm.fields.title[sourceLocale]
+      const title = itm.fields.title[sourceLocale];
 
-      console.debug(
-        `successfully translated ${contentType} '${title}' to ${targetLocale}`,
-      )
+      console.debug(`successfully translated ${contentType} '${title}' to ${targetLocale}`);
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
-translateContentfulEntries()
+translateContentfulEntries();

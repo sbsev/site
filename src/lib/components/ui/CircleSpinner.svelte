@@ -1,7 +1,7 @@
 <script lang="ts">
-  export let color = `var(--text-color)`
-  export let duration = `1.5s`
-  export let size = `1em`
+  export let color = `var(--text-color)`;
+  export let duration = `1.5s`;
+  export let size = `1em`;
 </script>
 
 <div

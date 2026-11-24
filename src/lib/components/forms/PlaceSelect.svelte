@@ -1,16 +1,16 @@
 <script lang="ts">
   // import Icon from '@iconify/svelte'
-  import IconDelete from '~icons/ic/delete'
-  import type { Result } from '@mapbox/mapbox-gl-geocoder'
-  import type { Map as MapBoxMap, Marker } from 'mapbox-gl'
-  import { Geocoder, Map as MapComponent } from '../..'
-  import type { Place } from '../../types'
+  import IconDelete from "~icons/ic/delete";
+  import type { Result } from "@mapbox/mapbox-gl-geocoder";
+  import type { Map as MapBoxMap, Marker } from "mapbox-gl";
+  import { Geocoder, Map as MapComponent } from "../..";
+  import type { Place } from "../../types";
 
   interface Props {
-    value?: Place[]
-    placeholder?: string
-    div?: HTMLDivElement | null
-    id?: string | null
+    value?: Place[];
+    placeholder?: string;
+    div?: HTMLDivElement | null;
+    id?: string | null;
   }
 
   let {
@@ -18,51 +18,51 @@
     placeholder = ``,
     div = $bindable(null),
     id = null,
-  }: Props = $props()
+  }: Props = $props();
 
-  let markers: Marker[] = $state([])
-  let map: MapBoxMap | null = $state(null)
+  let markers: Marker[] = $state([]);
+  let map: MapBoxMap | null = $state(null);
 
   async function selectHandler(place: Result) {
     if (!place.center) {
       window.alert(
-        `Für '${place.text}' konnte keine Adresse gefunden werden! Bitte versuche einen anderen Ort anzugeben.`
-      )
-      return
+        `Für '${place.text}' konnte keine Adresse gefunden werden! Bitte versuche einen anderen Ort anzugeben.`,
+      );
+      return;
     }
 
-    const [lng, lat] = place.center
+    const [lng, lat] = place.center;
 
-    value = [...(value ?? []), { address: place.place_name, lng, lat }]
+    value = [...(value ?? []), { address: place.place_name, lng, lat }];
 
     if (map) {
-      const { default: mapbox } = await import(`mapbox-gl`)
-      if (!map) return
-      const marker = new mapbox.Marker()
-      marker.setLngLat([lng, lat]).addTo(map)
+      const { default: mapbox } = await import(`mapbox-gl`);
+      if (!map) return;
+      const marker = new mapbox.Marker();
+      marker.setLngLat([lng, lat]).addTo(map);
 
-      markers = [...markers, marker]
+      markers = [...markers, marker];
 
-      const bounds = new mapbox.LngLatBounds([lng, lat], [lng, lat])
+      const bounds = new mapbox.LngLatBounds([lng, lat], [lng, lat]);
       for (const marker of markers) {
-        bounds.extend(marker.getLngLat())
+        bounds.extend(marker.getLngLat());
       }
 
-      map.fitBounds(bounds, { padding: 100, duration: 400 })
+      map.fitBounds(bounds, { padding: 100, duration: 400 });
     }
   }
 
   const deletePlace = (idx: number) => () => {
-    if (!value) return
+    if (!value) return;
     // remove place from list
-    value.splice(idx, 1)
-    value = [...value]
+    value.splice(idx, 1);
+    value = [...value];
     // remove marker from map
     if (markers[idx]) {
-      markers[idx].remove()
-      markers.splice(idx, 1)
+      markers[idx].remove();
+      markers.splice(idx, 1);
     }
-  }
+  };
 </script>
 
 <Geocoder {placeholder} {selectHandler} {id} bind:div />

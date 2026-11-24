@@ -1,9 +1,9 @@
 <script lang="ts">
-  export let options: (string | number | boolean)[]
-  export let value: string | number | boolean | null = null
-  export let required = false
-  export let style = ``
-  export let id: string | null = null
+  export let options: (string | number | boolean)[];
+  export let value: string | number | boolean | null = null;
+  export let required = false;
+  export let style = ``;
+  export let id: string | null = null;
 </script>
 
 <div {style}>

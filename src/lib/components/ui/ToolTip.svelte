@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let maxWidth = `14em`
-  export let minWidth = `8em`
+  export let maxWidth = `14em`;
+  export let minWidth = `8em`;
 </script>
 
 {#if $$slots.tip}
@@ -35,7 +35,7 @@
     width: fit-content;
   }
   span > div::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 50%;
     bottom: 100%;
@@ -50,7 +50,7 @@
   }
   /* needed to increase the div hover area beyond its top edge across its entire width */
   span > div::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     bottom: 100%;

@@ -1,33 +1,27 @@
 <script lang="ts">
-  import Toc from 'svelte-toc'
-  import type { Snippet } from 'svelte'
-  import { Img } from '../..'
-  import { microcopy } from '../../stores'
-  import type { Page } from '../../types'
+  import Toc from "svelte-toc";
+  import type { Snippet } from "svelte";
+  import { Img } from "../..";
+  import { microcopy } from "../../stores";
+  import type { Page } from "../../types";
 
   // Icon imports (bundled at build time)
-  import IconUpdate from '~icons/ic/update'
+  import IconUpdate from "~icons/ic/update";
 
   interface Props {
-    page: Page | null
-    title?: Snippet
-    children?: Snippet
-    afterBody?: Snippet
-    afterArticle?: Snippet
+    page: Page | null;
+    title?: Snippet;
+    children?: Snippet;
+    afterBody?: Snippet;
+    afterArticle?: Snippet;
   }
 
-  let {
-    page,
-    title: titleSlot,
-    children,
-    afterBody,
-    afterArticle,
-  }: Props = $props()
+  let { page, title: titleSlot, children, afterBody, afterArticle }: Props = $props();
 
-  const { title: pageTitle, slug, cover, body, toc, yaml, sys } = $derived(page ?? {} as Page)
-  const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`))
+  const { title: pageTitle, slug, cover, body, toc, yaml, sys } = $derived(page ?? ({} as Page));
+  const date = $derived(new Date(sys?.publishedAt).toLocaleDateString(`de`));
 
-  const mc = $derived($microcopy?.basepage ?? {})
+  const mc = $derived($microcopy?.basepage ?? {});
 </script>
 
 <svelte:head>
@@ -75,10 +69,7 @@
 
 {#if sys?.publishedAt && !slug.includes(`blog`)}
   <time>
-    <IconUpdate
-      width="1.3em"
-      style="padding: 0 4pt; vertical-align: middle;"
-    />
+    <IconUpdate width="1.3em" style="padding: 0 4pt; vertical-align: middle;" />
     {mc?.lastUpdated}
     {date}
   </time>

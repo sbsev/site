@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { Img } from '../..'
-  import type { Post } from '../../types'
+  import { Img } from "../..";
+  import type { Post } from "../../types";
 
   interface Props {
-    hit: Post
-    onclose?: () => void
+    hit: Post;
+    onclose?: () => void;
   }
 
-  let { hit, onclose }: Props = $props()
+  let { hit, onclose }: Props = $props();
 
-  const { title, slug, body, cover, date, author } = $derived(hit)
+  const { title, slug, body, cover, date, author } = $derived(hit);
 </script>
 
 <div>

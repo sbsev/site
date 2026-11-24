@@ -1,8 +1,8 @@
-import js from '@eslint/js'
-import typescript from '@typescript-eslint/eslint-plugin'
-import typescriptParser from '@typescript-eslint/parser'
-import svelte from 'eslint-plugin-svelte'
-import svelteParser from 'svelte-eslint-parser'
+import js from "@eslint/js";
+import typescript from "@typescript-eslint/eslint-plugin";
+import typescriptParser from "@typescript-eslint/parser";
+import svelte from "eslint-plugin-svelte";
+import svelteParser from "svelte-eslint-parser";
 
 export default [
   js.configs.recommended,
@@ -45,24 +45,24 @@ export default [
       },
     },
     plugins: {
-      '@typescript-eslint': typescript,
+      "@typescript-eslint": typescript,
       svelte: svelte,
     },
     rules: {
       ...typescript.configs.recommended.rules,
       ...svelte.configs.recommended.rules,
-      'no-console': [`error`, { allow: [`warn`, `error`, `debug`] }],
-      'no-var': `error`,
-      '@typescript-eslint/no-inferrable-types': `off`,
-      '@typescript-eslint/no-unused-vars': [
+      "no-console": [`error`, { allow: [`warn`, `error`, `debug`] }],
+      "no-var": `error`,
+      "@typescript-eslint/no-inferrable-types": `off`,
+      "@typescript-eslint/no-unused-vars": [
         `error`,
         { argsIgnorePattern: `^_`, varsIgnorePattern: `^_` },
       ],
-      'svelte/no-at-html-tags': `off`,
-      'no-inner-declarations': `off`,
+      "svelte/no-at-html-tags": `off`,
+      "no-inner-declarations": `off`,
     },
   },
   {
     ignores: [`build/`, `dist/`, `.svelte-kit/`, `node_modules/`, `*.config.*`],
   },
-]
+];

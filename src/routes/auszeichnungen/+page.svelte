@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { BasePage, Img } from '$lib'
-  import type { Award } from '$lib/types'
+  import { BasePage, Img } from "$lib";
+  import type { Award } from "$lib/types";
 
   // Icon imports (bundled at build time)
-  import IconCalendar from '~icons/octicon/calendar'
-  import IconAward from '~icons/fa-solid/award'
+  import IconCalendar from "~icons/octicon/calendar";
+  import IconAward from "~icons/fa-solid/award";
 
-  const { data } = $props()
-  const awards = $derived(data.awards as Award[])
+  const { data } = $props();
+  const awards = $derived(data.awards as Award[]);
 
-  const style = `margin: 0 5pt 0 0;`
+  const style = `margin: 0 5pt 0 0;`;
 </script>
 
 <BasePage page={data.page}>

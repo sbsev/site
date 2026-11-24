@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { Img, ToolTip } from '../..'
-  import type { Post } from '../../types'
+  import { Img, ToolTip } from "../..";
+  import type { Post } from "../../types";
 
   // Icon imports (bundled at build time)
-  import IconLink from '~icons/bx/link'
-  import IconEmail from '~icons/ic/email'
-  import IconGraduation from '~icons/fa-solid/graduation-cap'
-  import IconCalendar from '~icons/octicon/calendar'
-  import IconTags from '~icons/fa-solid/tags'
+  import IconLink from "~icons/bx/link";
+  import IconEmail from "~icons/ic/email";
+  import IconGraduation from "~icons/fa-solid/graduation-cap";
+  import IconCalendar from "~icons/octicon/calendar";
+  import IconTags from "~icons/fa-solid/tags";
 
-  export let post: Post
+  export let post: Post;
 
-  const { title, slug, cover, date, author, tags, plainBody } = post
+  const { title, slug, cover, date, author, tags, plainBody } = post;
 
-  const style = `padding-right: 4pt; height: 12pt;`
+  const style = `padding-right: 4pt; height: 12pt;`;
 </script>
 
 <section>

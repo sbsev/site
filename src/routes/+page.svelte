@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { ChapterMap } from '$lib'
-  import { microcopy } from '$lib/stores'
+  import { ChapterMap } from "$lib";
+  import { microcopy } from "$lib/stores";
   // import Icon from '@iconify/svelte'
   // Bundled icons to prevent layout shift
-  import IconPlace from '~icons/ic/place'
-  import IconUserGraduate from '~icons/fa-solid/user-graduate'
-  import IconChild from '~icons/fa-solid/child'
-  import IconUserGroup from '~icons/fa6-solid/user-group'
+  import IconPlace from "~icons/ic/place";
+  import IconUserGraduate from "~icons/fa-solid/user-graduate";
+  import IconChild from "~icons/fa-solid/child";
+  import IconUserGroup from "~icons/fa6-solid/user-group";
 
-  export let data
+  export let data;
 
-  const style = `margin-right: 5pt; display: inline-block; vertical-align: -0.125em;`
-
+  const style = `margin-right: 5pt; display: inline-block; vertical-align: -0.125em;`;
 </script>
 
 <!-- Shows image of name of german association if page is german. Otherwise shows name of association. -->
@@ -46,7 +45,9 @@
           >
         </div>
         <div class="stat-box" style="background: var(--green);">
-          <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+          <span id="organizationMemberNumber"
+            >{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span
+          >
           <strong>
             <IconUserGroup {style} />
             {@html $microcopy?.indexPage?.boxes?.organizationMemberName}
@@ -113,7 +114,9 @@
       </strong>
     </div>
     <div class="stat-box" style="background: var(--light-blue);">
-      <span id="organizationMemberNumber">{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span>
+      <span id="organizationMemberNumber"
+        >{$microcopy?.indexPage?.boxes?.organizationMemberNumber}</span
+      >
       <strong>
         <IconUserGroup {style} />
         {@html $microcopy?.indexPage?.boxes?.organizationMemberName}

@@ -1,30 +1,30 @@
 <script lang="ts">
-  import { repository } from '$root/package.json'
-  import { Social } from '../..'
-  import { microcopy } from '../../stores'
-  import type { Link } from '../../types'
+  import { repository } from "$root/package.json";
+  import { Social } from "../..";
+  import { microcopy } from "../../stores";
+  import type { Link } from "../../types";
 
   // Icon imports (bundled at build time)
-  import IconLaw from '~icons/octicon/law'
-  import IconPrivacy from '~icons/ic/round-privacy-tip'
-  import IconEuro from '~icons/ic/round-euro'
-  import IconDocument from '~icons/ion/document-text'
-  import IconOpenSource from '~icons/ri/open-source-fill'
-  import IconCookie from '~icons/bxs/cookie'
+  import IconLaw from "~icons/octicon/law";
+  import IconPrivacy from "~icons/ic/round-privacy-tip";
+  import IconEuro from "~icons/ic/round-euro";
+  import IconDocument from "~icons/ion/document-text";
+  import IconOpenSource from "~icons/ri/open-source-fill";
+  import IconCookie from "~icons/bxs/cookie";
 
   const icon_map: Record<string, typeof IconLaw> = {
     Impressum: IconLaw,
     Datenschutz: IconPrivacy,
     Spenden: IconEuro,
     Satzung: IconDocument,
-  }
+  };
 
   interface Props {
-    links: Link[]
-    social: Record<keyof typeof icon_map, string>
+    links: Link[];
+    social: Record<keyof typeof icon_map, string>;
   }
 
-  let { links, social }: Props = $props()
+  let { links, social }: Props = $props();
 </script>
 
 <footer>
@@ -42,7 +42,8 @@
   <span>
     {@html $microcopy?.footer?.site}
     <a href={repository}>
-      <IconOpenSource style="display: inline; vertical-align: -0.125em; padding-right: 3pt;" />open source
+      <IconOpenSource style="display: inline; vertical-align: -0.125em; padding-right: 3pt;" />open
+      source
     </a>
     {@html $microcopy?.footer?.uses}
     <IconCookie style="display: inline; vertical-align: -0.125em;" />

@@ -1,13 +1,13 @@
 <script lang="ts">
-  export let id: string
-  export let value = false // whether the toggle is on or off
-  export let required = false
-  export let input: HTMLInputElement | undefined = undefined
+  export let id: string;
+  export let value = false; // whether the toggle is on or off
+  export let required = false;
+  export let input: HTMLInputElement | undefined = undefined;
 
   function handleKeydown(event: KeyboardEvent) {
     if (event.key === `Enter`) {
-      value = !value
-      event.preventDefault()
+      value = !value;
+      event.preventDefault();
     }
   }
 </script>
@@ -48,7 +48,7 @@
     width: 1em;
   }
   input + span::after {
-    content: '';
+    content: "";
     display: block;
     height: 1.2em;
     width: 1.2em;

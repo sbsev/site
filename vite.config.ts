@@ -1,14 +1,14 @@
-import yaml from '@rollup/plugin-yaml'
-import { sveltekit } from '@sveltejs/kit/vite'
-import Icons from 'unplugin-icons/vite'
-import { defineConfig } from 'vite-plus'
+import yaml from "@rollup/plugin-yaml";
+import { sveltekit } from "@sveltejs/kit/vite";
+import Icons from "unplugin-icons/vite";
+import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   plugins: [
     sveltekit(),
     yaml(),
     Icons({
-      compiler: 'svelte',
+      compiler: "svelte",
       // Match @iconify/svelte default sizing (1em = text size)
       scale: 1,
     }),
@@ -33,7 +33,7 @@ export default defineConfig({
   lint: {
     ignorePatterns: [`**/*.svelte`, `build/**`, `.svelte-kit/**`, `scripts/**`],
     rules: {
-      'no-unused-vars': [`error`, { argsIgnorePattern: `^_`, varsIgnorePattern: `^_` }],
+      "no-unused-vars": [`error`, { argsIgnorePattern: `^_`, varsIgnorePattern: `^_` }],
     },
   },
-})
+});

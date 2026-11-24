@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { PostPreview, Social, TagList } from '$lib'
-  import type { BlogTag } from '$lib/types'
-  import { flip } from 'svelte/animate'
-  import { scale } from 'svelte/transition'
+  import { PostPreview, Social, TagList } from "$lib";
+  import type { BlogTag } from "$lib/types";
+  import { flip } from "svelte/animate";
+  import { scale } from "svelte/transition";
 
-  const { data } = $props()
-  const social = $derived(data.social as Record<string, string>)
+  const { data } = $props();
+  const social = $derived(data.social as Record<string, string>);
 
-  let active_tag: BlogTag = $state(`Alle` as BlogTag)
+  let active_tag: BlogTag = $state(`Alle` as BlogTag);
 
   const filtered_posts = $derived(
     Array.isArray(data.posts)
       ? data.posts.filter((post) => active_tag === `Alle` || post.tags.includes(active_tag))
-      : []
-  )
+      : [],
+  );
 </script>
 
 <Social {social} fixed vertical />

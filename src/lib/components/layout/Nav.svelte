@@ -1,86 +1,87 @@
 <script lang="ts">
-  import { beforeNavigate } from '$app/navigation'
-  import { page } from '$app/stores'
-  import { slide } from 'svelte/transition'
-  import type { NavLink } from '../../types'
+  import { beforeNavigate } from "$app/navigation";
+  import { page } from "$app/stores";
+  import { slide } from "svelte/transition";
+  import type { NavLink } from "../../types";
 
   // Icon imports (bundled)
-  import IconChevronExpand from '~icons/bi/chevron-expand'
-  import IconRssSquare from '~icons/fa-solid/rss-square'
-  import IconMenu from '~icons/heroicons-solid/menu'
-  import IconPlace from '~icons/ic/place'
-  import IconAlternateEmail from '~icons/ic/round-alternate-email'
-  import IconAssignmentInd from '~icons/ic/round-assignment-ind'
-  import IconPeopleCircle from '~icons/ion/people-circle'
-  import IconPlantFill from '~icons/ri/plant-fill'
-  import IconHandsHelping from '~icons/fa-solid/hands-helping'
+  import IconChevronExpand from "~icons/bi/chevron-expand";
+  import IconRssSquare from "~icons/fa-solid/rss-square";
+  import IconMenu from "~icons/heroicons-solid/menu";
+  import IconPlace from "~icons/ic/place";
+  import IconAlternateEmail from "~icons/ic/round-alternate-email";
+  import IconAssignmentInd from "~icons/ic/round-assignment-ind";
+  import IconPeopleCircle from "~icons/ion/people-circle";
+  import IconPlantFill from "~icons/ri/plant-fill";
+  import IconHandsHelping from "~icons/fa-solid/hands-helping";
 
   interface Props {
-    nav: NavLink[]
-    mobile: boolean
+    nav: NavLink[];
+    mobile: boolean;
   }
 
-  let { nav, mobile }: Props = $props()
+  let { nav, mobile }: Props = $props();
 
   // Map titles to components
-   const icon_map: Record<string, typeof IconPlantFill> = {
-     'Über Uns': IconPlantFill,
-     Standorte: IconPlace,
-     Mitmachen: IconPeopleCircle,
-     Blog: IconRssSquare,
-     Kontakt: IconAlternateEmail,
-     Internes: IconHandsHelping,
-     Anmeldung: IconAssignmentInd,
-   }
+  const icon_map: Record<string, typeof IconPlantFill> = {
+    "Über Uns": IconPlantFill,
+    Standorte: IconPlace,
+    Mitmachen: IconPeopleCircle,
+    Blog: IconRssSquare,
+    Kontakt: IconAlternateEmail,
+    Internes: IconHandsHelping,
+    Anmeldung: IconAssignmentInd,
+  };
 
-  let isOpen = $state(false)
-  let activeSubNav = $state(-1)
-  let node: HTMLElement
+  let isOpen = $state(false);
+  let activeSubNav = $state(-1);
+  let node: HTMLElement;
 
   const close = () => {
-    isOpen = false
-    activeSubNav = -1
-  }
+    isOpen = false;
+    activeSubNav = -1;
+  };
 
   const setActiveSubNav = (idx: number) => () => {
-    if (activeSubNav === idx) activeSubNav = -1
-    else activeSubNav = idx
-  }
+    if (activeSubNav === idx) activeSubNav = -1;
+    else activeSubNav = idx;
+  };
 
   const toggleSubNav = (idx: number) => () => {
-    if (activeSubNav === idx) activeSubNav = -1
-    else activeSubNav = idx
-  }
+    if (activeSubNav === idx) activeSubNav = -1;
+    else activeSubNav = idx;
+  };
 
   const isCurrent = $derived((url: string) => {
-    if (typeof window === `undefined`) return undefined
-    if (url === $page.url.pathname) return `page`
-    if (url !== `/` && $page.url.pathname.includes(url)) return `page`
-    return undefined
-  })
-  beforeNavigate(close)
+    if (typeof window === `undefined`) return undefined;
+    if (url === $page.url.pathname) return `page`;
+    if (url !== `/` && $page.url.pathname.includes(url)) return `page`;
+    return undefined;
+  });
+  beforeNavigate(close);
 
-  const crawl_links = $derived(nav.flatMap((itm) => itm?.subNav ?? []))
+  const crawl_links = $derived(nav.flatMap((itm) => itm?.subNav ?? []));
 </script>
 
 <svelte:window
   onclick={(event) => {
-    if (node && !node.contains(event.target as globalThis.Node)) close()
+    if (node && !node.contains(event.target as globalThis.Node)) close();
   }}
 />
 
 {#each crawl_links as { title, url }}
-  <a
-    href={url}
-    style="position: absolute; visibility: hidden;"
-    aria-hidden="true"
-    tabindex="-1">{title}</a
+  <a href={url} style="position: absolute; visibility: hidden;" aria-hidden="true" tabindex="-1"
+    >{title}</a
   >
 {/each}
 
 <button
   class="mobile-menu-btn"
-  onclick={(e) => { e.preventDefault(); e.stopPropagation(); isOpen = true }}
+  onclick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    isOpen = true;
+  }}
   aria-label="Navigationsmenü öffnen"
   style="grid-area: nav;"
 >
@@ -107,27 +108,21 @@
           >
             <!-- Using component from map -->
             {#if icon_map[title]}
-               {@const Icon = icon_map[title]}
-               <span style="display: inline-flex; margin: 0 5pt 0 0;">
-                 <Icon />
-               </span>
+              {@const Icon = icon_map[title]}
+              <span style="display: inline-flex; margin: 0 5pt 0 0;">
+                <Icon />
+              </span>
             {/if}
             {title}
           </a>
           {#if subNav}
-            <button
-              onclick={toggleSubNav(idx)}
-              aria-label="Untermenü {title} öffnen"
-            >
+            <button onclick={toggleSubNav(idx)} aria-label="Untermenü {title} öffnen">
               <IconChevronExpand />
             </button>
           {/if}
         </span>
         {#if subNav && activeSubNav === idx}
-          <ul
-            transition:slide
-            style="--cols: {Math.min(Math.ceil(subNav.length / 10), 4)}"
-          >
+          <ul transition:slide style="--cols: {Math.min(Math.ceil(subNav.length / 10), 4)}">
             {#each subNav as { title: subTitle, url: subUrl, spanCols, lightFont }}
               <li class:spanCols class:lightFont>
                 <a onclick={close} aria-current={isCurrent(subUrl)} href={subUrl}>

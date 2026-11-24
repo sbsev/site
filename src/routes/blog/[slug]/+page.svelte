@@ -1,29 +1,29 @@
 <script lang="ts">
-  import { Img, ToolTip } from '$lib'
-  import { onMount } from 'svelte'
+  import { Img, ToolTip } from "$lib";
+  import { onMount } from "svelte";
 
   // Icon imports (bundled at build time)
-  import IconPerson from '~icons/bi/person-circle'
-  import IconHistoryEdu from '~icons/ic/round-history-edu'
-  import IconGraduation from '~icons/fa-solid/graduation-cap'
-  import IconCalendar from '~icons/octicon/calendar'
-  import IconEye from '~icons/ic/round-remove-red-eye'
+  import IconPerson from "~icons/bi/person-circle";
+  import IconHistoryEdu from "~icons/ic/round-history-edu";
+  import IconGraduation from "~icons/fa-solid/graduation-cap";
+  import IconCalendar from "~icons/octicon/calendar";
+  import IconEye from "~icons/ic/round-remove-red-eye";
 
-  const { data } = $props()
-  let n_readers = $state(0)
+  const { data } = $props();
+  let n_readers = $state(0);
 
   // Derived values from data.post
-  const post = $derived(data.post)
-  const title = $derived(post.title)
-  const body = $derived(post.body)
-  const cover = $derived(post.cover)
-  const date = $derived(post.date)
-  const author = $derived(post.author)
-  const bio = $derived(author.bio)
-  const fieldOfStudy = $derived(author.fieldOfStudy)
-  const name = $derived(author.name)
-  const photo = $derived(author.photo)
-  const style = `padding: 0 3pt;`
+  const post = $derived(data.post);
+  const title = $derived(post.title);
+  const body = $derived(post.body);
+  const cover = $derived(post.cover);
+  const date = $derived(post.date);
+  const author = $derived(post.author);
+  const bio = $derived(author.bio);
+  const fieldOfStudy = $derived(author.fieldOfStudy);
+  const name = $derived(author.name);
+  const photo = $derived(author.photo);
+  const style = `padding: 0 3pt;`;
 
   onMount(async () => {
     const response = await fetch(
@@ -32,16 +32,16 @@
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_PLAUSIBLE_API_KEY}`,
         },
-      }
-    )
+      },
+    );
 
     if (!response.ok) {
-      throw new Error(`HTTP error ` + response.status)
+      throw new Error(`HTTP error ` + response.status);
     }
 
-    const { results } = await response.json()
-    n_readers = results.visitors.value
-  })
+    const { results } = await response.json();
+    n_readers = results.visitors.value;
+  });
 </script>
 
 <article>

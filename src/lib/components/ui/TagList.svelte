@@ -1,42 +1,42 @@
 <script lang="ts">
-  import { fade, slide } from 'svelte/transition'
-  import type { BlogTag, Post } from '../../types'
+  import { fade, slide } from "svelte/transition";
+  import type { BlogTag, Post } from "../../types";
 
   // Icon imports (bundled at build time)
-  import IconSelectAll from '~icons/ic/select-all'
-  import IconEuro from '~icons/ic/round-euro'
-  import IconPublic from '~icons/ic/public'
-  import IconGraduation from '~icons/fa-solid/graduation-cap'
-  import IconRateReview from '~icons/ic/rate-review'
-  import IconChalkboard from '~icons/fa-solid/chalkboard-teacher'
-  import IconQuestionAnswer from '~icons/ic/question-answer'
-  import IconHandshake from '~icons/fa-solid/handshake'
-  import IconEvent from '~icons/ic/event-available'
-  import IconBeach from '~icons/ic/beach-access'
-  import IconGitBranch from '~icons/bx/git-branch'
-  import IconStats from '~icons/ion/stats-chart'
-  import IconDonate from '~icons/fa-solid/donate'
-  import IconAward from '~icons/fa-solid/award'
-  import IconEarthEurope from '~icons/fa6-solid/earth-europe'
-  import IconMapLocation from '~icons/fa6-solid/map-location-dot'
-  import IconWorkshop from '~icons/grommet-icons/workshop'
-  import IconTags from '~icons/fa-solid/tags'
-  import IconClose from '~icons/ic/round-close'
-  import IconChevronExpand from '~icons/bi/chevron-expand'
+  import IconSelectAll from "~icons/ic/select-all";
+  import IconEuro from "~icons/ic/round-euro";
+  import IconPublic from "~icons/ic/public";
+  import IconGraduation from "~icons/fa-solid/graduation-cap";
+  import IconRateReview from "~icons/ic/rate-review";
+  import IconChalkboard from "~icons/fa-solid/chalkboard-teacher";
+  import IconQuestionAnswer from "~icons/ic/question-answer";
+  import IconHandshake from "~icons/fa-solid/handshake";
+  import IconEvent from "~icons/ic/event-available";
+  import IconBeach from "~icons/ic/beach-access";
+  import IconGitBranch from "~icons/bx/git-branch";
+  import IconStats from "~icons/ion/stats-chart";
+  import IconDonate from "~icons/fa-solid/donate";
+  import IconAward from "~icons/fa-solid/award";
+  import IconEarthEurope from "~icons/fa6-solid/earth-europe";
+  import IconMapLocation from "~icons/fa6-solid/map-location-dot";
+  import IconWorkshop from "~icons/grommet-icons/workshop";
+  import IconTags from "~icons/fa-solid/tags";
+  import IconClose from "~icons/ic/round-close";
+  import IconChevronExpand from "~icons/bi/chevron-expand";
 
-  export let posts: Post[]
-  export let active_tag = `Alle`
+  export let posts: Post[];
+  export let active_tag = `Alle`;
 
-  const tagCounter: Record<string, number> = { Alle: posts.length }
+  const tagCounter: Record<string, number> = { Alle: posts.length };
 
   // count tag occurrences
   for (const post of posts) {
     for (const tag of post.tags) {
-      tagCounter[tag] = (tagCounter[tag] ?? 0) + 1
+      tagCounter[tag] = (tagCounter[tag] ?? 0) + 1;
     }
   }
 
-  const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][]
+  const tagOccurrences = Object.entries(tagCounter) as [BlogTag, number][];
 
   const icons: Record<BlogTag, typeof IconSelectAll> = {
     Alle: IconSelectAll,
@@ -46,7 +46,7 @@
     Erfahrungsberichte: IconRateReview,
     Nachhilfelehrer: IconChalkboard,
     Interview: IconQuestionAnswer,
-    'Soziale Partner': IconHandshake,
+    "Soziale Partner": IconHandshake,
     Events: IconEvent,
     Freizeit: IconBeach,
     IT: IconGitBranch,
@@ -57,11 +57,11 @@
     Sonstiges: IconEarthEurope,
     Standorte: IconMapLocation,
     Workshops: IconWorkshop,
-  }
+  };
 
-  let open = false
-  let viewWidth: number
-  const style = `height: 18pt; margin-right: 5pt;`
+  let open = false;
+  let viewWidth: number;
+  const style = `height: 18pt; margin-right: 5pt;`;
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />

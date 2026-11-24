@@ -1,47 +1,47 @@
 export type Chapter = {
-  title: string
-  slug: string
+  title: string;
+  slug: string;
   coords: {
-    lat: number
-    lng: number
-  }
-  baseId: string
-  acceptsSignups: boolean
-  status: `active` | `starting` | `partner` | null
-  token: string
-}
+    lat: number;
+    lng: number;
+  };
+  baseId: string;
+  acceptsSignups: boolean;
+  status: `active` | `starting` | `partner` | null;
+  token: string;
+};
 
 export type Link = {
-  title: string
-  url: string
-}
+  title: string;
+  url: string;
+};
 
 export type NavLink = Link & {
-  subNav?: NavLink[]
-  spanCols?: boolean
-  lightFont?: boolean
-}
+  subNav?: NavLink[];
+  spanCols?: boolean;
+  lightFont?: boolean;
+};
 
 export type Page = {
-  title: string
-  slug: string
-  cover: Image
-  body: string
-  plainBody: string // for creating excerpts and search previews
-  date?: string
-  yaml?: Yaml
-  toc?: boolean
-  sys: { publishedAt: string }
-}
+  title: string;
+  slug: string;
+  cover: Image;
+  body: string;
+  plainBody: string; // for creating excerpts and search previews
+  date?: string;
+  yaml?: Yaml;
+  toc?: boolean;
+  sys: { publishedAt: string };
+};
 
 export type Author = {
-  name: string
-  bio: string
-  url: string
-  email: string
-  photo: Image
-  fieldOfStudy: string
-}
+  name: string;
+  bio: string;
+  url: string;
+  email: string;
+  photo: Image;
+  fieldOfStudy: string;
+};
 
 export const BlogTags = [
   `Alle`,
@@ -62,238 +62,236 @@ export const BlogTags = [
   `Mentoring`,
   `Auszeichnung`,
   `Workshops`,
-] as const // use const assertion to turn BlogTags into readonly tuple
+] as const; // use const assertion to turn BlogTags into readonly tuple
 
-export type BlogTag = (typeof BlogTags)[number]
+export type BlogTag = (typeof BlogTags)[number];
 
 export type Post = Page & {
-  author: Author
-  date: Date
-  tags: BlogTag[]
-  plainBody: string
-}
+  author: Author;
+  date: Date;
+  tags: BlogTag[];
+  plainBody: string;
+};
 
 export type Image = {
-  src: string
-  alt: string
-  width: number
-  height: number
-  base64: string
-  title: string
-}
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  base64: string;
+  title: string;
+};
 
 export type Yaml = {
-  [key: string]:
-    | string
-    | number
-    | Date
-    | boolean
-    | (string | number | Date | boolean)[]
-    | Yaml
-}
+  [key: string]: string | number | Date | boolean | (string | number | Date | boolean)[] | Yaml;
+};
 
 export type PressItem = {
-  title: string
-  id: string
-  img: string
-  url: string
-  date: Date
-  chapter: string
-  source: string
-}
+  title: string;
+  id: string;
+  img: string;
+  url: string;
+  date: Date;
+  chapter: string;
+  source: string;
+};
 
 // used by /lernmaterial.svelte
 export type StudyPlatform = {
-  title: string
-  id: string
-  url: string
-  img: string
-  body: string
-  tags: string[]
-}
+  title: string;
+  id: string;
+  url: string;
+  img: string;
+  body: string;
+  tags: string[];
+};
 
 // used by /faq.svelte
 export type FAQ = {
-  title: string
-  id: string
-  body: string
-  tags: string[]
-}
+  title: string;
+  id: string;
+  body: string;
+  tags: string[];
+};
 
 // used by /auszeichnungen.svelte
 export type Award = {
-  title: string
-  id: string
-  img: string
-  url: string
-  date: Date
-  prize: string
-}
+  title: string;
+  id: string;
+  img: string;
+  url: string;
+  date: Date;
+  prize: string;
+};
 
 export type Place = {
-  address: string
-  lat: number
-  lng: number
-}
+  address: string;
+  lat: number;
+  lng: number;
+};
 
 // fields allowed in student/pupil signup store (see src/stores.ts)
 export type SignupStore = {
-  agreement: StoredFormField<boolean>
-  birthDate: StoredFormField<Date>
-  birthPlace: StoredFormField<string>
-  birthYear: StoredFormField<number>
-  chapter: StoredFormField<string[]>
-  dataProtection: StoredFormField<boolean>
-  discovery: StoredFormField<string[]>
-  email: StoredFormField<string>
-  emailContact: StoredFormField<string>
-  firstName: StoredFormField<string>
-  fullName: StoredFormField<string>
-  gender: StoredFormField<string> // 'Männlich' | 'Weiblich' | 'Divers'
-  level: StoredFormField<number>
-  levels: StoredFormField<number[]>
-  nameContact: StoredFormField<string>
-  need: StoredFormField<string>
-  online: StoredFormField<boolean>
-  orgContact: StoredFormField<string>
-  phone: StoredFormField<string>
-  phoneContact: StoredFormField<string>
-  place: StoredFormField<Place>
-  places: StoredFormField<Place[]>
-  remarks: StoredFormField<string>
-  schoolType: StoredFormField<string>
-  schoolTypes: StoredFormField<string[]>
-  semester: StoredFormField<number>
-  studySubject: StoredFormField<string>
-  subjects: StoredFormField<string>
-  type: StoredFormField<`student` | `pupil`>
-}
+  agreement: StoredFormField<boolean>;
+  birthDate: StoredFormField<Date>;
+  birthPlace: StoredFormField<string>;
+  birthYear: StoredFormField<number>;
+  chapter: StoredFormField<string[]>;
+  dataProtection: StoredFormField<boolean>;
+  discovery: StoredFormField<string[]>;
+  email: StoredFormField<string>;
+  emailContact: StoredFormField<string>;
+  firstName: StoredFormField<string>;
+  fullName: StoredFormField<string>;
+  gender: StoredFormField<string>; // 'Männlich' | 'Weiblich' | 'Divers'
+  level: StoredFormField<number>;
+  levels: StoredFormField<number[]>;
+  nameContact: StoredFormField<string>;
+  need: StoredFormField<string>;
+  online: StoredFormField<boolean>;
+  orgContact: StoredFormField<string>;
+  phone: StoredFormField<string>;
+  phoneContact: StoredFormField<string>;
+  place: StoredFormField<Place>;
+  places: StoredFormField<Place[]>;
+  remarks: StoredFormField<string>;
+  schoolType: StoredFormField<string>;
+  schoolTypes: StoredFormField<string[]>;
+  semester: StoredFormField<number>;
+  studySubject: StoredFormField<string>;
+  subjects: StoredFormField<string>;
+  type: StoredFormField<`student` | `pupil`>;
+};
 
-export type StandardTypes =
-  `text` | `email` | `number` | `date` | `tel` | `checkbox`
+export type StandardTypes = `text` | `email` | `number` | `date` | `tel` | `checkbox`;
 export type CustomTypes =
-  `select` | `toggle` | `singleRange` | `doubleRange` | `placeSelect` | `radio`
-export type FormFieldType = StandardTypes | CustomTypes
+  | `select`
+  | `toggle`
+  | `singleRange`
+  | `doubleRange`
+  | `placeSelect`
+  | `radio`;
+export type FormFieldType = StandardTypes | CustomTypes;
 
 export type FormFieldProps = {
-  title: string
-  id: keyof SignupStore
-  note?: string
-  required?: boolean
-  placeholder?: string
-  min?: number
-  max?: number
-  maxSelect?: number
-  type?: FormFieldType
-  options?: string[]
-}
+  title: string;
+  id: keyof SignupStore;
+  note?: string;
+  required?: boolean;
+  placeholder?: string;
+  min?: number;
+  max?: number;
+  maxSelect?: number;
+  type?: FormFieldType;
+  options?: string[];
+};
 
 export type StoredFormField<T> = {
-  value?: T
-  error?: string | null
-  node?: HTMLLabelElement
-  required?: boolean
-}
+  value?: T;
+  error?: string | null;
+  node?: HTMLLabelElement;
+  required?: boolean;
+};
 
 export type FormSelectOptions = {
-  [key: string]: string[]
-}
+  [key: string]: string[];
+};
 
 export type FormMessages = {
-  submit: Record<`title` | `note`, string>
-  submitSuccess: Record<`title` | `note`, string>
-  submitError: Record<`title` | `note`, string>
-  errMsg: Record<`title` | `note`, string>
-}
+  submit: Record<`title` | `note`, string>;
+  submitSuccess: Record<`title` | `note`, string>;
+  submitError: Record<`title` | `note`, string>;
+  errMsg: Record<`title` | `note`, string>;
+};
 
 export type Form = {
-  fields: FormFieldProps[]
-  page: Record<`title` | `note`, string>
-  header: Record<`title` | `note`, string>
-} & FormMessages
+  fields: FormFieldProps[];
+  page: Record<`title` | `note`, string>;
+  header: Record<`title` | `note`, string>;
+} & FormMessages;
 
 // Microcopy type for internationalization/localization content
 export type Microcopy = {
-  locale?: string
-  country?: string
+  locale?: string;
+  country?: string;
   meta?: {
-    name?: string
-    description?: string
-    url?: string
-  }
+    name?: string;
+    description?: string;
+    url?: string;
+  };
   location?: {
-    register?: string
-    joinStudent?: string
-    registerStudent?: string
-    linkStudentInfo?: string
-    infoStudentButton?: string
-    joinPupil?: string
-    registerPupil?: string
-    linkPupilInfo?: string
-    infoPupilButton?: string
-    locationManagement?: string
-    mailTo?: string
-    writeMailButton?: string
-    linkLeadingInfo?: string
-    infoLeadingButton?: string
-    contact?: string
-    questions?: string
-    student?: string
-    pupil?: string
-    info?: string
-    url?: string
-    forStudents?: string
-    forPartner?: string
-    generalRequests?: string
-  }
+    register?: string;
+    joinStudent?: string;
+    registerStudent?: string;
+    linkStudentInfo?: string;
+    infoStudentButton?: string;
+    joinPupil?: string;
+    registerPupil?: string;
+    linkPupilInfo?: string;
+    infoPupilButton?: string;
+    locationManagement?: string;
+    mailTo?: string;
+    writeMailButton?: string;
+    linkLeadingInfo?: string;
+    infoLeadingButton?: string;
+    contact?: string;
+    questions?: string;
+    student?: string;
+    pupil?: string;
+    info?: string;
+    url?: string;
+    forStudents?: string;
+    forPartner?: string;
+    generalRequests?: string;
+  };
   chapterList?: {
-    locations?: string
-    inSetup?: string
-    partner?: string
-  }
+    locations?: string;
+    inSetup?: string;
+    partner?: string;
+  };
   map?: {
     location?: {
-      lng?: number
-      lat?: number
-      zoom?: number
-      minZoom?: number
-      maxZoom?: number
-    }
+      lng?: number;
+      lat?: number;
+      zoom?: number;
+      minZoom?: number;
+      maxZoom?: number;
+    };
     text?: {
-      active?: string
-      inSetup?: string
-      partner?: string
-    }
-  }
+      active?: string;
+      inSetup?: string;
+      partner?: string;
+    };
+  };
   indexPage?: {
-    title?: string
-    theme?: string
-    chooseLocation?: string
-    register?: string
-    statsLayout?: `default` | `grouped`
-    currentStatsTitle?: string
-    mediatedStatsTitle?: string
+    title?: string;
+    theme?: string;
+    chooseLocation?: string;
+    register?: string;
+    statsLayout?: `default` | `grouped`;
+    currentStatsTitle?: string;
+    mediatedStatsTitle?: string;
     boxes?: {
-      locationsNumber?: number
-      locationsName?: string
-      studentsNumber?: number
-      studentsName?: string
-      pupilsNumber?: number
-      pupilsName?: string
-      scholarshipNumber?: number
-      scholarshipName?: string
-      organizationMemberNumber?: number
-      organizationMemberName?: string
-    }
-  }
+      locationsNumber?: number;
+      locationsName?: string;
+      studentsNumber?: number;
+      studentsName?: string;
+      pupilsNumber?: number;
+      pupilsName?: string;
+      scholarshipNumber?: number;
+      scholarshipName?: string;
+      organizationMemberNumber?: number;
+      organizationMemberName?: string;
+    };
+  };
   basepage?: {
-    lastUpdated?: string
-    email?: string
-    feedback?: string
-  }
+    lastUpdated?: string;
+    email?: string;
+    feedback?: string;
+  };
   footer?: {
-    name?: string
-    site?: string
-    uses?: string
-  }
-}
+    name?: string;
+    site?: string;
+    uses?: string;
+  };
+};

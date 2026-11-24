@@ -1,32 +1,32 @@
 <script lang="ts">
-  import { tweened } from 'svelte/motion'
-  import { slide } from 'svelte/transition'
-  import type { Snippet } from 'svelte'
+  import { tweened } from "svelte/motion";
+  import { slide } from "svelte/transition";
+  import type { Snippet } from "svelte";
 
   interface Props {
-    id: string
-    active: boolean
-    title?: Snippet
-    children?: Snippet
+    id: string;
+    active: boolean;
+    title?: Snippet;
+    children?: Snippet;
   }
 
-  let { id, active = $bindable(), title: titleSnippet, children }: Props = $props()
+  let { id, active = $bindable(), title: titleSnippet, children }: Props = $props();
 
-  const duration = 200
-  const angle = tweened(180, { duration })
+  const duration = 200;
+  const angle = tweened(180, { duration });
 
-  let isOpen = $state(false)
+  let isOpen = $state(false);
 
   $effect(() => {
     if (active) {
-      toggle()
-      setTimeout(() => (active = false), 2000)
+      toggle();
+      setTimeout(() => (active = false), 2000);
     }
-  })
+  });
 
   function toggle() {
-    isOpen = !isOpen
-    angle.set(isOpen ? 0 : 180)
+    isOpen = !isOpen;
+    angle.set(isOpen ? 0 : 180);
   }
 </script>
 

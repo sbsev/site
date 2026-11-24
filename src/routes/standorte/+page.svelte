@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { BasePage, ChapterList, ChapterMap } from '$lib'
+  import { BasePage, ChapterList, ChapterMap } from "$lib";
 
-  const { data } = $props()
+  const { data } = $props();
 </script>
 
 <ChapterMap chapters={data.chapters} />

@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { untrack } from 'svelte'
-  import MultiSelect from 'svelte-multiselect'
-  import RangeSlider from 'svelte-range-slider-pips'
-  import { PlaceSelect, RadioButtons, Toggle } from '../..'
-  import { signupStore } from '../../stores'
-  import type { FormFieldType, SignupStore, Place } from '../../types'
+  import { untrack } from "svelte";
+  import MultiSelect from "svelte-multiselect";
+  import RangeSlider from "svelte-range-slider-pips";
+  import { PlaceSelect, RadioButtons, Toggle } from "../..";
+  import { signupStore } from "../../stores";
+  import type { FormFieldType, SignupStore, Place } from "../../types";
 
   interface Props {
-    title: string
-    note?: string
-    id: keyof SignupStore
-    placeholder?: string
-    options?: string[]
-    type?: FormFieldType
-    required?: boolean
-    min?: number | null
-    max?: number | null
-    maxSelect?: number | null
+    title: string;
+    note?: string;
+    id: keyof SignupStore;
+    placeholder?: string;
+    options?: string[];
+    type?: FormFieldType;
+    required?: boolean;
+    min?: number | null;
+    max?: number | null;
+    maxSelect?: number | null;
   }
 
   let {
@@ -30,67 +30,67 @@
     min = null,
     max = null,
     maxSelect = null,
-  }: Props = $props()
+  }: Props = $props();
 
-  const placeholder = $derived(propPlaceholder ?? title)
+  const placeholder = $derived(propPlaceholder ?? title);
 
-  let label: HTMLLabelElement = $state(null!)
-  let slider: HTMLDivElement = $state(null!)
+  let label: HTMLLabelElement = $state(null!);
+  let slider: HTMLDivElement = $state(null!);
 
   // Compute initial value based on type - using a function to get initial value
   const getInitialValue = () => {
     if (type === `select` || type === `placeSelect`) {
-      return maxSelect === 1 ? `` : []
+      return maxSelect === 1 ? `` : [];
     }
     if (type === `toggle` || type === `checkbox`) {
-      return false
+      return false;
     }
     if (type === `number` || type === `singleRange`) {
-      return min || 0
+      return min || 0;
     }
     if (type === `doubleRange`) {
-      return [min || 0, max || 100]
+      return [min || 0, max || 100];
     }
-    return ``
-  }
+    return ``;
+  };
 
-  let value: string | number | boolean | (string | number)[] = $state(getInitialValue())
+  let value: string | number | boolean | (string | number)[] = $state(getInitialValue());
 
   // Sync value and label to store - use untrack to avoid infinite loop
   $effect(() => {
     // Read value and label as dependencies
-    const currentValue = value
-    const currentLabel = label
+    const currentValue = value;
+    const currentLabel = label;
 
     // Write to store without reading it (untrack prevents loop)
     untrack(() => {
-      const existing = $signupStore[id]
+      const existing = $signupStore[id];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ;($signupStore[id] as any) = {
+      ($signupStore[id] as any) = {
         ...existing,
         required,
         node: currentLabel,
         value: currentValue,
-      }
-    })
-  })
+      };
+    });
+  });
 
   // Clear error when value changes
   $effect(() => {
     if (value) {
       untrack(() => {
-        if ($signupStore[id]) $signupStore[id].error = ``
-      })
+        if ($signupStore[id]) $signupStore[id].error = ``;
+      });
     }
-  })
+  });
 
   function input_type(node: HTMLInputElement, currentType: string) {
-    node.type = currentType
+    node.type = currentType;
     return {
       update(newType: string) {
-        node.type = newType
-      }
-    }
+        node.type = newType;
+      },
+    };
   }
 </script>
 
@@ -100,8 +100,12 @@
   for={id}
   class:required
   bind:this={label}
-  onclick={(e) => { if(type === `toggle`) e.preventDefault() }}
-  onkeyup={(e: KeyboardEvent) => { if(type === `toggle`) e.preventDefault() }}
+  onclick={(e) => {
+    if (type === `toggle`) e.preventDefault();
+  }}
+  onkeyup={(e: KeyboardEvent) => {
+    if (type === `toggle`) e.preventDefault();
+  }}
 >
   {@html title}
 </label>
@@ -167,7 +171,9 @@
     bind:value={value as number}
     {id}
     {placeholder}
-    onwheel={(e) => { if(type === `number`) e.currentTarget.blur() }}
+    onwheel={(e) => {
+      if (type === `number`) e.currentTarget.blur();
+    }}
     {min}
     {max}
   />
@@ -188,7 +194,7 @@
   }
   label.required::after {
     color: red;
-    content: '*';
+    content: "*";
   }
   input {
     display: block;

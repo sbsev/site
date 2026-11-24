@@ -1,16 +1,22 @@
 <script lang="ts">
-  import { microcopy } from '../../stores'
-  import type { Chapter } from '../../types'
+  import { microcopy } from "../../stores";
+  import type { Chapter } from "../../types";
 
   // Icon imports (bundled at build time)
-  import IconPlace from '~icons/ic/place'
-  import IconConstruction from '~icons/ic/round-construction'
+  import IconPlace from "~icons/ic/place";
+  import IconConstruction from "~icons/ic/round-construction";
 
-  const { chapters } = $props<{ chapters: Chapter[] }>()
+  const { chapters } = $props<{ chapters: Chapter[] }>();
 
-  const openChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.acceptsSignups) : [])
-  const startingChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `starting`) : [])
-  const partnerChapters = $derived(Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `partner`) : [])
+  const openChapters = $derived(
+    Array.isArray(chapters) ? chapters.filter((ch) => ch.acceptsSignups) : [],
+  );
+  const startingChapters = $derived(
+    Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `starting`) : [],
+  );
+  const partnerChapters = $derived(
+    Array.isArray(chapters) ? chapters.filter((ch) => ch.status == `partner`) : [],
+  );
 </script>
 
 <h1>

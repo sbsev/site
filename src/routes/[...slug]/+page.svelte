@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { BasePage } from '$lib'
+  import { BasePage } from "$lib";
 
-  export let data
+  export let data;
 </script>
 
 <BasePage page={data.page} />

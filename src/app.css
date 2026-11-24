@@ -238,7 +238,7 @@ section.green a {
 }
 
 section:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -314,12 +314,12 @@ p > :is(picture + em, a + em) {
 }
 
 /* heading links inserted by custom heading renderer in src/utils/marked.ts */
-:where(h2, h3, h4, h5, h6) a[aria-hidden='true'] {
+:where(h2, h3, h4, h5, h6) a[aria-hidden="true"] {
   transition: 0.3s;
   margin-left: 4pt;
   opacity: 0;
 }
 
-:where(h2, h3, h4, h5, h6):hover a[aria-hidden='true'] {
+:where(h2, h3, h4, h5, h6):hover a[aria-hidden="true"] {
   opacity: 1;
 }

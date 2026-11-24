@@ -1,54 +1,54 @@
 <script lang="ts">
-  import { CircleSpinner, FormField, Modal } from '$lib'
-  import { signup_form_submit_handler } from '$lib/airtable'
-  import { signupStore } from '$lib/stores'
-  import type { FormFieldProps } from '$lib/types'
-  import IconPlantFill from '~icons/ri/plant-fill'
+  import { CircleSpinner, FormField, Modal } from "$lib";
+  import { signup_form_submit_handler } from "$lib/airtable";
+  import { signupStore } from "$lib/stores";
+  import type { FormFieldProps } from "$lib/types";
+  import IconPlantFill from "~icons/ri/plant-fill";
 
-  const { data } = $props()
-  const chapters = $derived(data.chapters)
-  const form = $derived(data.form)
+  const { data } = $props();
+  const chapters = $derived(data.chapters);
+  const form = $derived(data.form);
 
   // Add debugging and fallback
   $effect(() => {
     if (!form || !form.header) {
-      console.error(`Form data is missing or incomplete:`, { data, form })
+      console.error(`Form data is missing or incomplete:`, { data, form });
     }
-  })
+  });
 
-  let success = $state(false)
-  let error: Error | undefined = $state(undefined)
-  let isSubmitting = $state(false)
-  const modalOpen = $derived(Boolean(error))
+  let success = $state(false);
+  let error: Error | undefined = $state(undefined);
+  let isSubmitting = $state(false);
+  const modalOpen = $derived(Boolean(error));
 
   async function submit(event: Event) {
-    event.preventDefault()
-    isSubmitting = true
+    event.preventDefault();
+    isSubmitting = true;
 
     try {
-      $signupStore.type = { value: `student` }
+      $signupStore.type = { value: `student` };
 
       // Ensure form fields exist before mapping
       if (!form || !form.fields) {
-        console.error(`Form fields not available:`, { form })
-        error = new Error(`Form configuration is missing`)
-        return
+        console.error(`Form fields not available:`, { form });
+        error = new Error(`Form configuration is missing`);
+        return;
       }
 
-      const field_ids_to_validate = form.fields.map((field: FormFieldProps) => field.id) // list of form fields to validate
+      const field_ids_to_validate = form.fields.map((field: FormFieldProps) => field.id); // list of form fields to validate
 
       const response = await signup_form_submit_handler(
         field_ids_to_validate,
         chapters,
-        form.errMsg || {}
-      )
-      if (response.success) success = true
-      error = response.error
+        form.errMsg || {},
+      );
+      if (response.success) success = true;
+      error = response.error;
     } catch (submitError) {
-      console.error(`Submit error:`, submitError)
-      error = submitError as Error
+      console.error(`Submit error:`, submitError);
+      error = submitError as Error;
     } finally {
-      isSubmitting = false
+      isSubmitting = false;
     }
   }
 </script>
@@ -89,7 +89,9 @@
 {:else}
   <div>
     <h1>Loading form...</h1>
-    <p>Please wait while the form loads. If this persists, there may be an issue with the form data.</p>
+    <p>
+      Please wait while the form loads. If this persists, there may be an issue with the form data.
+    </p>
   </div>
 {/if}
 {#if modalOpen}
@@ -112,7 +114,7 @@
     margin: 2em auto;
     padding: 1em;
   }
-  button[type='submit'] {
+  button[type="submit"] {
     margin: 1em auto;
     display: block;
     transition: 0.3s;
@@ -122,10 +124,10 @@
     font-size: 1.2em;
     border: 1pt solid transparent;
   }
-  button[type='submit']:focus {
+  button[type="submit"]:focus {
     border: 1pt solid var(--light-blue);
   }
-  button[type='submit']:disabled {
+  button[type="submit"]:disabled {
     cursor: default;
   }
   section {

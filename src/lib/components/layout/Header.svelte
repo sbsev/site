@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { browser } from '$app/environment'
-  import Nav from './Nav.svelte'
-  import ThemeSwitcher from '../ui/ThemeSwitcher.svelte'
-  import type { NavLink } from '../../types'
+  import { browser } from "$app/environment";
+  import Nav from "./Nav.svelte";
+  import ThemeSwitcher from "../ui/ThemeSwitcher.svelte";
+  import type { NavLink } from "../../types";
 
   interface Props {
-    nav: NavLink[]
-    breakpoint?: number
+    nav: NavLink[];
+    breakpoint?: number;
   }
 
-  const props: Props = $props()
-  const breakpoint = $derived(props.breakpoint ?? 1100)
+  const props: Props = $props();
+  const breakpoint = $derived(props.breakpoint ?? 1100);
 
   // Only used for JavaScript behavior (mouse events in Nav), not for CSS layout
   // CSS media queries handle the visual layout, so no flash on initial load
-  let viewWidth = $state(browser ? window.innerWidth : Infinity)
-  const mobile = $derived(viewWidth < breakpoint)
+  let viewWidth = $state(browser ? window.innerWidth : Infinity);
+  const mobile = $derived(viewWidth < breakpoint);
 </script>
 
 <svelte:window bind:innerWidth={viewWidth} />
@@ -60,7 +60,7 @@
       gap: 5vw;
       display: grid;
       grid-template-columns: auto 1fr auto auto;
-      grid-template-areas: 'nav logo colormode search';
+      grid-template-areas: "nav logo colormode search";
     }
   }
 </style>

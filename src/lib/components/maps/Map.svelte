@@ -1,26 +1,26 @@
 <script lang="ts">
-  import type { Map as MapboxMap } from 'mapbox-gl'
-  import 'mapbox-gl/dist/mapbox-gl.css'
-  import { onMount } from 'svelte'
-  import { microcopy } from '../../stores'
+  import type { Map as MapboxMap } from "mapbox-gl";
+  import "mapbox-gl/dist/mapbox-gl.css";
+  import { onMount } from "svelte";
+  import { microcopy } from "../../stores";
 
   type MapMarker = {
-    lng: number
-    lat: number
-    title: string
-    url?: string
-    classes?: string[]
-  }
+    lng: number;
+    lat: number;
+    title: string;
+    url?: string;
+    classes?: string[];
+  };
 
   interface Props {
-    map?: MapboxMap | null
-    markers?: MapMarker[]
-    css?: string
-    lng?: number
-    lat?: number
-    zoom?: number
-    minZoom?: number
-    maxZoom?: number
+    map?: MapboxMap | null;
+    markers?: MapMarker[];
+    css?: string;
+    lng?: number;
+    lat?: number;
+    zoom?: number;
+    minZoom?: number;
+    maxZoom?: number;
   }
 
   let {
@@ -32,31 +32,31 @@
     zoom: propZoom,
     minZoom: propMinZoom,
     maxZoom: propMaxZoom,
-  }: Props = $props()
+  }: Props = $props();
 
   // Use props if provided, otherwise fall back to store, then defaults
   const getLocation = () => {
-    const storeLoc = $microcopy?.map?.location
+    const storeLoc = $microcopy?.map?.location;
     return {
       lng: propLng ?? storeLoc?.lng ?? 10,
       lat: propLat ?? storeLoc?.lat ?? 51.3,
       zoom: propZoom ?? storeLoc?.zoom ?? 5.05,
       minZoom: propMinZoom ?? storeLoc?.minZoom ?? 4,
       maxZoom: propMaxZoom ?? storeLoc?.maxZoom ?? 10,
-    }
-  }
+    };
+  };
 
-  const { lng, lat, zoom, minZoom, maxZoom } = getLocation()
+  const { lng, lat, zoom, minZoom, maxZoom } = getLocation();
 
-  let map_div: HTMLDivElement
+  let map_div: HTMLDivElement;
 
   onMount(() => {
-    let mounted = true
-    let mapInstance: MapboxMap | undefined
+    let mounted = true;
+    let mapInstance: MapboxMap | undefined;
 
     async function mountMap() {
-      const { default: mapboxgl } = await import(`mapbox-gl`)
-      if (!mounted) return
+      const { default: mapboxgl } = await import(`mapbox-gl`);
+      if (!mounted) return;
 
       const instance = new mapboxgl.Map({
         accessToken: import.meta.env.VITE_MAPBOX_PUBLIC_KEY,
@@ -67,27 +67,29 @@
         zoom,
         minZoom,
         maxZoom,
-      })
-      map = mapInstance = instance
-      instance.on(`load`, () => instance.resize())
+      });
+      map = mapInstance = instance;
+      instance.on(`load`, () => instance.resize());
 
       // Sort north to south so southern markers have a higher stacking order.
       for (const { lng, lat, title, url, classes } of [...markers].sort((a, b) => b.lat - a.lat)) {
-        const node = url ? Object.assign(document.createElement(`a`), { href: url }) : document.createElement(`span`)
-        node.innerHTML = title
-        if (classes?.length) node.classList.add(...classes)
+        const node = url
+          ? Object.assign(document.createElement(`a`), { href: url })
+          : document.createElement(`span`);
+        node.innerHTML = title;
+        if (classes?.length) node.classList.add(...classes);
         new mapboxgl.Marker(node, { anchor: `bottom`, offset: [0, -11] })
           .setLngLat([lng, lat])
-          .addTo(instance)
+          .addTo(instance);
       }
     }
 
-    mountMap().catch((error) => console.error(`Could not load the map.`, error))
+    mountMap().catch((error) => console.error(`Could not load the map.`, error));
     return () => {
-      mounted = false
-      mapInstance?.remove()
-    }
-  })
+      mounted = false;
+      mapInstance?.remove();
+    };
+  });
 </script>
 
 <div bind:this={map_div} style={css}></div>
@@ -119,7 +121,7 @@
     background-color: var(--blue);
   }
   :global(a.chapter::after) {
-    content: '';
+    content: "";
     position: absolute;
     left: 50%;
     top: 100%;

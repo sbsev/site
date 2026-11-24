@@ -18,17 +18,16 @@
 
     <!-- Blocking script to prevent theme flash - must run before page renders -->
     <script>
-      ;(function () {
-        var theme = localStorage.getItem('color-mode') || 'system'
-        document.documentElement.setAttribute('data-theme', theme)
+      (function () {
+        var theme = localStorage.getItem("color-mode") || "system";
+        document.documentElement.setAttribute("data-theme", theme);
         if (
-          theme === 'dark' ||
-          (theme === 'system' &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches)
+          theme === "dark" ||
+          (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
         ) {
-          document.documentElement.classList.add('dark')
+          document.documentElement.classList.add("dark");
         }
-      })()
+      })();
     </script>
 
     <!-- required for triggering custom events in signup form -->
@@ -36,8 +35,8 @@
       window.plausible =
         window.plausible ||
         function () {
-          ;(window.plausible.q = window.plausible.q || []).push(arguments)
-        }
+          (window.plausible.q = window.plausible.q || []).push(arguments);
+        };
     </script>
 
     %sveltekit.head%

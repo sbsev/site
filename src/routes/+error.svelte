@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { dev } from '$app/environment'
-  import { page } from '$app/stores'
+  import { dev } from "$app/environment";
+  import { page } from "$app/stores";
 </script>
 
 <svelte:head>

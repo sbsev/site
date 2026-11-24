@@ -1,29 +1,29 @@
 <script lang="ts">
-  import { Collapsible } from '$lib'
-  import type { FAQ } from '$lib/types'
-  import { flip } from 'svelte/animate'
-  import { scale } from 'svelte/transition'
+  import { Collapsible } from "$lib";
+  import type { FAQ } from "$lib/types";
+  import { flip } from "svelte/animate";
+  import { scale } from "svelte/transition";
 
   // Icon imports (bundled at build time)
-  import IconHandsHelping from '~icons/fa-solid/hands-helping'
-  import IconChalkboard from '~icons/fa-solid/chalkboard-teacher'
-  import IconSupportAgent from '~icons/ic/round-support-agent'
-  import IconSelectAll from '~icons/ic/select-all'
-  import IconFilterFrames from '~icons/ic/filter-frames'
-  import IconExit from '~icons/ic/exit-to-app'
-  import IconMisc from '~icons/ic/round-miscellaneous-services'
-  import IconPrivacy from '~icons/ic/round-privacy-tip'
-  import IconStorefront from '~icons/ic/round-storefront'
-  import IconInsurance from '~icons/map/insurance-agency'
-  import IconGroup from '~icons/ic/round-group'
-  import IconAssignment from '~icons/ic/round-assignment-ind'
-  import IconTags from '~icons/fa-solid/tags'
+  import IconHandsHelping from "~icons/fa-solid/hands-helping";
+  import IconChalkboard from "~icons/fa-solid/chalkboard-teacher";
+  import IconSupportAgent from "~icons/ic/round-support-agent";
+  import IconSelectAll from "~icons/ic/select-all";
+  import IconFilterFrames from "~icons/ic/filter-frames";
+  import IconExit from "~icons/ic/exit-to-app";
+  import IconMisc from "~icons/ic/round-miscellaneous-services";
+  import IconPrivacy from "~icons/ic/round-privacy-tip";
+  import IconStorefront from "~icons/ic/round-storefront";
+  import IconInsurance from "~icons/map/insurance-agency";
+  import IconGroup from "~icons/ic/round-group";
+  import IconAssignment from "~icons/ic/round-assignment-ind";
+  import IconTags from "~icons/fa-solid/tags";
 
-  const { data } = $props()
-  const faqs = $derived(data.faqs as FAQ[])
+  const { data } = $props();
+  const faqs = $derived(data.faqs as FAQ[]);
 
   const icons: Record<string, typeof IconSelectAll> = {
-    'Rund ums Engagement': IconHandsHelping,
+    "Rund ums Engagement": IconHandsHelping,
     Nachhilfe: IconChalkboard,
     Vermittlung: IconSupportAgent,
     Alle: IconSelectAll,
@@ -31,34 +31,34 @@
     Vereinsaustritt: IconExit,
     Sonstiges: IconMisc,
     Datenschutz: IconPrivacy,
-    'Tipps für Standorte': IconStorefront,
+    "Tipps für Standorte": IconStorefront,
     Versicherung: IconInsurance,
     Mitgliederversammlung: IconGroup,
     Führungszeugnis: IconAssignment,
-  }
+  };
 
-  let active_tag = $state(`Alle`)
-  const email = `info@studytutors.de`
-  let hash = $state(typeof window !== `undefined` ? window.location.hash.slice(1) : ``)
+  let active_tag = $state(`Alle`);
+  const email = `info@studytutors.de`;
+  let hash = $state(typeof window !== `undefined` ? window.location.hash.slice(1) : ``);
 
   const filteredFaqs = $derived(
     Array.isArray(faqs)
       ? faqs.filter((faq) => active_tag === `Alle` || faq.tags.includes(active_tag))
-      : []
-  )
+      : [],
+  );
 
   // count tag occurrences
   const tags = $derived(
     Array.isArray(faqs)
       ? faqs.reduce(
-        (obj: Record<string, number>, faq) => {
-          faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1))
-          return obj
-        },
-        { Alle: faqs.length }
-      )
-      : { Alle: 0 }
-  )
+          (obj: Record<string, number>, faq) => {
+            faq.tags.forEach((tag) => (obj[tag] = obj[tag] ? obj[tag] + 1 : 1));
+            return obj;
+          },
+          { Alle: faqs.length },
+        )
+      : { Alle: 0 },
+  );
 </script>
 
 <!-- used to briefly flash an FAQ as active when it's hash is found in the URL -->
