@@ -1,5 +1,4 @@
 <script lang="ts">
-  import mapboxgl from 'mapbox-gl'
   import type { Map as MapboxMap } from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
@@ -12,8 +11,6 @@
     url?: string
     classes?: string[]
   }
-
-  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_PUBLIC_KEY
 
   interface Props {
     map?: MapboxMap | null
@@ -53,45 +50,42 @@
 
   let map_div: HTMLDivElement
 
-  // sort markers from north to south so southern makers have higher z-index
-  $effect(() => {
-    if (markers.length > 0) {
-      markers = markers.sort((m1, m2) => m2.lat - m1.lat)
-    }
-  })
-
   onMount(() => {
-    if (!map_div) return
+    let mounted = true
+    let mapInstance: MapboxMap | undefined
 
-    const mapInstance = new mapboxgl.Map({
-      cooperativeGestures: true,
-      container: map_div,
-      style: `mapbox://styles/mapbox/outdoors-v11?optimize=true`,
-      center: [lng, lat],
-      zoom,
-      minZoom,
-      maxZoom,
-    })
+    async function mountMap() {
+      const { default: mapboxgl } = await import(`mapbox-gl`)
+      if (!mounted) return
 
-    map = mapInstance
+      const instance = new mapboxgl.Map({
+        accessToken: import.meta.env.VITE_MAPBOX_PUBLIC_KEY,
+        cooperativeGestures: true,
+        container: map_div,
+        style: `mapbox://styles/mapbox/outdoors-v11?optimize=true`,
+        center: [lng, lat],
+        zoom,
+        minZoom,
+        maxZoom,
+      })
+      map = mapInstance = instance
+      instance.on(`load`, () => instance.resize())
 
-    mapInstance.on(`load`, () => mapInstance.resize()) // ensure map takes up full available width
-
-    for (const { lng, lat, title, url, classes } of markers) {
-      if (url) {
-        const node = document.createElement(`a`)
-        node.innerHTML = title
-        node.href = url
-        if (classes?.length) node.classList.add(...classes)
-        const marker = new mapboxgl.Marker(node, { anchor: `bottom`, offset: [0, -11] })
-        marker.setLngLat([lng, lat]).addTo(mapInstance)
-      } else {
-        const node = document.createElement(`span`)
+      // Sort north to south so southern markers have a higher stacking order.
+      for (const { lng, lat, title, url, classes } of [...markers].sort((a, b) => b.lat - a.lat)) {
+        const node = url ? Object.assign(document.createElement(`a`), { href: url }) : document.createElement(`span`)
         node.innerHTML = title
         if (classes?.length) node.classList.add(...classes)
-        const marker = new mapboxgl.Marker(node, { anchor: `bottom`, offset: [0, -11] })
-        marker.setLngLat([lng, lat]).addTo(mapInstance)
+        new mapboxgl.Marker(node, { anchor: `bottom`, offset: [0, -11] })
+          .setLngLat([lng, lat])
+          .addTo(instance)
       }
+    }
+
+    mountMap().catch((error) => console.error(`Could not load the map.`, error))
+    return () => {
+      mounted = false
+      mapInstance?.remove()
     }
   })
 </script>

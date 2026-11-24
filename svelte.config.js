@@ -10,22 +10,16 @@ export default {
 
     prerender: {
       handleMissingId: `warn`,
-      handleHttpError: ({ path, referrer }) => {
-        // Provide a clear, actionable error message for content editors
-        const errorMsg = `
-════════════════════════════════════════════════════════════════════
-BUILD FAILED: Broken link detected!
-
-  ❌ Page not found: ${path}
-  📍 Linked from: ${referrer}
-
-  This usually means a page in Contentful links to "${path}"
-  but that page doesn't exist. Please check Contentful and either:
-    1. Create the missing page at "${path}", or
-    2. Remove/fix the link on the "${referrer}" page
-
-════════════════════════════════════════════════════════════════════`
-        throw new Error(errorMsg)
+      handleHttpError: ({ status, path, referrer, message }) => {
+        const source = referrer ? ` (linked from ${referrer})` : ``
+        if (status === 404) {
+          throw new Error(
+            `Prerender could not find ${path}${source} (HTTP 404). Check that the page is published in Contentful and that the link matches its slug.`,
+          )
+        }
+        throw new Error(
+          `Prerender failed for ${path}${source} (HTTP ${status}). ${message}`,
+        )
       },
     },
 

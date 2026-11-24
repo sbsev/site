@@ -56,6 +56,22 @@ Running this site locally requires [`git`](https://git-scm.com) and [`pnpm`](htt
    pnpm dev
    ```
 
+## Chapter settings in Contentful
+
+- `showInNav` includes a chapter in the website's chapter collection. This also controls whether the map, location lists, and signup forms can see it. A published location page can still be reached directly.
+- `status` is `active`, `starting`, or `partner`. It sets the map marker style and the setup or partner grouping in the location list. Partner entries are hidden from the navigation.
+- `acceptsSignups` controls whether visitors can select the chapter in either signup form. An eligible chapter's location page also shows registration buttons unless its page YAML sets `showSignupButtons: false`.
+- Contacts can be shown or hidden independently with `showContact: true` or `showContact: false` in the location page YAML. When omitted, the page keeps the legacy behavior of hiding contacts if `showSignupButtons` is `false`.
+
+To change one chapter's address, open its **Page** entry in Contentful (for example, the entry with slug `standorte/wien`) and add the address to the existing YAML:
+
+```yaml
+contactEmails:
+  student: studierende.wien@studytutors.at
+```
+
+Use `student`, `pupil`, or `info` for the relevant contact. Omitted addresses still use the defaults from `smallTexts.location`. Publish the entry and rebuild the static site.
+
 ## Deploy
 
 To publish this site to netlify:

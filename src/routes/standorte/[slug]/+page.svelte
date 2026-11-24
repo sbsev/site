@@ -10,15 +10,18 @@
 
   const { data } = $props()
   const page = $derived(data.page)
-  const slug = $derived(data.slug)
+  const location = $derived($microcopy?.location)
+  const contactLabels = $derived({
+    student: { label: location?.forStudents, color: `blue` },
+    pupil: { label: location?.forPartner, color: `green` },
+    info: { label: location?.generalRequests, color: `orange` },
+  })
 
   const style = `margin-right: 3pt;`
 </script>
 
 <BasePage {page}>
-  <!-- Buttons at the end of the chapter pages to contact the different chapter manager by mail
-  showSignupButtons should be set false when chapter is still in setup -->
-  {#if page?.yaml?.showSignupButtons !== false}
+  {#if data.showSignupButtons}
     <h2 style="text-align: center; margin-top: 2em;">{$microcopy?.location?.register}</h2>
     <section>
       <span>
@@ -41,9 +44,11 @@
       </span>
       <span>
         {$microcopy?.location?.locationManagement}
-        <a href="mailto:info.{slug}{$microcopy?.location?.mailTo}" class="btn orange">
-          <IconEmail {style} />{$microcopy?.location?.writeMailButton}
-        </a>
+        {#if data.managementLink}
+          <a href={data.managementLink} class="btn orange">
+            <IconEmail {style} />{$microcopy?.location?.writeMailButton}
+          </a>
+        {/if}
         <a href={$microcopy?.location?.linkLeadingInfo} class="btn orange stroke">
           <IconInfo style={style + `margin-right: 6pt;`} />{$microcopy?.location?.infoLeadingButton}</a
         >
@@ -52,43 +57,21 @@
   {/if}
 
   {#snippet afterBody()}
-    {#if page?.yaml?.showSignupButtons !== false}
-      <h2 id="kontakt">{$microcopy?.location?.contact}</h2>
-      <p>{$microcopy?.location?.questions}</p>
+    {#if data.showContact && data.contactEmails.some(({ address }) => address)}
+      <h2 id="kontakt">{location?.contact}</h2>
+      <p>{location?.questions}</p>
       <ul class="contact">
-        <li>
-          <a
-            href="mailto:{$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}"
-            title="{$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}"
-            class="btn blue"
-          >
-            <IconEmail style="margin: 0 3pt 0 0;" />
-            {$microcopy?.location?.student}.{slug}@{$microcopy?.location?.url}
-          </a>
-          {$microcopy?.location?.forStudents}
-        </li>
-        <li>
-          <a
-            href="mailto:{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
-            title="{$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}"
-            class="btn green"
-          >
-            <IconEmail style="margin: 0 3pt 0 0;" />
-            {$microcopy?.location?.pupil}.{slug}@{$microcopy?.location?.url}
-          </a>
-          {$microcopy?.location?.forPartner}
-        </li>
-        <li>
-          <a
-            href="mailto:{$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}"
-            title="{$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}"
-            class="btn orange"
-          >
-            <IconEmail style="margin: 0 3pt 0 0;" />
-            {$microcopy?.location?.info}.{slug}@{$microcopy?.location?.url}
-          </a>
-          {$microcopy?.location?.generalRequests}
-        </li>
+        {#each data.contactEmails as { kind, address } (kind)}
+          {#if address}
+            <li>
+              <a href="mailto:{address}" title={address} class="btn {contactLabels[kind].color}">
+                <IconEmail style="margin: 0 3pt 0 0;" />
+                {address}
+              </a>
+              {contactLabels[kind].label}
+            </li>
+          {/if}
+        {/each}
       </ul>
     {/if}
   {/snippet}

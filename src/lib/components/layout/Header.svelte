@@ -10,11 +10,11 @@
   }
 
   const props: Props = $props()
-  const breakpoint = props.breakpoint ?? 1100
+  const breakpoint = $derived(props.breakpoint ?? 1100)
 
   // Only used for JavaScript behavior (mouse events in Nav), not for CSS layout
   // CSS media queries handle the visual layout, so no flash on initial load
-  let viewWidth = $state(browser ? window.innerWidth : breakpoint + 1)
+  let viewWidth = $state(browser ? window.innerWidth : Infinity)
   const mobile = $derived(viewWidth < breakpoint)
 </script>
 

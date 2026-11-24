@@ -4,7 +4,6 @@
   import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
-  import mapboxgl from 'mapbox-gl'
   import 'mapbox-gl/dist/mapbox-gl.css'
   import { onMount } from 'svelte'
   import { microcopy } from '../../stores'
@@ -38,12 +37,10 @@
   }
 
   onMount(() => {
-    mapboxgl.accessToken = mapboxKey
-
     // Check if div is available
     if (!div) return
 
-    let geocoder = new MapboxGeocoder({
+    const geocoder = new MapboxGeocoder({
       accessToken: mapboxKey,
       countries: $microcopy?.country,
       language: $microcopy?.locale,

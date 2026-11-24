@@ -1,4 +1,3 @@
-import { error as sveltekit_error } from '@sveltejs/kit'
 import yaml from 'js-yaml'
 import { createMarked } from '../utils/marked'
 import type { Chapter, Form, Page, Post } from './types'
@@ -35,27 +34,35 @@ export async function airtable_fetch(
 export async function contentful_fetch(
   query: string,
   customFetch: typeof fetch = fetch,
+  operation = `content`,
 ) {
   const token = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN
   const id = import.meta.env.VITE_CONTENTFUL_SPACE_ID
 
   if (!token || !id) {
-    throw `Missing Contentful access token and/or space ID. Please add to .env file`
+    throw new Error(`Missing Contentful access token and/or space ID. Check the build environment.`)
   }
 
   const ctfGqlUrl = `https://graphql.contentful.com/content/v1/spaces`
-  const ctfGraphqlEndPoint = `${ctfGqlUrl}/${id}?access_token=${token}`
+  let response: Response
+  try {
+    response = await customFetch(`${ctfGqlUrl}/${id}`, {
+      method: `POST`,
+      headers: { 'Content-Type': `application/json`, Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ query }),
+    })
+  } catch (cause) {
+    throw new Error(`Could not reach Contentful while loading ${operation}.`, { cause })
+  }
 
-  const response = await customFetch(ctfGraphqlEndPoint, {
-    method: `POST`,
-    headers: { 'Content-Type': `application/json` },
-    body: JSON.stringify({ query }),
-  })
+  if (!response.ok) {
+    throw new Error(`Contentful returned HTTP ${response.status} while loading ${operation}.`)
+  }
 
-  const { data, error } = await response.json()
-
-  if (error) throw error
-  if (!data) throw sveltekit_error(404, `No data returned from Contentful`)
+  const { data, errors } = await response.json()
+  if (errors?.length || !data) {
+    throw new Error(`Contentful could not load ${operation}: ${errors?.[0]?.message ?? `no data returned`}`)
+  }
   return data
 }
 
@@ -79,13 +86,8 @@ const chapters_query = `{
 export async function fetch_chapters(
   customFetch: typeof fetch = fetch,
 ): Promise<Chapter[]> {
-  try {
-    const { chapters } = await contentful_fetch(chapters_query, customFetch)
-    return chapters?.items?.map(prefixSlug(`/standorte/`)) || []
-  } catch (error) {
-    console.error(`Error fetching chapters:`, error)
-    return []
-  }
+  const { chapters } = await contentful_fetch(chapters_query, customFetch, `chapters`)
+  return chapters.items.map(prefixSlug(`/standorte/`))
 }
 
 export async function base64_thumbnail(
@@ -166,7 +168,7 @@ export async function fetch_page(
 
   if (slug.endsWith(`/`) && slug !== `/`) slug = slug.slice(0, -1)
 
-  const data = await contentful_fetch(page_query(slug), customFetch)
+  const data = await contentful_fetch(page_query(slug), customFetch, `page ${slug}`)
   const page = data?.pages?.items[0]
   if (!page) return null
 
@@ -250,9 +252,18 @@ export async function fetch_post(slug: string): Promise<Post> {
 export async function fetch_posts(
   customFetch: typeof fetch = fetch,
 ): Promise<Post[]> {
-  const data = await contentful_fetch(posts_query, customFetch)
+  const data = await contentful_fetch(posts_query, customFetch, `blog posts`)
   const posts = data?.posts?.items
   return await Promise.all(posts.map(process_post))
+}
+
+export async function fetch_post_slugs(): Promise<string[]> {
+  const { postCollection } = await contentful_fetch(
+    `{ postCollection { items { slug } } }`,
+    fetch,
+    `blog post slugs`,
+  )
+  return postCollection.items.map(({ slug }: { slug: string }) => slug)
 }
 
 const yaml_query = (title: string) => `{
@@ -268,8 +279,18 @@ export async function fetch_yaml(
   customFetch: typeof fetch = fetch,
 ) {
   if (!title) throw `fetch_yaml() requires a title, got '${title}'`
-  const { yml } = await contentful_fetch(yaml_query(title), customFetch)
-  return yaml.load(yml?.items[0]?.data)
+  const { yml } = await contentful_fetch(yaml_query(title), customFetch, `YAML entry ${title}`)
+  const source = yml?.items[0]?.data
+  if (typeof source !== `string` || !source.trim()) {
+    throw new Error(`Contentful YAML entry ${title} is missing or empty.`)
+  }
+  try {
+    const value = yaml.load(source)
+    if (value == null) throw new Error(`Empty YAML document`)
+    return value
+  } catch (cause) {
+    throw new Error(`Could not read Contentful YAML entry ${title}.`, { cause })
+  }
 }
 
 function title_to_slug(itm: Record<string, unknown> & { title: string }) {

@@ -3,7 +3,6 @@
   import IconDelete from '~icons/ic/delete'
   import type { Result } from '@mapbox/mapbox-gl-geocoder'
   import type { Map as MapBoxMap, Marker } from 'mapbox-gl'
-  import mapbox from 'mapbox-gl'
   import { Geocoder, Map as MapComponent } from '../..'
   import type { Place } from '../../types'
 
@@ -24,7 +23,7 @@
   let markers: Marker[] = $state([])
   let map: MapBoxMap | null = $state(null)
 
-  function selectHandler(place: Result) {
+  async function selectHandler(place: Result) {
     if (!place.center) {
       window.alert(
         `Für '${place.text}' konnte keine Adresse gefunden werden! Bitte versuche einen anderen Ort anzugeben.`
@@ -37,6 +36,8 @@
     value = [...(value ?? []), { address: place.place_name, lng, lat }]
 
     if (map) {
+      const { default: mapbox } = await import(`mapbox-gl`)
+      if (!map) return
       const marker = new mapbox.Marker()
       marker.setLngLat([lng, lat]).addTo(map)
 
