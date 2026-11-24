@@ -22,7 +22,7 @@ This site is built with [Svelte](https://github.com/sveltejs/svelte) and [Conten
 
 ## Setup
 
-Running this site locally requires [`git`](https://git-scm.com) and [`pnpm`](https://pnpm.io) (or [`npm`](https://npmjs.com)). With those installed, do:
+Running this site locally requires [`git`](https://git-scm.com), Node.js (see `.nvmrc`), and [`pnpm`](https://pnpm.io). With those installed, do:
 
 1. Clone the repo and change into its directory.
 
@@ -55,6 +55,8 @@ Running this site locally requires [`git`](https://git-scm.com) and [`pnpm`](htt
    ```sh
    pnpm dev
    ```
+
+Vite+ is installed with the project, so you can run its commands through pnpm without a global `vp` installation. Use `pnpm fmt` to format code, `pnpm lint` to lint, `pnpm check` for Svelte diagnostics, and `pnpm test` for Playwright tests. ESLint checks Svelte components because Oxlint does not cover Svelte templates.
 
 ## Chapter settings in Contentful
 
@@ -93,7 +95,7 @@ To publish this site to netlify:
 5. Create a production build.
 
    ```sh
-   pnpm export
+   pnpm build
    ```
 
 6. Finally deploy the site with

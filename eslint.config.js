@@ -7,7 +7,7 @@ import svelteParser from 'svelte-eslint-parser'
 export default [
   js.configs.recommended,
   {
-    files: [`**/*.{js,ts,svelte}`],
+    files: [`**/*.svelte`],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: `module`,
@@ -37,8 +37,9 @@ export default [
         KeyboardEvent: `readonly`,
         Event: `readonly`,
       },
-      parser: typescriptParser,
+      parser: svelteParser,
       parserOptions: {
+        parser: typescriptParser,
         ecmaVersion: 2020,
         sourceType: `module`,
       },
@@ -50,10 +51,6 @@ export default [
     rules: {
       ...typescript.configs.recommended.rules,
       ...svelte.configs.recommended.rules,
-      indent: [`error`, 2, { SwitchCase: 1 }],
-      quotes: [`error`, `backtick`, { avoidEscape: true }],
-      semi: [`error`, `never`],
-      'linebreak-style': [`error`, `unix`],
       'no-console': [`error`, { allow: [`warn`, `error`, `debug`] }],
       'no-var': `error`,
       '@typescript-eslint/no-inferrable-types': `off`,
@@ -63,28 +60,6 @@ export default [
       ],
       'svelte/no-at-html-tags': `off`,
       'no-inner-declarations': `off`,
-    },
-  },
-  {
-    files: [`**/*.svelte`],
-    languageOptions: {
-      parser: svelteParser,
-      parserOptions: {
-        parser: typescriptParser,
-      },
-    },
-  },
-  {
-    files: [`**/*.d.ts`],
-    rules: {
-      quotes: `off`,
-    },
-  },
-  {
-    files: [`tests/**/*`, `**/*.test.{js,ts}`],
-    rules: {
-      'no-console': `off`, // Allow console statements in test files
-      '@typescript-eslint/no-explicit-any': `warn`, // Relax any usage in tests
     },
   },
   {

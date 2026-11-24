@@ -1,9 +1,9 @@
 import yaml from '@rollup/plugin-yaml'
 import { sveltekit } from '@sveltejs/kit/vite'
 import Icons from 'unplugin-icons/vite'
-import type { UserConfig } from 'vite'
+import { defineConfig } from 'vite-plus'
 
-export default {
+export default defineConfig({
   plugins: [
     sveltekit(),
     yaml(),
@@ -24,4 +24,16 @@ export default {
   preview: {
     port: 3000,
   },
-} satisfies UserConfig
+
+  fmt: {
+    svelte: true,
+    ignorePatterns: [`src/signup-form/**`],
+  },
+
+  lint: {
+    ignorePatterns: [`**/*.svelte`, `build/**`, `.svelte-kit/**`, `scripts/**`],
+    rules: {
+      'no-unused-vars': [`error`, { argsIgnorePattern: `^_`, varsIgnorePattern: `^_` }],
+    },
+  },
+})
