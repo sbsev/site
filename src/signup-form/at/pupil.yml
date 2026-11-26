@@ -33,9 +33,9 @@ fields:
     maxSelect: 1
 
   - id: firstName
-    title: Vorname Schüler:in
+    title: Vor- und Nachname Schüler:in
     note: |
-      Aus Datenschutzgründen bitte nicht den Nachnamen nennen. Bei mehreren Anmeldungen jeweils ein Formular ausfüllen. Wenn mehrere Schüler:innen mit gleichen Vornamen von einer Kontaktperson angemeldet werden, bitte den ersten Buchstaben vom Nachnamen hinzufügen.
+      Bei mehreren Anmeldungen bitte jeweils ein Formular ausfüllen.
     required: true
 
   - id: subjects

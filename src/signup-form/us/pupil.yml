@@ -33,9 +33,9 @@ fields:
     maxSelect: 1
 
   - id: firstName
-    title: First name student
+    title: Student's first and last name
     note: |
-      For privacy reasons, please do not give your last name. If registering multiple times, fill out one form each. If several students with the same first name are registered by a contact person, please add the first letter of the last name.
+      If registering multiple students, please fill out a separate form for each student.
     required: true
 
   - id: subjects
