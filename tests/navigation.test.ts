@@ -22,16 +22,12 @@ test.describe(`Navigation`, () => {
     expect(aachenH1).not.toBe(homeH1);
     expect(aachenH1).toContain(`Aachen`);
 
-    // Navigate to another chapter page
-    await page.goto(`/standorte/augsburg`);
-    await page.waitForLoadState(`networkidle`);
-
-    const augsburgH1 = await page.locator(`h1`).first().textContent();
-    console.log(`Augsburg page H1: ${augsburgH1}`);
-
-    // Verify content changed from Aachen to Augsburg
-    expect(augsburgH1).not.toBe(aachenH1);
-    expect(augsburgH1).toContain(`Augsburg`);
+    // Navigate through the menu to another published page.
+    await page.locator(`nav a[href="/ueber-uns"]`).click();
+    await expect(page).toHaveURL(/\/ueber-uns\/?$/);
+    const aboutH1 = page.locator(`h1`).first();
+    await expect(aboutH1).toContainText(/über uns/i);
+    expect(await aboutH1.textContent()).not.toBe(aachenH1);
   });
 
   test(`navigation menu contains expected links`, async ({ page }) => {

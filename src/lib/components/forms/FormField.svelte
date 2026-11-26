@@ -39,9 +39,8 @@
 
   // Compute initial value based on type - using a function to get initial value
   const getInitialValue = () => {
-    if (type === `select` || type === `placeSelect`) {
-      return maxSelect === 1 ? `` : [];
-    }
+    if (type === `select`) return maxSelect === 1 ? null : [];
+    if (type === `placeSelect`) return [];
     if (type === `toggle` || type === `checkbox`) {
       return false;
     }
@@ -54,7 +53,7 @@
     return ``;
   };
 
-  let value: string | number | boolean | (string | number)[] = $state(getInitialValue());
+  let value: string | number | boolean | (string | number)[] | null = $state(getInitialValue());
 
   // Sync value and label to store - use untrack to avoid infinite loop
   $effect(() => {
@@ -125,7 +124,7 @@
     {options}
     {maxSelect}
     noMatchingOptionsMsg="Keine passenden Optionen"
-    bind:value={value as string | string[]}
+    bind:value={value as string | string[] | null}
     {required}
     --sms-options-bg="var(--accent-bg)"
     --sms-bg="var(--accent-bg)"

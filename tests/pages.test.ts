@@ -35,11 +35,8 @@ test.describe(`Page Loading and Content`, () => {
   test(`blog page shows posts`, async ({ page }) => {
     await page.goto(`/blog`);
 
-    // Either posts are shown or a "no posts" message
-    const hasContent = (await page.locator(`article, .post, [class*="post"]`).count()) > 0;
-    const hasMessage = await page.locator(`text=Keine`).isVisible();
-
-    expect(hasContent || hasMessage).toBeTruthy();
+    // Post previews link to their individual blog pages.
+    await expect(page.locator(`main a[href^="/blog/"]`).first()).toBeVisible();
   });
 
   test(`standorte page shows locations`, async ({ page }) => {

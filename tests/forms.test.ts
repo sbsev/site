@@ -1,6 +1,25 @@
 import { expect, test } from "@playwright/test";
+import { fill_select } from "./helpers";
 
 test.describe(`Form Functionality (Without Submission)`, () => {
+  for (const form of [`student`, `pupil`]) {
+    test(`${form} single-select fields start empty and can be selected and cleared`, async ({
+      page,
+    }) => {
+      await page.goto(`/signup-${form}`);
+
+      const singleSelects = page.locator(`.multiselect.single`);
+      expect(await singleSelects.count()).toBeGreaterThan(0);
+      await expect(singleSelects.locator(`ul.selected > li`)).toHaveCount(0);
+
+      const gender = page.locator(`.multiselect[data-id="gender"]`);
+      await fill_select(page, `#gender`, [`Männlich`]);
+      await expect(gender.locator(`ul.selected > li`)).toHaveText(/Männlich/);
+      await gender.locator(`ul.selected > li button.remove`).click();
+      await expect(gender.locator(`ul.selected > li`)).toHaveCount(0);
+    });
+  }
+
   test(`student signup form renders correctly`, async ({ page }) => {
     await page.goto(`/signup-student`);
 
