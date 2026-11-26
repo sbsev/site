@@ -1,6 +1,9 @@
-import { fetch_page } from "#lib/fetch.js";
+import { fetch_chapters, fetch_page } from "#lib/fetch.js";
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
+
+export const entries = async () =>
+  (await fetch_chapters()).map(({ slug }) => ({ slug: slug.replace(/^\/standorte\//, ``) }));
 
 export const load: PageServerLoad = async ({ params, parent, fetch }) => {
   const { slug } = params;
